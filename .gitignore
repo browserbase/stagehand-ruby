@@ -1,0 +1,42 @@
+# Gem files
+*.gem
+pkg/
+
+# Bundle
+.bundle/
+vendor/bundle/
+
+# RSpec
+coverage/
+spec/examples.txt
+
+# Documentation
+doc/
+.yardoc/
+
+# Editor/IDE
+.idea/
+*.swp
+*.swo
+*~
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment
+.env
+.env.local
+
+# Ruby version managers
+.ruby-version
+.ruby-gemset
+
+# Temporary files
+tmp/
+log/
+*.log
+
+# Lock file (include for apps, exclude for gems)
+Gemfile.lock
