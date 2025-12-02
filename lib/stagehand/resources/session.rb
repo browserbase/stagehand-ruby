@@ -4,13 +4,24 @@ require "json"
 
 module Stagehand
   module Resources
-    # Sessions resource for managing Stagehand browser sessions
+    # Session resource for managing a Stagehand browser session
     #
     # This is the main resource for interacting with the Stagehand API.
     # All browser automation happens within the context of a session.
-    class Sessions
+    # The session_id is stored automatically after calling start().
+    class Session
+      attr_reader :session_id
+
       def initialize(http_client)
         @http = http_client
+        @session_id = nil
+      end
+
+      # Check if a session is currently active
+      #
+      # @return [Boolean]
+      def active?
+        !@session_id.nil?
       end
 
       # Start a new browser session
@@ -54,25 +65,27 @@ module Stagehand
         body[:browserbaseSessionId] = browserbase_session_id if browserbase_session_id
         body[:browserbaseSessionCreateParams] = browserbase_session_create_params if browserbase_session_create_params
 
-        if stream && block_given?
-          result = nil
-          @http.post("/sessions/start", body, stream: true) do |event|
-            if event[:type] == "result" || event[:sessionId]
-              result = Types::SessionStartResponse.new(event[:data] || event)
-            else
-              block.call(event)
-            end
-          end
-          result || Types::SessionStartResponse.new({})
-        else
-          response = @http.post("/sessions/start", body)
-          Types::SessionStartResponse.new(response)
-        end
+        result = if stream && block_given?
+                   response = nil
+                   @http.post("/sessions/start", body, stream: true) do |event|
+                     if event[:type] == "result" || event[:sessionId]
+                       response = Types::SessionStartResponse.new(event[:data] || event)
+                     else
+                       block.call(event)
+                     end
+                   end
+                   response || Types::SessionStartResponse.new({})
+                 else
+                   response = @http.post("/sessions/start", body)
+                   Types::SessionStartResponse.new(response)
+                 end
+
+        @session_id = result.session_id
+        result
       end
 
       # Perform a browser action
       #
-      # @param session_id [String] Session UUID
       # @param input [String, Hash] Natural language instruction or Action object
       # @param frame_id [String, nil] Frame ID to act on
       # @param options [Hash] Additional options
@@ -82,7 +95,9 @@ module Stagehand
       # @param stream [Boolean] Whether to stream responses
       # @yield [Hash] SSE events if streaming
       # @return [Types::SessionActResponse]
-      def act(session_id, input:, frame_id: nil, options: {}, stream: false, &block)
+      def act(input:, frame_id: nil, options: {}, stream: false, &block)
+        require_session!
+
         body = {}
         body[:input] = input
         body[:frameId] = frame_id if frame_id
@@ -97,7 +112,7 @@ module Stagehand
 
         if stream && block_given?
           result = nil
-          @http.post("/sessions/#{session_id}/act", body, stream: true) do |event|
+          @http.post("/sessions/#{@session_id}/act", body, stream: true) do |event|
             if event[:type] == "result" || event[:success]
               result = Types::SessionActResponse.new(event[:data] || event)
             else
@@ -106,14 +121,13 @@ module Stagehand
           end
           result || Types::SessionActResponse.new({})
         else
-          response = @http.post("/sessions/#{session_id}/act", body)
+          response = @http.post("/sessions/#{@session_id}/act", body)
           Types::SessionActResponse.new(response)
         end
       end
 
       # Extract data from the page
       #
-      # @param session_id [String] Session UUID
       # @param instruction [String, nil] Natural language instruction
       # @param frame_id [String, nil] Frame ID to extract from
       # @param options [Hash] Additional options
@@ -124,7 +138,9 @@ module Stagehand
       # @param stream [Boolean] Whether to stream responses
       # @yield [Hash] SSE events if streaming
       # @return [Types::SessionExtractResponse, Hash]
-      def extract(session_id, instruction: nil, frame_id: nil, options: {}, stream: false, &block)
+      def extract(instruction: nil, frame_id: nil, options: {}, stream: false, &block)
+        require_session!
+
         body = {}
         body[:instruction] = instruction if instruction
         body[:frameId] = frame_id if frame_id
@@ -140,7 +156,7 @@ module Stagehand
 
         if stream && block_given?
           result = nil
-          @http.post("/sessions/#{session_id}/extract", body, stream: true) do |event|
+          @http.post("/sessions/#{@session_id}/extract", body, stream: true) do |event|
             if event[:type] == "result" || event[:extraction]
               result = Types::SessionExtractResponse.new(event[:data] || event)
             else
@@ -149,7 +165,7 @@ module Stagehand
           end
           result || Types::SessionExtractResponse.new({})
         else
-          response = @http.post("/sessions/#{session_id}/extract", body)
+          response = @http.post("/sessions/#{@session_id}/extract", body)
           # If schema was provided, return raw hash for flexible access
           options[:schema] ? response : Types::SessionExtractResponse.new(response)
         end
@@ -157,7 +173,6 @@ module Stagehand
 
       # Observe actionable elements on the page
       #
-      # @param session_id [String] Session UUID
       # @param instruction [String, nil] Natural language instruction to filter
       # @param frame_id [String, nil] Frame ID to observe
       # @param options [Hash] Additional options
@@ -167,7 +182,9 @@ module Stagehand
       # @param stream [Boolean] Whether to stream responses
       # @yield [Hash] SSE events if streaming
       # @return [Types::SessionObserveResponse]
-      def observe(session_id, instruction: nil, frame_id: nil, options: {}, stream: false, &block)
+      def observe(instruction: nil, frame_id: nil, options: {}, stream: false, &block)
+        require_session!
+
         body = {}
         body[:instruction] = instruction if instruction
         body[:frameId] = frame_id if frame_id
@@ -182,7 +199,7 @@ module Stagehand
 
         if stream && block_given?
           result = nil
-          @http.post("/sessions/#{session_id}/observe", body, stream: true) do |event|
+          @http.post("/sessions/#{@session_id}/observe", body, stream: true) do |event|
             if event[:type] == "result" || event.is_a?(Array)
               data = event[:data] || event
               result = Types::SessionObserveResponse.new(data)
@@ -192,14 +209,13 @@ module Stagehand
           end
           result || Types::SessionObserveResponse.new([])
         else
-          response = @http.post("/sessions/#{session_id}/observe", body)
+          response = @http.post("/sessions/#{@session_id}/observe", body)
           Types::SessionObserveResponse.new(response)
         end
       end
 
       # Execute an autonomous agent
       #
-      # @param session_id [String] Session UUID
       # @param execute_options [Hash] Agent execution options
       # @option execute_options [String] :instruction Task for the agent
       # @option execute_options [Integer] :max_steps Maximum steps
@@ -213,7 +229,9 @@ module Stagehand
       # @param stream [Boolean] Whether to stream responses
       # @yield [Hash] SSE events if streaming
       # @return [Types::SessionExecuteAgentResponse]
-      def execute_agent(session_id, execute_options:, agent_config: {}, frame_id: nil, stream: false, &block)
+      def execute_agent(execute_options:, agent_config: {}, frame_id: nil, stream: false, &block)
+        require_session!
+
         body = {
           executeOptions: camelize_keys(execute_options)
         }
@@ -223,7 +241,7 @@ module Stagehand
 
         if stream && block_given?
           result = nil
-          @http.post("/sessions/#{session_id}/agentExecute", body, stream: true) do |event|
+          @http.post("/sessions/#{@session_id}/agentExecute", body, stream: true) do |event|
             if event[:type] == "result" || event[:message]
               result = Types::SessionExecuteAgentResponse.new(event[:data] || event)
             else
@@ -232,14 +250,13 @@ module Stagehand
           end
           result || Types::SessionExecuteAgentResponse.new({})
         else
-          response = @http.post("/sessions/#{session_id}/agentExecute", body)
+          response = @http.post("/sessions/#{@session_id}/agentExecute", body)
           Types::SessionExecuteAgentResponse.new(response)
         end
       end
 
       # Navigate to a URL
       #
-      # @param session_id [String] Session UUID
       # @param url [String] URL to navigate to
       # @param frame_id [String, nil] Frame ID
       # @param options [Hash] Navigation options
@@ -247,7 +264,9 @@ module Stagehand
       # @param stream [Boolean] Whether to stream responses
       # @yield [Hash] SSE events if streaming
       # @return [Types::SessionNavigateResponse]
-      def navigate(session_id, url:, frame_id: nil, options: {}, stream: false, &block)
+      def navigate(url:, frame_id: nil, options: {}, stream: false, &block)
+        require_session!
+
         body = { url: url }
         body[:frameId] = frame_id if frame_id
 
@@ -259,7 +278,7 @@ module Stagehand
 
         if stream && block_given?
           result = nil
-          @http.post("/sessions/#{session_id}/navigate", body, stream: true) do |event|
+          @http.post("/sessions/#{@session_id}/navigate", body, stream: true) do |event|
             if event[:type] == "result" || event[:ok]
               result = Types::SessionNavigateResponse.new(event[:data] || event)
             else
@@ -268,21 +287,28 @@ module Stagehand
           end
           result || Types::SessionNavigateResponse.new({})
         else
-          response = @http.post("/sessions/#{session_id}/navigate", body)
+          response = @http.post("/sessions/#{@session_id}/navigate", body)
           Types::SessionNavigateResponse.new(response)
         end
       end
 
-      # End a session
+      # End the session
       #
-      # @param session_id [String] Session UUID
       # @return [Types::SessionEndResponse]
-      def end_(session_id)
-        response = @http.post("/sessions/#{session_id}/end", {})
-        Types::SessionEndResponse.new(response)
+      def end_
+        require_session!
+
+        response = @http.post("/sessions/#{@session_id}/end", {})
+        result = Types::SessionEndResponse.new(response)
+        @session_id = nil
+        result
       end
 
       private
+
+      def require_session!
+        raise SessionError, "No active session. Call start() first." unless active?
+      end
 
       def normalize_model(model)
         return model if model.is_a?(String)

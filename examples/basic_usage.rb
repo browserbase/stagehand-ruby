@@ -12,34 +12,32 @@ client = Stagehand::Client.new(
 )
 
 begin
-  # Start a local browser session
+  # Start a local browser session (session_id stored automatically)
   puts "Starting session..."
-  session = client.sessions.start(
+  client.session.start(
     env: :LOCAL,
     verbose: 1,
     local_browser_launch_options: {
       headless: false
     }
   )
-  session_id = session.session_id
-  puts "Session started: #{session_id}"
+  puts "Session started: #{client.session.session_id}"
 
   # Navigate to a website
   puts "\nNavigating to example.com..."
-  client.sessions.navigate(session_id, url: "https://example.com")
+  client.session.navigate(url: "https://example.com")
   puts "Navigation complete"
 
   # Extract data from the page
   puts "\nExtracting page content..."
-  extraction = client.sessions.extract(
-    session_id,
+  extraction = client.session.extract(
     instruction: "Extract the main heading and first paragraph"
   )
   puts "Extracted: #{extraction.extraction}"
 
   # Observe available actions
   puts "\nObserving available actions..."
-  observations = client.sessions.observe(session_id)
+  observations = client.session.observe
   puts "Found #{observations.size} actions:"
   observations.each do |action|
     puts "  - #{action.method}: #{action.description}"
@@ -47,15 +45,15 @@ begin
 
   # Perform an action
   puts "\nPerforming action..."
-  result = client.sessions.act(session_id, input: "click the 'More information' link")
+  result = client.session.act(input: "click the 'More information' link")
   puts "Action result: #{result.success ? 'Success' : 'Failed'}"
   puts "Message: #{result.message}"
 
 ensure
   # Always end the session
-  if session_id
+  if client.session.active?
     puts "\nEnding session..."
-    client.sessions.end_(session_id)
+    client.session.end_
     puts "Session ended"
   end
 end

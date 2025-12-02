@@ -10,24 +10,22 @@ client = Stagehand::Client.new(api_key: ENV["STAGEHAND_API_KEY"])
 begin
   # Start session with streaming logs
   puts "Starting session with streaming..."
-  session = client.sessions.start(env: :LOCAL, verbose: 2, stream: true) do |event|
+  client.session.start(env: :LOCAL, verbose: 2, stream: true) do |event|
     if event[:type] == "log"
       puts "[LOG] #{event[:category]}: #{event[:message]}"
     end
   end
-  session_id = session.session_id
-  puts "Session ID: #{session_id}"
+  puts "Session ID: #{client.session.session_id}"
 
   # Navigate with streaming
   puts "\nNavigating with streaming..."
-  client.sessions.navigate(session_id, url: "https://news.ycombinator.com", stream: true) do |event|
+  client.session.navigate(url: "https://news.ycombinator.com", stream: true) do |event|
     puts "[NAV] #{event[:type]}: #{event[:message] || event[:status]}"
   end
 
   # Act with streaming logs
   puts "\nActing with streaming..."
-  result = client.sessions.act(
-    session_id,
+  result = client.session.act(
     input: "click on the first article link",
     stream: true
   ) do |event|
@@ -41,5 +39,5 @@ begin
   puts "Action completed: #{result.success}"
 
 ensure
-  client.sessions.end_(session_id) if session_id
+  client.session.end_ if client.session.active?
 end
