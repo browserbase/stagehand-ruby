@@ -11,3 +11,9 @@ group :development do
   gem "webmock", "~> 3.18"
   gem "yard", "~> 0.9"
 end
+
+group :test do
+  gem "ferrum", "~> 0.15"
+  gem "webrick", "~> 1.8"
+  gem "json", "~> 2.6"
+end

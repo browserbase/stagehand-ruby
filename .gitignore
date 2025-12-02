@@ -9,6 +9,7 @@ vendor/bundle/
 # RSpec
 coverage/
 spec/examples.txt
+.rspec_status
 
 # Documentation
 doc/
