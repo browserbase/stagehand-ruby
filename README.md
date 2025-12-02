@@ -1,6 +1,6 @@
 # Stagehand Ruby SDK
 
-A thin, stateless Ruby SDK for the [Stagehand](https://github.com/browserbase/stagehand) browser automation API.
+A thin, nearly stateless Ruby SDK for the [Stagehand](https://github.com/browserbase/stagehand) browser automation API.
 
 ## Installation
 
@@ -30,25 +30,21 @@ require "stagehand"
 # Create a client
 client = Stagehand::Client.new(api_key: ENV["STAGEHAND_API_KEY"])
 
-# Start a session
-session = client.sessions.start(env: :LOCAL)
-session_id = session.session_id
+# Start a session (session_id is stored automatically)
+client.session.start(env: :LOCAL)
 
 # Navigate to a page
-client.sessions.navigate(session_id, url: "https://example.com")
+client.session.navigate(url: "https://example.com")
 
 # Perform actions with natural language
-client.sessions.act(session_id, input: "click the sign in button")
+client.session.act(input: "click the sign in button")
 
 # Extract data from the page
-data = client.sessions.extract(
-  session_id,
-  instruction: "extract the main heading text"
-)
+data = client.session.extract(instruction: "extract the main heading text")
 puts data.extraction
 
 # End the session
-client.sessions.end_(session_id)
+client.session.end_
 ```
 
 ## Configuration
@@ -80,16 +76,16 @@ The SDK will automatically use `STAGEHAND_API_KEY` from environment if not provi
 
 ## API Reference
 
-### Sessions
+### Session
 
-All browser automation happens through the `sessions` resource.
+All browser automation happens through the `session` resource. The `session_id` is automatically stored after calling `start()`.
 
 #### `start`
 
 Initialize a new browser session.
 
 ```ruby
-response = client.sessions.start(
+response = client.session.start(
   env: :LOCAL,                    # :LOCAL or :BROWSERBASE
   api_key: "browserbase-key",     # For Browserbase environment
   project_id: "project-id",       # For Browserbase environment
@@ -104,7 +100,8 @@ response = client.sessions.start(
   }
 )
 
-session_id = response.session_id
+# session_id is now stored automatically
+puts client.session.session_id
 ```
 
 #### `navigate`
@@ -112,8 +109,7 @@ session_id = response.session_id
 Navigate to a URL.
 
 ```ruby
-response = client.sessions.navigate(
-  session_id,
+response = client.session.navigate(
   url: "https://example.com",
   options: {
     wait_until: :networkidle  # :load, :domcontentloaded, or :networkidle
@@ -126,8 +122,7 @@ response = client.sessions.navigate(
 Perform a browser action using natural language.
 
 ```ruby
-response = client.sessions.act(
-  session_id,
+response = client.session.act(
   input: "click the sign in button",
   options: {
     model: "openai/gpt-4o",
@@ -147,15 +142,11 @@ Extract data from the page.
 
 ```ruby
 # Simple extraction
-response = client.sessions.extract(
-  session_id,
-  instruction: "extract the main heading"
-)
+response = client.session.extract(instruction: "extract the main heading")
 puts response.extraction
 
 # Structured extraction with schema
-data = client.sessions.extract(
-  session_id,
+data = client.session.extract(
   instruction: "extract product information",
   options: {
     schema: {
@@ -174,10 +165,7 @@ data = client.sessions.extract(
 Get a list of actionable elements on the page.
 
 ```ruby
-response = client.sessions.observe(
-  session_id,
-  instruction: "find all buttons"
-)
+response = client.session.observe(instruction: "find all buttons")
 
 response.actions.each do |action|
   puts "#{action.method}: #{action.description}"
@@ -190,8 +178,7 @@ end
 Run an autonomous agent for complex tasks.
 
 ```ruby
-response = client.sessions.execute_agent(
-  session_id,
+response = client.session.execute_agent(
   execute_options: {
     instruction: "Find and add the first product to cart",
     max_steps: 10,
@@ -212,8 +199,24 @@ response.steps.each { |step| puts step }
 Close the session and clean up resources.
 
 ```ruby
-response = client.sessions.end_(session_id)
+response = client.session.end_
 puts response.success
+```
+
+#### `active?`
+
+Check if a session is currently active.
+
+```ruby
+client.session.active?  # => true/false
+```
+
+#### `session_id`
+
+Access the current session ID.
+
+```ruby
+client.session.session_id  # => "uuid-string" or nil
 ```
 
 ### Streaming Responses
@@ -221,8 +224,7 @@ puts response.success
 All methods support streaming for real-time log output:
 
 ```ruby
-response = client.sessions.act(
-  session_id,
+client.session.act(
   input: "fill in the form",
   stream: true
 ) do |event|
@@ -259,7 +261,9 @@ model: Stagehand::Types::ModelConfig.new(
 
 ```ruby
 begin
-  client.sessions.act(session_id, input: "click button")
+  client.session.act(input: "click button")
+rescue Stagehand::SessionError => e
+  puts "No active session: #{e.message}"
 rescue Stagehand::AuthenticationError => e
   puts "Authentication failed: #{e.message}"
 rescue Stagehand::NotFoundError => e

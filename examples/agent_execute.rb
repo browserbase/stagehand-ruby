@@ -9,17 +9,15 @@ client = Stagehand::Client.new(api_key: ENV["STAGEHAND_API_KEY"])
 
 begin
   # Start session
-  session = client.sessions.start(env: :LOCAL, verbose: 1)
-  session_id = session.session_id
-  puts "Session started: #{session_id}"
+  client.session.start(env: :LOCAL, verbose: 1)
+  puts "Session started: #{client.session.session_id}"
 
   # Navigate to a shopping site
-  client.sessions.navigate(session_id, url: "https://www.example-shop.com")
+  client.session.navigate(url: "https://www.example-shop.com")
 
   # Execute an autonomous agent
   puts "\nExecuting agent..."
-  result = client.sessions.execute_agent(
-    session_id,
+  result = client.session.execute_agent(
     execute_options: {
       instruction: "Search for 'wireless headphones', find the cheapest option, and add it to cart",
       max_steps: 15,
@@ -44,5 +42,5 @@ begin
   puts "Steps taken: #{result.steps.length}"
 
 ensure
-  client.sessions.end_(session_id) if session_id
+  client.session.end_ if client.session.active?
 end

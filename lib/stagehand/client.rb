@@ -2,21 +2,20 @@
 
 require_relative "configuration"
 require_relative "http_client"
-require_relative "resources/sessions"
+require_relative "resources/session"
 
 module Stagehand
   # Main client for the Stagehand API
   #
-  # The client maintains minimal state - just the HTTP connection and optional
-  # session management. It provides access to the Sessions resource for all
-  # browser automation operations.
+  # The client maintains minimal state - just the HTTP connection and the
+  # session resource (which stores the session_id after start()).
   #
   # @example Basic usage
   #   client = Stagehand::Client.new(api_key: "your-api-key")
-  #   response = client.sessions.start(env: :LOCAL)
-  #   client.sessions.navigate(response.session_id, url: "https://example.com")
-  #   client.sessions.act(response.session_id, input: "click the login button")
-  #   client.sessions.end_(response.session_id)
+  #   client.session.start(env: :LOCAL)
+  #   client.session.navigate(url: "https://example.com")
+  #   client.session.act(input: "click the login button")
+  #   client.session.end_
   #
   # @example With configuration block
   #   client = Stagehand::Client.new do |config|
@@ -26,7 +25,7 @@ module Stagehand
   #   end
   #
   class Client
-    attr_reader :config, :sessions
+    attr_reader :config, :session
 
     # Initialize a new Stagehand client
     #
@@ -46,7 +45,7 @@ module Stagehand
       yield @config if block_given?
 
       @http = HTTPClient.new(@config)
-      @sessions = Resources::Sessions.new(@http)
+      @session = Resources::Session.new(@http)
     end
   end
 end
