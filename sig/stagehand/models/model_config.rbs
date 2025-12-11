@@ -1,0 +1,57 @@
+module Stagehand
+  module Models
+    type model_config =
+      {
+        api_key: String,
+        base_url: String,
+        model: String,
+        provider: Stagehand::Models::ModelConfig::provider
+      }
+
+    class ModelConfig < Stagehand::Internal::Type::BaseModel
+      attr_reader api_key: String?
+
+      def api_key=: (String) -> String
+
+      attr_reader base_url: String?
+
+      def base_url=: (String) -> String
+
+      attr_reader model: String?
+
+      def model=: (String) -> String
+
+      attr_reader provider: Stagehand::Models::ModelConfig::provider?
+
+      def provider=: (
+        Stagehand::Models::ModelConfig::provider
+      ) -> Stagehand::Models::ModelConfig::provider
+
+      def initialize: (
+        ?api_key: String,
+        ?base_url: String,
+        ?model: String,
+        ?provider: Stagehand::Models::ModelConfig::provider
+      ) -> void
+
+      def to_hash: -> {
+        api_key: String,
+        base_url: String,
+        model: String,
+        provider: Stagehand::Models::ModelConfig::provider
+      }
+
+      type provider = :openai | :anthropic | :google
+
+      module Provider
+        extend Stagehand::Internal::Type::Enum
+
+        OPENAI: :openai
+        ANTHROPIC: :anthropic
+        GOOGLE: :google
+
+        def self?.values: -> ::Array[Stagehand::Models::ModelConfig::provider]
+      end
+    end
+  end
+end

@@ -1,0 +1,23 @@
+module Stagehand
+  module Models
+    type session_navigate_response = { ok: bool, status: Integer, url: String }
+
+    class SessionNavigateResponse < Stagehand::Internal::Type::BaseModel
+      attr_reader ok: bool?
+
+      def ok=: (bool) -> bool
+
+      attr_reader status: Integer?
+
+      def status=: (Integer) -> Integer
+
+      attr_reader url: String?
+
+      def url=: (String) -> String
+
+      def initialize: (?ok: bool, ?status: Integer, ?url: String) -> void
+
+      def to_hash: -> { ok: bool, status: Integer, url: String }
+    end
+  end
+end

@@ -1,0 +1,20 @@
+module Stagehand
+  module Models
+    type session_execute_agent_response =
+      { message: String, steps: ::Array[top] }
+
+    class SessionExecuteAgentResponse < Stagehand::Internal::Type::BaseModel
+      attr_reader message: String?
+
+      def message=: (String) -> String
+
+      attr_reader steps: ::Array[top]?
+
+      def steps=: (::Array[top]) -> ::Array[top]
+
+      def initialize: (?message: String, ?steps: ::Array[top]) -> void
+
+      def to_hash: -> { message: String, steps: ::Array[top] }
+    end
+  end
+end
