@@ -1,0 +1,27 @@
+module Stagehand
+  module Models
+    type session_extract_response =
+      Stagehand::Models::SessionExtractResponse::Extraction
+      | ::Hash[Symbol, top]
+
+    module SessionExtractResponse
+      extend Stagehand::Internal::Type::Union
+
+      type extraction = { extraction: String }
+
+      class Extraction < Stagehand::Internal::Type::BaseModel
+        attr_reader extraction: String?
+
+        def extraction=: (String) -> String
+
+        def initialize: (?extraction: String) -> void
+
+        def to_hash: -> { extraction: String }
+      end
+
+      def self?.variants: -> ::Array[Stagehand::Models::session_extract_response]
+
+      UnionMember1Map: Stagehand::Internal::Type::Converter
+    end
+  end
+end

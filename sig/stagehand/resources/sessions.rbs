@@ -1,0 +1,71 @@
+module Stagehand
+  module Resources
+    class Sessions
+      def act: (
+        String session_id,
+        input: Stagehand::Models::SessionActParams::input,
+        ?frame_id: String,
+        ?options: Stagehand::SessionActParams::Options,
+        ?x_stream_response: Stagehand::Models::SessionActParams::x_stream_response,
+        ?request_options: Stagehand::request_opts
+      ) -> Stagehand::Models::SessionActResponse
+
+      def end_: (
+        String session_id,
+        ?request_options: Stagehand::request_opts
+      ) -> Stagehand::Models::SessionEndResponse
+
+      def execute_agent: (
+        String session_id,
+        agent_config: Stagehand::SessionExecuteAgentParams::AgentConfig,
+        execute_options: Stagehand::SessionExecuteAgentParams::ExecuteOptions,
+        ?frame_id: String,
+        ?x_stream_response: Stagehand::Models::SessionExecuteAgentParams::x_stream_response,
+        ?request_options: Stagehand::request_opts
+      ) -> Stagehand::Models::SessionExecuteAgentResponse
+
+      def extract: (
+        String session_id,
+        ?frame_id: String,
+        ?instruction: String,
+        ?options: Stagehand::SessionExtractParams::Options,
+        ?schema: ::Hash[Symbol, top],
+        ?x_stream_response: Stagehand::Models::SessionExtractParams::x_stream_response,
+        ?request_options: Stagehand::request_opts
+      ) -> Stagehand::Models::session_extract_response
+
+      def navigate: (
+        String session_id,
+        url: String,
+        ?frame_id: String,
+        ?options: Stagehand::SessionNavigateParams::Options,
+        ?x_stream_response: Stagehand::Models::SessionNavigateParams::x_stream_response,
+        ?request_options: Stagehand::request_opts
+      ) -> Stagehand::Models::SessionNavigateResponse?
+
+      def observe: (
+        String session_id,
+        ?frame_id: String,
+        ?instruction: String,
+        ?options: Stagehand::SessionObserveParams::Options,
+        ?x_stream_response: Stagehand::Models::SessionObserveParams::x_stream_response,
+        ?request_options: Stagehand::request_opts
+      ) -> Stagehand::Models::session_observe_response
+
+      def start: (
+        env: Stagehand::Models::SessionStartParams::env,
+        ?api_key: String,
+        ?dom_settle_timeout: Integer,
+        ?local_browser_launch_options: Stagehand::SessionStartParams::LocalBrowserLaunchOptions,
+        ?model: String,
+        ?project_id: String,
+        ?self_heal: bool,
+        ?system_prompt: String,
+        ?verbose: Integer,
+        ?request_options: Stagehand::request_opts
+      ) -> Stagehand::Models::SessionStartResponse
+
+      def initialize: (client: Stagehand::Client) -> void
+    end
+  end
+end

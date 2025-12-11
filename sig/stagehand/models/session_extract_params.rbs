@@ -1,0 +1,100 @@
+module Stagehand
+  module Models
+    type session_extract_params =
+      {
+        frame_id: String,
+        instruction: String,
+        options: Stagehand::SessionExtractParams::Options,
+        schema: ::Hash[Symbol, top],
+        x_stream_response: Stagehand::Models::SessionExtractParams::x_stream_response
+      }
+      & Stagehand::Internal::Type::request_parameters
+
+    class SessionExtractParams < Stagehand::Internal::Type::BaseModel
+      extend Stagehand::Internal::Type::RequestParameters::Converter
+      include Stagehand::Internal::Type::RequestParameters
+
+      attr_reader frame_id: String?
+
+      def frame_id=: (String) -> String
+
+      attr_reader instruction: String?
+
+      def instruction=: (String) -> String
+
+      attr_reader options: Stagehand::SessionExtractParams::Options?
+
+      def options=: (
+        Stagehand::SessionExtractParams::Options
+      ) -> Stagehand::SessionExtractParams::Options
+
+      attr_reader schema: ::Hash[Symbol, top]?
+
+      def schema=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
+
+      attr_reader x_stream_response: Stagehand::Models::SessionExtractParams::x_stream_response?
+
+      def x_stream_response=: (
+        Stagehand::Models::SessionExtractParams::x_stream_response
+      ) -> Stagehand::Models::SessionExtractParams::x_stream_response
+
+      def initialize: (
+        ?frame_id: String,
+        ?instruction: String,
+        ?options: Stagehand::SessionExtractParams::Options,
+        ?schema: ::Hash[Symbol, top],
+        ?x_stream_response: Stagehand::Models::SessionExtractParams::x_stream_response,
+        ?request_options: Stagehand::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        frame_id: String,
+        instruction: String,
+        options: Stagehand::SessionExtractParams::Options,
+        schema: ::Hash[Symbol, top],
+        x_stream_response: Stagehand::Models::SessionExtractParams::x_stream_response,
+        request_options: Stagehand::RequestOptions
+      }
+
+      type options =
+        { model: Stagehand::ModelConfig, selector: String, timeout: Integer }
+
+      class Options < Stagehand::Internal::Type::BaseModel
+        attr_reader model: Stagehand::ModelConfig?
+
+        def model=: (Stagehand::ModelConfig) -> Stagehand::ModelConfig
+
+        attr_reader selector: String?
+
+        def selector=: (String) -> String
+
+        attr_reader timeout: Integer?
+
+        def timeout=: (Integer) -> Integer
+
+        def initialize: (
+          ?model: Stagehand::ModelConfig,
+          ?selector: String,
+          ?timeout: Integer
+        ) -> void
+
+        def to_hash: -> {
+          model: Stagehand::ModelConfig,
+          selector: String,
+          timeout: Integer
+        }
+      end
+
+      type x_stream_response = :true | :false
+
+      module XStreamResponse
+        extend Stagehand::Internal::Type::Enum
+
+        TRUE: :true
+        FALSE: :false
+
+        def self?.values: -> ::Array[Stagehand::Models::SessionExtractParams::x_stream_response]
+      end
+    end
+  end
+end
