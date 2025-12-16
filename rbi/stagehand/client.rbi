@@ -55,8 +55,8 @@ module Stagehand
       # - `local` corresponds to `http://localhost:5000/v1`
       environment: nil,
       # Override the default base URL for the API, e.g.,
-      # `"https://api.example.com/v2/"`. Defaults to `ENV["BROWSERBASE_BASE_URL"]`
-      base_url: ENV["BROWSERBASE_BASE_URL"],
+      # `"https://api.example.com/v2/"`. Defaults to `ENV["STAGEHAND_BASE_URL"]`
+      base_url: ENV["STAGEHAND_BASE_URL"],
       # Max number of retries to attempt after a failed retryable request.
       max_retries: Stagehand::Client::DEFAULT_MAX_RETRIES,
       timeout: Stagehand::Client::DEFAULT_TIMEOUT_IN_SECONDS,
