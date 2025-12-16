@@ -10,18 +10,14 @@ module Stagehand
 
     DEFAULT_MAX_RETRY_DELAY = T.let(8.0, Float)
 
-    ENVIRONMENTS =
-      T.let(
-        {
-          production: "https://api.stagehand.browserbase.com/v1",
-          dev: "https://api.stagehand.dev.browserbase.com/v1",
-          local: "http://localhost:5000/v1"
-        },
-        T::Hash[Symbol, String]
-      )
+    sig { returns(String) }
+    attr_reader :browserbase_api_key
 
     sig { returns(String) }
-    attr_reader :api_key
+    attr_reader :browserbase_project_id
+
+    sig { returns(T.nilable(String)) }
+    attr_reader :model_api_key
 
     sig { returns(Stagehand::Resources::Sessions) }
     attr_reader :sessions
@@ -31,11 +27,27 @@ module Stagehand
     private def auth_headers
     end
 
+    # @api private
+    sig { returns(T::Hash[String, String]) }
+    private def bb_api_key_auth
+    end
+
+    # @api private
+    sig { returns(T::Hash[String, String]) }
+    private def bb_project_id_auth
+    end
+
+    # @api private
+    sig { returns(T::Hash[String, String]) }
+    private def llm_model_api_key_auth
+    end
+
     # Creates and returns a new client for interacting with the API.
     sig do
       params(
-        api_key: T.nilable(String),
-        environment: T.nilable(T.any(Symbol, String)),
+        browserbase_api_key: T.nilable(String),
+        browserbase_project_id: T.nilable(String),
+        model_api_key: T.nilable(String),
         base_url: T.nilable(String),
         max_retries: Integer,
         timeout: Float,
@@ -44,16 +56,12 @@ module Stagehand
       ).returns(T.attached_class)
     end
     def self.new(
-      # Defaults to `ENV["STAGEHAND_API_KEY"]`
-      api_key: ENV["STAGEHAND_API_KEY"],
-      # Specifies the environment to use for the API.
-      #
-      # Each environment maps to a different base URL:
-      #
-      # - `production` corresponds to `https://api.stagehand.browserbase.com/v1`
-      # - `dev` corresponds to `https://api.stagehand.dev.browserbase.com/v1`
-      # - `local` corresponds to `http://localhost:5000/v1`
-      environment: nil,
+      # Defaults to `ENV["BROWSERBASE_API_KEY"]`
+      browserbase_api_key: ENV["BROWSERBASE_API_KEY"],
+      # Defaults to `ENV["BROWSERBASE_PROJECT_ID"]`
+      browserbase_project_id: ENV["BROWSERBASE_PROJECT_ID"],
+      # Defaults to `ENV["MODEL_API_KEY"]`
+      model_api_key: ENV["MODEL_API_KEY"],
       # Override the default base URL for the API, e.g.,
       # `"https://api.example.com/v2/"`. Defaults to `ENV["STAGEHAND_BASE_URL"]`
       base_url: ENV["STAGEHAND_BASE_URL"],

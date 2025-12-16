@@ -15,18 +15,14 @@ module Stagehand
     # Default max retry delay in seconds.
     DEFAULT_MAX_RETRY_DELAY = 8.0
 
-    # rubocop:disable Style/MutableConstant
-    # @type [Hash{Symbol=>String}]
-    ENVIRONMENTS =
-      {
-        production: "https://api.stagehand.browserbase.com/v1",
-        dev: "https://api.stagehand.dev.browserbase.com/v1",
-        local: "http://localhost:5000/v1"
-      }
-    # rubocop:enable Style/MutableConstant
+    # @return [String]
+    attr_reader :browserbase_api_key
 
     # @return [String]
-    attr_reader :api_key
+    attr_reader :browserbase_project_id
+
+    # @return [String, nil]
+    attr_reader :model_api_key
 
     # @return [Stagehand::Resources::Sessions]
     attr_reader :sessions
@@ -35,22 +31,37 @@ module Stagehand
     #
     # @return [Hash{String=>String}]
     private def auth_headers
-      return {} if @api_key.nil?
+      {**bb_api_key_auth, **bb_project_id_auth, **llm_model_api_key_auth}
+    end
 
-      {"authorization" => "Bearer #{@api_key}"}
+    # @api private
+    #
+    # @return [Hash{String=>String}]
+    private def bb_api_key_auth
+      {"x-bb-api-key" => @browserbase_api_key}
+    end
+
+    # @api private
+    #
+    # @return [Hash{String=>String}]
+    private def bb_project_id_auth
+      {"x-bb-project-id" => @browserbase_project_id}
+    end
+
+    # @api private
+    #
+    # @return [Hash{String=>String}]
+    private def llm_model_api_key_auth
+      {"x-model-api-key" => @model_api_key}
     end
 
     # Creates and returns a new client for interacting with the API.
     #
-    # @param api_key [String, nil] Defaults to `ENV["STAGEHAND_API_KEY"]`
+    # @param browserbase_api_key [String, nil] Defaults to `ENV["BROWSERBASE_API_KEY"]`
     #
-    # @param environment [:production, :dev, :local, nil] Specifies the environment to use for the API.
+    # @param browserbase_project_id [String, nil] Defaults to `ENV["BROWSERBASE_PROJECT_ID"]`
     #
-    # Each environment maps to a different base URL:
-    #
-    # - `production` corresponds to `https://api.stagehand.browserbase.com/v1`
-    # - `dev` corresponds to `https://api.stagehand.dev.browserbase.com/v1`
-    # - `local` corresponds to `http://localhost:5000/v1`
+    # @param model_api_key [String, nil] Defaults to `ENV["MODEL_API_KEY"]`
     #
     # @param base_url [String, nil] Override the default base URL for the API, e.g.,
     # `"https://api.example.com/v2/"`. Defaults to `ENV["STAGEHAND_BASE_URL"]`
@@ -63,24 +74,27 @@ module Stagehand
     #
     # @param max_retry_delay [Float]
     def initialize(
-      api_key: ENV["STAGEHAND_API_KEY"],
-      environment: nil,
+      browserbase_api_key: ENV["BROWSERBASE_API_KEY"],
+      browserbase_project_id: ENV["BROWSERBASE_PROJECT_ID"],
+      model_api_key: ENV["MODEL_API_KEY"],
       base_url: ENV["STAGEHAND_BASE_URL"],
       max_retries: self.class::DEFAULT_MAX_RETRIES,
       timeout: self.class::DEFAULT_TIMEOUT_IN_SECONDS,
       initial_retry_delay: self.class::DEFAULT_INITIAL_RETRY_DELAY,
       max_retry_delay: self.class::DEFAULT_MAX_RETRY_DELAY
     )
-      base_url ||= Stagehand::Client::ENVIRONMENTS.fetch(environment&.to_sym || :production) do
-        message = "environment must be one of #{Stagehand::Client::ENVIRONMENTS.keys}, got #{environment}"
-        raise ArgumentError.new(message)
+      base_url ||= "https://api.stagehand.browserbase.com/v1"
+
+      if browserbase_api_key.nil?
+        raise ArgumentError.new("browserbase_api_key is required, and can be set via environ: \"BROWSERBASE_API_KEY\"")
+      end
+      if browserbase_project_id.nil?
+        raise ArgumentError.new("browserbase_project_id is required, and can be set via environ: \"BROWSERBASE_PROJECT_ID\"")
       end
 
-      if api_key.nil?
-        raise ArgumentError.new("api_key is required, and can be set via environ: \"STAGEHAND_API_KEY\"")
-      end
-
-      @api_key = api_key.to_s
+      @browserbase_api_key = browserbase_api_key.to_s
+      @browserbase_project_id = browserbase_project_id.to_s
+      @model_api_key = model_api_key&.to_s
 
       super(
         base_url: base_url,

@@ -29,8 +29,9 @@ require "bundler/setup"
 require "stagehand"
 
 stagehand = Stagehand::Client.new(
-  api_key: ENV["STAGEHAND_API_KEY"], # This is the default and can be omitted
-  environment: "dev" # or "production" | "local"; defaults to "production"
+  browserbase_api_key: ENV["BROWSERBASE_API_KEY"], # This is the default and can be omitted
+  browserbase_project_id: ENV["BROWSERBASE_PROJECT_ID"], # This is the default and can be omitted
+  model_api_key: ENV["MODEL_API_KEY"] # This is the default and can be omitted
 )
 
 response = stagehand.sessions.act("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e", input: "click the first link on the page")
