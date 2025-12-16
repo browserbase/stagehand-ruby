@@ -34,7 +34,7 @@ stagehand = Stagehand::Client.new(
   model_api_key: ENV["MODEL_API_KEY"] # This is the default and can be omitted
 )
 
-response = stagehand.sessions.act("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e", input: "click the first link on the page")
+response = stagehand.sessions.act("00000000-your-session-id-000000000000", input: "click the first link on the page")
 
 puts(response.actions)
 ```
@@ -46,8 +46,8 @@ When the library is unable to connect to the API, or if the API returns a non-su
 ```ruby
 begin
   session = stagehand.sessions.start(
-    browserbase_api_key: "BROWSERBASE_API_KEY",
-    browserbase_project_id: "BROWSERBASE_PROJECT_ID"
+    browserbase_api_key: "<your API key here>",
+    browserbase_project_id: "<your project ID here>"
   )
 rescue Stagehand::Errors::APIConnectionError => e
   puts("The server could not be reached")
@@ -92,8 +92,8 @@ stagehand = Stagehand::Client.new(
 
 # Or, configure per-request:
 stagehand.sessions.start(
-  browserbase_api_key: "BROWSERBASE_API_KEY",
-  browserbase_project_id: "BROWSERBASE_PROJECT_ID",
+  browserbase_api_key: "<your API key here>",
+  browserbase_project_id: "<your project ID here>",
   request_options: {max_retries: 5}
 )
 ```
@@ -110,8 +110,8 @@ stagehand = Stagehand::Client.new(
 
 # Or, configure per-request:
 stagehand.sessions.start(
-  browserbase_api_key: "BROWSERBASE_API_KEY",
-  browserbase_project_id: "BROWSERBASE_PROJECT_ID",
+  browserbase_api_key: "<your API key here>",
+  browserbase_project_id: "<your project ID here>",
   request_options: {timeout: 5}
 )
 ```
@@ -145,8 +145,8 @@ Note: the `extra_` parameters of the same name overrides the documented paramete
 ```ruby
 response =
   stagehand.sessions.start(
-    browserbase_api_key: "BROWSERBASE_API_KEY",
-    browserbase_project_id: "BROWSERBASE_PROJECT_ID",
+    browserbase_api_key: "<your API key here>",
+    browserbase_project_id: "<your project ID here>",
     request_options: {
       extra_query: {my_query_parameter: value},
       extra_body: {my_body_parameter: value},
@@ -192,18 +192,18 @@ This library provides comprehensive [RBI](https://sorbet.org/docs/rbi) definitio
 You can provide typesafe request parameters like so:
 
 ```ruby
-stagehand.sessions.act("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e", input: "click the first link on the page")
+stagehand.sessions.act("00000000-your-session-id-000000000000", input: "click the first link on the page")
 ```
 
 Or, equivalently:
 
 ```ruby
 # Hashes work, but are not typesafe:
-stagehand.sessions.act("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e", input: "click the first link on the page")
+stagehand.sessions.act("00000000-your-session-id-000000000000", input: "click the first link on the page")
 
 # You can also splat a full Params class:
 params = Stagehand::SessionActParams.new(input: "click the first link on the page")
-stagehand.sessions.act("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e", **params)
+stagehand.sessions.act("00000000-your-session-id-000000000000", **params)
 ```
 
 ### Enums
