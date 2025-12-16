@@ -72,7 +72,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
     assert_pattern do
       case response
       in Stagehand::Models::SessionExtractResponse::Extraction
-      in Stagehand::Models::SessionExtractResponse::UnionMember1Map
+      in Stagehand::Models::SessionExtractResponse::CustomMap
       end
     end
   end

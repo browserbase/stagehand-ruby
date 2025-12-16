@@ -21,7 +21,7 @@ module Stagehand
 
       def self?.variants: -> ::Array[Stagehand::Models::session_extract_response]
 
-      UnionMember1Map: Stagehand::Internal::Type::Converter
+      CustomMap: Stagehand::Internal::Type::Converter
     end
   end
 end
