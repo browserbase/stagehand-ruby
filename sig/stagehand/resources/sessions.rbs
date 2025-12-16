@@ -53,12 +53,10 @@ module Stagehand
       ) -> Stagehand::Models::session_observe_response
 
       def start: (
-        env: Stagehand::Models::SessionStartParams::env,
-        ?api_key: String,
+        browserbase_api_key: String,
+        browserbase_project_id: String,
         ?dom_settle_timeout: Integer,
-        ?local_browser_launch_options: Stagehand::SessionStartParams::LocalBrowserLaunchOptions,
         ?model: String,
-        ?project_id: String,
         ?self_heal: bool,
         ?system_prompt: String,
         ?verbose: Integer,

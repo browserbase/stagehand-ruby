@@ -72,7 +72,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
     assert_pattern do
       case response
       in Stagehand::Models::SessionExtractResponse::Extraction
-      in Stagehand::Models::SessionExtractResponse::UnionMember1Map
+      in Stagehand::Models::SessionExtractResponse::CustomMap
       end
     end
   end
@@ -109,7 +109,11 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
   def test_start_required_params
     skip("Prism tests are disabled")
 
-    response = @stagehand.sessions.start(env: :LOCAL)
+    response =
+      @stagehand.sessions.start(
+        browserbase_api_key: "BROWSERBASE_API_KEY",
+        browserbase_project_id: "BROWSERBASE_PROJECT_ID"
+      )
 
     assert_pattern do
       response => Stagehand::Models::SessionStartResponse
