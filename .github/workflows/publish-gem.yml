@@ -27,5 +27,5 @@ jobs:
           bash ./bin/publish-gem
         env:
           # `RUBYGEMS_HOST` is only required for private gem repositories, not https://rubygems.org
-          RUBYGEMS_HOST: ${{ secrets.STAGEHAND_RUBYGEMS_HOST || secrets.RUBYGEMS_HOST }}
-          GEM_HOST_API_KEY: ${{ secrets.STAGEHAND_GEM_HOST_API_KEY || secrets.GEM_HOST_API_KEY }}
+          RUBYGEMS_HOST: ${{ secrets.BROWSERBASE_RUBYGEMS_HOST || secrets.RUBYGEMS_HOST }}
+          GEM_HOST_API_KEY: ${{ secrets.BROWSERBASE_GEM_HOST_API_KEY || secrets.GEM_HOST_API_KEY }}

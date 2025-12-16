@@ -74,7 +74,7 @@ class Stagehand::Test::ResourceTest < Minitest::Test
 
   def before_all
     super
-    @stagehand = Stagehand::Test::SingletonClient.instance
+    @browserbase = Stagehand::Test::SingletonClient.instance
   end
 
   def around_all = async? ? Sync { super } : super

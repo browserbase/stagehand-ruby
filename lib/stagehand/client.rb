@@ -18,10 +18,14 @@ module Stagehand
     # rubocop:disable Style/MutableConstant
     # @type [Hash{Symbol=>String}]
     ENVIRONMENTS =
-      {production: "http://localhost:3000/v1", environment_1: "https://api.stagehand.browserbase.com/v1"}
+      {
+        production: "https://api.stagehand.browserbase.com/v1",
+        dev: "https://api.stagehand.dev.browserbase.com/v1",
+        local: "http://localhost:5000/v1"
+      }
     # rubocop:enable Style/MutableConstant
 
-    # @return [String, nil]
+    # @return [String]
     attr_reader :api_key
 
     # @return [Stagehand::Resources::Sessions]
@@ -40,15 +44,16 @@ module Stagehand
     #
     # @param api_key [String, nil] Defaults to `ENV["STAGEHAND_API_KEY"]`
     #
-    # @param environment [:production, :environment_1, nil] Specifies the environment to use for the API.
+    # @param environment [:production, :dev, :local, nil] Specifies the environment to use for the API.
     #
     # Each environment maps to a different base URL:
     #
-    # - `production` corresponds to `http://localhost:3000/v1`
-    # - `environment_1` corresponds to `https://api.stagehand.browserbase.com/v1`
+    # - `production` corresponds to `https://api.stagehand.browserbase.com/v1`
+    # - `dev` corresponds to `https://api.stagehand.dev.browserbase.com/v1`
+    # - `local` corresponds to `http://localhost:5000/v1`
     #
     # @param base_url [String, nil] Override the default base URL for the API, e.g.,
-    # `"https://api.example.com/v2/"`. Defaults to `ENV["STAGEHAND_BASE_URL"]`
+    # `"https://api.example.com/v2/"`. Defaults to `ENV["BROWSERBASE_BASE_URL"]`
     #
     # @param max_retries [Integer] Max number of retries to attempt after a failed retryable request.
     #
@@ -60,7 +65,7 @@ module Stagehand
     def initialize(
       api_key: ENV["STAGEHAND_API_KEY"],
       environment: nil,
-      base_url: ENV["STAGEHAND_BASE_URL"],
+      base_url: ENV["BROWSERBASE_BASE_URL"],
       max_retries: self.class::DEFAULT_MAX_RETRIES,
       timeout: self.class::DEFAULT_TIMEOUT_IN_SECONDS,
       initial_retry_delay: self.class::DEFAULT_INITIAL_RETRY_DELAY,
@@ -71,7 +76,11 @@ module Stagehand
         raise ArgumentError.new(message)
       end
 
-      @api_key = api_key&.to_s
+      if api_key.nil?
+        raise ArgumentError.new("api_key is required, and can be set via environ: \"STAGEHAND_API_KEY\"")
+      end
+
+      @api_key = api_key.to_s
 
       super(
         base_url: base_url,
