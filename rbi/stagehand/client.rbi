@@ -10,12 +10,15 @@ module Stagehand
 
     DEFAULT_MAX_RETRY_DELAY = T.let(8.0, Float)
 
+    # Your [Browserbase API Key](https://www.browserbase.com/settings)
     sig { returns(String) }
     attr_reader :browserbase_api_key
 
+    # Your [Browserbase Project ID](https://www.browserbase.com/settings)
     sig { returns(String) }
     attr_reader :browserbase_project_id
 
+    # Your LLM provider API key (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
     sig { returns(String) }
     attr_reader :model_api_key
 
@@ -56,10 +59,13 @@ module Stagehand
       ).returns(T.attached_class)
     end
     def self.new(
-      # Defaults to `ENV["BROWSERBASE_API_KEY"]`
+      # Your [Browserbase API Key](https://www.browserbase.com/settings) Defaults to
+      # `ENV["BROWSERBASE_API_KEY"]`
       browserbase_api_key: ENV["BROWSERBASE_API_KEY"],
-      # Defaults to `ENV["BROWSERBASE_PROJECT_ID"]`
+      # Your [Browserbase Project ID](https://www.browserbase.com/settings) Defaults to
+      # `ENV["BROWSERBASE_PROJECT_ID"]`
       browserbase_project_id: ENV["BROWSERBASE_PROJECT_ID"],
+      # Your LLM provider API key (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
       # Defaults to `ENV["MODEL_API_KEY"]`
       model_api_key: ENV["MODEL_API_KEY"],
       # Override the default base URL for the API, e.g.,
