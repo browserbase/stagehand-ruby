@@ -1,6 +1,6 @@
-# Browserbase Ruby API library
+# Stagehand Ruby API library
 
-The Browserbase Ruby library provides convenient access to the Browserbase REST API from any Ruby 3.2.0+ application. It ships with comprehensive types & docstrings in Yard, RBS, and RBI – [see below](https://github.com/browserbase/stagehand-ruby#Sorbet) for usage with Sorbet. The standard library's `net/http` is used as the HTTP transport, with connection pooling via the `connection_pool` gem.
+The Stagehand Ruby library provides convenient access to the Stagehand REST API from any Ruby 3.2.0+ application. It ships with comprehensive types & docstrings in Yard, RBS, and RBI – [see below](https://github.com/browserbase/stagehand-ruby#Sorbet) for usage with Sorbet. The standard library's `net/http` is used as the HTTP transport, with connection pooling via the `connection_pool` gem.
 
 It is generated with [Stainless](https://www.stainless.com/).
 
@@ -8,7 +8,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 
 Documentation for releases of this gem can be found [on RubyDoc](https://gemdocs.org/gems/stagehand).
 
-The REST API documentation can be found on [browserbase.com](https://browserbase.com).
+The REST API documentation can be found on [docs.stagehand.dev](https://docs.stagehand.dev).
 
 ## Installation
 
@@ -28,12 +28,12 @@ gem "stagehand", "~> 0.0.1"
 require "bundler/setup"
 require "stagehand"
 
-browserbase = Stagehand::Client.new(
+stagehand = Stagehand::Client.new(
   api_key: ENV["STAGEHAND_API_KEY"], # This is the default and can be omitted
   environment: "dev" # or "production" | "local"; defaults to "production"
 )
 
-response = browserbase.sessions.start(env: "LOCAL")
+response = stagehand.sessions.start(env: "LOCAL")
 
 puts(response.available)
 ```
@@ -44,7 +44,7 @@ When the library is unable to connect to the API, or if the API returns a non-su
 
 ```ruby
 begin
-  session = browserbase.sessions.start(env: "LOCAL")
+  session = stagehand.sessions.start(env: "LOCAL")
 rescue Stagehand::Errors::APIConnectionError => e
   puts("The server could not be reached")
   puts(e.cause)  # an underlying Exception, likely raised within `net/http`
@@ -82,12 +82,12 @@ You can use the `max_retries` option to configure or disable this:
 
 ```ruby
 # Configure the default for all requests:
-browserbase = Stagehand::Client.new(
+stagehand = Stagehand::Client.new(
   max_retries: 0 # default is 2
 )
 
 # Or, configure per-request:
-browserbase.sessions.start(env: "LOCAL", request_options: {max_retries: 5})
+stagehand.sessions.start(env: "LOCAL", request_options: {max_retries: 5})
 ```
 
 ### Timeouts
@@ -96,12 +96,12 @@ By default, requests will time out after 60 seconds. You can use the timeout opt
 
 ```ruby
 # Configure the default for all requests:
-browserbase = Stagehand::Client.new(
+stagehand = Stagehand::Client.new(
   timeout: nil # default is 60
 )
 
 # Or, configure per-request:
-browserbase.sessions.start(env: "LOCAL", request_options: {timeout: 5})
+stagehand.sessions.start(env: "LOCAL", request_options: {timeout: 5})
 ```
 
 On timeout, `Stagehand::Errors::APITimeoutError` is raised.
@@ -132,7 +132,7 @@ Note: the `extra_` parameters of the same name overrides the documented paramete
 
 ```ruby
 response =
-  browserbase.sessions.start(
+  stagehand.sessions.start(
     env: "LOCAL",
     request_options: {
       extra_query: {my_query_parameter: value},
@@ -179,18 +179,18 @@ This library provides comprehensive [RBI](https://sorbet.org/docs/rbi) definitio
 You can provide typesafe request parameters like so:
 
 ```ruby
-browserbase.sessions.start(env: "LOCAL")
+stagehand.sessions.start(env: "LOCAL")
 ```
 
 Or, equivalently:
 
 ```ruby
 # Hashes work, but are not typesafe:
-browserbase.sessions.start(env: "LOCAL")
+stagehand.sessions.start(env: "LOCAL")
 
 # You can also splat a full Params class:
 params = Stagehand::SessionStartParams.new(env: "LOCAL")
-browserbase.sessions.start(**params)
+stagehand.sessions.start(**params)
 ```
 
 ### Enums
@@ -209,13 +209,13 @@ Enum parameters have a "relaxed" type, so you can either pass in enum constants 
 
 ```ruby
 # Using the enum constants preserves the tagged type information:
-browserbase.sessions.act(
+stagehand.sessions.act(
   x_stream_response: Stagehand::SessionActParams::XStreamResponse::TRUE,
   # …
 )
 
 # Literal values are also permissible:
-browserbase.sessions.act(
+stagehand.sessions.act(
   x_stream_response: :true,
   # …
 )
