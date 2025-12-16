@@ -18,27 +18,14 @@ module Stagehand
       sig { params(message: String).void }
       attr_writer :message
 
-      # Steps taken by the agent
-      sig { returns(T.nilable(T::Array[T.anything])) }
-      attr_reader :steps
-
-      sig { params(steps: T::Array[T.anything]).void }
-      attr_writer :steps
-
-      sig do
-        params(message: String, steps: T::Array[T.anything]).returns(
-          T.attached_class
-        )
-      end
+      sig { params(message: String).returns(T.attached_class) }
       def self.new(
         # Final message from the agent
-        message: nil,
-        # Steps taken by the agent
-        steps: nil
+        message: nil
       )
       end
 
-      sig { override.returns({ message: String, steps: T::Array[T.anything] }) }
+      sig { override.returns({ message: String }) }
       def to_hash
       end
     end
