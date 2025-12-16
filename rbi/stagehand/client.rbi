@@ -16,7 +16,7 @@ module Stagehand
     sig { returns(String) }
     attr_reader :browserbase_project_id
 
-    sig { returns(T.nilable(String)) }
+    sig { returns(String) }
     attr_reader :model_api_key
 
     sig { returns(Stagehand::Resources::Sessions) }

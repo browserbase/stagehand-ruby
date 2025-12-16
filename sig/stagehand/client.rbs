@@ -12,7 +12,7 @@ module Stagehand
 
     attr_reader browserbase_project_id: String
 
-    attr_reader model_api_key: String?
+    attr_reader model_api_key: String
 
     attr_reader sessions: Stagehand::Resources::Sessions
 
