@@ -9,11 +9,12 @@ module Stagehand
     DEFAULT_MAX_RETRY_DELAY: Float
 
     ENVIRONMENTS: {
-      production: "http://localhost:3000/v1",
-      :environment_1 => "https://api.stagehand.browserbase.com/v1"
+      production: "https://api.stagehand.browserbase.com/v1",
+      dev: "https://api.stagehand.dev.browserbase.com/v1",
+      local: "http://localhost:5000/v1"
     }
 
-    attr_reader api_key: String?
+    attr_reader api_key: String
 
     attr_reader sessions: Stagehand::Resources::Sessions
 
@@ -21,7 +22,7 @@ module Stagehand
 
     def initialize: (
       ?api_key: String?,
-      ?environment: :production | :environment_1 | nil,
+      ?environment: :production | :dev | :local | nil,
       ?base_url: String?,
       ?max_retries: Integer,
       ?timeout: Float,

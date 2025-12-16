@@ -5,8 +5,8 @@ require_relative "lib/stagehand/version"
 Gem::Specification.new do |s|
   s.name = "stagehand"
   s.version = Stagehand::VERSION
-  s.summary = "Ruby library to access the Stagehand API"
-  s.authors = ["Stagehand"]
+  s.summary = "Ruby library to access the Browserbase API"
+  s.authors = ["Browserbase"]
   s.email = ""
   s.homepage = "https://gemdocs.org/gems/stagehand"
   s.metadata["homepage_uri"] = s.homepage

@@ -34,13 +34,20 @@ class StagehandTest < Minitest::Test
     assert_match(/environment must be one of/, e.message)
   end
 
+  def test_raises_on_missing_non_nullable_opts
+    e = assert_raises(ArgumentError) do
+      Stagehand::Client.new
+    end
+    assert_match(/is required/, e.message)
+  end
+
   def test_client_default_request_default_retry_attempts
     stub_request(:post, "http://localhost/sessions/start").to_return_json(status: 500, body: {})
 
-    stagehand = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
+    browserbase = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(env: :LOCAL)
+      browserbase.sessions.start(env: :LOCAL)
     end
 
     assert_requested(:any, /./, times: 3)
@@ -49,10 +56,10 @@ class StagehandTest < Minitest::Test
   def test_client_given_request_default_retry_attempts
     stub_request(:post, "http://localhost/sessions/start").to_return_json(status: 500, body: {})
 
-    stagehand = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key", max_retries: 3)
+    browserbase = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key", max_retries: 3)
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(env: :LOCAL)
+      browserbase.sessions.start(env: :LOCAL)
     end
 
     assert_requested(:any, /./, times: 4)
@@ -61,10 +68,10 @@ class StagehandTest < Minitest::Test
   def test_client_default_request_given_retry_attempts
     stub_request(:post, "http://localhost/sessions/start").to_return_json(status: 500, body: {})
 
-    stagehand = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
+    browserbase = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(env: :LOCAL, request_options: {max_retries: 3})
+      browserbase.sessions.start(env: :LOCAL, request_options: {max_retries: 3})
     end
 
     assert_requested(:any, /./, times: 4)
@@ -73,10 +80,10 @@ class StagehandTest < Minitest::Test
   def test_client_given_request_given_retry_attempts
     stub_request(:post, "http://localhost/sessions/start").to_return_json(status: 500, body: {})
 
-    stagehand = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key", max_retries: 3)
+    browserbase = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key", max_retries: 3)
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(env: :LOCAL, request_options: {max_retries: 4})
+      browserbase.sessions.start(env: :LOCAL, request_options: {max_retries: 4})
     end
 
     assert_requested(:any, /./, times: 5)
@@ -89,10 +96,10 @@ class StagehandTest < Minitest::Test
       body: {}
     )
 
-    stagehand = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key", max_retries: 1)
+    browserbase = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key", max_retries: 1)
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(env: :LOCAL)
+      browserbase.sessions.start(env: :LOCAL)
     end
 
     assert_requested(:any, /./, times: 2)
@@ -106,11 +113,11 @@ class StagehandTest < Minitest::Test
       body: {}
     )
 
-    stagehand = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key", max_retries: 1)
+    browserbase = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key", max_retries: 1)
 
     assert_raises(Stagehand::Errors::InternalServerError) do
       Thread.current.thread_variable_set(:time_now, Time.now)
-      stagehand.sessions.start(env: :LOCAL)
+      browserbase.sessions.start(env: :LOCAL)
       Thread.current.thread_variable_set(:time_now, nil)
     end
 
@@ -125,10 +132,10 @@ class StagehandTest < Minitest::Test
       body: {}
     )
 
-    stagehand = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key", max_retries: 1)
+    browserbase = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key", max_retries: 1)
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(env: :LOCAL)
+      browserbase.sessions.start(env: :LOCAL)
     end
 
     assert_requested(:any, /./, times: 2)
@@ -138,10 +145,10 @@ class StagehandTest < Minitest::Test
   def test_retry_count_header
     stub_request(:post, "http://localhost/sessions/start").to_return_json(status: 500, body: {})
 
-    stagehand = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
+    browserbase = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(env: :LOCAL)
+      browserbase.sessions.start(env: :LOCAL)
     end
 
     3.times do
@@ -152,10 +159,10 @@ class StagehandTest < Minitest::Test
   def test_omit_retry_count_header
     stub_request(:post, "http://localhost/sessions/start").to_return_json(status: 500, body: {})
 
-    stagehand = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
+    browserbase = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(
+      browserbase.sessions.start(
         env: :LOCAL,
         request_options: {extra_headers: {"x-stainless-retry-count" => nil}}
       )
@@ -169,10 +176,10 @@ class StagehandTest < Minitest::Test
   def test_overwrite_retry_count_header
     stub_request(:post, "http://localhost/sessions/start").to_return_json(status: 500, body: {})
 
-    stagehand = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
+    browserbase = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(
+      browserbase.sessions.start(
         env: :LOCAL,
         request_options: {extra_headers: {"x-stainless-retry-count" => "42"}}
       )
@@ -192,10 +199,10 @@ class StagehandTest < Minitest::Test
       headers: {"location" => "/redirected"}
     )
 
-    stagehand = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
+    browserbase = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(Stagehand::Errors::APIConnectionError) do
-      stagehand.sessions.start(env: :LOCAL, request_options: {extra_headers: {}})
+      browserbase.sessions.start(env: :LOCAL, request_options: {extra_headers: {}})
     end
 
     recorded, = WebMock::RequestRegistry.instance.requested_signatures.hash.first
@@ -221,10 +228,10 @@ class StagehandTest < Minitest::Test
       headers: {"location" => "/redirected"}
     )
 
-    stagehand = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
+    browserbase = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(Stagehand::Errors::APIConnectionError) do
-      stagehand.sessions.start(env: :LOCAL, request_options: {extra_headers: {}})
+      browserbase.sessions.start(env: :LOCAL, request_options: {extra_headers: {}})
     end
 
     assert_requested(:get, "http://localhost/redirected", times: Stagehand::Client::MAX_REDIRECTS) do
@@ -245,10 +252,10 @@ class StagehandTest < Minitest::Test
       headers: {"location" => "/redirected"}
     )
 
-    stagehand = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
+    browserbase = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(Stagehand::Errors::APIConnectionError) do
-      stagehand.sessions.start(
+      browserbase.sessions.start(
         env: :LOCAL,
         request_options: {extra_headers: {"authorization" => "Bearer xyz"}}
       )
@@ -275,10 +282,10 @@ class StagehandTest < Minitest::Test
       headers: {"location" => "https://example.com/redirected"}
     )
 
-    stagehand = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
+    browserbase = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
     assert_raises(Stagehand::Errors::APIConnectionError) do
-      stagehand.sessions.start(
+      browserbase.sessions.start(
         env: :LOCAL,
         request_options: {extra_headers: {"authorization" => "Bearer xyz"}}
       )
@@ -293,9 +300,9 @@ class StagehandTest < Minitest::Test
   def test_default_headers
     stub_request(:post, "http://localhost/sessions/start").to_return_json(status: 200, body: {})
 
-    stagehand = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
+    browserbase = Stagehand::Client.new(base_url: "http://localhost", api_key: "My API Key")
 
-    stagehand.sessions.start(env: :LOCAL)
+    browserbase.sessions.start(env: :LOCAL)
 
     assert_requested(:any, /./) do |req|
       headers = req.headers.transform_keys(&:downcase).fetch_values("accept", "content-type")

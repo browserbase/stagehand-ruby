@@ -13,13 +13,14 @@ module Stagehand
     ENVIRONMENTS =
       T.let(
         {
-          production: "http://localhost:3000/v1",
-          environment_1: "https://api.stagehand.browserbase.com/v1"
+          production: "https://api.stagehand.browserbase.com/v1",
+          dev: "https://api.stagehand.dev.browserbase.com/v1",
+          local: "http://localhost:5000/v1"
         },
         T::Hash[Symbol, String]
       )
 
-    sig { returns(T.nilable(String)) }
+    sig { returns(String) }
     attr_reader :api_key
 
     sig { returns(Stagehand::Resources::Sessions) }
@@ -49,12 +50,13 @@ module Stagehand
       #
       # Each environment maps to a different base URL:
       #
-      # - `production` corresponds to `http://localhost:3000/v1`
-      # - `environment_1` corresponds to `https://api.stagehand.browserbase.com/v1`
+      # - `production` corresponds to `https://api.stagehand.browserbase.com/v1`
+      # - `dev` corresponds to `https://api.stagehand.dev.browserbase.com/v1`
+      # - `local` corresponds to `http://localhost:5000/v1`
       environment: nil,
       # Override the default base URL for the API, e.g.,
-      # `"https://api.example.com/v2/"`. Defaults to `ENV["STAGEHAND_BASE_URL"]`
-      base_url: ENV["STAGEHAND_BASE_URL"],
+      # `"https://api.example.com/v2/"`. Defaults to `ENV["BROWSERBASE_BASE_URL"]`
+      base_url: ENV["BROWSERBASE_BASE_URL"],
       # Max number of retries to attempt after a failed retryable request.
       max_retries: Stagehand::Client::DEFAULT_MAX_RETRIES,
       timeout: Stagehand::Client::DEFAULT_TIMEOUT_IN_SECONDS,

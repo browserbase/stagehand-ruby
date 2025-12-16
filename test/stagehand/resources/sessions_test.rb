@@ -7,7 +7,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
     skip("Prism tests are disabled")
 
     response =
-      @stagehand.sessions.act("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e", input: "click the sign in button")
+      @browserbase.sessions.act("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e", input: "click the sign in button")
 
     assert_pattern do
       response => Stagehand::Models::SessionActResponse
@@ -25,7 +25,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
   def test_end_
     skip("Prism tests are disabled")
 
-    response = @stagehand.sessions.end_("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+    response = @browserbase.sessions.end_("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 
     assert_pattern do
       response => Stagehand::Models::SessionEndResponse
@@ -42,7 +42,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
     skip("Prism tests are disabled")
 
     response =
-      @stagehand.sessions.execute_agent(
+      @browserbase.sessions.execute_agent(
         "182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e",
         agent_config: {},
         execute_options: {instruction: "Find and click the first product"}
@@ -63,7 +63,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
   def test_extract
     skip("Prism tests are disabled")
 
-    response = @stagehand.sessions.extract("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+    response = @browserbase.sessions.extract("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 
     assert_pattern do
       response => Stagehand::Models::SessionExtractResponse
@@ -81,7 +81,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
     skip("Prism tests are disabled")
 
     response =
-      @stagehand.sessions.navigate("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e", url: "https://example.com")
+      @browserbase.sessions.navigate("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e", url: "https://example.com")
 
     assert_pattern do
       response => Stagehand::Models::SessionNavigateResponse
@@ -99,7 +99,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
   def test_observe
     skip("Prism tests are disabled")
 
-    response = @stagehand.sessions.observe("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
+    response = @browserbase.sessions.observe("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e")
 
     assert_pattern do
       response => ^(Stagehand::Internal::Type::ArrayOf[Stagehand::Action])
@@ -109,7 +109,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
   def test_start_required_params
     skip("Prism tests are disabled")
 
-    response = @stagehand.sessions.start(env: :LOCAL)
+    response = @browserbase.sessions.start(env: :LOCAL)
 
     assert_pattern do
       response => Stagehand::Models::SessionStartResponse
