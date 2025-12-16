@@ -21,7 +21,7 @@ module Stagehand
     # @return [String]
     attr_reader :browserbase_project_id
 
-    # @return [String, nil]
+    # @return [String]
     attr_reader :model_api_key
 
     # @return [Stagehand::Resources::Sessions]
@@ -91,10 +91,13 @@ module Stagehand
       if browserbase_project_id.nil?
         raise ArgumentError.new("browserbase_project_id is required, and can be set via environ: \"BROWSERBASE_PROJECT_ID\"")
       end
+      if model_api_key.nil?
+        raise ArgumentError.new("model_api_key is required, and can be set via environ: \"MODEL_API_KEY\"")
+      end
 
       @browserbase_api_key = browserbase_api_key.to_s
       @browserbase_project_id = browserbase_project_id.to_s
-      @model_api_key = model_api_key&.to_s
+      @model_api_key = model_api_key.to_s
 
       super(
         base_url: base_url,
