@@ -12,7 +12,7 @@ module Stagehand
       variant -> { Stagehand::Models::SessionExtractResponse::Extraction }
 
       # Structured data matching provided schema
-      variant -> { Stagehand::Models::SessionExtractResponse::UnionMember1Map }
+      variant -> { Stagehand::Models::SessionExtractResponse::CustomMap }
 
       class Extraction < Stagehand::Internal::Type::BaseModel
         # @!attribute extraction
@@ -30,7 +30,7 @@ module Stagehand
       #   @return [Array(Stagehand::Models::SessionExtractResponse::Extraction, Hash{Symbol=>Object})]
 
       # @type [Stagehand::Internal::Type::Converter]
-      UnionMember1Map = Stagehand::Internal::Type::HashOf[Stagehand::Internal::Type::Unknown]
+      CustomMap = Stagehand::Internal::Type::HashOf[Stagehand::Internal::Type::Unknown]
     end
   end
 end

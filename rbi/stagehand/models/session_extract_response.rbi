@@ -47,7 +47,7 @@ module Stagehand
       def self.variants
       end
 
-      UnionMember1Map =
+      CustomMap =
         T.let(
           Stagehand::Internal::Type::HashOf[Stagehand::Internal::Type::Unknown],
           Stagehand::Internal::Type::Converter

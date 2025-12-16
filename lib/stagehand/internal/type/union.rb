@@ -10,7 +10,7 @@ module Stagehand
       #   case session_extract_response
       #   when Stagehand::Models::SessionExtractResponse::Extraction
       #     puts(session_extract_response.extraction)
-      #   when Stagehand::Models::SessionExtractResponse::UnionMember1Map
+      #   when Stagehand::Models::SessionExtractResponse::CustomMap
       #     # ...
       #   else
       #     puts(session_extract_response)
