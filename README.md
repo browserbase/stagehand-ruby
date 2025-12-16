@@ -46,8 +46,8 @@ When the library is unable to connect to the API, or if the API returns a non-su
 ```ruby
 begin
   session = stagehand.sessions.start(
-    browserbase_api_key: "BROWSERBASE_API_KEY",
-    browserbase_project_id: "BROWSERBASE_PROJECT_ID"
+    browserbase_api_key: "your Browserbase API key",
+    browserbase_project_id: "your Browserbase Project ID"
   )
 rescue Stagehand::Errors::APIConnectionError => e
   puts("The server could not be reached")
@@ -92,8 +92,8 @@ stagehand = Stagehand::Client.new(
 
 # Or, configure per-request:
 stagehand.sessions.start(
-  browserbase_api_key: "BROWSERBASE_API_KEY",
-  browserbase_project_id: "BROWSERBASE_PROJECT_ID",
+  browserbase_api_key: "your Browserbase API key",
+  browserbase_project_id: "your Browserbase Project ID",
   request_options: {max_retries: 5}
 )
 ```
@@ -110,8 +110,8 @@ stagehand = Stagehand::Client.new(
 
 # Or, configure per-request:
 stagehand.sessions.start(
-  browserbase_api_key: "BROWSERBASE_API_KEY",
-  browserbase_project_id: "BROWSERBASE_PROJECT_ID",
+  browserbase_api_key: "your Browserbase API key",
+  browserbase_project_id: "your Browserbase Project ID",
   request_options: {timeout: 5}
 )
 ```
@@ -145,8 +145,8 @@ Note: the `extra_` parameters of the same name overrides the documented paramete
 ```ruby
 response =
   stagehand.sessions.start(
-    browserbase_api_key: "BROWSERBASE_API_KEY",
-    browserbase_project_id: "BROWSERBASE_PROJECT_ID",
+    browserbase_api_key: "your Browserbase API key",
+    browserbase_project_id: "your Browserbase Project ID",
     request_options: {
       extra_query: {my_query_parameter: value},
       extra_body: {my_body_parameter: value},
