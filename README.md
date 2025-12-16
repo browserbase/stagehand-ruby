@@ -33,9 +33,9 @@ stagehand = Stagehand::Client.new(
   environment: "dev" # or "production" | "local"; defaults to "production"
 )
 
-response = stagehand.sessions.start(env: "LOCAL")
+response = stagehand.sessions.act("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e", input: "click the first link on the page")
 
-puts(response.available)
+puts(response.actions)
 ```
 
 ### Handling errors
@@ -44,7 +44,10 @@ When the library is unable to connect to the API, or if the API returns a non-su
 
 ```ruby
 begin
-  session = stagehand.sessions.start(env: "LOCAL")
+  session = stagehand.sessions.start(
+    browserbase_api_key: "BROWSERBASE_API_KEY",
+    browserbase_project_id: "BROWSERBASE_PROJECT_ID"
+  )
 rescue Stagehand::Errors::APIConnectionError => e
   puts("The server could not be reached")
   puts(e.cause)  # an underlying Exception, likely raised within `net/http`
@@ -87,7 +90,11 @@ stagehand = Stagehand::Client.new(
 )
 
 # Or, configure per-request:
-stagehand.sessions.start(env: "LOCAL", request_options: {max_retries: 5})
+stagehand.sessions.start(
+  browserbase_api_key: "BROWSERBASE_API_KEY",
+  browserbase_project_id: "BROWSERBASE_PROJECT_ID",
+  request_options: {max_retries: 5}
+)
 ```
 
 ### Timeouts
@@ -101,7 +108,11 @@ stagehand = Stagehand::Client.new(
 )
 
 # Or, configure per-request:
-stagehand.sessions.start(env: "LOCAL", request_options: {timeout: 5})
+stagehand.sessions.start(
+  browserbase_api_key: "BROWSERBASE_API_KEY",
+  browserbase_project_id: "BROWSERBASE_PROJECT_ID",
+  request_options: {timeout: 5}
+)
 ```
 
 On timeout, `Stagehand::Errors::APITimeoutError` is raised.
@@ -133,7 +144,8 @@ Note: the `extra_` parameters of the same name overrides the documented paramete
 ```ruby
 response =
   stagehand.sessions.start(
-    env: "LOCAL",
+    browserbase_api_key: "BROWSERBASE_API_KEY",
+    browserbase_project_id: "BROWSERBASE_PROJECT_ID",
     request_options: {
       extra_query: {my_query_parameter: value},
       extra_body: {my_body_parameter: value},
@@ -179,18 +191,18 @@ This library provides comprehensive [RBI](https://sorbet.org/docs/rbi) definitio
 You can provide typesafe request parameters like so:
 
 ```ruby
-stagehand.sessions.start(env: "LOCAL")
+stagehand.sessions.act("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e", input: "click the first link on the page")
 ```
 
 Or, equivalently:
 
 ```ruby
 # Hashes work, but are not typesafe:
-stagehand.sessions.start(env: "LOCAL")
+stagehand.sessions.act("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e", input: "click the first link on the page")
 
 # You can also splat a full Params class:
-params = Stagehand::SessionStartParams.new(env: "LOCAL")
-stagehand.sessions.start(**params)
+params = Stagehand::SessionActParams.new(input: "click the first link on the page")
+stagehand.sessions.act("182bd5e5-6e1a-4fe4-a799-aa6d9a6ab26e", **params)
 ```
 
 ### Enums
