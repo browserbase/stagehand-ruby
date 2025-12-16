@@ -192,19 +192,15 @@ module Stagehand
       # Initializes a new Stagehand session with a browser instance. Returns a session
       # ID that must be used for all subsequent requests.
       #
-      # @overload start(env:, api_key: nil, dom_settle_timeout: nil, local_browser_launch_options: nil, model: nil, project_id: nil, self_heal: nil, system_prompt: nil, verbose: nil, request_options: {})
+      # @overload start(browserbase_api_key:, browserbase_project_id:, dom_settle_timeout: nil, model: nil, self_heal: nil, system_prompt: nil, verbose: nil, request_options: {})
       #
-      # @param env [Symbol, Stagehand::Models::SessionStartParams::Env] Environment to run the browser in
+      # @param browserbase_api_key [String] API key for Browserbase Cloud
       #
-      # @param api_key [String] API key for Browserbase (required when env=BROWSERBASE)
+      # @param browserbase_project_id [String] Project ID for Browserbase
       #
       # @param dom_settle_timeout [Integer] Timeout in ms to wait for DOM to settle
       #
-      # @param local_browser_launch_options [Stagehand::Models::SessionStartParams::LocalBrowserLaunchOptions] Options for local browser launch
-      #
-      # @param model [String] AI model to use for actions
-      #
-      # @param project_id [String] Project ID for Browserbase (required when env=BROWSERBASE)
+      # @param model [String] AI model to use for actions (must be prefixed with provider/)
       #
       # @param self_heal [Boolean] Enable self-healing for failed actions
       #

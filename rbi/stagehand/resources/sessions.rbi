@@ -165,13 +165,10 @@ module Stagehand
       # ID that must be used for all subsequent requests.
       sig do
         params(
-          env: Stagehand::SessionStartParams::Env::OrSymbol,
-          api_key: String,
+          browserbase_api_key: String,
+          browserbase_project_id: String,
           dom_settle_timeout: Integer,
-          local_browser_launch_options:
-            Stagehand::SessionStartParams::LocalBrowserLaunchOptions::OrHash,
           model: String,
-          project_id: String,
           self_heal: T::Boolean,
           system_prompt: String,
           verbose: Integer,
@@ -179,18 +176,14 @@ module Stagehand
         ).returns(Stagehand::Models::SessionStartResponse)
       end
       def start(
-        # Environment to run the browser in
-        env:,
-        # API key for Browserbase (required when env=BROWSERBASE)
-        api_key: nil,
+        # API key for Browserbase Cloud
+        browserbase_api_key:,
+        # Project ID for Browserbase
+        browserbase_project_id:,
         # Timeout in ms to wait for DOM to settle
         dom_settle_timeout: nil,
-        # Options for local browser launch
-        local_browser_launch_options: nil,
-        # AI model to use for actions
+        # AI model to use for actions (must be prefixed with provider/)
         model: nil,
-        # Project ID for Browserbase (required when env=BROWSERBASE)
-        project_id: nil,
         # Enable self-healing for failed actions
         self_heal: nil,
         # Custom system prompt for AI actions

@@ -2,12 +2,10 @@ module Stagehand
   module Models
     type session_start_params =
       {
-        env: Stagehand::Models::SessionStartParams::env,
-        api_key: String,
+        browserbase_api_key: String,
+        browserbase_project_id: String,
         dom_settle_timeout: Integer,
-        local_browser_launch_options: Stagehand::SessionStartParams::LocalBrowserLaunchOptions,
         model: String,
-        project_id: String,
         self_heal: bool,
         system_prompt: String,
         verbose: Integer
@@ -18,29 +16,17 @@ module Stagehand
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters
 
-      attr_accessor env: Stagehand::Models::SessionStartParams::env
+      attr_accessor browserbase_api_key: String
 
-      attr_reader api_key: String?
-
-      def api_key=: (String) -> String
+      attr_accessor browserbase_project_id: String
 
       attr_reader dom_settle_timeout: Integer?
 
       def dom_settle_timeout=: (Integer) -> Integer
 
-      attr_reader local_browser_launch_options: Stagehand::SessionStartParams::LocalBrowserLaunchOptions?
-
-      def local_browser_launch_options=: (
-        Stagehand::SessionStartParams::LocalBrowserLaunchOptions
-      ) -> Stagehand::SessionStartParams::LocalBrowserLaunchOptions
-
       attr_reader model: String?
 
       def model=: (String) -> String
-
-      attr_reader project_id: String?
-
-      def project_id=: (String) -> String
 
       attr_reader self_heal: bool?
 
@@ -55,12 +41,10 @@ module Stagehand
       def verbose=: (Integer) -> Integer
 
       def initialize: (
-        env: Stagehand::Models::SessionStartParams::env,
-        ?api_key: String,
+        browserbase_api_key: String,
+        browserbase_project_id: String,
         ?dom_settle_timeout: Integer,
-        ?local_browser_launch_options: Stagehand::SessionStartParams::LocalBrowserLaunchOptions,
         ?model: String,
-        ?project_id: String,
         ?self_heal: bool,
         ?system_prompt: String,
         ?verbose: Integer,
@@ -68,40 +52,15 @@ module Stagehand
       ) -> void
 
       def to_hash: -> {
-        env: Stagehand::Models::SessionStartParams::env,
-        api_key: String,
+        browserbase_api_key: String,
+        browserbase_project_id: String,
         dom_settle_timeout: Integer,
-        local_browser_launch_options: Stagehand::SessionStartParams::LocalBrowserLaunchOptions,
         model: String,
-        project_id: String,
         self_heal: bool,
         system_prompt: String,
         verbose: Integer,
         request_options: Stagehand::RequestOptions
       }
-
-      type env = :LOCAL | :BROWSERBASE
-
-      module Env
-        extend Stagehand::Internal::Type::Enum
-
-        LOCAL: :LOCAL
-        BROWSERBASE: :BROWSERBASE
-
-        def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::env]
-      end
-
-      type local_browser_launch_options = { headless: bool }
-
-      class LocalBrowserLaunchOptions < Stagehand::Internal::Type::BaseModel
-        attr_reader headless: bool?
-
-        def headless=: (bool) -> bool
-
-        def initialize: (?headless: bool) -> void
-
-        def to_hash: -> { headless: bool }
-      end
     end
   end
 end
