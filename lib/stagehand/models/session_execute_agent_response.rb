@@ -10,16 +10,8 @@ module Stagehand
       #   @return [String, nil]
       optional :message, String
 
-      # @!attribute steps
-      #   Steps taken by the agent
-      #
-      #   @return [Array<Object>, nil]
-      optional :steps, Stagehand::Internal::Type::ArrayOf[Stagehand::Internal::Type::Unknown]
-
-      # @!method initialize(message: nil, steps: nil)
+      # @!method initialize(message: nil)
       #   @param message [String] Final message from the agent
-      #
-      #   @param steps [Array<Object>] Steps taken by the agent
     end
   end
 end

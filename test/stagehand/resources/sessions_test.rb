@@ -54,8 +54,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
 
     assert_pattern do
       response => {
-        message: String | nil,
-        steps: ^(Stagehand::Internal::Type::ArrayOf[Stagehand::Internal::Type::Unknown]) | nil
+        message: String | nil
       }
     end
   end
