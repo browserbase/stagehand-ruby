@@ -15,12 +15,15 @@ module Stagehand
     # Default max retry delay in seconds.
     DEFAULT_MAX_RETRY_DELAY = 8.0
 
+    # Your [Browserbase API Key](https://www.browserbase.com/settings)
     # @return [String]
     attr_reader :browserbase_api_key
 
+    # Your [Browserbase Project ID](https://www.browserbase.com/settings)
     # @return [String]
     attr_reader :browserbase_project_id
 
+    # Your LLM provider API key (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
     # @return [String]
     attr_reader :model_api_key
 
@@ -57,11 +60,14 @@ module Stagehand
 
     # Creates and returns a new client for interacting with the API.
     #
-    # @param browserbase_api_key [String, nil] Defaults to `ENV["BROWSERBASE_API_KEY"]`
+    # @param browserbase_api_key [String, nil] Your [Browserbase API Key](https://www.browserbase.com/settings) Defaults to
+    # `ENV["BROWSERBASE_API_KEY"]`
     #
-    # @param browserbase_project_id [String, nil] Defaults to `ENV["BROWSERBASE_PROJECT_ID"]`
+    # @param browserbase_project_id [String, nil] Your [Browserbase Project ID](https://www.browserbase.com/settings) Defaults to
+    # `ENV["BROWSERBASE_PROJECT_ID"]`
     #
-    # @param model_api_key [String, nil] Defaults to `ENV["MODEL_API_KEY"]`
+    # @param model_api_key [String, nil] Your LLM provider API key (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
+    # Defaults to `ENV["MODEL_API_KEY"]`
     #
     # @param base_url [String, nil] Override the default base URL for the API, e.g.,
     # `"https://api.example.com/v2/"`. Defaults to `ENV["STAGEHAND_BASE_URL"]`
