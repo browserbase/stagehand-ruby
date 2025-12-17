@@ -88,14 +88,10 @@ module Stagehand
       attr_writer :system_prompt
 
       # Logging verbosity level (0=quiet, 1=normal, 2=debug)
-      sig do
-        returns(T.nilable(Stagehand::SessionStartParams::Verbose::OrFloat))
-      end
+      sig { returns(T.nilable(Integer)) }
       attr_reader :verbose
 
-      sig do
-        params(verbose: Stagehand::SessionStartParams::Verbose::OrFloat).void
-      end
+      sig { params(verbose: Integer).void }
       attr_writer :verbose
 
       sig { returns(T.nilable(T::Boolean)) }
@@ -160,7 +156,7 @@ module Stagehand
           experimental: T::Boolean,
           self_heal: T::Boolean,
           system_prompt: String,
-          verbose: Stagehand::SessionStartParams::Verbose::OrFloat,
+          verbose: Integer,
           wait_for_captcha_solves: T::Boolean,
           x_language: Stagehand::SessionStartParams::XLanguage::OrSymbol,
           x_sdk_version: String,
@@ -216,7 +212,7 @@ module Stagehand
             experimental: T::Boolean,
             self_heal: T::Boolean,
             system_prompt: String,
-            verbose: Stagehand::SessionStartParams::Verbose::OrFloat,
+            verbose: Integer,
             wait_for_captcha_solves: T::Boolean,
             x_language: Stagehand::SessionStartParams::XLanguage::OrSymbol,
             x_sdk_version: String,
@@ -1442,11 +1438,7 @@ module Stagehand
                   )
                 end
 
-              sig do
-                returns(
-                  Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Type::OrSymbol
-                )
-              end
+              sig { returns(Symbol) }
               attr_accessor :type
 
               sig { returns(T.nilable(String)) }
@@ -1474,21 +1466,23 @@ module Stagehand
 
               sig do
                 params(
-                  type:
-                    Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Type::OrSymbol,
                   domain_pattern: String,
                   geolocation:
-                    Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Geolocation::OrHash
+                    Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Geolocation::OrHash,
+                  type: Symbol
                 ).returns(T.attached_class)
               end
-              def self.new(type:, domain_pattern: nil, geolocation: nil)
+              def self.new(
+                domain_pattern: nil,
+                geolocation: nil,
+                type: :browserbase
+              )
               end
 
               sig do
                 override.returns(
                   {
-                    type:
-                      Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Type::OrSymbol,
+                    type: Symbol,
                     domain_pattern: String,
                     geolocation:
                       Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Geolocation
@@ -1496,35 +1490,6 @@ module Stagehand
                 )
               end
               def to_hash
-              end
-
-              module Type
-                extend Stagehand::Internal::Type::Enum
-
-                TaggedSymbol =
-                  T.type_alias do
-                    T.all(
-                      Symbol,
-                      Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Type
-                    )
-                  end
-                OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-                BROWSERBASE =
-                  T.let(
-                    :browserbase,
-                    Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Type::TaggedSymbol
-                  )
-
-                sig do
-                  override.returns(
-                    T::Array[
-                      Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Type::TaggedSymbol
-                    ]
-                  )
-                end
-                def self.values
-                end
               end
 
               class Geolocation < Stagehand::Internal::Type::BaseModel
@@ -1581,11 +1546,7 @@ module Stagehand
               sig { returns(String) }
               attr_accessor :server
 
-              sig do
-                returns(
-                  Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::ExternalProxyConfig::Type::OrSymbol
-                )
-              end
+              sig { returns(Symbol) }
               attr_accessor :type
 
               sig { returns(T.nilable(String)) }
@@ -1609,19 +1570,18 @@ module Stagehand
               sig do
                 params(
                   server: String,
-                  type:
-                    Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::ExternalProxyConfig::Type::OrSymbol,
                   domain_pattern: String,
                   password: String,
-                  username: String
+                  username: String,
+                  type: Symbol
                 ).returns(T.attached_class)
               end
               def self.new(
                 server:,
-                type:,
                 domain_pattern: nil,
                 password: nil,
-                username: nil
+                username: nil,
+                type: :external
               )
               end
 
@@ -1629,8 +1589,7 @@ module Stagehand
                 override.returns(
                   {
                     server: String,
-                    type:
-                      Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::ExternalProxyConfig::Type::OrSymbol,
+                    type: Symbol,
                     domain_pattern: String,
                     password: String,
                     username: String
@@ -1638,35 +1597,6 @@ module Stagehand
                 )
               end
               def to_hash
-              end
-
-              module Type
-                extend Stagehand::Internal::Type::Enum
-
-                TaggedSymbol =
-                  T.type_alias do
-                    T.all(
-                      Symbol,
-                      Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::ExternalProxyConfig::Type
-                    )
-                  end
-                OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-                EXTERNAL =
-                  T.let(
-                    :external,
-                    Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::ExternalProxyConfig::Type::TaggedSymbol
-                  )
-
-                sig do
-                  override.returns(
-                    T::Array[
-                      Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::ExternalProxyConfig::Type::TaggedSymbol
-                    ]
-                  )
-                end
-                def self.values
-                end
               end
             end
 
@@ -1743,30 +1673,6 @@ module Stagehand
           end
           def self.values
           end
-        end
-      end
-
-      # Logging verbosity level (0=quiet, 1=normal, 2=debug)
-      module Verbose
-        extend Stagehand::Internal::Type::Enum
-
-        TaggedFloat =
-          T.type_alias { T.all(Float, Stagehand::SessionStartParams::Verbose) }
-        OrFloat = T.type_alias { Float }
-
-        VERBOSE_0 =
-          T.let(0, Stagehand::SessionStartParams::Verbose::TaggedFloat)
-        VERBOSE_1 =
-          T.let(1, Stagehand::SessionStartParams::Verbose::TaggedFloat)
-        VERBOSE_2 =
-          T.let(2, Stagehand::SessionStartParams::Verbose::TaggedFloat)
-
-        sig do
-          override.returns(
-            T::Array[Stagehand::SessionStartParams::Verbose::TaggedFloat]
-          )
-        end
-        def self.values
         end
       end
 

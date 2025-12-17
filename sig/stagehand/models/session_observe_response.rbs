@@ -1,24 +1,21 @@
 module Stagehand
   module Models
     type session_observe_response =
-      {
-        data: Stagehand::Models::SessionObserveResponse::Data,
-        success: Stagehand::Models::SessionObserveResponse::success
-      }
+      { data: Stagehand::Models::SessionObserveResponse::Data, success: bool }
 
     class SessionObserveResponse < Stagehand::Internal::Type::BaseModel
       attr_accessor data: Stagehand::Models::SessionObserveResponse::Data
 
-      attr_accessor success: Stagehand::Models::SessionObserveResponse::success
+      attr_accessor success: bool
 
       def initialize: (
         data: Stagehand::Models::SessionObserveResponse::Data,
-        success: Stagehand::Models::SessionObserveResponse::success
+        success: bool
       ) -> void
 
       def to_hash: -> {
         data: Stagehand::Models::SessionObserveResponse::Data,
-        success: Stagehand::Models::SessionObserveResponse::success
+        success: bool
       }
 
       type data = { result: ::Array[Stagehand::Action], action_id: String }
@@ -39,16 +36,6 @@ module Stagehand
           result: ::Array[Stagehand::Action],
           action_id: String
         }
-      end
-
-      type success = true
-
-      module Success
-        extend Stagehand::Internal::Type::Enum
-
-        TRUE: true
-
-        def self?.values: -> ::Array[Stagehand::Models::SessionObserveResponse::success]
       end
     end
   end

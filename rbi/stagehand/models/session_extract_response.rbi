@@ -21,28 +21,28 @@ module Stagehand
       end
       attr_writer :data
 
-      sig do
-        returns(
-          Stagehand::Models::SessionExtractResponse::Success::TaggedBoolean
-        )
-      end
+      # Indicates whether the request was successful
+      sig { returns(T::Boolean) }
       attr_accessor :success
 
       sig do
         params(
           data: Stagehand::Models::SessionExtractResponse::Data::OrHash,
-          success: Stagehand::Models::SessionExtractResponse::Success::OrBoolean
+          success: T::Boolean
         ).returns(T.attached_class)
       end
-      def self.new(data:, success:)
+      def self.new(
+        data:,
+        # Indicates whether the request was successful
+        success:
+      )
       end
 
       sig do
         override.returns(
           {
             data: Stagehand::Models::SessionExtractResponse::Data,
-            success:
-              Stagehand::Models::SessionExtractResponse::Success::TaggedBoolean
+            success: T::Boolean
           }
         )
       end
@@ -84,35 +84,6 @@ module Stagehand
 
         sig { override.returns({ result: T.anything, action_id: String }) }
         def to_hash
-        end
-      end
-
-      module Success
-        extend Stagehand::Internal::Type::Enum
-
-        TaggedBoolean =
-          T.type_alias do
-            T.all(
-              T::Boolean,
-              Stagehand::Models::SessionExtractResponse::Success
-            )
-          end
-        OrBoolean = T.type_alias { T::Boolean }
-
-        TRUE =
-          T.let(
-            true,
-            Stagehand::Models::SessionExtractResponse::Success::TaggedBoolean
-          )
-
-        sig do
-          override.returns(
-            T::Array[
-              Stagehand::Models::SessionExtractResponse::Success::TaggedBoolean
-            ]
-          )
-        end
-        def self.values
         end
       end
     end
