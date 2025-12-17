@@ -10,13 +10,15 @@ module Stagehand
       required :data, -> { Stagehand::Models::SessionExtractResponse::Data }
 
       # @!attribute success
+      #   Indicates whether the request was successful
       #
-      #   @return [Boolean, Stagehand::Models::SessionExtractResponse::Success]
-      required :success, enum: -> { Stagehand::Models::SessionExtractResponse::Success }
+      #   @return [Boolean]
+      required :success, Stagehand::Internal::Type::Boolean
 
       # @!method initialize(data:, success:)
       #   @param data [Stagehand::Models::SessionExtractResponse::Data]
-      #   @param success [Boolean, Stagehand::Models::SessionExtractResponse::Success]
+      #
+      #   @param success [Boolean] Indicates whether the request was successful
 
       # @see Stagehand::Models::SessionExtractResponse#data
       class Data < Stagehand::Internal::Type::BaseModel
@@ -36,16 +38,6 @@ module Stagehand
         #   @param result [Object] Extracted data matching the requested schema
         #
         #   @param action_id [String] Action ID for tracking
-      end
-
-      # @see Stagehand::Models::SessionExtractResponse#success
-      module Success
-        extend Stagehand::Internal::Type::Enum
-
-        TRUE = true
-
-        # @!method self.values
-        #   @return [Array<Boolean>]
       end
     end
   end

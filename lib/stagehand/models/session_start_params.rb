@@ -68,8 +68,8 @@ module Stagehand
       # @!attribute verbose
       #   Logging verbosity level (0=quiet, 1=normal, 2=debug)
       #
-      #   @return [Float, Stagehand::Models::SessionStartParams::Verbose, nil]
-      optional :verbose, enum: -> { Stagehand::SessionStartParams::Verbose }
+      #   @return [Integer, nil]
+      optional :verbose, Integer
 
       # @!attribute wait_for_captcha_solves
       #
@@ -121,7 +121,7 @@ module Stagehand
       #
       #   @param system_prompt [String] Custom system prompt for AI operations
       #
-      #   @param verbose [Float, Stagehand::Models::SessionStartParams::Verbose] Logging verbosity level (0=quiet, 1=normal, 2=debug)
+      #   @param verbose [Integer] Logging verbosity level (0=quiet, 1=normal, 2=debug)
       #
       #   @param wait_for_captcha_solves [Boolean]
       #
@@ -650,9 +650,8 @@ module Stagehand
             class BrowserbaseProxyConfig < Stagehand::Internal::Type::BaseModel
               # @!attribute type
               #
-              #   @return [Symbol, Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Type]
-              required :type,
-                       enum: -> { Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Type }
+              #   @return [Symbol, :browserbase]
+              required :type, const: :browserbase
 
               # @!attribute domain_pattern
               #
@@ -665,20 +664,10 @@ module Stagehand
               optional :geolocation,
                        -> { Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Geolocation }
 
-              # @!method initialize(type:, domain_pattern: nil, geolocation: nil)
-              #   @param type [Symbol, Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Type]
+              # @!method initialize(domain_pattern: nil, geolocation: nil, type: :browserbase)
               #   @param domain_pattern [String]
               #   @param geolocation [Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Geolocation]
-
-              # @see Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig#type
-              module Type
-                extend Stagehand::Internal::Type::Enum
-
-                BROWSERBASE = :browserbase
-
-                # @!method self.values
-                #   @return [Array<Symbol>]
-              end
+              #   @param type [Symbol, :browserbase]
 
               # @see Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig#geolocation
               class Geolocation < Stagehand::Internal::Type::BaseModel
@@ -712,9 +701,8 @@ module Stagehand
 
               # @!attribute type
               #
-              #   @return [Symbol, Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::ExternalProxyConfig::Type]
-              required :type,
-                       enum: -> { Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::ExternalProxyConfig::Type }
+              #   @return [Symbol, :external]
+              required :type, const: :external
 
               # @!attribute domain_pattern
               #
@@ -731,22 +719,12 @@ module Stagehand
               #   @return [String, nil]
               optional :username, String
 
-              # @!method initialize(server:, type:, domain_pattern: nil, password: nil, username: nil)
+              # @!method initialize(server:, domain_pattern: nil, password: nil, username: nil, type: :external)
               #   @param server [String]
-              #   @param type [Symbol, Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::ExternalProxyConfig::Type]
               #   @param domain_pattern [String]
               #   @param password [String]
               #   @param username [String]
-
-              # @see Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::ExternalProxyConfig#type
-              module Type
-                extend Stagehand::Internal::Type::Enum
-
-                EXTERNAL = :external
-
-                # @!method self.values
-                #   @return [Array<Symbol>]
-              end
+              #   @param type [Symbol, :external]
             end
 
             # @!method self.variants
@@ -775,18 +753,6 @@ module Stagehand
           # @!method self.values
           #   @return [Array<Symbol>]
         end
-      end
-
-      # Logging verbosity level (0=quiet, 1=normal, 2=debug)
-      module Verbose
-        extend Stagehand::Internal::Type::Enum
-
-        VERBOSE_0 = 0
-        VERBOSE_1 = 1
-        VERBOSE_2 = 2
-
-        # @!method self.values
-        #   @return [Array<Float>]
       end
 
       # Client SDK language

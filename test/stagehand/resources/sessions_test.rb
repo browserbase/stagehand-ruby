@@ -16,7 +16,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
     assert_pattern do
       response => {
         data: Stagehand::Models::SessionActResponse::Data,
-        success: Stagehand::Models::SessionActResponse::Success
+        success: Stagehand::Internal::Type::Boolean
       }
     end
   end
@@ -32,7 +32,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
 
     assert_pattern do
       response => {
-        success: Stagehand::Models::SessionEndResponse::Success
+        success: true | false
       }
     end
   end
@@ -54,7 +54,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
     assert_pattern do
       response => {
         data: Stagehand::Models::SessionExecuteResponse::Data,
-        success: Stagehand::Models::SessionExecuteResponse::Success
+        success: Stagehand::Internal::Type::Boolean
       }
     end
   end
@@ -71,7 +71,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
     assert_pattern do
       response => {
         data: Stagehand::Models::SessionExtractResponse::Data,
-        success: Stagehand::Models::SessionExtractResponse::Success
+        success: Stagehand::Internal::Type::Boolean
       }
     end
   end
@@ -89,7 +89,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
     assert_pattern do
       response => {
         data: Stagehand::Models::SessionNavigateResponse::Data,
-        success: Stagehand::Models::SessionNavigateResponse::Success
+        success: Stagehand::Internal::Type::Boolean
       }
     end
   end
@@ -106,7 +106,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
     assert_pattern do
       response => {
         data: Stagehand::Models::SessionObserveResponse::Data,
-        success: Stagehand::Models::SessionObserveResponse::Success
+        success: Stagehand::Internal::Type::Boolean
       }
     end
   end
@@ -123,7 +123,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
     assert_pattern do
       response => {
         data: Stagehand::Models::SessionStartResponse::Data,
-        success: Stagehand::Models::SessionStartResponse::Success
+        success: Stagehand::Internal::Type::Boolean
       }
     end
   end

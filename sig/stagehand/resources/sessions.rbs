@@ -82,7 +82,7 @@ module Stagehand
         ?experimental: bool,
         ?self_heal: bool,
         ?system_prompt: String,
-        ?verbose: Stagehand::Models::SessionStartParams::verbose,
+        ?verbose: Integer,
         ?wait_for_captcha_solves: bool,
         ?x_language: Stagehand::Models::SessionStartParams::x_language,
         ?x_sdk_version: String,

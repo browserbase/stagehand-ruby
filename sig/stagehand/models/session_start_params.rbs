@@ -12,7 +12,7 @@ module Stagehand
         experimental: bool,
         self_heal: bool,
         system_prompt: String,
-        verbose: Stagehand::Models::SessionStartParams::verbose,
+        verbose: Integer,
         wait_for_captcha_solves: bool,
         x_language: Stagehand::Models::SessionStartParams::x_language,
         x_sdk_version: String,
@@ -67,11 +67,9 @@ module Stagehand
 
       def system_prompt=: (String) -> String
 
-      attr_reader verbose: Stagehand::Models::SessionStartParams::verbose?
+      attr_reader verbose: Integer?
 
-      def verbose=: (
-        Stagehand::Models::SessionStartParams::verbose
-      ) -> Stagehand::Models::SessionStartParams::verbose
+      def verbose=: (Integer) -> Integer
 
       attr_reader wait_for_captcha_solves: bool?
 
@@ -108,7 +106,7 @@ module Stagehand
         ?experimental: bool,
         ?self_heal: bool,
         ?system_prompt: String,
-        ?verbose: Stagehand::Models::SessionStartParams::verbose,
+        ?verbose: Integer,
         ?wait_for_captcha_solves: bool,
         ?x_language: Stagehand::Models::SessionStartParams::x_language,
         ?x_sdk_version: String,
@@ -128,7 +126,7 @@ module Stagehand
         experimental: bool,
         self_heal: bool,
         system_prompt: String,
-        verbose: Stagehand::Models::SessionStartParams::verbose,
+        verbose: Integer,
         wait_for_captcha_solves: bool,
         x_language: Stagehand::Models::SessionStartParams::x_language,
         x_sdk_version: String,
@@ -742,13 +740,13 @@ module Stagehand
 
             type browserbase_proxy_config =
               {
-                type: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::type_,
+                type: :browserbase,
                 domain_pattern: String,
                 geolocation: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Geolocation
               }
 
             class BrowserbaseProxyConfig < Stagehand::Internal::Type::BaseModel
-              attr_accessor type: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::type_
+              attr_accessor type: :browserbase
 
               attr_reader domain_pattern: String?
 
@@ -761,26 +759,16 @@ module Stagehand
               ) -> Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Geolocation
 
               def initialize: (
-                type: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::type_,
                 ?domain_pattern: String,
-                ?geolocation: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Geolocation
+                ?geolocation: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Geolocation,
+                ?type: :browserbase
               ) -> void
 
               def to_hash: -> {
-                type: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::type_,
+                type: :browserbase,
                 domain_pattern: String,
                 geolocation: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Geolocation
               }
-
-              type type_ = :browserbase
-
-              module Type
-                extend Stagehand::Internal::Type::Enum
-
-                BROWSERBASE: :browserbase
-
-                def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::type_]
-              end
 
               type geolocation =
                 { country: String, city: String, state: String }
@@ -809,7 +797,7 @@ module Stagehand
             type external_proxy_config =
               {
                 server: String,
-                type: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::ExternalProxyConfig::type_,
+                type: :external,
                 domain_pattern: String,
                 password: String,
                 username: String
@@ -818,7 +806,7 @@ module Stagehand
             class ExternalProxyConfig < Stagehand::Internal::Type::BaseModel
               attr_accessor server: String
 
-              attr_accessor type: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::ExternalProxyConfig::type_
+              attr_accessor type: :external
 
               attr_reader domain_pattern: String?
 
@@ -834,29 +822,19 @@ module Stagehand
 
               def initialize: (
                 server: String,
-                type: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::ExternalProxyConfig::type_,
                 ?domain_pattern: String,
                 ?password: String,
-                ?username: String
+                ?username: String,
+                ?type: :external
               ) -> void
 
               def to_hash: -> {
                 server: String,
-                type: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::ExternalProxyConfig::type_,
+                type: :external,
                 domain_pattern: String,
                 password: String,
                 username: String
               }
-
-              type type_ = :external
-
-              module Type
-                extend Stagehand::Internal::Type::Enum
-
-                EXTERNAL: :external
-
-                def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::ExternalProxyConfig::type_]
-              end
             end
 
             def self?.variants: -> ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::union_member1]
@@ -880,18 +858,6 @@ module Stagehand
 
           def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::region]
         end
-      end
-
-      type verbose = Float
-
-      module Verbose
-        extend Stagehand::Internal::Type::Enum
-
-        VERBOSE_0: 0
-        VERBOSE_1: 1
-        VERBOSE_2: 2
-
-        def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::verbose]
       end
 
       type x_language = :typescript | :python | :playground
