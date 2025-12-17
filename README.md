@@ -34,9 +34,9 @@ stagehand = Stagehand::Client.new(
   model_api_key: ENV["MODEL_API_KEY"] # This is the default and can be omitted
 )
 
-response = stagehand.sessions.act("00000000-your-session-id-000000000000", input: "click the first link on the page")
+response = stagehand.sessions.start
 
-puts(response.actions)
+puts(response)
 ```
 
 ### Handling errors
@@ -45,10 +45,7 @@ When the library is unable to connect to the API, or if the API returns a non-su
 
 ```ruby
 begin
-  session = stagehand.sessions.start(
-    browserbase_api_key: "your Browserbase API key",
-    browserbase_project_id: "your Browserbase Project ID"
-  )
+  session = stagehand.sessions.start
 rescue Stagehand::Errors::APIConnectionError => e
   puts("The server could not be reached")
   puts(e.cause)  # an underlying Exception, likely raised within `net/http`
@@ -91,11 +88,7 @@ stagehand = Stagehand::Client.new(
 )
 
 # Or, configure per-request:
-stagehand.sessions.start(
-  browserbase_api_key: "your Browserbase API key",
-  browserbase_project_id: "your Browserbase Project ID",
-  request_options: {max_retries: 5}
-)
+stagehand.sessions.start(request_options: {max_retries: 5})
 ```
 
 ### Timeouts
@@ -109,11 +102,7 @@ stagehand = Stagehand::Client.new(
 )
 
 # Or, configure per-request:
-stagehand.sessions.start(
-  browserbase_api_key: "your Browserbase API key",
-  browserbase_project_id: "your Browserbase Project ID",
-  request_options: {timeout: 5}
-)
+stagehand.sessions.start(request_options: {timeout: 5})
 ```
 
 On timeout, `Stagehand::Errors::APITimeoutError` is raised.
@@ -145,8 +134,6 @@ Note: the `extra_` parameters of the same name overrides the documented paramete
 ```ruby
 response =
   stagehand.sessions.start(
-    browserbase_api_key: "your Browserbase API key",
-    browserbase_project_id: "your Browserbase Project ID",
     request_options: {
       extra_query: {my_query_parameter: value},
       extra_body: {my_body_parameter: value},
@@ -192,46 +179,18 @@ This library provides comprehensive [RBI](https://sorbet.org/docs/rbi) definitio
 You can provide typesafe request parameters like so:
 
 ```ruby
-stagehand.sessions.act("00000000-your-session-id-000000000000", input: "click the first link on the page")
+stagehand.sessions.start
 ```
 
 Or, equivalently:
 
 ```ruby
 # Hashes work, but are not typesafe:
-stagehand.sessions.act("00000000-your-session-id-000000000000", input: "click the first link on the page")
+stagehand.sessions.start
 
 # You can also splat a full Params class:
-params = Stagehand::SessionActParams.new(input: "click the first link on the page")
-stagehand.sessions.act("00000000-your-session-id-000000000000", **params)
-```
-
-### Enums
-
-Since this library does not depend on `sorbet-runtime`, it cannot provide [`T::Enum`](https://sorbet.org/docs/tenum) instances. Instead, we provide "tagged symbols" instead, which is always a primitive at runtime:
-
-```ruby
-# :true
-puts(Stagehand::SessionActParams::XStreamResponse::TRUE)
-
-# Revealed type: `T.all(Stagehand::SessionActParams::XStreamResponse, Symbol)`
-T.reveal_type(Stagehand::SessionActParams::XStreamResponse::TRUE)
-```
-
-Enum parameters have a "relaxed" type, so you can either pass in enum constants or their literal value:
-
-```ruby
-# Using the enum constants preserves the tagged type information:
-stagehand.sessions.act(
-  x_stream_response: Stagehand::SessionActParams::XStreamResponse::TRUE,
-  # …
-)
-
-# Literal values are also permissible:
-stagehand.sessions.act(
-  x_stream_response: :true,
-  # …
-)
+params = Stagehand::SessionStartParams.new
+stagehand.sessions.start(**params)
 ```
 
 ## Versioning

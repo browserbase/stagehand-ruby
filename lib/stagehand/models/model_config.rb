@@ -2,50 +2,37 @@
 
 module Stagehand
   module Models
-    class ModelConfig < Stagehand::Internal::Type::BaseModel
-      # @!attribute api_key
-      #   API key for the model provider
-      #
-      #   @return [String, nil]
-      optional :api_key, String, api_name: :apiKey
+    module ModelConfig
+      extend Stagehand::Internal::Type::Union
 
-      # @!attribute base_url
-      #   Custom base URL for API
-      #
-      #   @return [String, nil]
-      optional :base_url, String, api_name: :baseURL
+      variant String
 
-      # @!attribute model
-      #   Model name
-      #
-      #   @return [String, nil]
-      optional :model, String
+      variant -> { Stagehand::ModelConfig::UnionMember1 }
 
-      # @!attribute provider
-      #
-      #   @return [Symbol, Stagehand::Models::ModelConfig::Provider, nil]
-      optional :provider, enum: -> { Stagehand::ModelConfig::Provider }
+      class UnionMember1 < Stagehand::Internal::Type::BaseModel
+        # @!attribute model_name
+        #
+        #   @return [String]
+        required :model_name, String, api_name: :modelName
 
-      # @!method initialize(api_key: nil, base_url: nil, model: nil, provider: nil)
-      #   @param api_key [String] API key for the model provider
-      #
-      #   @param base_url [String] Custom base URL for API
-      #
-      #   @param model [String] Model name
-      #
-      #   @param provider [Symbol, Stagehand::Models::ModelConfig::Provider]
+        # @!attribute api_key
+        #
+        #   @return [String, nil]
+        optional :api_key, String, api_name: :apiKey
 
-      # @see Stagehand::Models::ModelConfig#provider
-      module Provider
-        extend Stagehand::Internal::Type::Enum
+        # @!attribute base_url
+        #
+        #   @return [String, nil]
+        optional :base_url, String, api_name: :baseURL
 
-        OPENAI = :openai
-        ANTHROPIC = :anthropic
-        GOOGLE = :google
-
-        # @!method self.values
-        #   @return [Array<Symbol>]
+        # @!method initialize(model_name:, api_key: nil, base_url: nil)
+        #   @param model_name [String]
+        #   @param api_key [String]
+        #   @param base_url [String]
       end
+
+      # @!method self.variants
+      #   @return [Array(String, Stagehand::Models::ModelConfig::UnionMember1)]
     end
   end
 end

@@ -2,40 +2,37 @@ module Stagehand
   module Models
     type action =
       {
-        arguments: ::Array[String],
         description: String,
-        method_: String,
         selector: String,
-        backend_node_id: Integer
+        arguments: ::Array[String],
+        method_: String
       }
 
     class Action < Stagehand::Internal::Type::BaseModel
-      attr_accessor arguments: ::Array[String]
-
       attr_accessor description: String
-
-      attr_accessor method_: String
 
       attr_accessor selector: String
 
-      attr_reader backend_node_id: Integer?
+      attr_reader arguments: ::Array[String]?
 
-      def backend_node_id=: (Integer) -> Integer
+      def arguments=: (::Array[String]) -> ::Array[String]
+
+      attr_reader method_: String?
+
+      def method_=: (String) -> String
 
       def initialize: (
-        arguments: ::Array[String],
         description: String,
-        method_: String,
         selector: String,
-        ?backend_node_id: Integer
+        ?arguments: ::Array[String],
+        ?method_: String
       ) -> void
 
       def to_hash: -> {
-        arguments: ::Array[String],
         description: String,
-        method_: String,
         selector: String,
-        backend_node_id: Integer
+        arguments: ::Array[String],
+        method_: String
       }
     end
   end

@@ -1,57 +1,38 @@
 module Stagehand
   module Models
-    type model_config =
-      {
-        api_key: String,
-        base_url: String,
-        model: String,
-        provider: Stagehand::Models::ModelConfig::provider
-      }
+    type model_config = String | Stagehand::ModelConfig::UnionMember1
 
-    class ModelConfig < Stagehand::Internal::Type::BaseModel
-      attr_reader api_key: String?
+    module ModelConfig
+      extend Stagehand::Internal::Type::Union
 
-      def api_key=: (String) -> String
+      type union_member1 =
+        { model_name: String, api_key: String, base_url: String }
 
-      attr_reader base_url: String?
+      class UnionMember1 < Stagehand::Internal::Type::BaseModel
+        attr_accessor model_name: String
 
-      def base_url=: (String) -> String
+        attr_reader api_key: String?
 
-      attr_reader model: String?
+        def api_key=: (String) -> String
 
-      def model=: (String) -> String
+        attr_reader base_url: String?
 
-      attr_reader provider: Stagehand::Models::ModelConfig::provider?
+        def base_url=: (String) -> String
 
-      def provider=: (
-        Stagehand::Models::ModelConfig::provider
-      ) -> Stagehand::Models::ModelConfig::provider
+        def initialize: (
+          model_name: String,
+          ?api_key: String,
+          ?base_url: String
+        ) -> void
 
-      def initialize: (
-        ?api_key: String,
-        ?base_url: String,
-        ?model: String,
-        ?provider: Stagehand::Models::ModelConfig::provider
-      ) -> void
-
-      def to_hash: -> {
-        api_key: String,
-        base_url: String,
-        model: String,
-        provider: Stagehand::Models::ModelConfig::provider
-      }
-
-      type provider = :openai | :anthropic | :google
-
-      module Provider
-        extend Stagehand::Internal::Type::Enum
-
-        OPENAI: :openai
-        ANTHROPIC: :anthropic
-        GOOGLE: :google
-
-        def self?.values: -> ::Array[Stagehand::Models::ModelConfig::provider]
+        def to_hash: -> {
+          model_name: String,
+          api_key: String,
+          base_url: String
+        }
       end
+
+      def self?.variants: -> ::Array[Stagehand::Models::model_config]
     end
   end
 end

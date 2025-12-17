@@ -2,13 +2,11 @@ module Stagehand
   module Models
     type session_start_params =
       {
-        browserbase_api_key: String,
-        browserbase_project_id: String,
-        dom_settle_timeout: Integer,
-        model: String,
-        self_heal: bool,
-        system_prompt: String,
-        verbose: Integer
+        body: top,
+        x_language: top,
+        x_sdk_version: top,
+        x_sent_at: top,
+        x_stream_response: top
       }
       & Stagehand::Internal::Type::request_parameters
 
@@ -16,49 +14,41 @@ module Stagehand
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters
 
-      attr_accessor browserbase_api_key: String
+      attr_reader body: top?
 
-      attr_accessor browserbase_project_id: String
+      def body=: (top) -> top
 
-      attr_reader dom_settle_timeout: Integer?
+      attr_reader x_language: top?
 
-      def dom_settle_timeout=: (Integer) -> Integer
+      def x_language=: (top) -> top
 
-      attr_reader model: String?
+      attr_reader x_sdk_version: top?
 
-      def model=: (String) -> String
+      def x_sdk_version=: (top) -> top
 
-      attr_reader self_heal: bool?
+      attr_reader x_sent_at: top?
 
-      def self_heal=: (bool) -> bool
+      def x_sent_at=: (top) -> top
 
-      attr_reader system_prompt: String?
+      attr_reader x_stream_response: top?
 
-      def system_prompt=: (String) -> String
-
-      attr_reader verbose: Integer?
-
-      def verbose=: (Integer) -> Integer
+      def x_stream_response=: (top) -> top
 
       def initialize: (
-        browserbase_api_key: String,
-        browserbase_project_id: String,
-        ?dom_settle_timeout: Integer,
-        ?model: String,
-        ?self_heal: bool,
-        ?system_prompt: String,
-        ?verbose: Integer,
+        ?body: top,
+        ?x_language: top,
+        ?x_sdk_version: top,
+        ?x_sent_at: top,
+        ?x_stream_response: top,
         ?request_options: Stagehand::request_opts
       ) -> void
 
       def to_hash: -> {
-        browserbase_api_key: String,
-        browserbase_project_id: String,
-        dom_settle_timeout: Integer,
-        model: String,
-        self_heal: bool,
-        system_prompt: String,
-        verbose: Integer,
+        body: top,
+        x_language: top,
+        x_sdk_version: top,
+        x_sent_at: top,
+        x_stream_response: top,
         request_options: Stagehand::RequestOptions
       }
     end
