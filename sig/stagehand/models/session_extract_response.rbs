@@ -1,5 +1,49 @@
 module Stagehand
   module Models
-    SessionExtractResponse: Stagehand::Internal::Type::Converter
+    type session_extract_response =
+      {
+        data: Stagehand::Models::SessionExtractResponse::Data,
+        success: Stagehand::Models::SessionExtractResponse::success
+      }
+
+    class SessionExtractResponse < Stagehand::Internal::Type::BaseModel
+      attr_accessor data: Stagehand::Models::SessionExtractResponse::Data
+
+      attr_accessor success: Stagehand::Models::SessionExtractResponse::success
+
+      def initialize: (
+        data: Stagehand::Models::SessionExtractResponse::Data,
+        success: Stagehand::Models::SessionExtractResponse::success
+      ) -> void
+
+      def to_hash: -> {
+        data: Stagehand::Models::SessionExtractResponse::Data,
+        success: Stagehand::Models::SessionExtractResponse::success
+      }
+
+      type data = { result: top, action_id: String }
+
+      class Data < Stagehand::Internal::Type::BaseModel
+        attr_accessor result: top
+
+        attr_reader action_id: String?
+
+        def action_id=: (String) -> String
+
+        def initialize: (result: top, ?action_id: String) -> void
+
+        def to_hash: -> { result: top, action_id: String }
+      end
+
+      type success = true
+
+      module Success
+        extend Stagehand::Internal::Type::Enum
+
+        TRUE: true
+
+        def self?.values: -> ::Array[Stagehand::Models::SessionExtractResponse::success]
+      end
+    end
   end
 end

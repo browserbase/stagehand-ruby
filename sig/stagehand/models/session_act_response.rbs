@@ -1,5 +1,91 @@
 module Stagehand
   module Models
-    SessionActResponse: Stagehand::Internal::Type::Converter
+    type session_act_response =
+      {
+        data: Stagehand::Models::SessionActResponse::Data,
+        success: Stagehand::Models::SessionActResponse::success
+      }
+
+    class SessionActResponse < Stagehand::Internal::Type::BaseModel
+      attr_accessor data: Stagehand::Models::SessionActResponse::Data
+
+      attr_accessor success: Stagehand::Models::SessionActResponse::success
+
+      def initialize: (
+        data: Stagehand::Models::SessionActResponse::Data,
+        success: Stagehand::Models::SessionActResponse::success
+      ) -> void
+
+      def to_hash: -> {
+        data: Stagehand::Models::SessionActResponse::Data,
+        success: Stagehand::Models::SessionActResponse::success
+      }
+
+      type data =
+        {
+          result: Stagehand::Models::SessionActResponse::Data::Result,
+          action_id: String
+        }
+
+      class Data < Stagehand::Internal::Type::BaseModel
+        attr_accessor result: Stagehand::Models::SessionActResponse::Data::Result
+
+        attr_reader action_id: String?
+
+        def action_id=: (String) -> String
+
+        def initialize: (
+          result: Stagehand::Models::SessionActResponse::Data::Result,
+          ?action_id: String
+        ) -> void
+
+        def to_hash: -> {
+          result: Stagehand::Models::SessionActResponse::Data::Result,
+          action_id: String
+        }
+
+        type result =
+          {
+            action_description: String,
+            actions: ::Array[Stagehand::Action],
+            message: String,
+            success: bool
+          }
+
+        class Result < Stagehand::Internal::Type::BaseModel
+          attr_accessor action_description: String
+
+          attr_accessor actions: ::Array[Stagehand::Action]
+
+          attr_accessor message: String
+
+          attr_accessor success: bool
+
+          def initialize: (
+            action_description: String,
+            actions: ::Array[Stagehand::Action],
+            message: String,
+            success: bool
+          ) -> void
+
+          def to_hash: -> {
+            action_description: String,
+            actions: ::Array[Stagehand::Action],
+            message: String,
+            success: bool
+          }
+        end
+      end
+
+      type success = true
+
+      module Success
+        extend Stagehand::Internal::Type::Enum
+
+        TRUE: true
+
+        def self?.values: -> ::Array[Stagehand::Models::SessionActResponse::success]
+      end
+    end
   end
 end
