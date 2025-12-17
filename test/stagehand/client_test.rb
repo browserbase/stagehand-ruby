@@ -46,10 +46,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(
-        browserbase_api_key: "BROWSERBASE_API_KEY",
-        browserbase_project_id: "BROWSERBASE_PROJECT_ID"
-      )
+      stagehand.sessions.start
     end
 
     assert_requested(:any, /./, times: 3)
@@ -68,10 +65,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(
-        browserbase_api_key: "BROWSERBASE_API_KEY",
-        browserbase_project_id: "BROWSERBASE_PROJECT_ID"
-      )
+      stagehand.sessions.start
     end
 
     assert_requested(:any, /./, times: 4)
@@ -89,11 +83,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(
-        browserbase_api_key: "BROWSERBASE_API_KEY",
-        browserbase_project_id: "BROWSERBASE_PROJECT_ID",
-        request_options: {max_retries: 3}
-      )
+      stagehand.sessions.start(request_options: {max_retries: 3})
     end
 
     assert_requested(:any, /./, times: 4)
@@ -112,11 +102,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(
-        browserbase_api_key: "BROWSERBASE_API_KEY",
-        browserbase_project_id: "BROWSERBASE_PROJECT_ID",
-        request_options: {max_retries: 4}
-      )
+      stagehand.sessions.start(request_options: {max_retries: 4})
     end
 
     assert_requested(:any, /./, times: 5)
@@ -139,10 +125,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(
-        browserbase_api_key: "BROWSERBASE_API_KEY",
-        browserbase_project_id: "BROWSERBASE_PROJECT_ID"
-      )
+      stagehand.sessions.start
     end
 
     assert_requested(:any, /./, times: 2)
@@ -167,10 +150,7 @@ class StagehandTest < Minitest::Test
 
     assert_raises(Stagehand::Errors::InternalServerError) do
       Thread.current.thread_variable_set(:time_now, Time.now)
-      stagehand.sessions.start(
-        browserbase_api_key: "BROWSERBASE_API_KEY",
-        browserbase_project_id: "BROWSERBASE_PROJECT_ID"
-      )
+      stagehand.sessions.start
       Thread.current.thread_variable_set(:time_now, nil)
     end
 
@@ -195,10 +175,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(
-        browserbase_api_key: "BROWSERBASE_API_KEY",
-        browserbase_project_id: "BROWSERBASE_PROJECT_ID"
-      )
+      stagehand.sessions.start
     end
 
     assert_requested(:any, /./, times: 2)
@@ -217,10 +194,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(
-        browserbase_api_key: "BROWSERBASE_API_KEY",
-        browserbase_project_id: "BROWSERBASE_PROJECT_ID"
-      )
+      stagehand.sessions.start
     end
 
     3.times do
@@ -240,11 +214,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(
-        browserbase_api_key: "BROWSERBASE_API_KEY",
-        browserbase_project_id: "BROWSERBASE_PROJECT_ID",
-        request_options: {extra_headers: {"x-stainless-retry-count" => nil}}
-      )
+      stagehand.sessions.start(request_options: {extra_headers: {"x-stainless-retry-count" => nil}})
     end
 
     assert_requested(:any, /./, times: 3) do
@@ -264,11 +234,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(
-        browserbase_api_key: "BROWSERBASE_API_KEY",
-        browserbase_project_id: "BROWSERBASE_PROJECT_ID",
-        request_options: {extra_headers: {"x-stainless-retry-count" => "42"}}
-      )
+      stagehand.sessions.start(request_options: {extra_headers: {"x-stainless-retry-count" => "42"}})
     end
 
     assert_requested(:any, /./, headers: {"x-stainless-retry-count" => "42"}, times: 3)
@@ -294,11 +260,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::APIConnectionError) do
-      stagehand.sessions.start(
-        browserbase_api_key: "BROWSERBASE_API_KEY",
-        browserbase_project_id: "BROWSERBASE_PROJECT_ID",
-        request_options: {extra_headers: {}}
-      )
+      stagehand.sessions.start(request_options: {extra_headers: {}})
     end
 
     recorded, = WebMock::RequestRegistry.instance.requested_signatures.hash.first
@@ -333,11 +295,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::APIConnectionError) do
-      stagehand.sessions.start(
-        browserbase_api_key: "BROWSERBASE_API_KEY",
-        browserbase_project_id: "BROWSERBASE_PROJECT_ID",
-        request_options: {extra_headers: {}}
-      )
+      stagehand.sessions.start(request_options: {extra_headers: {}})
     end
 
     assert_requested(:get, "http://localhost/redirected", times: Stagehand::Client::MAX_REDIRECTS) do
@@ -367,11 +325,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::APIConnectionError) do
-      stagehand.sessions.start(
-        browserbase_api_key: "BROWSERBASE_API_KEY",
-        browserbase_project_id: "BROWSERBASE_PROJECT_ID",
-        request_options: {extra_headers: {"authorization" => "Bearer xyz"}}
-      )
+      stagehand.sessions.start(request_options: {extra_headers: {"authorization" => "Bearer xyz"}})
     end
 
     recorded, = WebMock::RequestRegistry.instance.requested_signatures.hash.first
@@ -404,11 +358,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::APIConnectionError) do
-      stagehand.sessions.start(
-        browserbase_api_key: "BROWSERBASE_API_KEY",
-        browserbase_project_id: "BROWSERBASE_PROJECT_ID",
-        request_options: {extra_headers: {"authorization" => "Bearer xyz"}}
-      )
+      stagehand.sessions.start(request_options: {extra_headers: {"authorization" => "Bearer xyz"}})
     end
 
     assert_requested(:any, "https://example.com/redirected", times: Stagehand::Client::MAX_REDIRECTS) do
@@ -428,10 +378,7 @@ class StagehandTest < Minitest::Test
         model_api_key: "My Model API Key"
       )
 
-    stagehand.sessions.start(
-      browserbase_api_key: "BROWSERBASE_API_KEY",
-      browserbase_project_id: "BROWSERBASE_PROJECT_ID"
-    )
+    stagehand.sessions.start
 
     assert_requested(:any, /./) do |req|
       headers = req.headers.transform_keys(&:downcase).fetch_values("accept", "content-type")

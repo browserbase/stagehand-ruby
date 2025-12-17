@@ -1,15 +1,5 @@
 module Stagehand
   module Models
-    type session_start_response = { available: bool, session_id: String }
-
-    class SessionStartResponse < Stagehand::Internal::Type::BaseModel
-      attr_accessor available: bool
-
-      attr_accessor session_id: String
-
-      def initialize: (available: bool, session_id: String) -> void
-
-      def to_hash: -> { available: bool, session_id: String }
-    end
+    SessionStartResponse: Stagehand::Internal::Type::Converter
   end
 end

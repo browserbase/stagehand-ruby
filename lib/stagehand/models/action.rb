@@ -3,46 +3,40 @@
 module Stagehand
   module Models
     class Action < Stagehand::Internal::Type::BaseModel
-      # @!attribute arguments
-      #   Arguments for the method
-      #
-      #   @return [Array<String>]
-      required :arguments, Stagehand::Internal::Type::ArrayOf[String]
-
       # @!attribute description
       #   Human-readable description of the action
       #
       #   @return [String]
       required :description, String
 
-      # @!attribute method_
-      #   Method to execute (e.g., "click", "fill")
-      #
-      #   @return [String]
-      required :method_, String, api_name: :method
-
       # @!attribute selector
-      #   CSS or XPath selector for the element
+      #   CSS selector or XPath for the element
       #
       #   @return [String]
       required :selector, String
 
-      # @!attribute backend_node_id
-      #   CDP backend node ID
+      # @!attribute arguments
+      #   Arguments to pass to the method
       #
-      #   @return [Integer, nil]
-      optional :backend_node_id, Integer, api_name: :backendNodeId
+      #   @return [Array<String>, nil]
+      optional :arguments, Stagehand::Internal::Type::ArrayOf[String]
 
-      # @!method initialize(arguments:, description:, method_:, selector:, backend_node_id: nil)
-      #   @param arguments [Array<String>] Arguments for the method
+      # @!attribute method_
+      #   The method to execute (click, fill, etc.)
+      #
+      #   @return [String, nil]
+      optional :method_, String, api_name: :method
+
+      # @!method initialize(description:, selector:, arguments: nil, method_: nil)
+      #   Action object returned by observe and used by act
       #
       #   @param description [String] Human-readable description of the action
       #
-      #   @param method_ [String] Method to execute (e.g., "click", "fill")
+      #   @param selector [String] CSS selector or XPath for the element
       #
-      #   @param selector [String] CSS or XPath selector for the element
+      #   @param arguments [Array<String>] Arguments to pass to the method
       #
-      #   @param backend_node_id [Integer] CDP backend node ID
+      #   @param method_ [String] The method to execute (click, fill, etc.)
     end
   end
 end

@@ -6,60 +6,56 @@ module Stagehand
       OrHash =
         T.type_alias { T.any(Stagehand::Action, Stagehand::Internal::AnyHash) }
 
-      # Arguments for the method
-      sig { returns(T::Array[String]) }
-      attr_accessor :arguments
-
       # Human-readable description of the action
       sig { returns(String) }
       attr_accessor :description
 
-      # Method to execute (e.g., "click", "fill")
-      sig { returns(String) }
-      attr_accessor :method_
-
-      # CSS or XPath selector for the element
+      # CSS selector or XPath for the element
       sig { returns(String) }
       attr_accessor :selector
 
-      # CDP backend node ID
-      sig { returns(T.nilable(Integer)) }
-      attr_reader :backend_node_id
+      # Arguments to pass to the method
+      sig { returns(T.nilable(T::Array[String])) }
+      attr_reader :arguments
 
-      sig { params(backend_node_id: Integer).void }
-      attr_writer :backend_node_id
+      sig { params(arguments: T::Array[String]).void }
+      attr_writer :arguments
 
+      # The method to execute (click, fill, etc.)
+      sig { returns(T.nilable(String)) }
+      attr_reader :method_
+
+      sig { params(method_: String).void }
+      attr_writer :method_
+
+      # Action object returned by observe and used by act
       sig do
         params(
-          arguments: T::Array[String],
           description: String,
-          method_: String,
           selector: String,
-          backend_node_id: Integer
+          arguments: T::Array[String],
+          method_: String
         ).returns(T.attached_class)
       end
       def self.new(
-        # Arguments for the method
-        arguments:,
         # Human-readable description of the action
         description:,
-        # Method to execute (e.g., "click", "fill")
-        method_:,
-        # CSS or XPath selector for the element
+        # CSS selector or XPath for the element
         selector:,
-        # CDP backend node ID
-        backend_node_id: nil
+        # Arguments to pass to the method
+        arguments: nil,
+        # The method to execute (click, fill, etc.)
+        method_: nil
       )
       end
 
       sig do
         override.returns(
           {
-            arguments: T::Array[String],
             description: String,
-            method_: String,
             selector: String,
-            backend_node_id: Integer
+            arguments: T::Array[String],
+            method_: String
           }
         )
       end

@@ -1,19 +1,7 @@
 module Stagehand
   class Action = Stagehand::Models::Action
 
-  class ModelConfig = Stagehand::Models::ModelConfig
-
-  class SessionActParams = Stagehand::Models::SessionActParams
-
-  class SessionEndParams = Stagehand::Models::SessionEndParams
-
-  class SessionExecuteAgentParams = Stagehand::Models::SessionExecuteAgentParams
-
-  class SessionExtractParams = Stagehand::Models::SessionExtractParams
-
-  class SessionNavigateParams = Stagehand::Models::SessionNavigateParams
-
-  class SessionObserveParams = Stagehand::Models::SessionObserveParams
+  module ModelConfig = Stagehand::Models::ModelConfig
 
   class SessionStartParams = Stagehand::Models::SessionStartParams
 end

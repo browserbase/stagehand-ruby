@@ -1,7 +1,0 @@
-module Stagehand
-  module Models
-    type session_observe_response = ::Array[Stagehand::Action]
-
-    SessionObserveResponse: Stagehand::Internal::Type::Converter
-  end
-end

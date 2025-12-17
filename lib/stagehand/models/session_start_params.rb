@@ -7,63 +7,37 @@ module Stagehand
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters
 
-      # @!attribute browserbase_api_key
-      #   API key for Browserbase Cloud
+      # @!attribute body
       #
-      #   @return [String]
-      required :browserbase_api_key, String, api_name: :BROWSERBASE_API_KEY
+      #   @return [Object, nil]
+      optional :body, Stagehand::Internal::Type::Unknown
 
-      # @!attribute browserbase_project_id
-      #   Project ID for Browserbase
+      # @!attribute x_language
       #
-      #   @return [String]
-      required :browserbase_project_id, String, api_name: :BROWSERBASE_PROJECT_ID
+      #   @return [Object, nil]
+      optional :x_language, Stagehand::Internal::Type::Unknown
 
-      # @!attribute dom_settle_timeout
-      #   Timeout in ms to wait for DOM to settle
+      # @!attribute x_sdk_version
       #
-      #   @return [Integer, nil]
-      optional :dom_settle_timeout, Integer, api_name: :domSettleTimeout
+      #   @return [Object, nil]
+      optional :x_sdk_version, Stagehand::Internal::Type::Unknown
 
-      # @!attribute model
-      #   AI model to use for actions (must be prefixed with provider/)
+      # @!attribute x_sent_at
       #
-      #   @return [String, nil]
-      optional :model, String
+      #   @return [Object, nil]
+      optional :x_sent_at, Stagehand::Internal::Type::Unknown
 
-      # @!attribute self_heal
-      #   Enable self-healing for failed actions
+      # @!attribute x_stream_response
       #
-      #   @return [Boolean, nil]
-      optional :self_heal, Stagehand::Internal::Type::Boolean, api_name: :selfHeal
+      #   @return [Object, nil]
+      optional :x_stream_response, Stagehand::Internal::Type::Unknown
 
-      # @!attribute system_prompt
-      #   Custom system prompt for AI actions
-      #
-      #   @return [String, nil]
-      optional :system_prompt, String, api_name: :systemPrompt
-
-      # @!attribute verbose
-      #   Logging verbosity level
-      #
-      #   @return [Integer, nil]
-      optional :verbose, Integer
-
-      # @!method initialize(browserbase_api_key:, browserbase_project_id:, dom_settle_timeout: nil, model: nil, self_heal: nil, system_prompt: nil, verbose: nil, request_options: {})
-      #   @param browserbase_api_key [String] API key for Browserbase Cloud
-      #
-      #   @param browserbase_project_id [String] Project ID for Browserbase
-      #
-      #   @param dom_settle_timeout [Integer] Timeout in ms to wait for DOM to settle
-      #
-      #   @param model [String] AI model to use for actions (must be prefixed with provider/)
-      #
-      #   @param self_heal [Boolean] Enable self-healing for failed actions
-      #
-      #   @param system_prompt [String] Custom system prompt for AI actions
-      #
-      #   @param verbose [Integer] Logging verbosity level
-      #
+      # @!method initialize(body: nil, x_language: nil, x_sdk_version: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      #   @param body [Object]
+      #   @param x_language [Object]
+      #   @param x_sdk_version [Object]
+      #   @param x_sent_at [Object]
+      #   @param x_stream_response [Object]
       #   @param request_options [Stagehand::RequestOptions, Hash{Symbol=>Object}]
     end
   end
