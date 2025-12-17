@@ -147,16 +147,19 @@ module Stagehand
         sig { params(cua: T::Boolean).void }
         attr_writer :cua
 
+        # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
+        # 'anthropic/claude-4.5-opus')
         sig do
           returns(
-            T.nilable(T.any(String, Stagehand::ModelConfig::UnionMember1))
+            T.nilable(T.any(String, Stagehand::ModelConfig::ModelConfigObject))
           )
         end
         attr_reader :model
 
         sig do
           params(
-            model: T.any(String, Stagehand::ModelConfig::UnionMember1::OrHash)
+            model:
+              T.any(String, Stagehand::ModelConfig::ModelConfigObject::OrHash)
           ).void
         end
         attr_writer :model
@@ -171,13 +174,16 @@ module Stagehand
         sig do
           params(
             cua: T::Boolean,
-            model: T.any(String, Stagehand::ModelConfig::UnionMember1::OrHash),
+            model:
+              T.any(String, Stagehand::ModelConfig::ModelConfigObject::OrHash),
             system_prompt: String
           ).returns(T.attached_class)
         end
         def self.new(
           # Enable Computer Use Agent mode
           cua: nil,
+          # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
+          # 'anthropic/claude-4.5-opus')
           model: nil,
           # Custom system prompt for the agent
           system_prompt: nil
@@ -188,7 +194,7 @@ module Stagehand
           override.returns(
             {
               cua: T::Boolean,
-              model: T.any(String, Stagehand::ModelConfig::UnionMember1),
+              model: T.any(String, Stagehand::ModelConfig::ModelConfigObject),
               system_prompt: String
             }
           )

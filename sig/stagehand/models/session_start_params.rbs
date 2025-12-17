@@ -12,7 +12,7 @@ module Stagehand
         experimental: bool,
         self_heal: bool,
         system_prompt: String,
-        verbose: Integer,
+        verbose: Stagehand::Models::SessionStartParams::verbose,
         wait_for_captcha_solves: bool,
         x_language: Stagehand::Models::SessionStartParams::x_language,
         x_sdk_version: String,
@@ -67,9 +67,11 @@ module Stagehand
 
       def system_prompt=: (String) -> String
 
-      attr_reader verbose: Integer?
+      attr_reader verbose: Stagehand::Models::SessionStartParams::verbose?
 
-      def verbose=: (Integer) -> Integer
+      def verbose=: (
+        Stagehand::Models::SessionStartParams::verbose
+      ) -> Stagehand::Models::SessionStartParams::verbose
 
       attr_reader wait_for_captcha_solves: bool?
 
@@ -106,7 +108,7 @@ module Stagehand
         ?experimental: bool,
         ?self_heal: bool,
         ?system_prompt: String,
-        ?verbose: Integer,
+        ?verbose: Stagehand::Models::SessionStartParams::verbose,
         ?wait_for_captcha_solves: bool,
         ?x_language: Stagehand::Models::SessionStartParams::x_language,
         ?x_sdk_version: String,
@@ -126,7 +128,7 @@ module Stagehand
         experimental: bool,
         self_heal: bool,
         system_prompt: String,
-        verbose: Integer,
+        verbose: Stagehand::Models::SessionStartParams::verbose,
         wait_for_captcha_solves: bool,
         x_language: Stagehand::Models::SessionStartParams::x_language,
         x_sdk_version: String,
@@ -732,42 +734,42 @@ module Stagehand
           extend Stagehand::Internal::Type::Union
 
           type union_member1 =
-            Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig
-            | Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::ExternalProxyConfig
+            Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase
+            | Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::External
 
           module UnionMember1
             extend Stagehand::Internal::Type::Union
 
-            type browserbase_proxy_config =
+            type browserbase =
               {
                 type: :browserbase,
                 domain_pattern: String,
-                geolocation: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Geolocation
+                geolocation: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase::Geolocation
               }
 
-            class BrowserbaseProxyConfig < Stagehand::Internal::Type::BaseModel
+            class Browserbase < Stagehand::Internal::Type::BaseModel
               attr_accessor type: :browserbase
 
               attr_reader domain_pattern: String?
 
               def domain_pattern=: (String) -> String
 
-              attr_reader geolocation: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Geolocation?
+              attr_reader geolocation: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase::Geolocation?
 
               def geolocation=: (
-                Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Geolocation
-              ) -> Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Geolocation
+                Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase::Geolocation
+              ) -> Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase::Geolocation
 
               def initialize: (
                 ?domain_pattern: String,
-                ?geolocation: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Geolocation,
+                ?geolocation: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase::Geolocation,
                 ?type: :browserbase
               ) -> void
 
               def to_hash: -> {
                 type: :browserbase,
                 domain_pattern: String,
-                geolocation: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::BrowserbaseProxyConfig::Geolocation
+                geolocation: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase::Geolocation
               }
 
               type geolocation =
@@ -794,7 +796,7 @@ module Stagehand
               end
             end
 
-            type external_proxy_config =
+            type external =
               {
                 server: String,
                 type: :external,
@@ -803,7 +805,7 @@ module Stagehand
                 username: String
               }
 
-            class ExternalProxyConfig < Stagehand::Internal::Type::BaseModel
+            class External < Stagehand::Internal::Type::BaseModel
               attr_accessor server: String
 
               attr_accessor type: :external
@@ -858,6 +860,18 @@ module Stagehand
 
           def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::region]
         end
+      end
+
+      type verbose = 0 | 1 | 2
+
+      module Verbose
+        extend Stagehand::Internal::Type::Enum
+
+        VERBOSE_0: 0
+        VERBOSE_1: 1
+        VERBOSE_2: 2
+
+        def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::verbose]
       end
 
       type x_language = :typescript | :python | :playground

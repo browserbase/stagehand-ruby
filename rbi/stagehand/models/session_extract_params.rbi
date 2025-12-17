@@ -145,16 +145,19 @@ module Stagehand
             )
           end
 
+        # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
+        # 'anthropic/claude-4.5-opus')
         sig do
           returns(
-            T.nilable(T.any(String, Stagehand::ModelConfig::UnionMember1))
+            T.nilable(T.any(String, Stagehand::ModelConfig::ModelConfigObject))
           )
         end
         attr_reader :model
 
         sig do
           params(
-            model: T.any(String, Stagehand::ModelConfig::UnionMember1::OrHash)
+            model:
+              T.any(String, Stagehand::ModelConfig::ModelConfigObject::OrHash)
           ).void
         end
         attr_writer :model
@@ -175,12 +178,15 @@ module Stagehand
 
         sig do
           params(
-            model: T.any(String, Stagehand::ModelConfig::UnionMember1::OrHash),
+            model:
+              T.any(String, Stagehand::ModelConfig::ModelConfigObject::OrHash),
             selector: String,
             timeout: Float
           ).returns(T.attached_class)
         end
         def self.new(
+          # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
+          # 'anthropic/claude-4.5-opus')
           model: nil,
           # CSS selector to scope extraction to a specific element
           selector: nil,
@@ -192,7 +198,7 @@ module Stagehand
         sig do
           override.returns(
             {
-              model: T.any(String, Stagehand::ModelConfig::UnionMember1),
+              model: T.any(String, Stagehand::ModelConfig::ModelConfigObject),
               selector: String,
               timeout: Float
             }

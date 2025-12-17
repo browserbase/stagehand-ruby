@@ -2,30 +2,37 @@
 
 module Stagehand
   module Models
+    # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
+    # 'anthropic/claude-4.5-opus')
     module ModelConfig
       extend Stagehand::Internal::Type::Union
 
       Variants =
-        T.type_alias { T.any(String, Stagehand::ModelConfig::UnionMember1) }
+        T.type_alias do
+          T.any(String, Stagehand::ModelConfig::ModelConfigObject)
+        end
 
-      class UnionMember1 < Stagehand::Internal::Type::BaseModel
+      class ModelConfigObject < Stagehand::Internal::Type::BaseModel
         OrHash =
           T.type_alias do
             T.any(
-              Stagehand::ModelConfig::UnionMember1,
+              Stagehand::ModelConfig::ModelConfigObject,
               Stagehand::Internal::AnyHash
             )
           end
 
+        # Model name string without prefix (e.g., 'gpt-5-nano', 'claude-4.5-opus')
         sig { returns(String) }
         attr_accessor :model_name
 
+        # API key for the model provider
         sig { returns(T.nilable(String)) }
         attr_reader :api_key
 
         sig { params(api_key: String).void }
         attr_writer :api_key
 
+        # Base URL for the model provider
         sig { returns(T.nilable(String)) }
         attr_reader :base_url
 
@@ -37,7 +44,14 @@ module Stagehand
             T.attached_class
           )
         end
-        def self.new(model_name:, api_key: nil, base_url: nil)
+        def self.new(
+          # Model name string without prefix (e.g., 'gpt-5-nano', 'claude-4.5-opus')
+          model_name:,
+          # API key for the model provider
+          api_key: nil,
+          # Base URL for the model provider
+          base_url: nil
+        )
         end
 
         sig do

@@ -75,8 +75,10 @@ module Stagehand
 
       class Options < Stagehand::Internal::Type::BaseModel
         # @!attribute model
+        #   Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
+        #   'anthropic/claude-4.5-opus')
         #
-        #   @return [String, Stagehand::Models::ModelConfig::UnionMember1, nil]
+        #   @return [String, Stagehand::Models::ModelConfig::ModelConfigObject, nil]
         optional :model, union: -> { Stagehand::ModelConfig }
 
         # @!attribute selector
@@ -92,7 +94,10 @@ module Stagehand
         optional :timeout, Float
 
         # @!method initialize(model: nil, selector: nil, timeout: nil)
-        #   @param model [String, Stagehand::Models::ModelConfig::UnionMember1]
+        #   Some parameter documentations has been truncated, see
+        #   {Stagehand::Models::SessionExtractParams::Options} for more details.
+        #
+        #   @param model [String, Stagehand::Models::ModelConfig::ModelConfigObject] Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/cl
         #
         #   @param selector [String] CSS selector to scope extraction to a specific element
         #
