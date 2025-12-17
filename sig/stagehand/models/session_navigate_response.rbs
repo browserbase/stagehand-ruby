@@ -1,0 +1,5 @@
+module Stagehand
+  module Models
+    SessionNavigateResponse: Stagehand::Internal::Type::Converter
+  end
+end

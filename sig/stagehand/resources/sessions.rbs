@@ -1,6 +1,65 @@
 module Stagehand
   module Resources
     class Sessions
+      def act: (
+        top id,
+        ?body: top,
+        ?x_language: top,
+        ?x_sdk_version: top,
+        ?x_sent_at: top,
+        ?x_stream_response: top,
+        ?request_options: Stagehand::request_opts
+      ) -> top
+
+      def end_: (
+        top id,
+        ?x_language: top,
+        ?x_sdk_version: top,
+        ?x_sent_at: top,
+        ?x_stream_response: top,
+        ?request_options: Stagehand::request_opts
+      ) -> top
+
+      def execute_agent: (
+        top id,
+        ?body: top,
+        ?x_language: top,
+        ?x_sdk_version: top,
+        ?x_sent_at: top,
+        ?x_stream_response: top,
+        ?request_options: Stagehand::request_opts
+      ) -> top
+
+      def extract: (
+        top id,
+        ?body: top,
+        ?x_language: top,
+        ?x_sdk_version: top,
+        ?x_sent_at: top,
+        ?x_stream_response: top,
+        ?request_options: Stagehand::request_opts
+      ) -> top
+
+      def navigate: (
+        top id,
+        ?body: top,
+        ?x_language: top,
+        ?x_sdk_version: top,
+        ?x_sent_at: top,
+        ?x_stream_response: top,
+        ?request_options: Stagehand::request_opts
+      ) -> top
+
+      def observe: (
+        top id,
+        ?body: top,
+        ?x_language: top,
+        ?x_sdk_version: top,
+        ?x_sent_at: top,
+        ?x_stream_response: top,
+        ?request_options: Stagehand::request_opts
+      ) -> top
+
       def start: (
         ?body: top,
         ?x_language: top,
