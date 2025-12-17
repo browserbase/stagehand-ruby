@@ -88,14 +88,10 @@ module Stagehand
       attr_writer :system_prompt
 
       # Logging verbosity level (0=quiet, 1=normal, 2=debug)
-      sig do
-        returns(T.nilable(Stagehand::SessionStartParams::Verbose::OrInteger))
-      end
+      sig { returns(T.nilable(Integer)) }
       attr_reader :verbose
 
-      sig do
-        params(verbose: Stagehand::SessionStartParams::Verbose::OrInteger).void
-      end
+      sig { params(verbose: Integer).void }
       attr_writer :verbose
 
       sig { returns(T.nilable(T::Boolean)) }
@@ -160,7 +156,7 @@ module Stagehand
           experimental: T::Boolean,
           self_heal: T::Boolean,
           system_prompt: String,
-          verbose: Stagehand::SessionStartParams::Verbose::OrInteger,
+          verbose: Integer,
           wait_for_captcha_solves: T::Boolean,
           x_language: Stagehand::SessionStartParams::XLanguage::OrSymbol,
           x_sdk_version: String,
@@ -216,7 +212,7 @@ module Stagehand
             experimental: T::Boolean,
             self_heal: T::Boolean,
             system_prompt: String,
-            verbose: Stagehand::SessionStartParams::Verbose::OrInteger,
+            verbose: Integer,
             wait_for_captcha_solves: T::Boolean,
             x_language: Stagehand::SessionStartParams::XLanguage::OrSymbol,
             x_sdk_version: String,
@@ -1417,19 +1413,19 @@ module Stagehand
               T.any(
                 T::Boolean,
                 T::Array[
-                  Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Variants
+                  Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Variants
                 ]
               )
             end
 
-          module UnionMember1
+          module ProxyConfigList
             extend Stagehand::Internal::Type::Union
 
             Variants =
               T.type_alias do
                 T.any(
-                  Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase,
-                  Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::External
+                  Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase,
+                  Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::External
                 )
               end
 
@@ -1437,7 +1433,7 @@ module Stagehand
               OrHash =
                 T.type_alias do
                   T.any(
-                    Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase,
+                    Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase,
                     Stagehand::Internal::AnyHash
                   )
                 end
@@ -1454,7 +1450,7 @@ module Stagehand
               sig do
                 returns(
                   T.nilable(
-                    Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase::Geolocation
+                    Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase::Geolocation
                   )
                 )
               end
@@ -1463,7 +1459,7 @@ module Stagehand
               sig do
                 params(
                   geolocation:
-                    Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase::Geolocation::OrHash
+                    Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase::Geolocation::OrHash
                 ).void
               end
               attr_writer :geolocation
@@ -1472,7 +1468,7 @@ module Stagehand
                 params(
                   domain_pattern: String,
                   geolocation:
-                    Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase::Geolocation::OrHash,
+                    Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase::Geolocation::OrHash,
                   type: Symbol
                 ).returns(T.attached_class)
               end
@@ -1489,7 +1485,7 @@ module Stagehand
                     type: Symbol,
                     domain_pattern: String,
                     geolocation:
-                      Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase::Geolocation
+                      Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase::Geolocation
                   }
                 )
               end
@@ -1500,7 +1496,7 @@ module Stagehand
                 OrHash =
                   T.type_alias do
                     T.any(
-                      Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase::Geolocation,
+                      Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase::Geolocation,
                       Stagehand::Internal::AnyHash
                     )
                   end
@@ -1542,7 +1538,7 @@ module Stagehand
               OrHash =
                 T.type_alias do
                   T.any(
-                    Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::External,
+                    Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::External,
                     Stagehand::Internal::AnyHash
                   )
                 end
@@ -1607,7 +1603,7 @@ module Stagehand
             sig do
               override.returns(
                 T::Array[
-                  Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Variants
+                  Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Variants
                 ]
               )
             end
@@ -1625,11 +1621,11 @@ module Stagehand
           def self.variants
           end
 
-          UnionMember1Array =
+          ProxyConfigListArray =
             T.let(
               Stagehand::Internal::Type::ArrayOf[
                 union:
-                  Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1
+                  Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList
               ],
               Stagehand::Internal::Type::Converter
             )
@@ -1677,32 +1673,6 @@ module Stagehand
           end
           def self.values
           end
-        end
-      end
-
-      # Logging verbosity level (0=quiet, 1=normal, 2=debug)
-      module Verbose
-        extend Stagehand::Internal::Type::Enum
-
-        TaggedInteger =
-          T.type_alias do
-            T.all(Integer, Stagehand::SessionStartParams::Verbose)
-          end
-        OrInteger = T.type_alias { Integer }
-
-        VERBOSE_0 =
-          T.let(0, Stagehand::SessionStartParams::Verbose::TaggedInteger)
-        VERBOSE_1 =
-          T.let(1, Stagehand::SessionStartParams::Verbose::TaggedInteger)
-        VERBOSE_2 =
-          T.let(2, Stagehand::SessionStartParams::Verbose::TaggedInteger)
-
-        sig do
-          override.returns(
-            T::Array[Stagehand::SessionStartParams::Verbose::TaggedInteger]
-          )
-        end
-        def self.values
         end
       end
 

@@ -68,8 +68,8 @@ module Stagehand
       # @!attribute verbose
       #   Logging verbosity level (0=quiet, 1=normal, 2=debug)
       #
-      #   @return [Integer, Stagehand::Models::SessionStartParams::Verbose, nil]
-      optional :verbose, enum: -> { Stagehand::SessionStartParams::Verbose }
+      #   @return [Integer, nil]
+      optional :verbose, Integer
 
       # @!attribute wait_for_captcha_solves
       #
@@ -121,7 +121,7 @@ module Stagehand
       #
       #   @param system_prompt [String] Custom system prompt for AI operations
       #
-      #   @param verbose [Integer, Stagehand::Models::SessionStartParams::Verbose] Logging verbosity level (0=quiet, 1=normal, 2=debug)
+      #   @param verbose [Integer] Logging verbosity level (0=quiet, 1=normal, 2=debug)
       #
       #   @param wait_for_captcha_solves [Boolean]
       #
@@ -377,7 +377,7 @@ module Stagehand
 
         # @!attribute proxies
         #
-        #   @return [Boolean, Array<Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase, Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::External>, nil]
+        #   @return [Boolean, Array<Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase, Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::External>, nil]
         optional :proxies, union: -> { Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies }
 
         # @!attribute region
@@ -402,7 +402,7 @@ module Stagehand
         #   @param extension_id [String]
         #   @param keep_alive [Boolean]
         #   @param project_id [String]
-        #   @param proxies [Boolean, Array<Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase, Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::External>]
+        #   @param proxies [Boolean, Array<Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase, Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::External>]
         #   @param region [Symbol, Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Region]
         #   @param timeout [Float]
         #   @param user_metadata [Hash{Symbol=>Object}]
@@ -638,18 +638,18 @@ module Stagehand
 
           variant Stagehand::Internal::Type::Boolean
 
-          variant -> { Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1Array }
+          variant -> { Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigListArray }
 
-          module UnionMember1
+          module ProxyConfigList
             extend Stagehand::Internal::Type::Union
 
             discriminator :type
 
             variant :browserbase,
-                    -> { Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase }
+                    -> { Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase }
 
             variant :external,
-                    -> { Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::External }
+                    -> { Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::External }
 
             class Browserbase < Stagehand::Internal::Type::BaseModel
               # @!attribute type
@@ -664,16 +664,16 @@ module Stagehand
 
               # @!attribute geolocation
               #
-              #   @return [Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase::Geolocation, nil]
+              #   @return [Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase::Geolocation, nil]
               optional :geolocation,
-                       -> { Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase::Geolocation }
+                       -> { Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase::Geolocation }
 
               # @!method initialize(domain_pattern: nil, geolocation: nil, type: :browserbase)
               #   @param domain_pattern [String]
-              #   @param geolocation [Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase::Geolocation]
+              #   @param geolocation [Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase::Geolocation]
               #   @param type [Symbol, :browserbase]
 
-              # @see Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase#geolocation
+              # @see Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase#geolocation
               class Geolocation < Stagehand::Internal::Type::BaseModel
                 # @!attribute country
                 #
@@ -732,16 +732,16 @@ module Stagehand
             end
 
             # @!method self.variants
-            #   @return [Array(Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase, Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::External)]
+            #   @return [Array(Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase, Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::External)]
           end
 
           # @!method self.variants
-          #   @return [Array(Boolean, Array<Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::Browserbase, Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1::External>)]
+          #   @return [Array(Boolean, Array<Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase, Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::External>)]
 
           # @type [Stagehand::Internal::Type::Converter]
-          UnionMember1Array =
+          ProxyConfigListArray =
             Stagehand::Internal::Type::ArrayOf[union: -> {
-              Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::UnionMember1
+              Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList
             }]
         end
 
@@ -757,18 +757,6 @@ module Stagehand
           # @!method self.values
           #   @return [Array<Symbol>]
         end
-      end
-
-      # Logging verbosity level (0=quiet, 1=normal, 2=debug)
-      module Verbose
-        extend Stagehand::Internal::Type::Enum
-
-        VERBOSE_0 = 0
-        VERBOSE_1 = 1
-        VERBOSE_2 = 2
-
-        # @!method self.values
-        #   @return [Array<Integer>]
       end
 
       # Client SDK language
