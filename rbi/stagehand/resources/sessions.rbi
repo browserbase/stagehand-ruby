@@ -3,193 +3,281 @@
 module Stagehand
   module Resources
     class Sessions
-      # Performs a browser action based on natural language instruction or a specific
-      # action object returned by observe().
+      # Executes a browser action using natural language instructions or a predefined
+      # Action object.
       sig do
         params(
-          session_id: String,
-          input: T.any(String, Stagehand::Action::OrHash),
+          id: String,
+          input:
+            T.any(
+              String,
+              Stagehand::SessionActParams::Input::ActionInput::OrHash
+            ),
           frame_id: String,
           options: Stagehand::SessionActParams::Options::OrHash,
+          x_language: Stagehand::SessionActParams::XLanguage::OrSymbol,
+          x_sdk_version: String,
+          x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionActParams::XStreamResponse::OrSymbol,
           request_options: Stagehand::RequestOptions::OrHash
         ).returns(Stagehand::Models::SessionActResponse)
       end
       def act(
-        # Path param: The session ID returned by /sessions/start
-        session_id,
-        # Body param: Natural language instruction
+        # Path param: Unique session identifier
+        id,
+        # Body param: Natural language instruction or Action object
         input:,
-        # Body param: Frame ID to act on (optional)
+        # Body param: Target frame ID for the action
         frame_id: nil,
         # Body param:
         options: nil,
-        # Header param: Enable Server-Sent Events streaming for real-time logs
+        # Header param: Client SDK language
+        x_language: nil,
+        # Header param: Version of the Stagehand SDK
+        x_sdk_version: nil,
+        # Header param: ISO timestamp when request was sent
+        x_sent_at: nil,
+        # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
       )
       end
 
-      # Closes the browser and cleans up all resources associated with the session.
+      # Terminates the browser session and releases all associated resources.
       sig do
         params(
-          session_id: String,
+          id: String,
+          x_language: Stagehand::SessionEndParams::XLanguage::OrSymbol,
+          x_sdk_version: String,
+          x_sent_at: Time,
+          x_stream_response:
+            Stagehand::SessionEndParams::XStreamResponse::OrSymbol,
           request_options: Stagehand::RequestOptions::OrHash
         ).returns(Stagehand::Models::SessionEndResponse)
       end
       def end_(
-        # The session ID returned by /sessions/start
-        session_id,
+        # Unique session identifier
+        id,
+        # Client SDK language
+        x_language: nil,
+        # Version of the Stagehand SDK
+        x_sdk_version: nil,
+        # ISO timestamp when request was sent
+        x_sent_at: nil,
+        # Whether to stream the response via SSE
+        x_stream_response: nil,
         request_options: {}
       )
       end
 
-      # Runs an autonomous agent that can perform multiple actions to complete a complex
-      # task.
+      # Runs an autonomous AI agent that can perform complex multi-step browser tasks.
       sig do
         params(
-          session_id: String,
-          agent_config:
-            Stagehand::SessionExecuteAgentParams::AgentConfig::OrHash,
+          id: String,
+          agent_config: Stagehand::SessionExecuteParams::AgentConfig::OrHash,
           execute_options:
-            Stagehand::SessionExecuteAgentParams::ExecuteOptions::OrHash,
+            Stagehand::SessionExecuteParams::ExecuteOptions::OrHash,
           frame_id: String,
+          x_language: Stagehand::SessionExecuteParams::XLanguage::OrSymbol,
+          x_sdk_version: String,
+          x_sent_at: Time,
           x_stream_response:
-            Stagehand::SessionExecuteAgentParams::XStreamResponse::OrSymbol,
+            Stagehand::SessionExecuteParams::XStreamResponse::OrSymbol,
           request_options: Stagehand::RequestOptions::OrHash
-        ).returns(Stagehand::Models::SessionExecuteAgentResponse)
+        ).returns(Stagehand::Models::SessionExecuteResponse)
       end
-      def execute_agent(
-        # Path param: The session ID returned by /sessions/start
-        session_id,
+      def execute(
+        # Path param: Unique session identifier
+        id,
         # Body param:
         agent_config:,
         # Body param:
         execute_options:,
-        # Body param:
+        # Body param: Target frame ID for the agent
         frame_id: nil,
-        # Header param: Enable Server-Sent Events streaming for real-time logs
+        # Header param: Client SDK language
+        x_language: nil,
+        # Header param: Version of the Stagehand SDK
+        x_sdk_version: nil,
+        # Header param: ISO timestamp when request was sent
+        x_sent_at: nil,
+        # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
       )
       end
 
-      # Extracts data from the current page using natural language instructions and
-      # optional JSON schema for structured output.
+      # Extracts structured data from the current page using AI-powered analysis.
       sig do
         params(
-          session_id: String,
+          id: String,
           frame_id: String,
           instruction: String,
           options: Stagehand::SessionExtractParams::Options::OrHash,
           schema: T::Hash[Symbol, T.anything],
+          x_language: Stagehand::SessionExtractParams::XLanguage::OrSymbol,
+          x_sdk_version: String,
+          x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionExtractParams::XStreamResponse::OrSymbol,
           request_options: Stagehand::RequestOptions::OrHash
-        ).returns(Stagehand::Models::SessionExtractResponse::Variants)
+        ).returns(Stagehand::Models::SessionExtractResponse)
       end
       def extract(
-        # Path param: The session ID returned by /sessions/start
-        session_id,
-        # Body param: Frame ID to extract from
+        # Path param: Unique session identifier
+        id,
+        # Body param: Target frame ID for the extraction
         frame_id: nil,
-        # Body param: Natural language instruction for extraction
+        # Body param: Natural language instruction for what to extract
         instruction: nil,
         # Body param:
         options: nil,
-        # Body param: JSON Schema for structured output
+        # Body param: JSON Schema defining the structure of data to extract
         schema: nil,
-        # Header param: Enable Server-Sent Events streaming for real-time logs
+        # Header param: Client SDK language
+        x_language: nil,
+        # Header param: Version of the Stagehand SDK
+        x_sdk_version: nil,
+        # Header param: ISO timestamp when request was sent
+        x_sent_at: nil,
+        # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
       )
       end
 
-      # Navigates the browser to the specified URL and waits for page load.
+      # Navigates the browser to the specified URL.
       sig do
         params(
-          session_id: String,
+          id: String,
           url: String,
           frame_id: String,
           options: Stagehand::SessionNavigateParams::Options::OrHash,
+          x_language: Stagehand::SessionNavigateParams::XLanguage::OrSymbol,
+          x_sdk_version: String,
+          x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionNavigateParams::XStreamResponse::OrSymbol,
           request_options: Stagehand::RequestOptions::OrHash
-        ).returns(T.nilable(Stagehand::Models::SessionNavigateResponse))
+        ).returns(Stagehand::Models::SessionNavigateResponse)
       end
       def navigate(
-        # Path param: The session ID returned by /sessions/start
-        session_id,
+        # Path param: Unique session identifier
+        id,
         # Body param: URL to navigate to
         url:,
-        # Body param:
+        # Body param: Target frame ID for the navigation
         frame_id: nil,
         # Body param:
         options: nil,
-        # Header param: Enable Server-Sent Events streaming for real-time logs
+        # Header param: Client SDK language
+        x_language: nil,
+        # Header param: Version of the Stagehand SDK
+        x_sdk_version: nil,
+        # Header param: ISO timestamp when request was sent
+        x_sent_at: nil,
+        # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
       )
       end
 
-      # Returns a list of candidate actions that can be performed on the page,
-      # optionally filtered by natural language instruction.
+      # Identifies and returns available actions on the current page that match the
+      # given instruction.
       sig do
         params(
-          session_id: String,
+          id: String,
           frame_id: String,
           instruction: String,
           options: Stagehand::SessionObserveParams::Options::OrHash,
+          x_language: Stagehand::SessionObserveParams::XLanguage::OrSymbol,
+          x_sdk_version: String,
+          x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionObserveParams::XStreamResponse::OrSymbol,
           request_options: Stagehand::RequestOptions::OrHash
-        ).returns(T::Array[Stagehand::Action])
+        ).returns(Stagehand::Models::SessionObserveResponse)
       end
       def observe(
-        # Path param: The session ID returned by /sessions/start
-        session_id,
-        # Body param: Frame ID to observe
+        # Path param: Unique session identifier
+        id,
+        # Body param: Target frame ID for the observation
         frame_id: nil,
-        # Body param: Natural language instruction to filter actions
+        # Body param: Natural language instruction for what actions to find
         instruction: nil,
         # Body param:
         options: nil,
-        # Header param: Enable Server-Sent Events streaming for real-time logs
+        # Header param: Client SDK language
+        x_language: nil,
+        # Header param: Version of the Stagehand SDK
+        x_sdk_version: nil,
+        # Header param: ISO timestamp when request was sent
+        x_sent_at: nil,
+        # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
       )
       end
 
-      # Initializes a new Stagehand session with a browser instance. Returns a session
-      # ID that must be used for all subsequent requests.
+      # Creates a new browser session with the specified configuration. Returns a
+      # session ID used for all subsequent operations.
       sig do
         params(
-          browserbase_api_key: String,
-          browserbase_project_id: String,
-          dom_settle_timeout: Integer,
-          model: String,
+          model_name: String,
+          act_timeout_ms: Float,
+          browser: Stagehand::SessionStartParams::Browser::OrHash,
+          browserbase_session_create_params:
+            Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::OrHash,
+          browserbase_session_id: String,
+          debug_dom: T::Boolean,
+          dom_settle_timeout_ms: Float,
+          experimental: T::Boolean,
           self_heal: T::Boolean,
           system_prompt: String,
           verbose: Integer,
+          wait_for_captcha_solves: T::Boolean,
+          x_language: Stagehand::SessionStartParams::XLanguage::OrSymbol,
+          x_sdk_version: String,
+          x_sent_at: Time,
+          x_stream_response:
+            Stagehand::SessionStartParams::XStreamResponse::OrSymbol,
           request_options: Stagehand::RequestOptions::OrHash
         ).returns(Stagehand::Models::SessionStartResponse)
       end
       def start(
-        # API key for Browserbase Cloud
-        browserbase_api_key:,
-        # Project ID for Browserbase
-        browserbase_project_id:,
-        # Timeout in ms to wait for DOM to settle
-        dom_settle_timeout: nil,
-        # AI model to use for actions (must be prefixed with provider/)
-        model: nil,
-        # Enable self-healing for failed actions
+        # Body param: Model name to use for AI operations
+        model_name:,
+        # Body param: Timeout in ms for act operations
+        act_timeout_ms: nil,
+        # Body param:
+        browser: nil,
+        # Body param:
+        browserbase_session_create_params: nil,
+        # Body param: Existing Browserbase session ID to resume
+        browserbase_session_id: nil,
+        # Body param:
+        debug_dom: nil,
+        # Body param: Timeout in ms to wait for DOM to settle
+        dom_settle_timeout_ms: nil,
+        # Body param:
+        experimental: nil,
+        # Body param: Enable self-healing for failed actions
         self_heal: nil,
-        # Custom system prompt for AI actions
+        # Body param: Custom system prompt for AI operations
         system_prompt: nil,
-        # Logging verbosity level
+        # Body param: Logging verbosity level (0=quiet, 1=normal, 2=debug)
         verbose: nil,
+        # Body param:
+        wait_for_captcha_solves: nil,
+        # Header param: Client SDK language
+        x_language: nil,
+        # Header param: Version of the Stagehand SDK
+        x_sdk_version: nil,
+        # Header param: ISO timestamp when request was sent
+        x_sent_at: nil,
+        # Header param: Whether to stream the response via SSE
+        x_stream_response: nil,
         request_options: {}
       )
       end

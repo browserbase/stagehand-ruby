@@ -5,12 +5,13 @@ module Stagehand
     # @see Stagehand::Resources::Sessions#end_
     class SessionEndResponse < Stagehand::Internal::Type::BaseModel
       # @!attribute success
+      #   Indicates whether the request was successful
       #
-      #   @return [Boolean, nil]
-      optional :success, Stagehand::Internal::Type::Boolean
+      #   @return [Boolean]
+      required :success, Stagehand::Internal::Type::Boolean
 
-      # @!method initialize(success: nil)
-      #   @param success [Boolean]
+      # @!method initialize(success:)
+      #   @param success [Boolean] Indicates whether the request was successful
     end
   end
 end

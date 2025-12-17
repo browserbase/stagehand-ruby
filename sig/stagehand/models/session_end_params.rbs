@@ -1,15 +1,76 @@
 module Stagehand
   module Models
     type session_end_params =
-      {  } & Stagehand::Internal::Type::request_parameters
+      {
+        x_language: Stagehand::Models::SessionEndParams::x_language,
+        x_sdk_version: String,
+        x_sent_at: Time,
+        x_stream_response: Stagehand::Models::SessionEndParams::x_stream_response
+      }
+      & Stagehand::Internal::Type::request_parameters
 
     class SessionEndParams < Stagehand::Internal::Type::BaseModel
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters
 
-      def initialize: (?request_options: Stagehand::request_opts) -> void
+      attr_reader x_language: Stagehand::Models::SessionEndParams::x_language?
 
-      def to_hash: -> { request_options: Stagehand::RequestOptions }
+      def x_language=: (
+        Stagehand::Models::SessionEndParams::x_language
+      ) -> Stagehand::Models::SessionEndParams::x_language
+
+      attr_reader x_sdk_version: String?
+
+      def x_sdk_version=: (String) -> String
+
+      attr_reader x_sent_at: Time?
+
+      def x_sent_at=: (Time) -> Time
+
+      attr_reader x_stream_response: Stagehand::Models::SessionEndParams::x_stream_response?
+
+      def x_stream_response=: (
+        Stagehand::Models::SessionEndParams::x_stream_response
+      ) -> Stagehand::Models::SessionEndParams::x_stream_response
+
+      def initialize: (
+        ?x_language: Stagehand::Models::SessionEndParams::x_language,
+        ?x_sdk_version: String,
+        ?x_sent_at: Time,
+        ?x_stream_response: Stagehand::Models::SessionEndParams::x_stream_response,
+        ?request_options: Stagehand::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        x_language: Stagehand::Models::SessionEndParams::x_language,
+        x_sdk_version: String,
+        x_sent_at: Time,
+        x_stream_response: Stagehand::Models::SessionEndParams::x_stream_response,
+        request_options: Stagehand::RequestOptions
+      }
+
+      type x_language = :typescript | :python | :playground
+
+      module XLanguage
+        extend Stagehand::Internal::Type::Enum
+
+        TYPESCRIPT: :typescript
+        PYTHON: :python
+        PLAYGROUND: :playground
+
+        def self?.values: -> ::Array[Stagehand::Models::SessionEndParams::x_language]
+      end
+
+      type x_stream_response = :true | :false
+
+      module XStreamResponse
+        extend Stagehand::Internal::Type::Enum
+
+        TRUE: :true
+        FALSE: :false
+
+        def self?.values: -> ::Array[Stagehand::Models::SessionEndParams::x_stream_response]
+      end
     end
   end
 end

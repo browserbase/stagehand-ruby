@@ -11,29 +11,73 @@ module Stagehand
           )
         end
 
-      # Whether the session is ready to use
-      sig { returns(T::Boolean) }
-      attr_accessor :available
-
-      # Unique identifier for the session
-      sig { returns(String) }
-      attr_accessor :session_id
+      sig { returns(Stagehand::Models::SessionStartResponse::Data) }
+      attr_reader :data
 
       sig do
-        params(available: T::Boolean, session_id: String).returns(
-          T.attached_class
-        )
+        params(data: Stagehand::Models::SessionStartResponse::Data::OrHash).void
+      end
+      attr_writer :data
+
+      # Indicates whether the request was successful
+      sig { returns(T::Boolean) }
+      attr_accessor :success
+
+      sig do
+        params(
+          data: Stagehand::Models::SessionStartResponse::Data::OrHash,
+          success: T::Boolean
+        ).returns(T.attached_class)
       end
       def self.new(
-        # Whether the session is ready to use
-        available:,
-        # Unique identifier for the session
-        session_id:
+        data:,
+        # Indicates whether the request was successful
+        success:
       )
       end
 
-      sig { override.returns({ available: T::Boolean, session_id: String }) }
+      sig do
+        override.returns(
+          {
+            data: Stagehand::Models::SessionStartResponse::Data,
+            success: T::Boolean
+          }
+        )
+      end
       def to_hash
+      end
+
+      class Data < Stagehand::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              Stagehand::Models::SessionStartResponse::Data,
+              Stagehand::Internal::AnyHash
+            )
+          end
+
+        sig { returns(T::Boolean) }
+        attr_accessor :available
+
+        # Unique session identifier
+        sig { returns(String) }
+        attr_accessor :session_id
+
+        sig do
+          params(available: T::Boolean, session_id: String).returns(
+            T.attached_class
+          )
+        end
+        def self.new(
+          available:,
+          # Unique session identifier
+          session_id:
+        )
+        end
+
+        sig { override.returns({ available: T::Boolean, session_id: String }) }
+        def to_hash
+        end
       end
     end
   end

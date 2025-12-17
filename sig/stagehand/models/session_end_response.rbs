@@ -3,11 +3,9 @@ module Stagehand
     type session_end_response = { success: bool }
 
     class SessionEndResponse < Stagehand::Internal::Type::BaseModel
-      attr_reader success: bool?
+      attr_accessor success: bool
 
-      def success=: (bool) -> bool
-
-      def initialize: (?success: bool) -> void
+      def initialize: (success: bool) -> void
 
       def to_hash: -> { success: bool }
     end

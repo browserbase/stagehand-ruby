@@ -2,35 +2,43 @@
 
 module Stagehand
   module Models
-    # Default extraction result
-    #
     # @see Stagehand::Resources::Sessions#extract
-    module SessionExtractResponse
-      extend Stagehand::Internal::Type::Union
+    class SessionExtractResponse < Stagehand::Internal::Type::BaseModel
+      # @!attribute data
+      #
+      #   @return [Stagehand::Models::SessionExtractResponse::Data]
+      required :data, -> { Stagehand::Models::SessionExtractResponse::Data }
 
-      # Default extraction result
-      variant -> { Stagehand::Models::SessionExtractResponse::Extraction }
+      # @!attribute success
+      #   Indicates whether the request was successful
+      #
+      #   @return [Boolean]
+      required :success, Stagehand::Internal::Type::Boolean
 
-      # Structured data matching provided schema
-      variant -> { Stagehand::Models::SessionExtractResponse::CustomMap }
+      # @!method initialize(data:, success:)
+      #   @param data [Stagehand::Models::SessionExtractResponse::Data]
+      #
+      #   @param success [Boolean] Indicates whether the request was successful
 
-      class Extraction < Stagehand::Internal::Type::BaseModel
-        # @!attribute extraction
+      # @see Stagehand::Models::SessionExtractResponse#data
+      class Data < Stagehand::Internal::Type::BaseModel
+        # @!attribute result
+        #   Extracted data matching the requested schema
+        #
+        #   @return [Object]
+        required :result, Stagehand::Internal::Type::Unknown
+
+        # @!attribute action_id
+        #   Action ID for tracking
         #
         #   @return [String, nil]
-        optional :extraction, String
+        optional :action_id, String, api_name: :actionId
 
-        # @!method initialize(extraction: nil)
-        #   Default extraction result
+        # @!method initialize(result:, action_id: nil)
+        #   @param result [Object] Extracted data matching the requested schema
         #
-        #   @param extraction [String]
+        #   @param action_id [String] Action ID for tracking
       end
-
-      # @!method self.variants
-      #   @return [Array(Stagehand::Models::SessionExtractResponse::Extraction, Hash{Symbol=>Object})]
-
-      # @type [Stagehand::Internal::Type::Converter]
-      CustomMap = Stagehand::Internal::Type::HashOf[Stagehand::Internal::Type::Unknown]
     end
   end
 end

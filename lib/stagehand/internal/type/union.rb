@@ -6,14 +6,14 @@ module Stagehand
       # @api private
       #
       # @example
-      #   # `session_extract_response` is a `Stagehand::Models::SessionExtractResponse`
-      #   case session_extract_response
-      #   when Stagehand::Models::SessionExtractResponse::Extraction
-      #     puts(session_extract_response.extraction)
-      #   when Stagehand::Models::SessionExtractResponse::CustomMap
+      #   # `model_config` is a `Stagehand::ModelConfig`
+      #   case model_config
+      #   when String
       #     # ...
+      #   when Stagehand::ModelConfig::ModelConfigObject
+      #     puts(model_config.model_name)
       #   else
-      #     puts(session_extract_response)
+      #     puts(model_config)
       #   end
       module Union
         include Stagehand::Internal::Type::Converter

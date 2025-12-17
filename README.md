@@ -17,7 +17,7 @@ To use this gem, install via Bundler by adding the following to your application
 <!-- x-release-please-start-version -->
 
 ```ruby
-gem "stagehand", "~> 0.2.0"
+gem "stagehand", "~> 0.3.0"
 ```
 
 <!-- x-release-please-end -->
@@ -36,7 +36,7 @@ stagehand = Stagehand::Client.new(
 
 response = stagehand.sessions.act("00000000-your-session-id-000000000000", input: "click the first link on the page")
 
-puts(response.actions)
+puts(response.data)
 ```
 
 ### Handling errors
@@ -45,10 +45,7 @@ When the library is unable to connect to the API, or if the API returns a non-su
 
 ```ruby
 begin
-  session = stagehand.sessions.start(
-    browserbase_api_key: "your Browserbase API key",
-    browserbase_project_id: "your Browserbase Project ID"
-  )
+  session = stagehand.sessions.start(model_name: "openai/gpt-5-nano")
 rescue Stagehand::Errors::APIConnectionError => e
   puts("The server could not be reached")
   puts(e.cause)  # an underlying Exception, likely raised within `net/http`
@@ -91,11 +88,7 @@ stagehand = Stagehand::Client.new(
 )
 
 # Or, configure per-request:
-stagehand.sessions.start(
-  browserbase_api_key: "your Browserbase API key",
-  browserbase_project_id: "your Browserbase Project ID",
-  request_options: {max_retries: 5}
-)
+stagehand.sessions.start(model_name: "openai/gpt-5-nano", request_options: {max_retries: 5})
 ```
 
 ### Timeouts
@@ -109,11 +102,7 @@ stagehand = Stagehand::Client.new(
 )
 
 # Or, configure per-request:
-stagehand.sessions.start(
-  browserbase_api_key: "your Browserbase API key",
-  browserbase_project_id: "your Browserbase Project ID",
-  request_options: {timeout: 5}
-)
+stagehand.sessions.start(model_name: "openai/gpt-5-nano", request_options: {timeout: 5})
 ```
 
 On timeout, `Stagehand::Errors::APITimeoutError` is raised.
@@ -145,8 +134,7 @@ Note: the `extra_` parameters of the same name overrides the documented paramete
 ```ruby
 response =
   stagehand.sessions.start(
-    browserbase_api_key: "your Browserbase API key",
-    browserbase_project_id: "your Browserbase Project ID",
+    model_name: "openai/gpt-5-nano",
     request_options: {
       extra_query: {my_query_parameter: value},
       extra_body: {my_body_parameter: value},
@@ -211,11 +199,11 @@ stagehand.sessions.act("00000000-your-session-id-000000000000", **params)
 Since this library does not depend on `sorbet-runtime`, it cannot provide [`T::Enum`](https://sorbet.org/docs/tenum) instances. Instead, we provide "tagged symbols" instead, which is always a primitive at runtime:
 
 ```ruby
-# :true
-puts(Stagehand::SessionActParams::XStreamResponse::TRUE)
+# :typescript
+puts(Stagehand::SessionActParams::XLanguage::TYPESCRIPT)
 
-# Revealed type: `T.all(Stagehand::SessionActParams::XStreamResponse, Symbol)`
-T.reveal_type(Stagehand::SessionActParams::XStreamResponse::TRUE)
+# Revealed type: `T.all(Stagehand::SessionActParams::XLanguage, Symbol)`
+T.reveal_type(Stagehand::SessionActParams::XLanguage::TYPESCRIPT)
 ```
 
 Enum parameters have a "relaxed" type, so you can either pass in enum constants or their literal value:
@@ -223,13 +211,13 @@ Enum parameters have a "relaxed" type, so you can either pass in enum constants 
 ```ruby
 # Using the enum constants preserves the tagged type information:
 stagehand.sessions.act(
-  x_stream_response: Stagehand::SessionActParams::XStreamResponse::TRUE,
+  x_language: Stagehand::SessionActParams::XLanguage::TYPESCRIPT,
   # …
 )
 
 # Literal values are also permissible:
 stagehand.sessions.act(
-  x_stream_response: :true,
+  x_language: :typescript,
   # …
 )
 ```

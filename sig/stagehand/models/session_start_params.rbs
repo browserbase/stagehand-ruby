@@ -2,13 +2,22 @@ module Stagehand
   module Models
     type session_start_params =
       {
-        browserbase_api_key: String,
-        browserbase_project_id: String,
-        dom_settle_timeout: Integer,
-        model: String,
+        model_name: String,
+        act_timeout_ms: Float,
+        browser: Stagehand::SessionStartParams::Browser,
+        browserbase_session_create_params: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams,
+        browserbase_session_id: String,
+        debug_dom: bool,
+        dom_settle_timeout_ms: Float,
+        experimental: bool,
         self_heal: bool,
         system_prompt: String,
-        verbose: Integer
+        verbose: Integer,
+        wait_for_captcha_solves: bool,
+        x_language: Stagehand::Models::SessionStartParams::x_language,
+        x_sdk_version: String,
+        x_sent_at: Time,
+        x_stream_response: Stagehand::Models::SessionStartParams::x_stream_response
       }
       & Stagehand::Internal::Type::request_parameters
 
@@ -16,17 +25,39 @@ module Stagehand
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters
 
-      attr_accessor browserbase_api_key: String
+      attr_accessor model_name: String
 
-      attr_accessor browserbase_project_id: String
+      attr_reader act_timeout_ms: Float?
 
-      attr_reader dom_settle_timeout: Integer?
+      def act_timeout_ms=: (Float) -> Float
 
-      def dom_settle_timeout=: (Integer) -> Integer
+      attr_reader browser: Stagehand::SessionStartParams::Browser?
 
-      attr_reader model: String?
+      def browser=: (
+        Stagehand::SessionStartParams::Browser
+      ) -> Stagehand::SessionStartParams::Browser
 
-      def model=: (String) -> String
+      attr_reader browserbase_session_create_params: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams?
+
+      def browserbase_session_create_params=: (
+        Stagehand::SessionStartParams::BrowserbaseSessionCreateParams
+      ) -> Stagehand::SessionStartParams::BrowserbaseSessionCreateParams
+
+      attr_reader browserbase_session_id: String?
+
+      def browserbase_session_id=: (String) -> String
+
+      attr_reader debug_dom: bool?
+
+      def debug_dom=: (bool) -> bool
+
+      attr_reader dom_settle_timeout_ms: Float?
+
+      def dom_settle_timeout_ms=: (Float) -> Float
+
+      attr_reader experimental: bool?
+
+      def experimental=: (bool) -> bool
 
       attr_reader self_heal: bool?
 
@@ -40,27 +71,817 @@ module Stagehand
 
       def verbose=: (Integer) -> Integer
 
+      attr_reader wait_for_captcha_solves: bool?
+
+      def wait_for_captcha_solves=: (bool) -> bool
+
+      attr_reader x_language: Stagehand::Models::SessionStartParams::x_language?
+
+      def x_language=: (
+        Stagehand::Models::SessionStartParams::x_language
+      ) -> Stagehand::Models::SessionStartParams::x_language
+
+      attr_reader x_sdk_version: String?
+
+      def x_sdk_version=: (String) -> String
+
+      attr_reader x_sent_at: Time?
+
+      def x_sent_at=: (Time) -> Time
+
+      attr_reader x_stream_response: Stagehand::Models::SessionStartParams::x_stream_response?
+
+      def x_stream_response=: (
+        Stagehand::Models::SessionStartParams::x_stream_response
+      ) -> Stagehand::Models::SessionStartParams::x_stream_response
+
       def initialize: (
-        browserbase_api_key: String,
-        browserbase_project_id: String,
-        ?dom_settle_timeout: Integer,
-        ?model: String,
+        model_name: String,
+        ?act_timeout_ms: Float,
+        ?browser: Stagehand::SessionStartParams::Browser,
+        ?browserbase_session_create_params: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams,
+        ?browserbase_session_id: String,
+        ?debug_dom: bool,
+        ?dom_settle_timeout_ms: Float,
+        ?experimental: bool,
         ?self_heal: bool,
         ?system_prompt: String,
         ?verbose: Integer,
+        ?wait_for_captcha_solves: bool,
+        ?x_language: Stagehand::Models::SessionStartParams::x_language,
+        ?x_sdk_version: String,
+        ?x_sent_at: Time,
+        ?x_stream_response: Stagehand::Models::SessionStartParams::x_stream_response,
         ?request_options: Stagehand::request_opts
       ) -> void
 
       def to_hash: -> {
-        browserbase_api_key: String,
-        browserbase_project_id: String,
-        dom_settle_timeout: Integer,
-        model: String,
+        model_name: String,
+        act_timeout_ms: Float,
+        browser: Stagehand::SessionStartParams::Browser,
+        browserbase_session_create_params: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams,
+        browserbase_session_id: String,
+        debug_dom: bool,
+        dom_settle_timeout_ms: Float,
+        experimental: bool,
         self_heal: bool,
         system_prompt: String,
         verbose: Integer,
+        wait_for_captcha_solves: bool,
+        x_language: Stagehand::Models::SessionStartParams::x_language,
+        x_sdk_version: String,
+        x_sent_at: Time,
+        x_stream_response: Stagehand::Models::SessionStartParams::x_stream_response,
         request_options: Stagehand::RequestOptions
       }
+
+      type browser =
+        {
+          cdp_url: String,
+          launch_options: Stagehand::SessionStartParams::Browser::LaunchOptions,
+          type: Stagehand::Models::SessionStartParams::Browser::type_
+        }
+
+      class Browser < Stagehand::Internal::Type::BaseModel
+        attr_reader cdp_url: String?
+
+        def cdp_url=: (String) -> String
+
+        attr_reader launch_options: Stagehand::SessionStartParams::Browser::LaunchOptions?
+
+        def launch_options=: (
+          Stagehand::SessionStartParams::Browser::LaunchOptions
+        ) -> Stagehand::SessionStartParams::Browser::LaunchOptions
+
+        attr_reader type: Stagehand::Models::SessionStartParams::Browser::type_?
+
+        def type=: (
+          Stagehand::Models::SessionStartParams::Browser::type_
+        ) -> Stagehand::Models::SessionStartParams::Browser::type_
+
+        def initialize: (
+          ?cdp_url: String,
+          ?launch_options: Stagehand::SessionStartParams::Browser::LaunchOptions,
+          ?type: Stagehand::Models::SessionStartParams::Browser::type_
+        ) -> void
+
+        def to_hash: -> {
+          cdp_url: String,
+          launch_options: Stagehand::SessionStartParams::Browser::LaunchOptions,
+          type: Stagehand::Models::SessionStartParams::Browser::type_
+        }
+
+        type launch_options =
+          {
+            accept_downloads: bool,
+            args: ::Array[String],
+            cdp_url: String,
+            chromium_sandbox: bool,
+            connect_timeout_ms: Float,
+            device_scale_factor: Float,
+            devtools: bool,
+            downloads_path: String,
+            executable_path: String,
+            has_touch: bool,
+            headless: bool,
+            ignore_default_args: Stagehand::Models::SessionStartParams::Browser::LaunchOptions::ignore_default_args,
+            ignore_https_errors: bool,
+            locale: String,
+            preserve_user_data_dir: bool,
+            proxy: Stagehand::SessionStartParams::Browser::LaunchOptions::Proxy,
+            user_data_dir: String,
+            viewport: Stagehand::SessionStartParams::Browser::LaunchOptions::Viewport
+          }
+
+        class LaunchOptions < Stagehand::Internal::Type::BaseModel
+          attr_reader accept_downloads: bool?
+
+          def accept_downloads=: (bool) -> bool
+
+          attr_reader args: ::Array[String]?
+
+          def args=: (::Array[String]) -> ::Array[String]
+
+          attr_reader cdp_url: String?
+
+          def cdp_url=: (String) -> String
+
+          attr_reader chromium_sandbox: bool?
+
+          def chromium_sandbox=: (bool) -> bool
+
+          attr_reader connect_timeout_ms: Float?
+
+          def connect_timeout_ms=: (Float) -> Float
+
+          attr_reader device_scale_factor: Float?
+
+          def device_scale_factor=: (Float) -> Float
+
+          attr_reader devtools: bool?
+
+          def devtools=: (bool) -> bool
+
+          attr_reader downloads_path: String?
+
+          def downloads_path=: (String) -> String
+
+          attr_reader executable_path: String?
+
+          def executable_path=: (String) -> String
+
+          attr_reader has_touch: bool?
+
+          def has_touch=: (bool) -> bool
+
+          attr_reader headless: bool?
+
+          def headless=: (bool) -> bool
+
+          attr_reader ignore_default_args: Stagehand::Models::SessionStartParams::Browser::LaunchOptions::ignore_default_args?
+
+          def ignore_default_args=: (
+            Stagehand::Models::SessionStartParams::Browser::LaunchOptions::ignore_default_args
+          ) -> Stagehand::Models::SessionStartParams::Browser::LaunchOptions::ignore_default_args
+
+          attr_reader ignore_https_errors: bool?
+
+          def ignore_https_errors=: (bool) -> bool
+
+          attr_reader locale: String?
+
+          def locale=: (String) -> String
+
+          attr_reader preserve_user_data_dir: bool?
+
+          def preserve_user_data_dir=: (bool) -> bool
+
+          attr_reader proxy: Stagehand::SessionStartParams::Browser::LaunchOptions::Proxy?
+
+          def proxy=: (
+            Stagehand::SessionStartParams::Browser::LaunchOptions::Proxy
+          ) -> Stagehand::SessionStartParams::Browser::LaunchOptions::Proxy
+
+          attr_reader user_data_dir: String?
+
+          def user_data_dir=: (String) -> String
+
+          attr_reader viewport: Stagehand::SessionStartParams::Browser::LaunchOptions::Viewport?
+
+          def viewport=: (
+            Stagehand::SessionStartParams::Browser::LaunchOptions::Viewport
+          ) -> Stagehand::SessionStartParams::Browser::LaunchOptions::Viewport
+
+          def initialize: (
+            ?accept_downloads: bool,
+            ?args: ::Array[String],
+            ?cdp_url: String,
+            ?chromium_sandbox: bool,
+            ?connect_timeout_ms: Float,
+            ?device_scale_factor: Float,
+            ?devtools: bool,
+            ?downloads_path: String,
+            ?executable_path: String,
+            ?has_touch: bool,
+            ?headless: bool,
+            ?ignore_default_args: Stagehand::Models::SessionStartParams::Browser::LaunchOptions::ignore_default_args,
+            ?ignore_https_errors: bool,
+            ?locale: String,
+            ?preserve_user_data_dir: bool,
+            ?proxy: Stagehand::SessionStartParams::Browser::LaunchOptions::Proxy,
+            ?user_data_dir: String,
+            ?viewport: Stagehand::SessionStartParams::Browser::LaunchOptions::Viewport
+          ) -> void
+
+          def to_hash: -> {
+            accept_downloads: bool,
+            args: ::Array[String],
+            cdp_url: String,
+            chromium_sandbox: bool,
+            connect_timeout_ms: Float,
+            device_scale_factor: Float,
+            devtools: bool,
+            downloads_path: String,
+            executable_path: String,
+            has_touch: bool,
+            headless: bool,
+            ignore_default_args: Stagehand::Models::SessionStartParams::Browser::LaunchOptions::ignore_default_args,
+            ignore_https_errors: bool,
+            locale: String,
+            preserve_user_data_dir: bool,
+            proxy: Stagehand::SessionStartParams::Browser::LaunchOptions::Proxy,
+            user_data_dir: String,
+            viewport: Stagehand::SessionStartParams::Browser::LaunchOptions::Viewport
+          }
+
+          type ignore_default_args = bool | ::Array[String]
+
+          module IgnoreDefaultArgs
+            extend Stagehand::Internal::Type::Union
+
+            def self?.variants: -> ::Array[Stagehand::Models::SessionStartParams::Browser::LaunchOptions::ignore_default_args]
+
+            StringArray: Stagehand::Internal::Type::Converter
+          end
+
+          type proxy =
+            {
+              server: String,
+              bypass: String,
+              password: String,
+              username: String
+            }
+
+          class Proxy < Stagehand::Internal::Type::BaseModel
+            attr_accessor server: String
+
+            attr_reader bypass: String?
+
+            def bypass=: (String) -> String
+
+            attr_reader password: String?
+
+            def password=: (String) -> String
+
+            attr_reader username: String?
+
+            def username=: (String) -> String
+
+            def initialize: (
+              server: String,
+              ?bypass: String,
+              ?password: String,
+              ?username: String
+            ) -> void
+
+            def to_hash: -> {
+              server: String,
+              bypass: String,
+              password: String,
+              username: String
+            }
+          end
+
+          type viewport = { height: Float, width: Float }
+
+          class Viewport < Stagehand::Internal::Type::BaseModel
+            attr_accessor height: Float
+
+            attr_accessor width: Float
+
+            def initialize: (height: Float, width: Float) -> void
+
+            def to_hash: -> { height: Float, width: Float }
+          end
+        end
+
+        type type_ = :local | :browserbase
+
+        module Type
+          extend Stagehand::Internal::Type::Enum
+
+          LOCAL: :local
+          BROWSERBASE: :browserbase
+
+          def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::Browser::type_]
+        end
+      end
+
+      type browserbase_session_create_params =
+        {
+          browser_settings: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings,
+          extension_id: String,
+          keep_alive: bool,
+          project_id: String,
+          proxies: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::proxies,
+          region: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::region,
+          timeout: Float,
+          user_metadata: ::Hash[Symbol, top]
+        }
+
+      class BrowserbaseSessionCreateParams < Stagehand::Internal::Type::BaseModel
+        attr_reader browser_settings: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings?
+
+        def browser_settings=: (
+          Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings
+        ) -> Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings
+
+        attr_reader extension_id: String?
+
+        def extension_id=: (String) -> String
+
+        attr_reader keep_alive: bool?
+
+        def keep_alive=: (bool) -> bool
+
+        attr_reader project_id: String?
+
+        def project_id=: (String) -> String
+
+        attr_reader proxies: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::proxies?
+
+        def proxies=: (
+          Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::proxies
+        ) -> Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::proxies
+
+        attr_reader region: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::region?
+
+        def region=: (
+          Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::region
+        ) -> Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::region
+
+        attr_reader timeout: Float?
+
+        def timeout=: (Float) -> Float
+
+        attr_reader user_metadata: ::Hash[Symbol, top]?
+
+        def user_metadata=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
+
+        def initialize: (
+          ?browser_settings: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings,
+          ?extension_id: String,
+          ?keep_alive: bool,
+          ?project_id: String,
+          ?proxies: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::proxies,
+          ?region: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::region,
+          ?timeout: Float,
+          ?user_metadata: ::Hash[Symbol, top]
+        ) -> void
+
+        def to_hash: -> {
+          browser_settings: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings,
+          extension_id: String,
+          keep_alive: bool,
+          project_id: String,
+          proxies: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::proxies,
+          region: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::region,
+          timeout: Float,
+          user_metadata: ::Hash[Symbol, top]
+        }
+
+        type browser_settings =
+          {
+            advanced_stealth: bool,
+            block_ads: bool,
+            context: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Context,
+            extension_id: String,
+            fingerprint: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint,
+            log_session: bool,
+            record_session: bool,
+            solve_captchas: bool,
+            viewport: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Viewport
+          }
+
+        class BrowserSettings < Stagehand::Internal::Type::BaseModel
+          attr_reader advanced_stealth: bool?
+
+          def advanced_stealth=: (bool) -> bool
+
+          attr_reader block_ads: bool?
+
+          def block_ads=: (bool) -> bool
+
+          attr_reader context: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Context?
+
+          def context=: (
+            Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Context
+          ) -> Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Context
+
+          attr_reader extension_id: String?
+
+          def extension_id=: (String) -> String
+
+          attr_reader fingerprint: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint?
+
+          def fingerprint=: (
+            Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint
+          ) -> Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint
+
+          attr_reader log_session: bool?
+
+          def log_session=: (bool) -> bool
+
+          attr_reader record_session: bool?
+
+          def record_session=: (bool) -> bool
+
+          attr_reader solve_captchas: bool?
+
+          def solve_captchas=: (bool) -> bool
+
+          attr_reader viewport: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Viewport?
+
+          def viewport=: (
+            Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Viewport
+          ) -> Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Viewport
+
+          def initialize: (
+            ?advanced_stealth: bool,
+            ?block_ads: bool,
+            ?context: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Context,
+            ?extension_id: String,
+            ?fingerprint: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint,
+            ?log_session: bool,
+            ?record_session: bool,
+            ?solve_captchas: bool,
+            ?viewport: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Viewport
+          ) -> void
+
+          def to_hash: -> {
+            advanced_stealth: bool,
+            block_ads: bool,
+            context: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Context,
+            extension_id: String,
+            fingerprint: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint,
+            log_session: bool,
+            record_session: bool,
+            solve_captchas: bool,
+            viewport: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Viewport
+          }
+
+          type context = { id: String, persist: bool }
+
+          class Context < Stagehand::Internal::Type::BaseModel
+            attr_accessor id: String
+
+            attr_reader persist: bool?
+
+            def persist=: (bool) -> bool
+
+            def initialize: (id: String, ?persist: bool) -> void
+
+            def to_hash: -> { id: String, persist: bool }
+          end
+
+          type fingerprint =
+            {
+              browsers: ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::browser],
+              devices: ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::device],
+              http_version: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::http_version,
+              locales: ::Array[String],
+              operating_systems: ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::operating_system],
+              screen: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::Screen
+            }
+
+          class Fingerprint < Stagehand::Internal::Type::BaseModel
+            attr_reader browsers: ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::browser]?
+
+            def browsers=: (
+              ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::browser]
+            ) -> ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::browser]
+
+            attr_reader devices: ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::device]?
+
+            def devices=: (
+              ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::device]
+            ) -> ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::device]
+
+            attr_reader http_version: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::http_version?
+
+            def http_version=: (
+              Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::http_version
+            ) -> Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::http_version
+
+            attr_reader locales: ::Array[String]?
+
+            def locales=: (::Array[String]) -> ::Array[String]
+
+            attr_reader operating_systems: ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::operating_system]?
+
+            def operating_systems=: (
+              ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::operating_system]
+            ) -> ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::operating_system]
+
+            attr_reader screen: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::Screen?
+
+            def screen=: (
+              Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::Screen
+            ) -> Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::Screen
+
+            def initialize: (
+              ?browsers: ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::browser],
+              ?devices: ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::device],
+              ?http_version: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::http_version,
+              ?locales: ::Array[String],
+              ?operating_systems: ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::operating_system],
+              ?screen: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::Screen
+            ) -> void
+
+            def to_hash: -> {
+              browsers: ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::browser],
+              devices: ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::device],
+              http_version: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::http_version,
+              locales: ::Array[String],
+              operating_systems: ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::operating_system],
+              screen: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::Screen
+            }
+
+            type browser = :chrome | :edge | :firefox | :safari
+
+            module Browser
+              extend Stagehand::Internal::Type::Enum
+
+              CHROME: :chrome
+              EDGE: :edge
+              FIREFOX: :firefox
+              SAFARI: :safari
+
+              def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::browser]
+            end
+
+            type device = :desktop | :mobile
+
+            module Device
+              extend Stagehand::Internal::Type::Enum
+
+              DESKTOP: :desktop
+              MOBILE: :mobile
+
+              def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::device]
+            end
+
+            type http_version = :"1" | :"2"
+
+            module HTTPVersion
+              extend Stagehand::Internal::Type::Enum
+
+              HTTP_VERSION_1: :"1"
+              HTTP_VERSION_2: :"2"
+
+              def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::http_version]
+            end
+
+            type operating_system = :android | :ios | :linux | :macos | :windows
+
+            module OperatingSystem
+              extend Stagehand::Internal::Type::Enum
+
+              ANDROID: :android
+              IOS: :ios
+              LINUX: :linux
+              MACOS: :macos
+              WINDOWS: :windows
+
+              def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::operating_system]
+            end
+
+            type screen =
+              {
+                max_height: Float,
+                max_width: Float,
+                min_height: Float,
+                min_width: Float
+              }
+
+            class Screen < Stagehand::Internal::Type::BaseModel
+              attr_reader max_height: Float?
+
+              def max_height=: (Float) -> Float
+
+              attr_reader max_width: Float?
+
+              def max_width=: (Float) -> Float
+
+              attr_reader min_height: Float?
+
+              def min_height=: (Float) -> Float
+
+              attr_reader min_width: Float?
+
+              def min_width=: (Float) -> Float
+
+              def initialize: (
+                ?max_height: Float,
+                ?max_width: Float,
+                ?min_height: Float,
+                ?min_width: Float
+              ) -> void
+
+              def to_hash: -> {
+                max_height: Float,
+                max_width: Float,
+                min_height: Float,
+                min_width: Float
+              }
+            end
+          end
+
+          type viewport = { height: Float, width: Float }
+
+          class Viewport < Stagehand::Internal::Type::BaseModel
+            attr_reader height: Float?
+
+            def height=: (Float) -> Float
+
+            attr_reader width: Float?
+
+            def width=: (Float) -> Float
+
+            def initialize: (?height: Float, ?width: Float) -> void
+
+            def to_hash: -> { height: Float, width: Float }
+          end
+        end
+
+        type proxies =
+          bool
+          | ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::proxy_config_list]
+
+        module Proxies
+          extend Stagehand::Internal::Type::Union
+
+          type proxy_config_list =
+            Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase
+            | Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::External
+
+          module ProxyConfigList
+            extend Stagehand::Internal::Type::Union
+
+            type browserbase =
+              {
+                type: :browserbase,
+                domain_pattern: String,
+                geolocation: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase::Geolocation
+              }
+
+            class Browserbase < Stagehand::Internal::Type::BaseModel
+              attr_accessor type: :browserbase
+
+              attr_reader domain_pattern: String?
+
+              def domain_pattern=: (String) -> String
+
+              attr_reader geolocation: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase::Geolocation?
+
+              def geolocation=: (
+                Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase::Geolocation
+              ) -> Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase::Geolocation
+
+              def initialize: (
+                ?domain_pattern: String,
+                ?geolocation: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase::Geolocation,
+                ?type: :browserbase
+              ) -> void
+
+              def to_hash: -> {
+                type: :browserbase,
+                domain_pattern: String,
+                geolocation: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase::Geolocation
+              }
+
+              type geolocation =
+                { country: String, city: String, state: String }
+
+              class Geolocation < Stagehand::Internal::Type::BaseModel
+                attr_accessor country: String
+
+                attr_reader city: String?
+
+                def city=: (String) -> String
+
+                attr_reader state: String?
+
+                def state=: (String) -> String
+
+                def initialize: (
+                  country: String,
+                  ?city: String,
+                  ?state: String
+                ) -> void
+
+                def to_hash: -> { country: String, city: String, state: String }
+              end
+            end
+
+            type external =
+              {
+                server: String,
+                type: :external,
+                domain_pattern: String,
+                password: String,
+                username: String
+              }
+
+            class External < Stagehand::Internal::Type::BaseModel
+              attr_accessor server: String
+
+              attr_accessor type: :external
+
+              attr_reader domain_pattern: String?
+
+              def domain_pattern=: (String) -> String
+
+              attr_reader password: String?
+
+              def password=: (String) -> String
+
+              attr_reader username: String?
+
+              def username=: (String) -> String
+
+              def initialize: (
+                server: String,
+                ?domain_pattern: String,
+                ?password: String,
+                ?username: String,
+                ?type: :external
+              ) -> void
+
+              def to_hash: -> {
+                server: String,
+                type: :external,
+                domain_pattern: String,
+                password: String,
+                username: String
+              }
+            end
+
+            def self?.variants: -> ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::proxy_config_list]
+          end
+
+          def self?.variants: -> ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::proxies]
+
+          ProxyConfigListArray: Stagehand::Internal::Type::Converter
+        end
+
+        type region =
+          :"us-west-2" | :"us-east-1" | :"eu-central-1" | :"ap-southeast-1"
+
+        module Region
+          extend Stagehand::Internal::Type::Enum
+
+          US_WEST_2: :"us-west-2"
+          US_EAST_1: :"us-east-1"
+          EU_CENTRAL_1: :"eu-central-1"
+          AP_SOUTHEAST_1: :"ap-southeast-1"
+
+          def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::region]
+        end
+      end
+
+      type x_language = :typescript | :python | :playground
+
+      module XLanguage
+        extend Stagehand::Internal::Type::Enum
+
+        TYPESCRIPT: :typescript
+        PYTHON: :python
+        PLAYGROUND: :playground
+
+        def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::x_language]
+      end
+
+      type x_stream_response = :true | :false
+
+      module XStreamResponse
+        extend Stagehand::Internal::Type::Enum
+
+        TRUE: :true
+        FALSE: :false
+
+        def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::x_stream_response]
+      end
     end
   end
 end

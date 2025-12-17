@@ -440,9 +440,9 @@ module Stagehand
         # @example
         #   # `action` is a `Stagehand::Action`
         #   action => {
-        #     arguments: arguments,
         #     description: description,
-        #     method_: method_
+        #     selector: selector,
+        #     arguments: arguments
         #   }
         def deconstruct_keys(keys)
           (keys || self.class.known_fields.keys)

@@ -2,56 +2,90 @@
 
 module Stagehand
   module Models
-    # Default extraction result
-    module SessionExtractResponse
-      extend Stagehand::Internal::Type::Union
-
-      Variants =
+    class SessionExtractResponse < Stagehand::Internal::Type::BaseModel
+      OrHash =
         T.type_alias do
           T.any(
-            Stagehand::Models::SessionExtractResponse::Extraction,
-            T::Hash[Symbol, T.anything]
+            Stagehand::Models::SessionExtractResponse,
+            Stagehand::Internal::AnyHash
           )
         end
 
-      class Extraction < Stagehand::Internal::Type::BaseModel
-        OrHash =
-          T.type_alias do
-            T.any(
-              Stagehand::Models::SessionExtractResponse::Extraction,
-              Stagehand::Internal::AnyHash
-            )
-          end
+      sig { returns(Stagehand::Models::SessionExtractResponse::Data) }
+      attr_reader :data
 
-        sig { returns(T.nilable(String)) }
-        attr_reader :extraction
+      sig do
+        params(
+          data: Stagehand::Models::SessionExtractResponse::Data::OrHash
+        ).void
+      end
+      attr_writer :data
 
-        sig { params(extraction: String).void }
-        attr_writer :extraction
+      # Indicates whether the request was successful
+      sig { returns(T::Boolean) }
+      attr_accessor :success
 
-        # Default extraction result
-        sig { params(extraction: String).returns(T.attached_class) }
-        def self.new(extraction: nil)
-        end
-
-        sig { override.returns({ extraction: String }) }
-        def to_hash
-        end
+      sig do
+        params(
+          data: Stagehand::Models::SessionExtractResponse::Data::OrHash,
+          success: T::Boolean
+        ).returns(T.attached_class)
+      end
+      def self.new(
+        data:,
+        # Indicates whether the request was successful
+        success:
+      )
       end
 
       sig do
         override.returns(
-          T::Array[Stagehand::Models::SessionExtractResponse::Variants]
+          {
+            data: Stagehand::Models::SessionExtractResponse::Data,
+            success: T::Boolean
+          }
         )
       end
-      def self.variants
+      def to_hash
       end
 
-      CustomMap =
-        T.let(
-          Stagehand::Internal::Type::HashOf[Stagehand::Internal::Type::Unknown],
-          Stagehand::Internal::Type::Converter
+      class Data < Stagehand::Internal::Type::BaseModel
+        OrHash =
+          T.type_alias do
+            T.any(
+              Stagehand::Models::SessionExtractResponse::Data,
+              Stagehand::Internal::AnyHash
+            )
+          end
+
+        # Extracted data matching the requested schema
+        sig { returns(T.anything) }
+        attr_accessor :result
+
+        # Action ID for tracking
+        sig { returns(T.nilable(String)) }
+        attr_reader :action_id
+
+        sig { params(action_id: String).void }
+        attr_writer :action_id
+
+        sig do
+          params(result: T.anything, action_id: String).returns(
+            T.attached_class
+          )
+        end
+        def self.new(
+          # Extracted data matching the requested schema
+          result:,
+          # Action ID for tracking
+          action_id: nil
         )
+        end
+
+        sig { override.returns({ result: T.anything, action_id: String }) }
+        def to_hash
+        end
+      end
     end
   end
 end

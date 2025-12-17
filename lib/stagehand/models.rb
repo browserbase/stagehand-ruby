@@ -47,7 +47,7 @@ module Stagehand
 
   SessionEndParams = Stagehand::Models::SessionEndParams
 
-  SessionExecuteAgentParams = Stagehand::Models::SessionExecuteAgentParams
+  SessionExecuteParams = Stagehand::Models::SessionExecuteParams
 
   SessionExtractParams = Stagehand::Models::SessionExtractParams
 

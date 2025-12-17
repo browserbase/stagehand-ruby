@@ -5,6 +5,9 @@ module Stagehand
         frame_id: String,
         instruction: String,
         options: Stagehand::SessionObserveParams::Options,
+        x_language: Stagehand::Models::SessionObserveParams::x_language,
+        x_sdk_version: String,
+        x_sent_at: Time,
         x_stream_response: Stagehand::Models::SessionObserveParams::x_stream_response
       }
       & Stagehand::Internal::Type::request_parameters
@@ -27,6 +30,20 @@ module Stagehand
         Stagehand::SessionObserveParams::Options
       ) -> Stagehand::SessionObserveParams::Options
 
+      attr_reader x_language: Stagehand::Models::SessionObserveParams::x_language?
+
+      def x_language=: (
+        Stagehand::Models::SessionObserveParams::x_language
+      ) -> Stagehand::Models::SessionObserveParams::x_language
+
+      attr_reader x_sdk_version: String?
+
+      def x_sdk_version=: (String) -> String
+
+      attr_reader x_sent_at: Time?
+
+      def x_sent_at=: (Time) -> Time
+
       attr_reader x_stream_response: Stagehand::Models::SessionObserveParams::x_stream_response?
 
       def x_stream_response=: (
@@ -37,6 +54,9 @@ module Stagehand
         ?frame_id: String,
         ?instruction: String,
         ?options: Stagehand::SessionObserveParams::Options,
+        ?x_language: Stagehand::Models::SessionObserveParams::x_language,
+        ?x_sdk_version: String,
+        ?x_sent_at: Time,
         ?x_stream_response: Stagehand::Models::SessionObserveParams::x_stream_response,
         ?request_options: Stagehand::request_opts
       ) -> void
@@ -45,37 +65,58 @@ module Stagehand
         frame_id: String,
         instruction: String,
         options: Stagehand::SessionObserveParams::Options,
+        x_language: Stagehand::Models::SessionObserveParams::x_language,
+        x_sdk_version: String,
+        x_sent_at: Time,
         x_stream_response: Stagehand::Models::SessionObserveParams::x_stream_response,
         request_options: Stagehand::RequestOptions
       }
 
       type options =
-        { model: Stagehand::ModelConfig, selector: String, timeout: Integer }
+        {
+          model: Stagehand::Models::model_config,
+          selector: String,
+          timeout: Float
+        }
 
       class Options < Stagehand::Internal::Type::BaseModel
-        attr_reader model: Stagehand::ModelConfig?
+        attr_reader model: Stagehand::Models::model_config?
 
-        def model=: (Stagehand::ModelConfig) -> Stagehand::ModelConfig
+        def model=: (
+          Stagehand::Models::model_config
+        ) -> Stagehand::Models::model_config
 
         attr_reader selector: String?
 
         def selector=: (String) -> String
 
-        attr_reader timeout: Integer?
+        attr_reader timeout: Float?
 
-        def timeout=: (Integer) -> Integer
+        def timeout=: (Float) -> Float
 
         def initialize: (
-          ?model: Stagehand::ModelConfig,
+          ?model: Stagehand::Models::model_config,
           ?selector: String,
-          ?timeout: Integer
+          ?timeout: Float
         ) -> void
 
         def to_hash: -> {
-          model: Stagehand::ModelConfig,
+          model: Stagehand::Models::model_config,
           selector: String,
-          timeout: Integer
+          timeout: Float
         }
+      end
+
+      type x_language = :typescript | :python | :playground
+
+      module XLanguage
+        extend Stagehand::Internal::Type::Enum
+
+        TYPESCRIPT: :typescript
+        PYTHON: :python
+        PLAYGROUND: :playground
+
+        def self?.values: -> ::Array[Stagehand::Models::SessionObserveParams::x_language]
       end
 
       type x_stream_response = :true | :false

@@ -11,14 +11,15 @@ module Stagehand
           )
         end
 
-      sig { returns(T.nilable(T::Boolean)) }
-      attr_reader :success
-
-      sig { params(success: T::Boolean).void }
-      attr_writer :success
+      # Indicates whether the request was successful
+      sig { returns(T::Boolean) }
+      attr_accessor :success
 
       sig { params(success: T::Boolean).returns(T.attached_class) }
-      def self.new(success: nil)
+      def self.new(
+        # Indicates whether the request was successful
+        success:
+      )
       end
 
       sig { override.returns({ success: T::Boolean }) }

@@ -1,15 +1,34 @@
 module Stagehand
   module Models
-    type session_start_response = { available: bool, session_id: String }
+    type session_start_response =
+      { data: Stagehand::Models::SessionStartResponse::Data, success: bool }
 
     class SessionStartResponse < Stagehand::Internal::Type::BaseModel
-      attr_accessor available: bool
+      attr_accessor data: Stagehand::Models::SessionStartResponse::Data
 
-      attr_accessor session_id: String
+      attr_accessor success: bool
 
-      def initialize: (available: bool, session_id: String) -> void
+      def initialize: (
+        data: Stagehand::Models::SessionStartResponse::Data,
+        success: bool
+      ) -> void
 
-      def to_hash: -> { available: bool, session_id: String }
+      def to_hash: -> {
+        data: Stagehand::Models::SessionStartResponse::Data,
+        success: bool
+      }
+
+      type data = { available: bool, session_id: String }
+
+      class Data < Stagehand::Internal::Type::BaseModel
+        attr_accessor available: bool
+
+        attr_accessor session_id: String
+
+        def initialize: (available: bool, session_id: String) -> void
+
+        def to_hash: -> { available: bool, session_id: String }
+      end
     end
   end
 end

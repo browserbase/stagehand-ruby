@@ -1,23 +1,36 @@
 module Stagehand
   module Models
-    type session_navigate_response = { ok: bool, status: Integer, url: String }
+    type session_navigate_response =
+      { data: Stagehand::Models::SessionNavigateResponse::Data, success: bool }
 
     class SessionNavigateResponse < Stagehand::Internal::Type::BaseModel
-      attr_reader ok: bool?
+      attr_accessor data: Stagehand::Models::SessionNavigateResponse::Data
 
-      def ok=: (bool) -> bool
+      attr_accessor success: bool
 
-      attr_reader status: Integer?
+      def initialize: (
+        data: Stagehand::Models::SessionNavigateResponse::Data,
+        success: bool
+      ) -> void
 
-      def status=: (Integer) -> Integer
+      def to_hash: -> {
+        data: Stagehand::Models::SessionNavigateResponse::Data,
+        success: bool
+      }
 
-      attr_reader url: String?
+      type data = { result: top, action_id: String }
 
-      def url=: (String) -> String
+      class Data < Stagehand::Internal::Type::BaseModel
+        attr_accessor result: top
 
-      def initialize: (?ok: bool, ?status: Integer, ?url: String) -> void
+        attr_reader action_id: String?
 
-      def to_hash: -> { ok: bool, status: Integer, url: String }
+        def action_id=: (String) -> String
+
+        def initialize: (result: top, ?action_id: String) -> void
+
+        def to_hash: -> { result: top, action_id: String }
+      end
     end
   end
 end

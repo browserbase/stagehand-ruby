@@ -4,27 +4,41 @@ module Stagehand
   module Models
     # @see Stagehand::Resources::Sessions#navigate
     class SessionNavigateResponse < Stagehand::Internal::Type::BaseModel
-      # @!attribute ok
+      # @!attribute data
       #
-      #   @return [Boolean, nil]
-      optional :ok, Stagehand::Internal::Type::Boolean
+      #   @return [Stagehand::Models::SessionNavigateResponse::Data]
+      required :data, -> { Stagehand::Models::SessionNavigateResponse::Data }
 
-      # @!attribute status
+      # @!attribute success
+      #   Indicates whether the request was successful
       #
-      #   @return [Integer, nil]
-      optional :status, Integer
+      #   @return [Boolean]
+      required :success, Stagehand::Internal::Type::Boolean
 
-      # @!attribute url
+      # @!method initialize(data:, success:)
+      #   @param data [Stagehand::Models::SessionNavigateResponse::Data]
       #
-      #   @return [String, nil]
-      optional :url, String
+      #   @param success [Boolean] Indicates whether the request was successful
 
-      # @!method initialize(ok: nil, status: nil, url: nil)
-      #   Navigation response (may be null)
-      #
-      #   @param ok [Boolean]
-      #   @param status [Integer]
-      #   @param url [String]
+      # @see Stagehand::Models::SessionNavigateResponse#data
+      class Data < Stagehand::Internal::Type::BaseModel
+        # @!attribute result
+        #   Navigation response (Playwright Response object or null)
+        #
+        #   @return [Object]
+        required :result, Stagehand::Internal::Type::Unknown
+
+        # @!attribute action_id
+        #   Action ID for tracking
+        #
+        #   @return [String, nil]
+        optional :action_id, String, api_name: :actionId
+
+        # @!method initialize(result:, action_id: nil)
+        #   @param result [Object] Navigation response (Playwright Response object or null)
+        #
+        #   @param action_id [String] Action ID for tracking
+      end
     end
   end
 end
