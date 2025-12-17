@@ -34,7 +34,7 @@ stagehand = Stagehand::Client.new(
   model_api_key: ENV["MODEL_API_KEY"] # This is the default and can be omitted
 )
 
-response = stagehand.sessions.act("c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123", input: "click the first link on the page")
+response = stagehand.sessions.act("00000000-your-session-id-000000000000", input: "click the first link on the page")
 
 puts(response.data)
 ```
@@ -180,18 +180,18 @@ This library provides comprehensive [RBI](https://sorbet.org/docs/rbi) definitio
 You can provide typesafe request parameters like so:
 
 ```ruby
-stagehand.sessions.act("c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123", input: "click the first link on the page")
+stagehand.sessions.act("00000000-your-session-id-000000000000", input: "click the first link on the page")
 ```
 
 Or, equivalently:
 
 ```ruby
 # Hashes work, but are not typesafe:
-stagehand.sessions.act("c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123", input: "click the first link on the page")
+stagehand.sessions.act("00000000-your-session-id-000000000000", input: "click the first link on the page")
 
 # You can also splat a full Params class:
 params = Stagehand::SessionActParams.new(input: "click the first link on the page")
-stagehand.sessions.act("c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123", **params)
+stagehand.sessions.act("00000000-your-session-id-000000000000", **params)
 ```
 
 ### Enums
