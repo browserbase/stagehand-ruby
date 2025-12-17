@@ -1,13 +1,13 @@
 module Stagehand
   module Models
-    type session_end_response = { success: true }
+    type session_end_response = { success: bool }
 
     class SessionEndResponse < Stagehand::Internal::Type::BaseModel
-      attr_accessor success: true
+      attr_accessor success: bool
 
-      def initialize: (?success: true) -> void
+      def initialize: (success: bool) -> void
 
-      def to_hash: -> { success: true }
+      def to_hash: -> { success: bool }
     end
   end
 end

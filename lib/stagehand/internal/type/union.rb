@@ -10,7 +10,7 @@ module Stagehand
       #   case model_config
       #   when String
       #     # ...
-      #   when Stagehand::ModelConfig::UnionMember1
+      #   when Stagehand::ModelConfig::ModelConfigObject
       #     puts(model_config.model_name)
       #   else
       #     puts(model_config)

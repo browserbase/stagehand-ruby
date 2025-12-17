@@ -1,14 +1,14 @@
 module Stagehand
   module Models
-    type model_config = String | Stagehand::ModelConfig::UnionMember1
+    type model_config = String | Stagehand::ModelConfig::ModelConfigObject
 
     module ModelConfig
       extend Stagehand::Internal::Type::Union
 
-      type union_member1 =
+      type model_config_object =
         { model_name: String, api_key: String, base_url: String }
 
-      class UnionMember1 < Stagehand::Internal::Type::BaseModel
+      class ModelConfigObject < Stagehand::Internal::Type::BaseModel
         attr_accessor model_name: String
 
         attr_reader api_key: String?

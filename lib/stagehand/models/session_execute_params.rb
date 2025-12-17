@@ -74,8 +74,10 @@ module Stagehand
         optional :cua, Stagehand::Internal::Type::Boolean
 
         # @!attribute model
+        #   Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
+        #   'anthropic/claude-4.5-opus')
         #
-        #   @return [String, Stagehand::Models::ModelConfig::UnionMember1, nil]
+        #   @return [String, Stagehand::Models::ModelConfig::ModelConfigObject, nil]
         optional :model, union: -> { Stagehand::ModelConfig }
 
         # @!attribute system_prompt
@@ -85,9 +87,12 @@ module Stagehand
         optional :system_prompt, String, api_name: :systemPrompt
 
         # @!method initialize(cua: nil, model: nil, system_prompt: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {Stagehand::Models::SessionExecuteParams::AgentConfig} for more details.
+        #
         #   @param cua [Boolean] Enable Computer Use Agent mode
         #
-        #   @param model [String, Stagehand::Models::ModelConfig::UnionMember1]
+        #   @param model [String, Stagehand::Models::ModelConfig::ModelConfigObject] Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/cl
         #
         #   @param system_prompt [String] Custom system prompt for the agent
       end

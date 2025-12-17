@@ -32,7 +32,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
 
     assert_pattern do
       response => {
-        success: true | false
+        success: Stagehand::Internal::Type::Boolean
       }
     end
   end

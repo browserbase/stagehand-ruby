@@ -117,8 +117,10 @@ module Stagehand
 
       class Options < Stagehand::Internal::Type::BaseModel
         # @!attribute model
+        #   Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
+        #   'anthropic/claude-4.5-opus')
         #
-        #   @return [String, Stagehand::Models::ModelConfig::UnionMember1, nil]
+        #   @return [String, Stagehand::Models::ModelConfig::ModelConfigObject, nil]
         optional :model, union: -> { Stagehand::ModelConfig }
 
         # @!attribute timeout
@@ -134,7 +136,10 @@ module Stagehand
         optional :variables, Stagehand::Internal::Type::HashOf[String]
 
         # @!method initialize(model: nil, timeout: nil, variables: nil)
-        #   @param model [String, Stagehand::Models::ModelConfig::UnionMember1]
+        #   Some parameter documentations has been truncated, see
+        #   {Stagehand::Models::SessionActParams::Options} for more details.
+        #
+        #   @param model [String, Stagehand::Models::ModelConfig::ModelConfigObject] Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/cl
         #
         #   @param timeout [Float] Timeout in ms for the action
         #

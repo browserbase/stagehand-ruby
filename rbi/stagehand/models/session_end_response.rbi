@@ -11,11 +11,15 @@ module Stagehand
           )
         end
 
+      # Indicates whether the request was successful
       sig { returns(T::Boolean) }
       attr_accessor :success
 
       sig { params(success: T::Boolean).returns(T.attached_class) }
-      def self.new(success: true)
+      def self.new(
+        # Indicates whether the request was successful
+        success:
+      )
       end
 
       sig { override.returns({ success: T::Boolean }) }
