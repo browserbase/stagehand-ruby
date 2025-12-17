@@ -1,5 +1,28 @@
 module Stagehand
   module Models
-    SessionEndResponse: Stagehand::Internal::Type::Converter
+    type session_end_response =
+      { success: Stagehand::Models::SessionEndResponse::success }
+
+    class SessionEndResponse < Stagehand::Internal::Type::BaseModel
+      attr_accessor success: Stagehand::Models::SessionEndResponse::success
+
+      def initialize: (
+        success: Stagehand::Models::SessionEndResponse::success
+      ) -> void
+
+      def to_hash: -> {
+        success: Stagehand::Models::SessionEndResponse::success
+      }
+
+      type success = true
+
+      module Success
+        extend Stagehand::Internal::Type::Enum
+
+        TRUE: true
+
+        def self?.values: -> ::Array[Stagehand::Models::SessionEndResponse::success]
+      end
+    end
   end
 end

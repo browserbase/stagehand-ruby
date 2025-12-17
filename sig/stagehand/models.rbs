@@ -7,7 +7,7 @@ module Stagehand
 
   class SessionEndParams = Stagehand::Models::SessionEndParams
 
-  class SessionExecuteAgentParams = Stagehand::Models::SessionExecuteAgentParams
+  class SessionExecuteParams = Stagehand::Models::SessionExecuteParams
 
   class SessionExtractParams = Stagehand::Models::SessionExtractParams
 

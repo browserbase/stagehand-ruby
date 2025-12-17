@@ -2,72 +2,94 @@ module Stagehand
   module Resources
     class Sessions
       def act: (
-        top id,
-        ?body: top,
-        ?x_language: top,
-        ?x_sdk_version: top,
-        ?x_sent_at: top,
-        ?x_stream_response: top,
+        String id,
+        input: Stagehand::Models::SessionActParams::input,
+        ?frame_id: String,
+        ?options: Stagehand::SessionActParams::Options,
+        ?x_language: Stagehand::Models::SessionActParams::x_language,
+        ?x_sdk_version: String,
+        ?x_sent_at: Time,
+        ?x_stream_response: Stagehand::Models::SessionActParams::x_stream_response,
         ?request_options: Stagehand::request_opts
-      ) -> top
+      ) -> Stagehand::Models::SessionActResponse
 
       def end_: (
-        top id,
-        ?x_language: top,
-        ?x_sdk_version: top,
-        ?x_sent_at: top,
-        ?x_stream_response: top,
+        String id,
+        ?x_language: Stagehand::Models::SessionEndParams::x_language,
+        ?x_sdk_version: String,
+        ?x_sent_at: Time,
+        ?x_stream_response: Stagehand::Models::SessionEndParams::x_stream_response,
         ?request_options: Stagehand::request_opts
-      ) -> top
+      ) -> Stagehand::Models::SessionEndResponse
 
-      def execute_agent: (
-        top id,
-        ?body: top,
-        ?x_language: top,
-        ?x_sdk_version: top,
-        ?x_sent_at: top,
-        ?x_stream_response: top,
+      def execute: (
+        String id,
+        agent_config: Stagehand::SessionExecuteParams::AgentConfig,
+        execute_options: Stagehand::SessionExecuteParams::ExecuteOptions,
+        ?frame_id: String,
+        ?x_language: Stagehand::Models::SessionExecuteParams::x_language,
+        ?x_sdk_version: String,
+        ?x_sent_at: Time,
+        ?x_stream_response: Stagehand::Models::SessionExecuteParams::x_stream_response,
         ?request_options: Stagehand::request_opts
-      ) -> top
+      ) -> Stagehand::Models::SessionExecuteResponse
 
       def extract: (
-        top id,
-        ?body: top,
-        ?x_language: top,
-        ?x_sdk_version: top,
-        ?x_sent_at: top,
-        ?x_stream_response: top,
+        String id,
+        ?frame_id: String,
+        ?instruction: String,
+        ?options: Stagehand::SessionExtractParams::Options,
+        ?schema: ::Hash[Symbol, top],
+        ?x_language: Stagehand::Models::SessionExtractParams::x_language,
+        ?x_sdk_version: String,
+        ?x_sent_at: Time,
+        ?x_stream_response: Stagehand::Models::SessionExtractParams::x_stream_response,
         ?request_options: Stagehand::request_opts
-      ) -> top
+      ) -> Stagehand::Models::SessionExtractResponse
 
       def navigate: (
-        top id,
-        ?body: top,
-        ?x_language: top,
-        ?x_sdk_version: top,
-        ?x_sent_at: top,
-        ?x_stream_response: top,
+        String id,
+        url: String,
+        ?frame_id: String,
+        ?options: Stagehand::SessionNavigateParams::Options,
+        ?x_language: Stagehand::Models::SessionNavigateParams::x_language,
+        ?x_sdk_version: String,
+        ?x_sent_at: Time,
+        ?x_stream_response: Stagehand::Models::SessionNavigateParams::x_stream_response,
         ?request_options: Stagehand::request_opts
-      ) -> top
+      ) -> Stagehand::Models::SessionNavigateResponse
 
       def observe: (
-        top id,
-        ?body: top,
-        ?x_language: top,
-        ?x_sdk_version: top,
-        ?x_sent_at: top,
-        ?x_stream_response: top,
+        String id,
+        ?frame_id: String,
+        ?instruction: String,
+        ?options: Stagehand::SessionObserveParams::Options,
+        ?x_language: Stagehand::Models::SessionObserveParams::x_language,
+        ?x_sdk_version: String,
+        ?x_sent_at: Time,
+        ?x_stream_response: Stagehand::Models::SessionObserveParams::x_stream_response,
         ?request_options: Stagehand::request_opts
-      ) -> top
+      ) -> Stagehand::Models::SessionObserveResponse
 
       def start: (
-        ?body: top,
-        ?x_language: top,
-        ?x_sdk_version: top,
-        ?x_sent_at: top,
-        ?x_stream_response: top,
+        model_name: String,
+        ?act_timeout_ms: Float,
+        ?browser: Stagehand::SessionStartParams::Browser,
+        ?browserbase_session_create_params: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams,
+        ?browserbase_session_id: String,
+        ?debug_dom: bool,
+        ?dom_settle_timeout_ms: Float,
+        ?experimental: bool,
+        ?self_heal: bool,
+        ?system_prompt: String,
+        ?verbose: Stagehand::Models::SessionStartParams::verbose,
+        ?wait_for_captcha_solves: bool,
+        ?x_language: Stagehand::Models::SessionStartParams::x_language,
+        ?x_sdk_version: String,
+        ?x_sent_at: Time,
+        ?x_stream_response: Stagehand::Models::SessionStartParams::x_stream_response,
         ?request_options: Stagehand::request_opts
-      ) -> top
+      ) -> Stagehand::Models::SessionStartResponse
 
       def initialize: (client: Stagehand::Client) -> void
     end

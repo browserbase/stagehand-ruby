@@ -2,11 +2,13 @@ module Stagehand
   module Models
     type session_navigate_params =
       {
-        body: top,
-        x_language: top,
-        x_sdk_version: top,
-        x_sent_at: top,
-        x_stream_response: top
+        url: String,
+        frame_id: String,
+        options: Stagehand::SessionNavigateParams::Options,
+        x_language: Stagehand::Models::SessionNavigateParams::x_language,
+        x_sdk_version: String,
+        x_sent_at: Time,
+        x_stream_response: Stagehand::Models::SessionNavigateParams::x_stream_response
       }
       & Stagehand::Internal::Type::request_parameters
 
@@ -14,43 +16,129 @@ module Stagehand
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters
 
-      attr_reader body: top?
+      attr_accessor url: String
 
-      def body=: (top) -> top
+      attr_reader frame_id: String?
 
-      attr_reader x_language: top?
+      def frame_id=: (String) -> String
 
-      def x_language=: (top) -> top
+      attr_reader options: Stagehand::SessionNavigateParams::Options?
 
-      attr_reader x_sdk_version: top?
+      def options=: (
+        Stagehand::SessionNavigateParams::Options
+      ) -> Stagehand::SessionNavigateParams::Options
 
-      def x_sdk_version=: (top) -> top
+      attr_reader x_language: Stagehand::Models::SessionNavigateParams::x_language?
 
-      attr_reader x_sent_at: top?
+      def x_language=: (
+        Stagehand::Models::SessionNavigateParams::x_language
+      ) -> Stagehand::Models::SessionNavigateParams::x_language
 
-      def x_sent_at=: (top) -> top
+      attr_reader x_sdk_version: String?
 
-      attr_reader x_stream_response: top?
+      def x_sdk_version=: (String) -> String
 
-      def x_stream_response=: (top) -> top
+      attr_reader x_sent_at: Time?
+
+      def x_sent_at=: (Time) -> Time
+
+      attr_reader x_stream_response: Stagehand::Models::SessionNavigateParams::x_stream_response?
+
+      def x_stream_response=: (
+        Stagehand::Models::SessionNavigateParams::x_stream_response
+      ) -> Stagehand::Models::SessionNavigateParams::x_stream_response
 
       def initialize: (
-        ?body: top,
-        ?x_language: top,
-        ?x_sdk_version: top,
-        ?x_sent_at: top,
-        ?x_stream_response: top,
+        url: String,
+        ?frame_id: String,
+        ?options: Stagehand::SessionNavigateParams::Options,
+        ?x_language: Stagehand::Models::SessionNavigateParams::x_language,
+        ?x_sdk_version: String,
+        ?x_sent_at: Time,
+        ?x_stream_response: Stagehand::Models::SessionNavigateParams::x_stream_response,
         ?request_options: Stagehand::request_opts
       ) -> void
 
       def to_hash: -> {
-        body: top,
-        x_language: top,
-        x_sdk_version: top,
-        x_sent_at: top,
-        x_stream_response: top,
+        url: String,
+        frame_id: String,
+        options: Stagehand::SessionNavigateParams::Options,
+        x_language: Stagehand::Models::SessionNavigateParams::x_language,
+        x_sdk_version: String,
+        x_sent_at: Time,
+        x_stream_response: Stagehand::Models::SessionNavigateParams::x_stream_response,
         request_options: Stagehand::RequestOptions
       }
+
+      type options =
+        {
+          referer: String,
+          timeout: Float,
+          wait_until: Stagehand::Models::SessionNavigateParams::Options::wait_until
+        }
+
+      class Options < Stagehand::Internal::Type::BaseModel
+        attr_reader referer: String?
+
+        def referer=: (String) -> String
+
+        attr_reader timeout: Float?
+
+        def timeout=: (Float) -> Float
+
+        attr_reader wait_until: Stagehand::Models::SessionNavigateParams::Options::wait_until?
+
+        def wait_until=: (
+          Stagehand::Models::SessionNavigateParams::Options::wait_until
+        ) -> Stagehand::Models::SessionNavigateParams::Options::wait_until
+
+        def initialize: (
+          ?referer: String,
+          ?timeout: Float,
+          ?wait_until: Stagehand::Models::SessionNavigateParams::Options::wait_until
+        ) -> void
+
+        def to_hash: -> {
+          referer: String,
+          timeout: Float,
+          wait_until: Stagehand::Models::SessionNavigateParams::Options::wait_until
+        }
+
+        type wait_until = :load | :domcontentloaded | :networkidle
+
+        module WaitUntil
+          extend Stagehand::Internal::Type::Enum
+
+          LOAD: :load
+          DOMCONTENTLOADED: :domcontentloaded
+          NETWORKIDLE: :networkidle
+
+          def self?.values: -> ::Array[Stagehand::Models::SessionNavigateParams::Options::wait_until]
+        end
+      end
+
+      type x_language = :typescript | :python | :playground
+
+      module XLanguage
+        extend Stagehand::Internal::Type::Enum
+
+        TYPESCRIPT: :typescript
+        PYTHON: :python
+        PLAYGROUND: :playground
+
+        def self?.values: -> ::Array[Stagehand::Models::SessionNavigateParams::x_language]
+      end
+
+      type x_stream_response = :true | :false
+
+      module XStreamResponse
+        extend Stagehand::Internal::Type::Enum
+
+        TRUE: :true
+        FALSE: :false
+
+        def self?.values: -> ::Array[Stagehand::Models::SessionNavigateParams::x_stream_response]
+      end
     end
   end
 end
