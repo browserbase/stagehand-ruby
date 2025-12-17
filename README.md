@@ -34,7 +34,7 @@ stagehand = Stagehand::Client.new(
   model_api_key: ENV["MODEL_API_KEY"] # This is the default and can be omitted
 )
 
-response = stagehand.sessions.act
+response = stagehand.sessions.act("c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123", input: "click the first link on the page")
 
 puts(response.data)
 ```
@@ -45,7 +45,7 @@ When the library is unable to connect to the API, or if the API returns a non-su
 
 ```ruby
 begin
-  session = stagehand.sessions.act
+  session = stagehand.sessions.start(model_name: "gpt-4o")
 rescue Stagehand::Errors::APIConnectionError => e
   puts("The server could not be reached")
   puts(e.cause)  # an underlying Exception, likely raised within `net/http`
@@ -88,7 +88,7 @@ stagehand = Stagehand::Client.new(
 )
 
 # Or, configure per-request:
-stagehand.sessions.act(request_options: {max_retries: 5})
+stagehand.sessions.start(model_name: "gpt-4o", request_options: {max_retries: 5})
 ```
 
 ### Timeouts
@@ -102,7 +102,7 @@ stagehand = Stagehand::Client.new(
 )
 
 # Or, configure per-request:
-stagehand.sessions.act(request_options: {timeout: 5})
+stagehand.sessions.start(model_name: "gpt-4o", request_options: {timeout: 5})
 ```
 
 On timeout, `Stagehand::Errors::APITimeoutError` is raised.
@@ -133,7 +133,8 @@ Note: the `extra_` parameters of the same name overrides the documented paramete
 
 ```ruby
 response =
-  stagehand.sessions.act(
+  stagehand.sessions.start(
+    model_name: "gpt-4o",
     request_options: {
       extra_query: {my_query_parameter: value},
       extra_body: {my_body_parameter: value},
@@ -179,17 +180,17 @@ This library provides comprehensive [RBI](https://sorbet.org/docs/rbi) definitio
 You can provide typesafe request parameters like so:
 
 ```ruby
-stagehand.sessions.act
+stagehand.sessions.act("c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123", input: "click the first link on the page")
 ```
 
 Or, equivalently:
 
 ```ruby
 # Hashes work, but are not typesafe:
-stagehand.sessions.act
+stagehand.sessions.act("c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123", input: "click the first link on the page")
 
 # You can also splat a full Params class:
-params = Stagehand::SessionActParams.new
+params = Stagehand::SessionActParams.new(input: "click the first link on the page")
 stagehand.sessions.act("c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123", **params)
 ```
 
