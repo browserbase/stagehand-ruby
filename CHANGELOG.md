@@ -1,5 +1,26 @@
 # Changelog
 
+## 0.3.0 (2025-12-17)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/browserbase/stagehand-ruby/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** manual updates ([7dcf75c](https://github.com/browserbase/stagehand-ruby/commit/7dcf75cc0c580743b8bb0bbdb41077a6a7aa6dfb))
+* **api:** manual updates ([3162ca0](https://github.com/browserbase/stagehand-ruby/commit/3162ca00c75b37ccb869d7a082f25b263e15d93d))
+* **api:** manual updates ([a972ef7](https://github.com/browserbase/stagehand-ruby/commit/a972ef7dc9040af201ee8e87db013fc077a7ab3f))
+* **api:** manual updates ([be169eb](https://github.com/browserbase/stagehand-ruby/commit/be169ebb8a61b86f4d1caee63aeded39139f10aa))
+* **api:** manual updates ([2a98da9](https://github.com/browserbase/stagehand-ruby/commit/2a98da9563a1ab4e33d6bf3398083d772b61e07f))
+* **api:** manual updates ([05879da](https://github.com/browserbase/stagehand-ruby/commit/05879da16a92ae6199ca2c4e323a6602fbc5d841))
+* **api:** manual updates ([69e4183](https://github.com/browserbase/stagehand-ruby/commit/69e418398b943df8b7454b50ab02d17ba3feb212))
+* **api:** manual updates ([9176bca](https://github.com/browserbase/stagehand-ruby/commit/9176bcaf88f115335199a44a52c8e1d697920822))
+* **api:** manual updates ([36f0681](https://github.com/browserbase/stagehand-ruby/commit/36f0681452a11e25da7126e0270855bbdd3fe8df))
+
+
+### Bug Fixes
+
+* calling `break` out of streams should be instantaneous ([369b9d0](https://github.com/browserbase/stagehand-ruby/commit/369b9d0d37390d96fa673d08e64594cefc6a04fa))
+
 ## 0.2.0 (2025-12-16)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/browserbase/stagehand-ruby/compare/v0.1.0...v0.2.0)
