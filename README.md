@@ -45,7 +45,7 @@ When the library is unable to connect to the API, or if the API returns a non-su
 
 ```ruby
 begin
-  session = stagehand.sessions.start(model_name: "gpt-4o")
+  session = stagehand.sessions.start(model_name: "openai/gpt-5-nano")
 rescue Stagehand::Errors::APIConnectionError => e
   puts("The server could not be reached")
   puts(e.cause)  # an underlying Exception, likely raised within `net/http`
@@ -88,7 +88,7 @@ stagehand = Stagehand::Client.new(
 )
 
 # Or, configure per-request:
-stagehand.sessions.start(model_name: "gpt-4o", request_options: {max_retries: 5})
+stagehand.sessions.start(model_name: "openai/gpt-5-nano", request_options: {max_retries: 5})
 ```
 
 ### Timeouts
@@ -102,7 +102,7 @@ stagehand = Stagehand::Client.new(
 )
 
 # Or, configure per-request:
-stagehand.sessions.start(model_name: "gpt-4o", request_options: {timeout: 5})
+stagehand.sessions.start(model_name: "openai/gpt-5-nano", request_options: {timeout: 5})
 ```
 
 On timeout, `Stagehand::Errors::APITimeoutError` is raised.
@@ -134,7 +134,7 @@ Note: the `extra_` parameters of the same name overrides the documented paramete
 ```ruby
 response =
   stagehand.sessions.start(
-    model_name: "gpt-4o",
+    model_name: "openai/gpt-5-nano",
     request_options: {
       extra_query: {my_query_parameter: value},
       extra_body: {my_body_parameter: value},
