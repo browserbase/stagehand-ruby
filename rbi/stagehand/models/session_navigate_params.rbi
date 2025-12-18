@@ -30,6 +30,13 @@ module Stagehand
       end
       attr_writer :options
 
+      # Whether to stream the response via SSE
+      sig { returns(T.nilable(T::Boolean)) }
+      attr_reader :stream_response
+
+      sig { params(stream_response: T::Boolean).void }
+      attr_writer :stream_response
+
       # Client SDK language
       sig do
         returns(
@@ -80,6 +87,7 @@ module Stagehand
           url: String,
           frame_id: String,
           options: Stagehand::SessionNavigateParams::Options::OrHash,
+          stream_response: T::Boolean,
           x_language: Stagehand::SessionNavigateParams::XLanguage::OrSymbol,
           x_sdk_version: String,
           x_sent_at: Time,
@@ -94,6 +102,8 @@ module Stagehand
         # Target frame ID for the navigation
         frame_id: nil,
         options: nil,
+        # Whether to stream the response via SSE
+        stream_response: nil,
         # Client SDK language
         x_language: nil,
         # Version of the Stagehand SDK
@@ -112,6 +122,7 @@ module Stagehand
             url: String,
             frame_id: String,
             options: Stagehand::SessionNavigateParams::Options,
+            stream_response: T::Boolean,
             x_language: Stagehand::SessionNavigateParams::XLanguage::OrSymbol,
             x_sdk_version: String,
             x_sent_at: Time,

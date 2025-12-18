@@ -3,6 +3,8 @@
 module Stagehand
   module Models
     # @see Stagehand::Resources::Sessions#observe
+    #
+    # @see Stagehand::Resources::Sessions#observe_streaming
     class SessionObserveParams < Stagehand::Internal::Type::BaseModel
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters

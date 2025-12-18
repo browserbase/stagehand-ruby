@@ -3,6 +3,8 @@
 module Stagehand
   module Models
     # @see Stagehand::Resources::Sessions#observe
+    #
+    # @see Stagehand::Resources::Sessions#observe_streaming
     class SessionObserveResponse < Stagehand::Internal::Type::BaseModel
       # @!attribute data
       #

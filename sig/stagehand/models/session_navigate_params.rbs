@@ -5,6 +5,7 @@ module Stagehand
         url: String,
         frame_id: String,
         options: Stagehand::SessionNavigateParams::Options,
+        stream_response: bool,
         x_language: Stagehand::Models::SessionNavigateParams::x_language,
         x_sdk_version: String,
         x_sent_at: Time,
@@ -27,6 +28,10 @@ module Stagehand
       def options=: (
         Stagehand::SessionNavigateParams::Options
       ) -> Stagehand::SessionNavigateParams::Options
+
+      attr_reader stream_response: bool?
+
+      def stream_response=: (bool) -> bool
 
       attr_reader x_language: Stagehand::Models::SessionNavigateParams::x_language?
 
@@ -52,6 +57,7 @@ module Stagehand
         url: String,
         ?frame_id: String,
         ?options: Stagehand::SessionNavigateParams::Options,
+        ?stream_response: bool,
         ?x_language: Stagehand::Models::SessionNavigateParams::x_language,
         ?x_sdk_version: String,
         ?x_sent_at: Time,
@@ -63,6 +69,7 @@ module Stagehand
         url: String,
         frame_id: String,
         options: Stagehand::SessionNavigateParams::Options,
+        stream_response: bool,
         x_language: Stagehand::Models::SessionNavigateParams::x_language,
         x_sdk_version: String,
         x_sent_at: Time,
