@@ -3,6 +3,8 @@
 module Stagehand
   module Models
     # @see Stagehand::Resources::Sessions#act
+    #
+    # @see Stagehand::Resources::Sessions#act_streaming
     class SessionActParams < Stagehand::Internal::Type::BaseModel
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters
@@ -10,7 +12,7 @@ module Stagehand
       # @!attribute input
       #   Natural language instruction or Action object
       #
-      #   @return [String, Stagehand::Models::SessionActParams::Input::ActionInput]
+      #   @return [String, Stagehand::Models::Action]
       required :input, union: -> { Stagehand::SessionActParams::Input }
 
       # @!attribute frame_id
@@ -49,7 +51,7 @@ module Stagehand
       optional :x_stream_response, enum: -> { Stagehand::SessionActParams::XStreamResponse }
 
       # @!method initialize(input:, frame_id: nil, options: nil, x_language: nil, x_sdk_version: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
-      #   @param input [String, Stagehand::Models::SessionActParams::Input::ActionInput] Natural language instruction or Action object
+      #   @param input [String, Stagehand::Models::Action] Natural language instruction or Action object
       #
       #   @param frame_id [String] Target frame ID for the action
       #
@@ -72,47 +74,10 @@ module Stagehand
         variant String
 
         # Action object returned by observe and used by act
-        variant -> { Stagehand::SessionActParams::Input::ActionInput }
-
-        class ActionInput < Stagehand::Internal::Type::BaseModel
-          # @!attribute description
-          #   Human-readable description of the action
-          #
-          #   @return [String]
-          required :description, String
-
-          # @!attribute selector
-          #   CSS selector or XPath for the element
-          #
-          #   @return [String]
-          required :selector, String
-
-          # @!attribute arguments
-          #   Arguments to pass to the method
-          #
-          #   @return [Array<String>, nil]
-          optional :arguments, Stagehand::Internal::Type::ArrayOf[String]
-
-          # @!attribute method_
-          #   The method to execute (click, fill, etc.)
-          #
-          #   @return [String, nil]
-          optional :method_, String, api_name: :method
-
-          # @!method initialize(description:, selector:, arguments: nil, method_: nil)
-          #   Action object returned by observe and used by act
-          #
-          #   @param description [String] Human-readable description of the action
-          #
-          #   @param selector [String] CSS selector or XPath for the element
-          #
-          #   @param arguments [Array<String>] Arguments to pass to the method
-          #
-          #   @param method_ [String] The method to execute (click, fill, etc.)
-        end
+        variant -> { Stagehand::Action }
 
         # @!method self.variants
-        #   @return [Array(String, Stagehand::Models::SessionActParams::Input::ActionInput)]
+        #   @return [Array(String, Stagehand::Models::Action)]
       end
 
       class Options < Stagehand::Internal::Type::BaseModel

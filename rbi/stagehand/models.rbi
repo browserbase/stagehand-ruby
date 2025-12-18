@@ -18,4 +18,6 @@ module Stagehand
   SessionObserveParams = Stagehand::Models::SessionObserveParams
 
   SessionStartParams = Stagehand::Models::SessionStartParams
+
+  StreamEvent = Stagehand::Models::StreamEvent
 end

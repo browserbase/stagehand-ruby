@@ -49,7 +49,15 @@ module Stagehand
                     ]
                   ]
                 ),
-              stream: T.nilable(T::Class[T.anything]),
+              stream:
+                T.nilable(
+                  T::Class[
+                    Stagehand::Internal::Type::BaseStream[
+                      T.anything,
+                      Stagehand::Internal::Type::BaseModel
+                    ]
+                  ]
+                ),
               model: T.nilable(Stagehand::Internal::Type::Converter::Input),
               options: T.nilable(Stagehand::RequestOptions::OrHash)
             }
@@ -269,7 +277,15 @@ module Stagehand
                   ]
                 ]
               ),
-            stream: T.nilable(T::Class[T.anything]),
+            stream:
+              T.nilable(
+                T::Class[
+                  Stagehand::Internal::Type::BaseStream[
+                    T.anything,
+                    Stagehand::Internal::Type::BaseModel
+                  ]
+                ]
+              ),
             model: T.nilable(Stagehand::Internal::Type::Converter::Input),
             options: T.nilable(Stagehand::RequestOptions::OrHash)
           ).returns(T.anything)

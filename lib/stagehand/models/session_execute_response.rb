@@ -3,6 +3,8 @@
 module Stagehand
   module Models
     # @see Stagehand::Resources::Sessions#execute
+    #
+    # @see Stagehand::Resources::Sessions#execute_streaming
     class SessionExecuteResponse < Stagehand::Internal::Type::BaseModel
       # @!attribute data
       #

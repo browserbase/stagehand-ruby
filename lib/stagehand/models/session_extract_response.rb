@@ -3,6 +3,8 @@
 module Stagehand
   module Models
     # @see Stagehand::Resources::Sessions#extract
+    #
+    # @see Stagehand::Resources::Sessions#extract_streaming
     class SessionExtractResponse < Stagehand::Internal::Type::BaseModel
       # @!attribute data
       #

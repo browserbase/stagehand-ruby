@@ -24,6 +24,12 @@ module Stagehand
       #   @return [Stagehand::Models::SessionNavigateParams::Options, nil]
       optional :options, -> { Stagehand::SessionNavigateParams::Options }
 
+      # @!attribute stream_response
+      #   Whether to stream the response via SSE
+      #
+      #   @return [Boolean, nil]
+      optional :stream_response, Stagehand::Internal::Type::Boolean, api_name: :streamResponse
+
       # @!attribute x_language
       #   Client SDK language
       #
@@ -48,12 +54,14 @@ module Stagehand
       #   @return [Symbol, Stagehand::Models::SessionNavigateParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { Stagehand::SessionNavigateParams::XStreamResponse }
 
-      # @!method initialize(url:, frame_id: nil, options: nil, x_language: nil, x_sdk_version: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @!method initialize(url:, frame_id: nil, options: nil, stream_response: nil, x_language: nil, x_sdk_version: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
       #   @param url [String] URL to navigate to
       #
       #   @param frame_id [String] Target frame ID for the navigation
       #
       #   @param options [Stagehand::Models::SessionNavigateParams::Options]
+      #
+      #   @param stream_response [Boolean] Whether to stream the response via SSE
       #
       #   @param x_language [Symbol, Stagehand::Models::SessionNavigateParams::XLanguage] Client SDK language
       #

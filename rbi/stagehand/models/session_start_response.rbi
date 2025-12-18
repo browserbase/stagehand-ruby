@@ -59,23 +59,35 @@ module Stagehand
         sig { returns(T::Boolean) }
         attr_accessor :available
 
-        # Unique session identifier
+        # CDP WebSocket URL for connecting to the Browserbase cloud browser
+        sig { returns(String) }
+        attr_accessor :connect_url
+
+        # Unique Browserbase session identifier
         sig { returns(String) }
         attr_accessor :session_id
 
         sig do
-          params(available: T::Boolean, session_id: String).returns(
-            T.attached_class
-          )
+          params(
+            available: T::Boolean,
+            connect_url: String,
+            session_id: String
+          ).returns(T.attached_class)
         end
         def self.new(
           available:,
-          # Unique session identifier
+          # CDP WebSocket URL for connecting to the Browserbase cloud browser
+          connect_url:,
+          # Unique Browserbase session identifier
           session_id:
         )
         end
 
-        sig { override.returns({ available: T::Boolean, session_id: String }) }
+        sig do
+          override.returns(
+            { available: T::Boolean, connect_url: String, session_id: String }
+          )
+        end
         def to_hash
         end
       end

@@ -549,7 +549,9 @@ module Stagehand
                 )
               ),
               page: T.nilable(T::Class[Stagehand::Internal::Type::BasePage[Stagehand::Internal::Type::BaseModel]]),
-              stream: T.nilable(T::Class[T.anything]),
+              stream: T.nilable(
+                T::Class[Stagehand::Internal::Type::BaseStream[T.anything, Stagehand::Internal::Type::BaseModel]]
+              ),
               model: T.nilable(Stagehand::Internal::Type::Converter::Input),
               options: T.nilable(Stagehand::RequestOptions::OrHash)
             }
