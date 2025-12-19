@@ -3,6 +3,8 @@
 module Stagehand
   module Models
     # @see Stagehand::Resources::Sessions#extract
+    #
+    # @see Stagehand::Resources::Sessions#extract_streaming
     class SessionExtractParams < Stagehand::Internal::Type::BaseModel
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters

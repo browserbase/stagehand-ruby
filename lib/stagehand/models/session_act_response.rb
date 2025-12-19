@@ -3,6 +3,8 @@
 module Stagehand
   module Models
     # @see Stagehand::Resources::Sessions#act
+    #
+    # @see Stagehand::Resources::Sessions#act_streaming
     class SessionActResponse < Stagehand::Internal::Type::BaseModel
       # @!attribute data
       #

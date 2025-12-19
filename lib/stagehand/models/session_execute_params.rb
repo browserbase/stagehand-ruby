@@ -3,6 +3,8 @@
 module Stagehand
   module Models
     # @see Stagehand::Resources::Sessions#execute
+    #
+    # @see Stagehand::Resources::Sessions#execute_streaming
     class SessionExecuteParams < Stagehand::Internal::Type::BaseModel
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters

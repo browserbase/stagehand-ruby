@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.4.0 (2025-12-19)
+
+Full Changelog: [v0.3.0...v0.4.0](https://github.com/browserbase/stagehand-ruby/compare/v0.3.0...v0.4.0)
+
+### Features
+
+* **api:** manual updates ([c93a988](https://github.com/browserbase/stagehand-ruby/commit/c93a988374918f841643a84145b3008970b665a7))
+
+
+### Bug Fixes
+
+* issue where json.parse errors when receiving HTTP 204 with nobody ([fc3e31e](https://github.com/browserbase/stagehand-ruby/commit/fc3e31e00944a7fdf89e367e281bc0510847d15e))
+
 ## 0.3.0 (2025-12-17)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/browserbase/stagehand-ruby/compare/v0.2.0...v0.3.0)

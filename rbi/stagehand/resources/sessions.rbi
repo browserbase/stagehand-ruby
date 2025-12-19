@@ -3,16 +3,14 @@
 module Stagehand
   module Resources
     class Sessions
+      # See {Stagehand::Resources::Sessions#act_streaming} for streaming counterpart.
+      #
       # Executes a browser action using natural language instructions or a predefined
       # Action object.
       sig do
         params(
           id: String,
-          input:
-            T.any(
-              String,
-              Stagehand::SessionActParams::Input::ActionInput::OrHash
-            ),
+          input: T.any(String, Stagehand::Action::OrHash),
           frame_id: String,
           options: Stagehand::SessionActParams::Options::OrHash,
           x_language: Stagehand::SessionActParams::XLanguage::OrSymbol,
@@ -20,6 +18,7 @@ module Stagehand
           x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionActParams::XStreamResponse::OrSymbol,
+          stream_response: T.noreturn,
           request_options: Stagehand::RequestOptions::OrHash
         ).returns(Stagehand::Models::SessionActResponse)
       end
@@ -40,6 +39,52 @@ module Stagehand
         x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
+        # There is no need to provide `stream_response:`. Instead, use `#act_streaming` or
+        # `#act` for streaming and non-streaming use cases, respectively.
+        stream_response: false,
+        request_options: {}
+      )
+      end
+
+      # See {Stagehand::Resources::Sessions#act} for non-streaming counterpart.
+      #
+      # Executes a browser action using natural language instructions or a predefined
+      # Action object.
+      sig do
+        params(
+          id: String,
+          input: T.any(String, Stagehand::Action::OrHash),
+          frame_id: String,
+          options: Stagehand::SessionActParams::Options::OrHash,
+          x_language: Stagehand::SessionActParams::XLanguage::OrSymbol,
+          x_sdk_version: String,
+          x_sent_at: Time,
+          x_stream_response:
+            Stagehand::SessionActParams::XStreamResponse::OrSymbol,
+          stream_response: T.noreturn,
+          request_options: Stagehand::RequestOptions::OrHash
+        ).returns(Stagehand::Internal::Stream[Stagehand::StreamEvent])
+      end
+      def act_streaming(
+        # Path param: Unique session identifier
+        id,
+        # Body param: Natural language instruction or Action object
+        input:,
+        # Body param: Target frame ID for the action
+        frame_id: nil,
+        # Body param:
+        options: nil,
+        # Header param: Client SDK language
+        x_language: nil,
+        # Header param: Version of the Stagehand SDK
+        x_sdk_version: nil,
+        # Header param: ISO timestamp when request was sent
+        x_sent_at: nil,
+        # Header param: Whether to stream the response via SSE
+        x_stream_response: nil,
+        # There is no need to provide `stream_response:`. Instead, use `#act_streaming` or
+        # `#act` for streaming and non-streaming use cases, respectively.
+        stream_response: true,
         request_options: {}
       )
       end
@@ -71,6 +116,9 @@ module Stagehand
       )
       end
 
+      # See {Stagehand::Resources::Sessions#execute_streaming} for streaming
+      # counterpart.
+      #
       # Runs an autonomous AI agent that can perform complex multi-step browser tasks.
       sig do
         params(
@@ -84,6 +132,7 @@ module Stagehand
           x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionExecuteParams::XStreamResponse::OrSymbol,
+          stream_response: T.noreturn,
           request_options: Stagehand::RequestOptions::OrHash
         ).returns(Stagehand::Models::SessionExecuteResponse)
       end
@@ -104,10 +153,61 @@ module Stagehand
         x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
+        # There is no need to provide `stream_response:`. Instead, use
+        # `#execute_streaming` or `#execute` for streaming and non-streaming use cases,
+        # respectively.
+        stream_response: false,
         request_options: {}
       )
       end
 
+      # See {Stagehand::Resources::Sessions#execute} for non-streaming counterpart.
+      #
+      # Runs an autonomous AI agent that can perform complex multi-step browser tasks.
+      sig do
+        params(
+          id: String,
+          agent_config: Stagehand::SessionExecuteParams::AgentConfig::OrHash,
+          execute_options:
+            Stagehand::SessionExecuteParams::ExecuteOptions::OrHash,
+          frame_id: String,
+          x_language: Stagehand::SessionExecuteParams::XLanguage::OrSymbol,
+          x_sdk_version: String,
+          x_sent_at: Time,
+          x_stream_response:
+            Stagehand::SessionExecuteParams::XStreamResponse::OrSymbol,
+          stream_response: T.noreturn,
+          request_options: Stagehand::RequestOptions::OrHash
+        ).returns(Stagehand::Internal::Stream[Stagehand::StreamEvent])
+      end
+      def execute_streaming(
+        # Path param: Unique session identifier
+        id,
+        # Body param:
+        agent_config:,
+        # Body param:
+        execute_options:,
+        # Body param: Target frame ID for the agent
+        frame_id: nil,
+        # Header param: Client SDK language
+        x_language: nil,
+        # Header param: Version of the Stagehand SDK
+        x_sdk_version: nil,
+        # Header param: ISO timestamp when request was sent
+        x_sent_at: nil,
+        # Header param: Whether to stream the response via SSE
+        x_stream_response: nil,
+        # There is no need to provide `stream_response:`. Instead, use
+        # `#execute_streaming` or `#execute` for streaming and non-streaming use cases,
+        # respectively.
+        stream_response: true,
+        request_options: {}
+      )
+      end
+
+      # See {Stagehand::Resources::Sessions#extract_streaming} for streaming
+      # counterpart.
+      #
       # Extracts structured data from the current page using AI-powered analysis.
       sig do
         params(
@@ -121,6 +221,7 @@ module Stagehand
           x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionExtractParams::XStreamResponse::OrSymbol,
+          stream_response: T.noreturn,
           request_options: Stagehand::RequestOptions::OrHash
         ).returns(Stagehand::Models::SessionExtractResponse)
       end
@@ -143,6 +244,56 @@ module Stagehand
         x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
+        # There is no need to provide `stream_response:`. Instead, use
+        # `#extract_streaming` or `#extract` for streaming and non-streaming use cases,
+        # respectively.
+        stream_response: false,
+        request_options: {}
+      )
+      end
+
+      # See {Stagehand::Resources::Sessions#extract} for non-streaming counterpart.
+      #
+      # Extracts structured data from the current page using AI-powered analysis.
+      sig do
+        params(
+          id: String,
+          frame_id: String,
+          instruction: String,
+          options: Stagehand::SessionExtractParams::Options::OrHash,
+          schema: T::Hash[Symbol, T.anything],
+          x_language: Stagehand::SessionExtractParams::XLanguage::OrSymbol,
+          x_sdk_version: String,
+          x_sent_at: Time,
+          x_stream_response:
+            Stagehand::SessionExtractParams::XStreamResponse::OrSymbol,
+          stream_response: T.noreturn,
+          request_options: Stagehand::RequestOptions::OrHash
+        ).returns(Stagehand::Internal::Stream[Stagehand::StreamEvent])
+      end
+      def extract_streaming(
+        # Path param: Unique session identifier
+        id,
+        # Body param: Target frame ID for the extraction
+        frame_id: nil,
+        # Body param: Natural language instruction for what to extract
+        instruction: nil,
+        # Body param:
+        options: nil,
+        # Body param: JSON Schema defining the structure of data to extract
+        schema: nil,
+        # Header param: Client SDK language
+        x_language: nil,
+        # Header param: Version of the Stagehand SDK
+        x_sdk_version: nil,
+        # Header param: ISO timestamp when request was sent
+        x_sent_at: nil,
+        # Header param: Whether to stream the response via SSE
+        x_stream_response: nil,
+        # There is no need to provide `stream_response:`. Instead, use
+        # `#extract_streaming` or `#extract` for streaming and non-streaming use cases,
+        # respectively.
+        stream_response: true,
         request_options: {}
       )
       end
@@ -154,6 +305,7 @@ module Stagehand
           url: String,
           frame_id: String,
           options: Stagehand::SessionNavigateParams::Options::OrHash,
+          stream_response: T::Boolean,
           x_language: Stagehand::SessionNavigateParams::XLanguage::OrSymbol,
           x_sdk_version: String,
           x_sent_at: Time,
@@ -171,6 +323,8 @@ module Stagehand
         frame_id: nil,
         # Body param:
         options: nil,
+        # Body param: Whether to stream the response via SSE
+        stream_response: nil,
         # Header param: Client SDK language
         x_language: nil,
         # Header param: Version of the Stagehand SDK
@@ -183,6 +337,9 @@ module Stagehand
       )
       end
 
+      # See {Stagehand::Resources::Sessions#observe_streaming} for streaming
+      # counterpart.
+      #
       # Identifies and returns available actions on the current page that match the
       # given instruction.
       sig do
@@ -196,6 +353,7 @@ module Stagehand
           x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionObserveParams::XStreamResponse::OrSymbol,
+          stream_response: T.noreturn,
           request_options: Stagehand::RequestOptions::OrHash
         ).returns(Stagehand::Models::SessionObserveResponse)
       end
@@ -216,6 +374,54 @@ module Stagehand
         x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
+        # There is no need to provide `stream_response:`. Instead, use
+        # `#observe_streaming` or `#observe` for streaming and non-streaming use cases,
+        # respectively.
+        stream_response: false,
+        request_options: {}
+      )
+      end
+
+      # See {Stagehand::Resources::Sessions#observe} for non-streaming counterpart.
+      #
+      # Identifies and returns available actions on the current page that match the
+      # given instruction.
+      sig do
+        params(
+          id: String,
+          frame_id: String,
+          instruction: String,
+          options: Stagehand::SessionObserveParams::Options::OrHash,
+          x_language: Stagehand::SessionObserveParams::XLanguage::OrSymbol,
+          x_sdk_version: String,
+          x_sent_at: Time,
+          x_stream_response:
+            Stagehand::SessionObserveParams::XStreamResponse::OrSymbol,
+          stream_response: T.noreturn,
+          request_options: Stagehand::RequestOptions::OrHash
+        ).returns(Stagehand::Internal::Stream[Stagehand::StreamEvent])
+      end
+      def observe_streaming(
+        # Path param: Unique session identifier
+        id,
+        # Body param: Target frame ID for the observation
+        frame_id: nil,
+        # Body param: Natural language instruction for what actions to find
+        instruction: nil,
+        # Body param:
+        options: nil,
+        # Header param: Client SDK language
+        x_language: nil,
+        # Header param: Version of the Stagehand SDK
+        x_sdk_version: nil,
+        # Header param: ISO timestamp when request was sent
+        x_sent_at: nil,
+        # Header param: Whether to stream the response via SSE
+        x_stream_response: nil,
+        # There is no need to provide `stream_response:`. Instead, use
+        # `#observe_streaming` or `#observe` for streaming and non-streaming use cases,
+        # respectively.
+        stream_response: true,
         request_options: {}
       )
       end

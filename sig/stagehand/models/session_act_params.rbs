@@ -70,46 +70,10 @@ module Stagehand
         request_options: Stagehand::RequestOptions
       }
 
-      type input = String | Stagehand::SessionActParams::Input::ActionInput
+      type input = String | Stagehand::Action
 
       module Input
         extend Stagehand::Internal::Type::Union
-
-        type action_input =
-          {
-            description: String,
-            selector: String,
-            arguments: ::Array[String],
-            method_: String
-          }
-
-        class ActionInput < Stagehand::Internal::Type::BaseModel
-          attr_accessor description: String
-
-          attr_accessor selector: String
-
-          attr_reader arguments: ::Array[String]?
-
-          def arguments=: (::Array[String]) -> ::Array[String]
-
-          attr_reader method_: String?
-
-          def method_=: (String) -> String
-
-          def initialize: (
-            description: String,
-            selector: String,
-            ?arguments: ::Array[String],
-            ?method_: String
-          ) -> void
-
-          def to_hash: -> {
-            description: String,
-            selector: String,
-            arguments: ::Array[String],
-            method_: String
-          }
-        end
 
         def self?.variants: -> ::Array[Stagehand::Models::SessionActParams::input]
       end
