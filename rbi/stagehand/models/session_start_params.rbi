@@ -15,7 +15,7 @@ module Stagehand
       sig { returns(String) }
       attr_accessor :model_name
 
-      # Timeout in ms for act operations
+      # Timeout in ms for act operations (deprecated, v2 only)
       sig { returns(T.nilable(Float)) }
       attr_reader :act_timeout_ms
 
@@ -54,12 +54,6 @@ module Stagehand
       sig { params(browserbase_session_id: String).void }
       attr_writer :browserbase_session_id
 
-      sig { returns(T.nilable(T::Boolean)) }
-      attr_reader :debug_dom
-
-      sig { params(debug_dom: T::Boolean).void }
-      attr_writer :debug_dom
-
       # Timeout in ms to wait for DOM to settle
       sig { returns(T.nilable(Float)) }
       attr_reader :dom_settle_timeout_ms
@@ -88,12 +82,17 @@ module Stagehand
       attr_writer :system_prompt
 
       # Logging verbosity level (0=quiet, 1=normal, 2=debug)
-      sig { returns(T.nilable(Integer)) }
+      sig do
+        returns(T.nilable(Stagehand::SessionStartParams::Verbose::OrSymbol))
+      end
       attr_reader :verbose
 
-      sig { params(verbose: Integer).void }
+      sig do
+        params(verbose: Stagehand::SessionStartParams::Verbose::OrSymbol).void
+      end
       attr_writer :verbose
 
+      # Wait for captcha solves (deprecated, v2 only)
       sig { returns(T.nilable(T::Boolean)) }
       attr_reader :wait_for_captcha_solves
 
@@ -151,12 +150,11 @@ module Stagehand
           browserbase_session_create_params:
             Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::OrHash,
           browserbase_session_id: String,
-          debug_dom: T::Boolean,
           dom_settle_timeout_ms: Float,
           experimental: T::Boolean,
           self_heal: T::Boolean,
           system_prompt: String,
-          verbose: Integer,
+          verbose: Stagehand::SessionStartParams::Verbose::OrSymbol,
           wait_for_captcha_solves: T::Boolean,
           x_language: Stagehand::SessionStartParams::XLanguage::OrSymbol,
           x_sdk_version: String,
@@ -169,13 +167,12 @@ module Stagehand
       def self.new(
         # Model name to use for AI operations
         model_name:,
-        # Timeout in ms for act operations
+        # Timeout in ms for act operations (deprecated, v2 only)
         act_timeout_ms: nil,
         browser: nil,
         browserbase_session_create_params: nil,
         # Existing Browserbase session ID to resume
         browserbase_session_id: nil,
-        debug_dom: nil,
         # Timeout in ms to wait for DOM to settle
         dom_settle_timeout_ms: nil,
         experimental: nil,
@@ -185,6 +182,7 @@ module Stagehand
         system_prompt: nil,
         # Logging verbosity level (0=quiet, 1=normal, 2=debug)
         verbose: nil,
+        # Wait for captcha solves (deprecated, v2 only)
         wait_for_captcha_solves: nil,
         # Client SDK language
         x_language: nil,
@@ -207,12 +205,11 @@ module Stagehand
             browserbase_session_create_params:
               Stagehand::SessionStartParams::BrowserbaseSessionCreateParams,
             browserbase_session_id: String,
-            debug_dom: T::Boolean,
             dom_settle_timeout_ms: Float,
             experimental: T::Boolean,
             self_heal: T::Boolean,
             system_prompt: String,
-            verbose: Integer,
+            verbose: Stagehand::SessionStartParams::Verbose::OrSymbol,
             wait_for_captcha_solves: T::Boolean,
             x_language: Stagehand::SessionStartParams::XLanguage::OrSymbol,
             x_sdk_version: String,
@@ -1673,6 +1670,30 @@ module Stagehand
           end
           def self.values
           end
+        end
+      end
+
+      # Logging verbosity level (0=quiet, 1=normal, 2=debug)
+      module Verbose
+        extend Stagehand::Internal::Type::Enum
+
+        TaggedSymbol =
+          T.type_alias { T.all(Symbol, Stagehand::SessionStartParams::Verbose) }
+        OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+        VERBOSE_0 =
+          T.let(:"0", Stagehand::SessionStartParams::Verbose::TaggedSymbol)
+        VERBOSE_1 =
+          T.let(:"1", Stagehand::SessionStartParams::Verbose::TaggedSymbol)
+        VERBOSE_2 =
+          T.let(:"2", Stagehand::SessionStartParams::Verbose::TaggedSymbol)
+
+        sig do
+          override.returns(
+            T::Array[Stagehand::SessionStartParams::Verbose::TaggedSymbol]
+          )
+        end
+        def self.values
         end
       end
 

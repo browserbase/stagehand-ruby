@@ -518,19 +518,17 @@ module Stagehand
       # Creates a new browser session with the specified configuration. Returns a
       # session ID used for all subsequent operations.
       #
-      # @overload start(model_name:, act_timeout_ms: nil, browser: nil, browserbase_session_create_params: nil, browserbase_session_id: nil, debug_dom: nil, dom_settle_timeout_ms: nil, experimental: nil, self_heal: nil, system_prompt: nil, verbose: nil, wait_for_captcha_solves: nil, x_language: nil, x_sdk_version: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @overload start(model_name:, act_timeout_ms: nil, browser: nil, browserbase_session_create_params: nil, browserbase_session_id: nil, dom_settle_timeout_ms: nil, experimental: nil, self_heal: nil, system_prompt: nil, verbose: nil, wait_for_captcha_solves: nil, x_language: nil, x_sdk_version: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
       #
       # @param model_name [String] Body param: Model name to use for AI operations
       #
-      # @param act_timeout_ms [Float] Body param: Timeout in ms for act operations
+      # @param act_timeout_ms [Float] Body param: Timeout in ms for act operations (deprecated, v2 only)
       #
       # @param browser [Stagehand::Models::SessionStartParams::Browser] Body param:
       #
       # @param browserbase_session_create_params [Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams] Body param:
       #
       # @param browserbase_session_id [String] Body param: Existing Browserbase session ID to resume
-      #
-      # @param debug_dom [Boolean] Body param:
       #
       # @param dom_settle_timeout_ms [Float] Body param: Timeout in ms to wait for DOM to settle
       #
@@ -540,9 +538,9 @@ module Stagehand
       #
       # @param system_prompt [String] Body param: Custom system prompt for AI operations
       #
-      # @param verbose [Integer] Body param: Logging verbosity level (0=quiet, 1=normal, 2=debug)
+      # @param verbose [Symbol, Stagehand::Models::SessionStartParams::Verbose] Body param: Logging verbosity level (0=quiet, 1=normal, 2=debug)
       #
-      # @param wait_for_captcha_solves [Boolean] Body param:
+      # @param wait_for_captcha_solves [Boolean] Body param: Wait for captcha solves (deprecated, v2 only)
       #
       # @param x_language [Symbol, Stagehand::Models::SessionStartParams::XLanguage] Header param: Client SDK language
       #
