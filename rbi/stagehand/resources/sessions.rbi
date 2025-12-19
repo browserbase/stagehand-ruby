@@ -436,12 +436,11 @@ module Stagehand
           browserbase_session_create_params:
             Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::OrHash,
           browserbase_session_id: String,
-          debug_dom: T::Boolean,
           dom_settle_timeout_ms: Float,
           experimental: T::Boolean,
           self_heal: T::Boolean,
           system_prompt: String,
-          verbose: Integer,
+          verbose: Stagehand::SessionStartParams::Verbose::OrSymbol,
           wait_for_captcha_solves: T::Boolean,
           x_language: Stagehand::SessionStartParams::XLanguage::OrSymbol,
           x_sdk_version: String,
@@ -454,7 +453,7 @@ module Stagehand
       def start(
         # Body param: Model name to use for AI operations
         model_name:,
-        # Body param: Timeout in ms for act operations
+        # Body param: Timeout in ms for act operations (deprecated, v2 only)
         act_timeout_ms: nil,
         # Body param:
         browser: nil,
@@ -462,8 +461,6 @@ module Stagehand
         browserbase_session_create_params: nil,
         # Body param: Existing Browserbase session ID to resume
         browserbase_session_id: nil,
-        # Body param:
-        debug_dom: nil,
         # Body param: Timeout in ms to wait for DOM to settle
         dom_settle_timeout_ms: nil,
         # Body param:
@@ -474,7 +471,7 @@ module Stagehand
         system_prompt: nil,
         # Body param: Logging verbosity level (0=quiet, 1=normal, 2=debug)
         verbose: nil,
-        # Body param:
+        # Body param: Wait for captcha solves (deprecated, v2 only)
         wait_for_captcha_solves: nil,
         # Header param: Client SDK language
         x_language: nil,

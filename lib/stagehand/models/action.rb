@@ -21,13 +21,19 @@ module Stagehand
       #   @return [Array<String>, nil]
       optional :arguments, Stagehand::Internal::Type::ArrayOf[String]
 
+      # @!attribute backend_node_id
+      #   Backend node ID for the element
+      #
+      #   @return [Float, nil]
+      optional :backend_node_id, Float, api_name: :backendNodeId
+
       # @!attribute method_
       #   The method to execute (click, fill, etc.)
       #
       #   @return [String, nil]
       optional :method_, String, api_name: :method
 
-      # @!method initialize(description:, selector:, arguments: nil, method_: nil)
+      # @!method initialize(description:, selector:, arguments: nil, backend_node_id: nil, method_: nil)
       #   Action object returned by observe and used by act
       #
       #   @param description [String] Human-readable description of the action
@@ -35,6 +41,8 @@ module Stagehand
       #   @param selector [String] CSS selector or XPath for the element
       #
       #   @param arguments [Array<String>] Arguments to pass to the method
+      #
+      #   @param backend_node_id [Float] Backend node ID for the element
       #
       #   @param method_ [String] The method to execute (click, fill, etc.)
     end

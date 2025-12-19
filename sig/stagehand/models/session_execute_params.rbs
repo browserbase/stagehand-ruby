@@ -70,6 +70,7 @@ module Stagehand
         {
           cua: bool,
           model: Stagehand::Models::model_config,
+          provider: Stagehand::Models::SessionExecuteParams::AgentConfig::provider,
           system_prompt: String
         }
 
@@ -84,6 +85,12 @@ module Stagehand
           Stagehand::Models::model_config
         ) -> Stagehand::Models::model_config
 
+        attr_reader provider: Stagehand::Models::SessionExecuteParams::AgentConfig::provider?
+
+        def provider=: (
+          Stagehand::Models::SessionExecuteParams::AgentConfig::provider
+        ) -> Stagehand::Models::SessionExecuteParams::AgentConfig::provider
+
         attr_reader system_prompt: String?
 
         def system_prompt=: (String) -> String
@@ -91,14 +98,29 @@ module Stagehand
         def initialize: (
           ?cua: bool,
           ?model: Stagehand::Models::model_config,
+          ?provider: Stagehand::Models::SessionExecuteParams::AgentConfig::provider,
           ?system_prompt: String
         ) -> void
 
         def to_hash: -> {
           cua: bool,
           model: Stagehand::Models::model_config,
+          provider: Stagehand::Models::SessionExecuteParams::AgentConfig::provider,
           system_prompt: String
         }
+
+        type provider = :openai | :anthropic | :google | :microsoft
+
+        module Provider
+          extend Stagehand::Internal::Type::Enum
+
+          OPENAI: :openai
+          ANTHROPIC: :anthropic
+          GOOGLE: :google
+          MICROSOFT: :microsoft
+
+          def self?.values: -> ::Array[Stagehand::Models::SessionExecuteParams::AgentConfig::provider]
+        end
       end
 
       type execute_options =
