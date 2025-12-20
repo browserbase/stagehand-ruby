@@ -39,6 +39,21 @@ response = stagehand.sessions.act("00000000-your-session-id-000000000000", input
 puts(response.data)
 ```
 
+### Streaming
+
+We provide support for streaming responses using Server-Sent Events (SSE).
+
+```ruby
+stream = stagehand.sessions.act_streaming(
+  "00000000-your-session-id-000000000000",
+  input: "click the first link on the page"
+)
+
+stream.each do |session|
+  puts(session.data)
+end
+```
+
 ### Handling errors
 
 When the library is unable to connect to the API, or if the API returns a non-success status code (i.e., 4xx or 5xx response), a subclass of `Stagehand::Errors::APIError` will be thrown:
