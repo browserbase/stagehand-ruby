@@ -538,7 +538,7 @@ module Stagehand
       #
       # @param system_prompt [String] Body param: Custom system prompt for AI operations
       #
-      # @param verbose [Symbol, Stagehand::Models::SessionStartParams::Verbose] Body param: Logging verbosity level (0=quiet, 1=normal, 2=debug)
+      # @param verbose [Float, Stagehand::Models::SessionStartParams::Verbose] Body param: Logging verbosity level (0=quiet, 1=normal, 2=debug)
       #
       # @param wait_for_captcha_solves [Boolean] Body param: Wait for captcha solves (deprecated, v2 only)
       #

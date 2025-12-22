@@ -63,7 +63,7 @@ module Stagehand
       # @!attribute verbose
       #   Logging verbosity level (0=quiet, 1=normal, 2=debug)
       #
-      #   @return [Symbol, Stagehand::Models::SessionStartParams::Verbose, nil]
+      #   @return [Float, Stagehand::Models::SessionStartParams::Verbose, nil]
       optional :verbose, enum: -> { Stagehand::SessionStartParams::Verbose }
 
       # @!attribute wait_for_captcha_solves
@@ -115,7 +115,7 @@ module Stagehand
       #
       #   @param system_prompt [String] Custom system prompt for AI operations
       #
-      #   @param verbose [Symbol, Stagehand::Models::SessionStartParams::Verbose] Logging verbosity level (0=quiet, 1=normal, 2=debug)
+      #   @param verbose [Float, Stagehand::Models::SessionStartParams::Verbose] Logging verbosity level (0=quiet, 1=normal, 2=debug)
       #
       #   @param wait_for_captcha_solves [Boolean] Wait for captcha solves (deprecated, v2 only)
       #
@@ -757,12 +757,12 @@ module Stagehand
       module Verbose
         extend Stagehand::Internal::Type::Enum
 
-        VERBOSE_0 = :"0"
-        VERBOSE_1 = :"1"
-        VERBOSE_2 = :"2"
+        VERBOSE_0 = 0
+        VERBOSE_1 = 1
+        VERBOSE_2 = 2
 
         # @!method self.values
-        #   @return [Array<Symbol>]
+        #   @return [Array<Float>]
       end
 
       # Client SDK language
