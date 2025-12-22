@@ -440,7 +440,7 @@ module Stagehand
           experimental: T::Boolean,
           self_heal: T::Boolean,
           system_prompt: String,
-          verbose: Stagehand::SessionStartParams::Verbose::OrSymbol,
+          verbose: Stagehand::SessionStartParams::Verbose::OrFloat,
           wait_for_captcha_solves: T::Boolean,
           x_language: Stagehand::SessionStartParams::XLanguage::OrSymbol,
           x_sdk_version: String,

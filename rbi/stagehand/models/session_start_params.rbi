@@ -83,12 +83,12 @@ module Stagehand
 
       # Logging verbosity level (0=quiet, 1=normal, 2=debug)
       sig do
-        returns(T.nilable(Stagehand::SessionStartParams::Verbose::OrSymbol))
+        returns(T.nilable(Stagehand::SessionStartParams::Verbose::OrFloat))
       end
       attr_reader :verbose
 
       sig do
-        params(verbose: Stagehand::SessionStartParams::Verbose::OrSymbol).void
+        params(verbose: Stagehand::SessionStartParams::Verbose::OrFloat).void
       end
       attr_writer :verbose
 
@@ -154,7 +154,7 @@ module Stagehand
           experimental: T::Boolean,
           self_heal: T::Boolean,
           system_prompt: String,
-          verbose: Stagehand::SessionStartParams::Verbose::OrSymbol,
+          verbose: Stagehand::SessionStartParams::Verbose::OrFloat,
           wait_for_captcha_solves: T::Boolean,
           x_language: Stagehand::SessionStartParams::XLanguage::OrSymbol,
           x_sdk_version: String,
@@ -209,7 +209,7 @@ module Stagehand
             experimental: T::Boolean,
             self_heal: T::Boolean,
             system_prompt: String,
-            verbose: Stagehand::SessionStartParams::Verbose::OrSymbol,
+            verbose: Stagehand::SessionStartParams::Verbose::OrFloat,
             wait_for_captcha_solves: T::Boolean,
             x_language: Stagehand::SessionStartParams::XLanguage::OrSymbol,
             x_sdk_version: String,
@@ -1677,20 +1677,20 @@ module Stagehand
       module Verbose
         extend Stagehand::Internal::Type::Enum
 
-        TaggedSymbol =
-          T.type_alias { T.all(Symbol, Stagehand::SessionStartParams::Verbose) }
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
+        TaggedFloat =
+          T.type_alias { T.all(Float, Stagehand::SessionStartParams::Verbose) }
+        OrFloat = T.type_alias { Float }
 
         VERBOSE_0 =
-          T.let(:"0", Stagehand::SessionStartParams::Verbose::TaggedSymbol)
+          T.let(0, Stagehand::SessionStartParams::Verbose::TaggedFloat)
         VERBOSE_1 =
-          T.let(:"1", Stagehand::SessionStartParams::Verbose::TaggedSymbol)
+          T.let(1, Stagehand::SessionStartParams::Verbose::TaggedFloat)
         VERBOSE_2 =
-          T.let(:"2", Stagehand::SessionStartParams::Verbose::TaggedSymbol)
+          T.let(2, Stagehand::SessionStartParams::Verbose::TaggedFloat)
 
         sig do
           override.returns(
-            T::Array[Stagehand::SessionStartParams::Verbose::TaggedSymbol]
+            T::Array[Stagehand::SessionStartParams::Verbose::TaggedFloat]
           )
         end
         def self.values

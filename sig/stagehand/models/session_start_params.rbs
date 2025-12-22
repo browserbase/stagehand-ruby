@@ -855,14 +855,14 @@ module Stagehand
         end
       end
 
-      type verbose = :"0" | :"1" | :"2"
+      type verbose = Float
 
       module Verbose
         extend Stagehand::Internal::Type::Enum
 
-        VERBOSE_0: :"0"
-        VERBOSE_1: :"1"
-        VERBOSE_2: :"2"
+        VERBOSE_0: 0
+        VERBOSE_1: 1
+        VERBOSE_2: 2
 
         def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::verbose]
       end
