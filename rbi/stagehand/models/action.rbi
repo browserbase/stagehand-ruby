@@ -21,6 +21,13 @@ module Stagehand
       sig { params(arguments: T::Array[String]).void }
       attr_writer :arguments
 
+      # Backend node ID for the element
+      sig { returns(T.nilable(Float)) }
+      attr_reader :backend_node_id
+
+      sig { params(backend_node_id: Float).void }
+      attr_writer :backend_node_id
+
       # The method to execute (click, fill, etc.)
       sig { returns(T.nilable(String)) }
       attr_reader :method_
@@ -34,6 +41,7 @@ module Stagehand
           description: String,
           selector: String,
           arguments: T::Array[String],
+          backend_node_id: Float,
           method_: String
         ).returns(T.attached_class)
       end
@@ -44,6 +52,8 @@ module Stagehand
         selector:,
         # Arguments to pass to the method
         arguments: nil,
+        # Backend node ID for the element
+        backend_node_id: nil,
         # The method to execute (click, fill, etc.)
         method_: nil
       )
@@ -55,6 +65,7 @@ module Stagehand
             description: String,
             selector: String,
             arguments: T::Array[String],
+            backend_node_id: Float,
             method_: String
           }
         )

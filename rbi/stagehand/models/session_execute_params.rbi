@@ -164,6 +164,24 @@ module Stagehand
         end
         attr_writer :model
 
+        # AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
+        sig do
+          returns(
+            T.nilable(
+              Stagehand::SessionExecuteParams::AgentConfig::Provider::OrSymbol
+            )
+          )
+        end
+        attr_reader :provider
+
+        sig do
+          params(
+            provider:
+              Stagehand::SessionExecuteParams::AgentConfig::Provider::OrSymbol
+          ).void
+        end
+        attr_writer :provider
+
         # Custom system prompt for the agent
         sig { returns(T.nilable(String)) }
         attr_reader :system_prompt
@@ -176,6 +194,8 @@ module Stagehand
             cua: T::Boolean,
             model:
               T.any(String, Stagehand::ModelConfig::ModelConfigObject::OrHash),
+            provider:
+              Stagehand::SessionExecuteParams::AgentConfig::Provider::OrSymbol,
             system_prompt: String
           ).returns(T.attached_class)
         end
@@ -185,6 +205,8 @@ module Stagehand
           # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
           # 'anthropic/claude-4.5-opus')
           model: nil,
+          # AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
+          provider: nil,
           # Custom system prompt for the agent
           system_prompt: nil
         )
@@ -195,11 +217,58 @@ module Stagehand
             {
               cua: T::Boolean,
               model: T.any(String, Stagehand::ModelConfig::ModelConfigObject),
+              provider:
+                Stagehand::SessionExecuteParams::AgentConfig::Provider::OrSymbol,
               system_prompt: String
             }
           )
         end
         def to_hash
+        end
+
+        # AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
+        module Provider
+          extend Stagehand::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(
+                Symbol,
+                Stagehand::SessionExecuteParams::AgentConfig::Provider
+              )
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          OPENAI =
+            T.let(
+              :openai,
+              Stagehand::SessionExecuteParams::AgentConfig::Provider::TaggedSymbol
+            )
+          ANTHROPIC =
+            T.let(
+              :anthropic,
+              Stagehand::SessionExecuteParams::AgentConfig::Provider::TaggedSymbol
+            )
+          GOOGLE =
+            T.let(
+              :google,
+              Stagehand::SessionExecuteParams::AgentConfig::Provider::TaggedSymbol
+            )
+          MICROSOFT =
+            T.let(
+              :microsoft,
+              Stagehand::SessionExecuteParams::AgentConfig::Provider::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                Stagehand::SessionExecuteParams::AgentConfig::Provider::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
         end
       end
 

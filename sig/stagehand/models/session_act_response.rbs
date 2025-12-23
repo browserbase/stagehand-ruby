@@ -44,7 +44,7 @@ module Stagehand
         type result =
           {
             action_description: String,
-            actions: ::Array[Stagehand::Action],
+            actions: ::Array[Stagehand::Models::SessionActResponse::Data::Result::Action],
             message: String,
             success: bool
           }
@@ -52,7 +52,7 @@ module Stagehand
         class Result < Stagehand::Internal::Type::BaseModel
           attr_accessor action_description: String
 
-          attr_accessor actions: ::Array[Stagehand::Action]
+          attr_accessor actions: ::Array[Stagehand::Models::SessionActResponse::Data::Result::Action]
 
           attr_accessor message: String
 
@@ -60,17 +60,60 @@ module Stagehand
 
           def initialize: (
             action_description: String,
-            actions: ::Array[Stagehand::Action],
+            actions: ::Array[Stagehand::Models::SessionActResponse::Data::Result::Action],
             message: String,
             success: bool
           ) -> void
 
           def to_hash: -> {
             action_description: String,
-            actions: ::Array[Stagehand::Action],
+            actions: ::Array[Stagehand::Models::SessionActResponse::Data::Result::Action],
             message: String,
             success: bool
           }
+
+          type action =
+            {
+              description: String,
+              selector: String,
+              arguments: ::Array[String],
+              backend_node_id: Float,
+              method_: String
+            }
+
+          class Action < Stagehand::Internal::Type::BaseModel
+            attr_accessor description: String
+
+            attr_accessor selector: String
+
+            attr_reader arguments: ::Array[String]?
+
+            def arguments=: (::Array[String]) -> ::Array[String]
+
+            attr_reader backend_node_id: Float?
+
+            def backend_node_id=: (Float) -> Float
+
+            attr_reader method_: String?
+
+            def method_=: (String) -> String
+
+            def initialize: (
+              description: String,
+              selector: String,
+              ?arguments: ::Array[String],
+              ?backend_node_id: Float,
+              ?method_: String
+            ) -> void
+
+            def to_hash: -> {
+              description: String,
+              selector: String,
+              arguments: ::Array[String],
+              backend_node_id: Float,
+              method_: String
+            }
+          end
         end
       end
     end

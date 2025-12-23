@@ -17,7 +17,7 @@ To use this gem, install via Bundler by adding the following to your application
 <!-- x-release-please-start-version -->
 
 ```ruby
-gem "stagehand", "~> 0.4.0"
+gem "stagehand", "~> 0.5.0"
 ```
 
 <!-- x-release-please-end -->
@@ -37,6 +37,21 @@ stagehand = Stagehand::Client.new(
 response = stagehand.sessions.act("00000000-your-session-id-000000000000", input: "click the first link on the page")
 
 puts(response.data)
+```
+
+### Streaming
+
+We provide support for streaming responses using Server-Sent Events (SSE).
+
+```ruby
+stream = stagehand.sessions.act_streaming(
+  "00000000-your-session-id-000000000000",
+  input: "click the first link on the page"
+)
+
+stream.each do |session|
+  puts(session.data)
+end
 ```
 
 ### Handling errors

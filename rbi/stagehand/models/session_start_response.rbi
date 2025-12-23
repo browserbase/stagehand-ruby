@@ -59,33 +59,39 @@ module Stagehand
         sig { returns(T::Boolean) }
         attr_accessor :available
 
-        # CDP WebSocket URL for connecting to the Browserbase cloud browser
-        sig { returns(String) }
-        attr_accessor :connect_url
-
         # Unique Browserbase session identifier
         sig { returns(String) }
         attr_accessor :session_id
 
+        # CDP WebSocket URL for connecting to the Browserbase cloud browser (present when
+        # available)
+        sig { returns(T.nilable(String)) }
+        attr_accessor :cdp_url
+
         sig do
           params(
             available: T::Boolean,
-            connect_url: String,
-            session_id: String
+            session_id: String,
+            cdp_url: T.nilable(String)
           ).returns(T.attached_class)
         end
         def self.new(
           available:,
-          # CDP WebSocket URL for connecting to the Browserbase cloud browser
-          connect_url:,
           # Unique Browserbase session identifier
-          session_id:
+          session_id:,
+          # CDP WebSocket URL for connecting to the Browserbase cloud browser (present when
+          # available)
+          cdp_url: nil
         )
         end
 
         sig do
           override.returns(
-            { available: T::Boolean, connect_url: String, session_id: String }
+            {
+              available: T::Boolean,
+              session_id: String,
+              cdp_url: T.nilable(String)
+            }
           )
         end
         def to_hash

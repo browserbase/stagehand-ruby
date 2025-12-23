@@ -82,13 +82,19 @@ module Stagehand
         #   @return [String, Stagehand::Models::ModelConfig::ModelConfigObject, nil]
         optional :model, union: -> { Stagehand::ModelConfig }
 
+        # @!attribute provider
+        #   AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
+        #
+        #   @return [Symbol, Stagehand::Models::SessionExecuteParams::AgentConfig::Provider, nil]
+        optional :provider, enum: -> { Stagehand::SessionExecuteParams::AgentConfig::Provider }
+
         # @!attribute system_prompt
         #   Custom system prompt for the agent
         #
         #   @return [String, nil]
         optional :system_prompt, String, api_name: :systemPrompt
 
-        # @!method initialize(cua: nil, model: nil, system_prompt: nil)
+        # @!method initialize(cua: nil, model: nil, provider: nil, system_prompt: nil)
         #   Some parameter documentations has been truncated, see
         #   {Stagehand::Models::SessionExecuteParams::AgentConfig} for more details.
         #
@@ -96,7 +102,24 @@ module Stagehand
         #
         #   @param model [String, Stagehand::Models::ModelConfig::ModelConfigObject] Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/cl
         #
+        #   @param provider [Symbol, Stagehand::Models::SessionExecuteParams::AgentConfig::Provider] AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
+        #
         #   @param system_prompt [String] Custom system prompt for the agent
+
+        # AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
+        #
+        # @see Stagehand::Models::SessionExecuteParams::AgentConfig#provider
+        module Provider
+          extend Stagehand::Internal::Type::Enum
+
+          OPENAI = :openai
+          ANTHROPIC = :anthropic
+          GOOGLE = :google
+          MICROSOFT = :microsoft
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
       end
 
       class ExecuteOptions < Stagehand::Internal::Type::BaseModel

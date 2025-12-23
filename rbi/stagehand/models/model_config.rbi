@@ -39,10 +39,32 @@ module Stagehand
         sig { params(base_url: String).void }
         attr_writer :base_url
 
+        # AI provider for the model (or provide a baseURL endpoint instead)
         sig do
-          params(model_name: String, api_key: String, base_url: String).returns(
-            T.attached_class
+          returns(
+            T.nilable(
+              Stagehand::ModelConfig::ModelConfigObject::Provider::OrSymbol
+            )
           )
+        end
+        attr_reader :provider
+
+        sig do
+          params(
+            provider:
+              Stagehand::ModelConfig::ModelConfigObject::Provider::OrSymbol
+          ).void
+        end
+        attr_writer :provider
+
+        sig do
+          params(
+            model_name: String,
+            api_key: String,
+            base_url: String,
+            provider:
+              Stagehand::ModelConfig::ModelConfigObject::Provider::OrSymbol
+          ).returns(T.attached_class)
         end
         def self.new(
           # Model name string without prefix (e.g., 'gpt-5-nano', 'claude-4.5-opus')
@@ -50,16 +72,66 @@ module Stagehand
           # API key for the model provider
           api_key: nil,
           # Base URL for the model provider
-          base_url: nil
+          base_url: nil,
+          # AI provider for the model (or provide a baseURL endpoint instead)
+          provider: nil
         )
         end
 
         sig do
           override.returns(
-            { model_name: String, api_key: String, base_url: String }
+            {
+              model_name: String,
+              api_key: String,
+              base_url: String,
+              provider:
+                Stagehand::ModelConfig::ModelConfigObject::Provider::OrSymbol
+            }
           )
         end
         def to_hash
+        end
+
+        # AI provider for the model (or provide a baseURL endpoint instead)
+        module Provider
+          extend Stagehand::Internal::Type::Enum
+
+          TaggedSymbol =
+            T.type_alias do
+              T.all(Symbol, Stagehand::ModelConfig::ModelConfigObject::Provider)
+            end
+          OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+          OPENAI =
+            T.let(
+              :openai,
+              Stagehand::ModelConfig::ModelConfigObject::Provider::TaggedSymbol
+            )
+          ANTHROPIC =
+            T.let(
+              :anthropic,
+              Stagehand::ModelConfig::ModelConfigObject::Provider::TaggedSymbol
+            )
+          GOOGLE =
+            T.let(
+              :google,
+              Stagehand::ModelConfig::ModelConfigObject::Provider::TaggedSymbol
+            )
+          MICROSOFT =
+            T.let(
+              :microsoft,
+              Stagehand::ModelConfig::ModelConfigObject::Provider::TaggedSymbol
+            )
+
+          sig do
+            override.returns(
+              T::Array[
+                Stagehand::ModelConfig::ModelConfigObject::Provider::TaggedSymbol
+              ]
+            )
+          end
+          def self.values
+          end
         end
       end
 

@@ -6,7 +6,12 @@ module Stagehand
       extend Stagehand::Internal::Type::Union
 
       type model_config_object =
-        { model_name: String, api_key: String, base_url: String }
+        {
+          model_name: String,
+          api_key: String,
+          base_url: String,
+          provider: Stagehand::Models::ModelConfig::ModelConfigObject::provider
+        }
 
       class ModelConfigObject < Stagehand::Internal::Type::BaseModel
         attr_accessor model_name: String
@@ -19,17 +24,38 @@ module Stagehand
 
         def base_url=: (String) -> String
 
+        attr_reader provider: Stagehand::Models::ModelConfig::ModelConfigObject::provider?
+
+        def provider=: (
+          Stagehand::Models::ModelConfig::ModelConfigObject::provider
+        ) -> Stagehand::Models::ModelConfig::ModelConfigObject::provider
+
         def initialize: (
           model_name: String,
           ?api_key: String,
-          ?base_url: String
+          ?base_url: String,
+          ?provider: Stagehand::Models::ModelConfig::ModelConfigObject::provider
         ) -> void
 
         def to_hash: -> {
           model_name: String,
           api_key: String,
-          base_url: String
+          base_url: String,
+          provider: Stagehand::Models::ModelConfig::ModelConfigObject::provider
         }
+
+        type provider = :openai | :anthropic | :google | :microsoft
+
+        module Provider
+          extend Stagehand::Internal::Type::Enum
+
+          OPENAI: :openai
+          ANTHROPIC: :anthropic
+          GOOGLE: :google
+          MICROSOFT: :microsoft
+
+          def self?.values: -> ::Array[Stagehand::Models::ModelConfig::ModelConfigObject::provider]
+        end
       end
 
       def self?.variants: -> ::Array[Stagehand::Models::model_config]
