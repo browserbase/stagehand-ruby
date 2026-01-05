@@ -14,7 +14,7 @@ module Stagehand
       required :model_name, String, api_name: :modelName
 
       # @!attribute act_timeout_ms
-      #   Timeout in ms for act operations
+      #   Timeout in ms for act operations (deprecated, v2 only)
       #
       #   @return [Float, nil]
       optional :act_timeout_ms, Float, api_name: :actTimeoutMs
@@ -36,11 +36,6 @@ module Stagehand
       #
       #   @return [String, nil]
       optional :browserbase_session_id, String, api_name: :browserbaseSessionID
-
-      # @!attribute debug_dom
-      #
-      #   @return [Boolean, nil]
-      optional :debug_dom, Stagehand::Internal::Type::Boolean, api_name: :debugDom
 
       # @!attribute dom_settle_timeout_ms
       #   Timeout in ms to wait for DOM to settle
@@ -68,10 +63,11 @@ module Stagehand
       # @!attribute verbose
       #   Logging verbosity level (0=quiet, 1=normal, 2=debug)
       #
-      #   @return [Integer, nil]
-      optional :verbose, Integer
+      #   @return [Float, Stagehand::Models::SessionStartParams::Verbose, nil]
+      optional :verbose, enum: -> { Stagehand::SessionStartParams::Verbose }
 
       # @!attribute wait_for_captcha_solves
+      #   Wait for captcha solves (deprecated, v2 only)
       #
       #   @return [Boolean, nil]
       optional :wait_for_captcha_solves, Stagehand::Internal::Type::Boolean, api_name: :waitForCaptchaSolves
@@ -100,18 +96,16 @@ module Stagehand
       #   @return [Symbol, Stagehand::Models::SessionStartParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { Stagehand::SessionStartParams::XStreamResponse }
 
-      # @!method initialize(model_name:, act_timeout_ms: nil, browser: nil, browserbase_session_create_params: nil, browserbase_session_id: nil, debug_dom: nil, dom_settle_timeout_ms: nil, experimental: nil, self_heal: nil, system_prompt: nil, verbose: nil, wait_for_captcha_solves: nil, x_language: nil, x_sdk_version: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @!method initialize(model_name:, act_timeout_ms: nil, browser: nil, browserbase_session_create_params: nil, browserbase_session_id: nil, dom_settle_timeout_ms: nil, experimental: nil, self_heal: nil, system_prompt: nil, verbose: nil, wait_for_captcha_solves: nil, x_language: nil, x_sdk_version: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
       #   @param model_name [String] Model name to use for AI operations
       #
-      #   @param act_timeout_ms [Float] Timeout in ms for act operations
+      #   @param act_timeout_ms [Float] Timeout in ms for act operations (deprecated, v2 only)
       #
       #   @param browser [Stagehand::Models::SessionStartParams::Browser]
       #
       #   @param browserbase_session_create_params [Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams]
       #
       #   @param browserbase_session_id [String] Existing Browserbase session ID to resume
-      #
-      #   @param debug_dom [Boolean]
       #
       #   @param dom_settle_timeout_ms [Float] Timeout in ms to wait for DOM to settle
       #
@@ -121,9 +115,9 @@ module Stagehand
       #
       #   @param system_prompt [String] Custom system prompt for AI operations
       #
-      #   @param verbose [Integer] Logging verbosity level (0=quiet, 1=normal, 2=debug)
+      #   @param verbose [Float, Stagehand::Models::SessionStartParams::Verbose] Logging verbosity level (0=quiet, 1=normal, 2=debug)
       #
-      #   @param wait_for_captcha_solves [Boolean]
+      #   @param wait_for_captcha_solves [Boolean] Wait for captcha solves (deprecated, v2 only)
       #
       #   @param x_language [Symbol, Stagehand::Models::SessionStartParams::XLanguage] Client SDK language
       #
@@ -757,6 +751,18 @@ module Stagehand
           # @!method self.values
           #   @return [Array<Symbol>]
         end
+      end
+
+      # Logging verbosity level (0=quiet, 1=normal, 2=debug)
+      module Verbose
+        extend Stagehand::Internal::Type::Enum
+
+        VERBOSE_0 = 0
+        VERBOSE_1 = 1
+        VERBOSE_2 = 2
+
+        # @!method self.values
+        #   @return [Array<Float>]
       end
 
       # Client SDK language

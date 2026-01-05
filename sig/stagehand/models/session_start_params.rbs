@@ -7,12 +7,11 @@ module Stagehand
         browser: Stagehand::SessionStartParams::Browser,
         browserbase_session_create_params: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams,
         browserbase_session_id: String,
-        debug_dom: bool,
         dom_settle_timeout_ms: Float,
         experimental: bool,
         self_heal: bool,
         system_prompt: String,
-        verbose: Integer,
+        verbose: Stagehand::Models::SessionStartParams::verbose,
         wait_for_captcha_solves: bool,
         x_language: Stagehand::Models::SessionStartParams::x_language,
         x_sdk_version: String,
@@ -47,10 +46,6 @@ module Stagehand
 
       def browserbase_session_id=: (String) -> String
 
-      attr_reader debug_dom: bool?
-
-      def debug_dom=: (bool) -> bool
-
       attr_reader dom_settle_timeout_ms: Float?
 
       def dom_settle_timeout_ms=: (Float) -> Float
@@ -67,9 +62,11 @@ module Stagehand
 
       def system_prompt=: (String) -> String
 
-      attr_reader verbose: Integer?
+      attr_reader verbose: Stagehand::Models::SessionStartParams::verbose?
 
-      def verbose=: (Integer) -> Integer
+      def verbose=: (
+        Stagehand::Models::SessionStartParams::verbose
+      ) -> Stagehand::Models::SessionStartParams::verbose
 
       attr_reader wait_for_captcha_solves: bool?
 
@@ -101,12 +98,11 @@ module Stagehand
         ?browser: Stagehand::SessionStartParams::Browser,
         ?browserbase_session_create_params: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams,
         ?browserbase_session_id: String,
-        ?debug_dom: bool,
         ?dom_settle_timeout_ms: Float,
         ?experimental: bool,
         ?self_heal: bool,
         ?system_prompt: String,
-        ?verbose: Integer,
+        ?verbose: Stagehand::Models::SessionStartParams::verbose,
         ?wait_for_captcha_solves: bool,
         ?x_language: Stagehand::Models::SessionStartParams::x_language,
         ?x_sdk_version: String,
@@ -121,12 +117,11 @@ module Stagehand
         browser: Stagehand::SessionStartParams::Browser,
         browserbase_session_create_params: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams,
         browserbase_session_id: String,
-        debug_dom: bool,
         dom_settle_timeout_ms: Float,
         experimental: bool,
         self_heal: bool,
         system_prompt: String,
-        verbose: Integer,
+        verbose: Stagehand::Models::SessionStartParams::verbose,
         wait_for_captcha_solves: bool,
         x_language: Stagehand::Models::SessionStartParams::x_language,
         x_sdk_version: String,
@@ -858,6 +853,18 @@ module Stagehand
 
           def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::region]
         end
+      end
+
+      type verbose = Float
+
+      module Verbose
+        extend Stagehand::Internal::Type::Enum
+
+        VERBOSE_0: 0
+        VERBOSE_1: 1
+        VERBOSE_2: 2
+
+        def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::verbose]
       end
 
       type x_language = :typescript | :python | :playground

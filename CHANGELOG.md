@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.5.0 (2025-12-23)
+
+Full Changelog: [v0.4.0...v0.5.0](https://github.com/browserbase/stagehand-ruby/compare/v0.4.0...v0.5.0)
+
+### Features
+
+* [STG-1053] [server] Use fastify-zod-openapi + zod v4 for openapi generation ([926a819](https://github.com/browserbase/stagehand-ruby/commit/926a819a4bbe2b260d3dbd46b860c444f60857bf))
+* **api:** manual updates ([0619302](https://github.com/browserbase/stagehand-ruby/commit/061930217b3efce30e29cf8b2511970b21c86c57))
+
+
+### Documentation
+
+* add more examples ([3e81eba](https://github.com/browserbase/stagehand-ruby/commit/3e81eba0b962a3ec0c9a8b13fc9ae30f0961663e))
+
 ## 0.4.0 (2025-12-19)
 
 Full Changelog: [v0.3.0...v0.4.0](https://github.com/browserbase/stagehand-ruby/compare/v0.3.0...v0.4.0)

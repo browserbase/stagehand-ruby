@@ -27,24 +27,28 @@ module Stagehand
         #   @return [Boolean]
         required :available, Stagehand::Internal::Type::Boolean
 
-        # @!attribute connect_url
-        #   CDP WebSocket URL for connecting to the Browserbase cloud browser
-        #
-        #   @return [String]
-        required :connect_url, String, api_name: :connectUrl
-
         # @!attribute session_id
         #   Unique Browserbase session identifier
         #
         #   @return [String]
         required :session_id, String, api_name: :sessionId
 
-        # @!method initialize(available:, connect_url:, session_id:)
+        # @!attribute cdp_url
+        #   CDP WebSocket URL for connecting to the Browserbase cloud browser (present when
+        #   available)
+        #
+        #   @return [String, nil]
+        optional :cdp_url, String, api_name: :cdpUrl, nil?: true
+
+        # @!method initialize(available:, session_id:, cdp_url: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {Stagehand::Models::SessionStartResponse::Data} for more details.
+        #
         #   @param available [Boolean]
         #
-        #   @param connect_url [String] CDP WebSocket URL for connecting to the Browserbase cloud browser
-        #
         #   @param session_id [String] Unique Browserbase session identifier
+        #
+        #   @param cdp_url [String, nil] CDP WebSocket URL for connecting to the Browserbase cloud browser (present when
       end
     end
   end

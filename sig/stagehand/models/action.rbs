@@ -5,6 +5,7 @@ module Stagehand
         description: String,
         selector: String,
         arguments: ::Array[String],
+        backend_node_id: Float,
         method_: String
       }
 
@@ -17,6 +18,10 @@ module Stagehand
 
       def arguments=: (::Array[String]) -> ::Array[String]
 
+      attr_reader backend_node_id: Float?
+
+      def backend_node_id=: (Float) -> Float
+
       attr_reader method_: String?
 
       def method_=: (String) -> String
@@ -25,6 +30,7 @@ module Stagehand
         description: String,
         selector: String,
         ?arguments: ::Array[String],
+        ?backend_node_id: Float,
         ?method_: String
       ) -> void
 
@@ -32,6 +38,7 @@ module Stagehand
         description: String,
         selector: String,
         arguments: ::Array[String],
+        backend_node_id: Float,
         method_: String
       }
     end
