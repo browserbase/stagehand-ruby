@@ -140,6 +140,7 @@ module Stagehand
             x_sent_at: "x-sent-at",
             x_stream_response: "x-stream-response"
           ),
+          body: {},
           model: Stagehand::Models::SessionEndResponse,
           options: options
         )
