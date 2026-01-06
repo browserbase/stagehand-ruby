@@ -11,6 +11,12 @@ module Stagehand
           T.any(Stagehand::SessionEndParams, Stagehand::Internal::AnyHash)
         end
 
+      sig { returns(T.nilable(T.anything)) }
+      attr_reader :_force_body
+
+      sig { params(_force_body: T.anything).void }
+      attr_writer :_force_body
+
       # Client SDK language
       sig do
         returns(T.nilable(Stagehand::SessionEndParams::XLanguage::OrSymbol))
@@ -56,6 +62,7 @@ module Stagehand
 
       sig do
         params(
+          _force_body: T.anything,
           x_language: Stagehand::SessionEndParams::XLanguage::OrSymbol,
           x_sdk_version: String,
           x_sent_at: Time,
@@ -65,6 +72,7 @@ module Stagehand
         ).returns(T.attached_class)
       end
       def self.new(
+        _force_body: nil,
         # Client SDK language
         x_language: nil,
         # Version of the Stagehand SDK
@@ -80,6 +88,7 @@ module Stagehand
       sig do
         override.returns(
           {
+            _force_body: T.anything,
             x_language: Stagehand::SessionEndParams::XLanguage::OrSymbol,
             x_sdk_version: String,
             x_sent_at: Time,

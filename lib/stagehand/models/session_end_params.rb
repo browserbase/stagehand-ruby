@@ -7,6 +7,11 @@ module Stagehand
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters
 
+      # @!attribute _force_body
+      #
+      #   @return [Object, nil]
+      optional :_force_body, Stagehand::Internal::Type::Unknown, api_name: :_forceBody
+
       # @!attribute x_language
       #   Client SDK language
       #
@@ -31,7 +36,9 @@ module Stagehand
       #   @return [Symbol, Stagehand::Models::SessionEndParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { Stagehand::SessionEndParams::XStreamResponse }
 
-      # @!method initialize(x_language: nil, x_sdk_version: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @!method initialize(_force_body: nil, x_language: nil, x_sdk_version: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      #   @param _force_body [Object]
+      #
       #   @param x_language [Symbol, Stagehand::Models::SessionEndParams::XLanguage] Client SDK language
       #
       #   @param x_sdk_version [String] Version of the Stagehand SDK

@@ -93,6 +93,7 @@ module Stagehand
       sig do
         params(
           id: String,
+          _force_body: T.anything,
           x_language: Stagehand::SessionEndParams::XLanguage::OrSymbol,
           x_sdk_version: String,
           x_sent_at: Time,
@@ -102,15 +103,17 @@ module Stagehand
         ).returns(Stagehand::Models::SessionEndResponse)
       end
       def end_(
-        # Unique session identifier
+        # Path param: Unique session identifier
         id,
-        # Client SDK language
+        # Body param:
+        _force_body: nil,
+        # Header param: Client SDK language
         x_language: nil,
-        # Version of the Stagehand SDK
+        # Header param: Version of the Stagehand SDK
         x_sdk_version: nil,
-        # ISO timestamp when request was sent
+        # Header param: ISO timestamp when request was sent
         x_sent_at: nil,
-        # Whether to stream the response via SSE
+        # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
       )

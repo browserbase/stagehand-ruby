@@ -27,6 +27,7 @@ module Stagehand
 
       def end_: (
         String id,
+        ?_force_body: top,
         ?x_language: Stagehand::Models::SessionEndParams::x_language,
         ?x_sdk_version: String,
         ?x_sent_at: Time,

@@ -112,17 +112,19 @@ module Stagehand
 
       # Terminates the browser session and releases all associated resources.
       #
-      # @overload end_(id, x_language: nil, x_sdk_version: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @overload end_(id, _force_body: nil, x_language: nil, x_sdk_version: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
       #
-      # @param id [String] Unique session identifier
+      # @param id [String] Path param: Unique session identifier
       #
-      # @param x_language [Symbol, Stagehand::Models::SessionEndParams::XLanguage] Client SDK language
+      # @param _force_body [Object] Body param:
       #
-      # @param x_sdk_version [String] Version of the Stagehand SDK
+      # @param x_language [Symbol, Stagehand::Models::SessionEndParams::XLanguage] Header param: Client SDK language
       #
-      # @param x_sent_at [Time] ISO timestamp when request was sent
+      # @param x_sdk_version [String] Header param: Version of the Stagehand SDK
       #
-      # @param x_stream_response [Symbol, Stagehand::Models::SessionEndParams::XStreamResponse] Whether to stream the response via SSE
+      # @param x_sent_at [Time] Header param: ISO timestamp when request was sent
+      #
+      # @param x_stream_response [Symbol, Stagehand::Models::SessionEndParams::XStreamResponse] Header param: Whether to stream the response via SSE
       #
       # @param request_options [Stagehand::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -131,15 +133,18 @@ module Stagehand
       # @see Stagehand::Models::SessionEndParams
       def end_(id, params = {})
         parsed, options = Stagehand::SessionEndParams.dump_request(params)
-        @client.request(
-          method: :post,
-          path: ["v1/sessions/%1$s/end", id],
-          headers: parsed.transform_keys(
+        header_params =
+          {
             x_language: "x-language",
             x_sdk_version: "x-sdk-version",
             x_sent_at: "x-sent-at",
             x_stream_response: "x-stream-response"
-          ),
+          }
+        @client.request(
+          method: :post,
+          path: ["v1/sessions/%1$s/end", id],
+          headers: parsed.slice(*header_params.keys).transform_keys(header_params),
+          body: parsed.except(*header_params.keys),
           model: Stagehand::Models::SessionEndResponse,
           options: options
         )

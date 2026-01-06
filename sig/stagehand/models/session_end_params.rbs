@@ -2,6 +2,7 @@ module Stagehand
   module Models
     type session_end_params =
       {
+        _force_body: top,
         x_language: Stagehand::Models::SessionEndParams::x_language,
         x_sdk_version: String,
         x_sent_at: Time,
@@ -12,6 +13,10 @@ module Stagehand
     class SessionEndParams < Stagehand::Internal::Type::BaseModel
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters
+
+      attr_reader _force_body: top?
+
+      def _force_body=: (top) -> top
 
       attr_reader x_language: Stagehand::Models::SessionEndParams::x_language?
 
@@ -34,6 +39,7 @@ module Stagehand
       ) -> Stagehand::Models::SessionEndParams::x_stream_response
 
       def initialize: (
+        ?_force_body: top,
         ?x_language: Stagehand::Models::SessionEndParams::x_language,
         ?x_sdk_version: String,
         ?x_sent_at: Time,
@@ -42,6 +48,7 @@ module Stagehand
       ) -> void
 
       def to_hash: -> {
+        _force_body: top,
         x_language: Stagehand::Models::SessionEndParams::x_language,
         x_sdk_version: String,
         x_sent_at: Time,
