@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.6.0 (2026-01-05)
+
+Full Changelog: [v0.5.0...v0.6.0](https://github.com/browserbase/stagehand-ruby/compare/v0.5.0...v0.6.0)
+
+### Features
+
+* **api:** manual updates ([ffa5258](https://github.com/browserbase/stagehand-ruby/commit/ffa5258d23db78c2aa398289bc4d775fd5d145f0))
+
 ## 0.5.0 (2025-12-23)
 
 Full Changelog: [v0.4.0...v0.5.0](https://github.com/browserbase/stagehand-ruby/compare/v0.4.0...v0.5.0)
