@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.6.1 (2026-01-06)
+
+Full Changelog: [v0.6.0...v0.6.1](https://github.com/browserbase/stagehand-ruby/compare/v0.6.0...v0.6.1)
+
+### Documentation
+
+* add full example and update examples in README ([#8](https://github.com/browserbase/stagehand-ruby/issues/8)) ([3d8b897](https://github.com/browserbase/stagehand-ruby/commit/3d8b8978c4623f906fd809fdd44c91539098fe00))
+* prominently feature MCP server setup in root SDK readmes ([f9a368b](https://github.com/browserbase/stagehand-ruby/commit/f9a368b0508862cd3ee53198ac92fe1265c5050f))
+
 ## 0.6.0 (2026-01-05)
 
 Full Changelog: [v0.5.0...v0.6.0](https://github.com/browserbase/stagehand-ruby/compare/v0.5.0...v0.6.0)
