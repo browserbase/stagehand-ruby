@@ -3,8 +3,6 @@ module Stagehand
     type session_end_params =
       {
         _force_body: top,
-        x_language: Stagehand::Models::SessionEndParams::x_language,
-        x_sdk_version: String,
         x_sent_at: Time,
         x_stream_response: Stagehand::Models::SessionEndParams::x_stream_response
       }
@@ -18,16 +16,6 @@ module Stagehand
 
       def _force_body=: (top) -> top
 
-      attr_reader x_language: Stagehand::Models::SessionEndParams::x_language?
-
-      def x_language=: (
-        Stagehand::Models::SessionEndParams::x_language
-      ) -> Stagehand::Models::SessionEndParams::x_language
-
-      attr_reader x_sdk_version: String?
-
-      def x_sdk_version=: (String) -> String
-
       attr_reader x_sent_at: Time?
 
       def x_sent_at=: (Time) -> Time
@@ -40,8 +28,6 @@ module Stagehand
 
       def initialize: (
         ?_force_body: top,
-        ?x_language: Stagehand::Models::SessionEndParams::x_language,
-        ?x_sdk_version: String,
         ?x_sent_at: Time,
         ?x_stream_response: Stagehand::Models::SessionEndParams::x_stream_response,
         ?request_options: Stagehand::request_opts
@@ -49,24 +35,10 @@ module Stagehand
 
       def to_hash: -> {
         _force_body: top,
-        x_language: Stagehand::Models::SessionEndParams::x_language,
-        x_sdk_version: String,
         x_sent_at: Time,
         x_stream_response: Stagehand::Models::SessionEndParams::x_stream_response,
         request_options: Stagehand::RequestOptions
       }
-
-      type x_language = :typescript | :python | :playground
-
-      module XLanguage
-        extend Stagehand::Internal::Type::Enum
-
-        TYPESCRIPT: :typescript
-        PYTHON: :python
-        PLAYGROUND: :playground
-
-        def self?.values: -> ::Array[Stagehand::Models::SessionEndParams::x_language]
-      end
 
       type x_stream_response = :true | :false
 

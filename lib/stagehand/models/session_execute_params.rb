@@ -27,18 +27,6 @@ module Stagehand
       #   @return [String, nil]
       optional :frame_id, String, api_name: :frameId
 
-      # @!attribute x_language
-      #   Client SDK language
-      #
-      #   @return [Symbol, Stagehand::Models::SessionExecuteParams::XLanguage, nil]
-      optional :x_language, enum: -> { Stagehand::SessionExecuteParams::XLanguage }
-
-      # @!attribute x_sdk_version
-      #   Version of the Stagehand SDK
-      #
-      #   @return [String, nil]
-      optional :x_sdk_version, String
-
       # @!attribute x_sent_at
       #   ISO timestamp when request was sent
       #
@@ -51,16 +39,12 @@ module Stagehand
       #   @return [Symbol, Stagehand::Models::SessionExecuteParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { Stagehand::SessionExecuteParams::XStreamResponse }
 
-      # @!method initialize(agent_config:, execute_options:, frame_id: nil, x_language: nil, x_sdk_version: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @!method initialize(agent_config:, execute_options:, frame_id: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
       #   @param agent_config [Stagehand::Models::SessionExecuteParams::AgentConfig]
       #
       #   @param execute_options [Stagehand::Models::SessionExecuteParams::ExecuteOptions]
       #
       #   @param frame_id [String] Target frame ID for the agent
-      #
-      #   @param x_language [Symbol, Stagehand::Models::SessionExecuteParams::XLanguage] Client SDK language
-      #
-      #   @param x_sdk_version [String] Version of the Stagehand SDK
       #
       #   @param x_sent_at [Time] ISO timestamp when request was sent
       #
@@ -147,18 +131,6 @@ module Stagehand
         #   @param highlight_cursor [Boolean] Whether to visually highlight the cursor during execution
         #
         #   @param max_steps [Float] Maximum number of steps the agent can take
-      end
-
-      # Client SDK language
-      module XLanguage
-        extend Stagehand::Internal::Type::Enum
-
-        TYPESCRIPT = :typescript
-        PYTHON = :python
-        PLAYGROUND = :playground
-
-        # @!method self.values
-        #   @return [Array<Symbol>]
       end
 
       # Whether to stream the response via SSE

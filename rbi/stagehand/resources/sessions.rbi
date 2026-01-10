@@ -13,8 +13,6 @@ module Stagehand
           input: T.any(String, Stagehand::Action::OrHash),
           frame_id: String,
           options: Stagehand::SessionActParams::Options::OrHash,
-          x_language: Stagehand::SessionActParams::XLanguage::OrSymbol,
-          x_sdk_version: String,
           x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionActParams::XStreamResponse::OrSymbol,
@@ -31,10 +29,6 @@ module Stagehand
         frame_id: nil,
         # Body param:
         options: nil,
-        # Header param: Client SDK language
-        x_language: nil,
-        # Header param: Version of the Stagehand SDK
-        x_sdk_version: nil,
         # Header param: ISO timestamp when request was sent
         x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
@@ -56,8 +50,6 @@ module Stagehand
           input: T.any(String, Stagehand::Action::OrHash),
           frame_id: String,
           options: Stagehand::SessionActParams::Options::OrHash,
-          x_language: Stagehand::SessionActParams::XLanguage::OrSymbol,
-          x_sdk_version: String,
           x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionActParams::XStreamResponse::OrSymbol,
@@ -74,10 +66,6 @@ module Stagehand
         frame_id: nil,
         # Body param:
         options: nil,
-        # Header param: Client SDK language
-        x_language: nil,
-        # Header param: Version of the Stagehand SDK
-        x_sdk_version: nil,
         # Header param: ISO timestamp when request was sent
         x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
@@ -94,8 +82,6 @@ module Stagehand
         params(
           id: String,
           _force_body: T.anything,
-          x_language: Stagehand::SessionEndParams::XLanguage::OrSymbol,
-          x_sdk_version: String,
           x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionEndParams::XStreamResponse::OrSymbol,
@@ -107,10 +93,6 @@ module Stagehand
         id,
         # Body param:
         _force_body: nil,
-        # Header param: Client SDK language
-        x_language: nil,
-        # Header param: Version of the Stagehand SDK
-        x_sdk_version: nil,
         # Header param: ISO timestamp when request was sent
         x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
@@ -130,8 +112,6 @@ module Stagehand
           execute_options:
             Stagehand::SessionExecuteParams::ExecuteOptions::OrHash,
           frame_id: String,
-          x_language: Stagehand::SessionExecuteParams::XLanguage::OrSymbol,
-          x_sdk_version: String,
           x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionExecuteParams::XStreamResponse::OrSymbol,
@@ -148,10 +128,6 @@ module Stagehand
         execute_options:,
         # Body param: Target frame ID for the agent
         frame_id: nil,
-        # Header param: Client SDK language
-        x_language: nil,
-        # Header param: Version of the Stagehand SDK
-        x_sdk_version: nil,
         # Header param: ISO timestamp when request was sent
         x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
@@ -174,8 +150,6 @@ module Stagehand
           execute_options:
             Stagehand::SessionExecuteParams::ExecuteOptions::OrHash,
           frame_id: String,
-          x_language: Stagehand::SessionExecuteParams::XLanguage::OrSymbol,
-          x_sdk_version: String,
           x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionExecuteParams::XStreamResponse::OrSymbol,
@@ -192,10 +166,6 @@ module Stagehand
         execute_options:,
         # Body param: Target frame ID for the agent
         frame_id: nil,
-        # Header param: Client SDK language
-        x_language: nil,
-        # Header param: Version of the Stagehand SDK
-        x_sdk_version: nil,
         # Header param: ISO timestamp when request was sent
         x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
@@ -219,8 +189,6 @@ module Stagehand
           instruction: String,
           options: Stagehand::SessionExtractParams::Options::OrHash,
           schema: T::Hash[Symbol, T.anything],
-          x_language: Stagehand::SessionExtractParams::XLanguage::OrSymbol,
-          x_sdk_version: String,
           x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionExtractParams::XStreamResponse::OrSymbol,
@@ -239,10 +207,6 @@ module Stagehand
         options: nil,
         # Body param: JSON Schema defining the structure of data to extract
         schema: nil,
-        # Header param: Client SDK language
-        x_language: nil,
-        # Header param: Version of the Stagehand SDK
-        x_sdk_version: nil,
         # Header param: ISO timestamp when request was sent
         x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
@@ -265,8 +229,6 @@ module Stagehand
           instruction: String,
           options: Stagehand::SessionExtractParams::Options::OrHash,
           schema: T::Hash[Symbol, T.anything],
-          x_language: Stagehand::SessionExtractParams::XLanguage::OrSymbol,
-          x_sdk_version: String,
           x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionExtractParams::XStreamResponse::OrSymbol,
@@ -285,10 +247,6 @@ module Stagehand
         options: nil,
         # Body param: JSON Schema defining the structure of data to extract
         schema: nil,
-        # Header param: Client SDK language
-        x_language: nil,
-        # Header param: Version of the Stagehand SDK
-        x_sdk_version: nil,
         # Header param: ISO timestamp when request was sent
         x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
@@ -309,8 +267,6 @@ module Stagehand
           frame_id: String,
           options: Stagehand::SessionNavigateParams::Options::OrHash,
           stream_response: T::Boolean,
-          x_language: Stagehand::SessionNavigateParams::XLanguage::OrSymbol,
-          x_sdk_version: String,
           x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionNavigateParams::XStreamResponse::OrSymbol,
@@ -328,10 +284,6 @@ module Stagehand
         options: nil,
         # Body param: Whether to stream the response via SSE
         stream_response: nil,
-        # Header param: Client SDK language
-        x_language: nil,
-        # Header param: Version of the Stagehand SDK
-        x_sdk_version: nil,
         # Header param: ISO timestamp when request was sent
         x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
@@ -351,8 +303,6 @@ module Stagehand
           frame_id: String,
           instruction: String,
           options: Stagehand::SessionObserveParams::Options::OrHash,
-          x_language: Stagehand::SessionObserveParams::XLanguage::OrSymbol,
-          x_sdk_version: String,
           x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionObserveParams::XStreamResponse::OrSymbol,
@@ -369,10 +319,6 @@ module Stagehand
         instruction: nil,
         # Body param:
         options: nil,
-        # Header param: Client SDK language
-        x_language: nil,
-        # Header param: Version of the Stagehand SDK
-        x_sdk_version: nil,
         # Header param: ISO timestamp when request was sent
         x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
@@ -395,8 +341,6 @@ module Stagehand
           frame_id: String,
           instruction: String,
           options: Stagehand::SessionObserveParams::Options::OrHash,
-          x_language: Stagehand::SessionObserveParams::XLanguage::OrSymbol,
-          x_sdk_version: String,
           x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionObserveParams::XStreamResponse::OrSymbol,
@@ -413,10 +357,6 @@ module Stagehand
         instruction: nil,
         # Body param:
         options: nil,
-        # Header param: Client SDK language
-        x_language: nil,
-        # Header param: Version of the Stagehand SDK
-        x_sdk_version: nil,
         # Header param: ISO timestamp when request was sent
         x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
@@ -445,8 +385,6 @@ module Stagehand
           system_prompt: String,
           verbose: Stagehand::SessionStartParams::Verbose::OrFloat,
           wait_for_captcha_solves: T::Boolean,
-          x_language: Stagehand::SessionStartParams::XLanguage::OrSymbol,
-          x_sdk_version: String,
           x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionStartParams::XStreamResponse::OrSymbol,
@@ -476,10 +414,6 @@ module Stagehand
         verbose: nil,
         # Body param: Wait for captcha solves (deprecated, v2 only)
         wait_for_captcha_solves: nil,
-        # Header param: Client SDK language
-        x_language: nil,
-        # Header param: Version of the Stagehand SDK
-        x_sdk_version: nil,
         # Header param: ISO timestamp when request was sent
         x_sent_at: nil,
         # Header param: Whether to stream the response via SSE

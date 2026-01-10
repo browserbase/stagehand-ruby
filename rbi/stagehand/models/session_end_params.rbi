@@ -17,26 +17,6 @@ module Stagehand
       sig { params(_force_body: T.anything).void }
       attr_writer :_force_body
 
-      # Client SDK language
-      sig do
-        returns(T.nilable(Stagehand::SessionEndParams::XLanguage::OrSymbol))
-      end
-      attr_reader :x_language
-
-      sig do
-        params(
-          x_language: Stagehand::SessionEndParams::XLanguage::OrSymbol
-        ).void
-      end
-      attr_writer :x_language
-
-      # Version of the Stagehand SDK
-      sig { returns(T.nilable(String)) }
-      attr_reader :x_sdk_version
-
-      sig { params(x_sdk_version: String).void }
-      attr_writer :x_sdk_version
-
       # ISO timestamp when request was sent
       sig { returns(T.nilable(Time)) }
       attr_reader :x_sent_at
@@ -63,8 +43,6 @@ module Stagehand
       sig do
         params(
           _force_body: T.anything,
-          x_language: Stagehand::SessionEndParams::XLanguage::OrSymbol,
-          x_sdk_version: String,
           x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionEndParams::XStreamResponse::OrSymbol,
@@ -73,10 +51,6 @@ module Stagehand
       end
       def self.new(
         _force_body: nil,
-        # Client SDK language
-        x_language: nil,
-        # Version of the Stagehand SDK
-        x_sdk_version: nil,
         # ISO timestamp when request was sent
         x_sent_at: nil,
         # Whether to stream the response via SSE
@@ -89,8 +63,6 @@ module Stagehand
         override.returns(
           {
             _force_body: T.anything,
-            x_language: Stagehand::SessionEndParams::XLanguage::OrSymbol,
-            x_sdk_version: String,
             x_sent_at: Time,
             x_stream_response:
               Stagehand::SessionEndParams::XStreamResponse::OrSymbol,
@@ -99,36 +71,6 @@ module Stagehand
         )
       end
       def to_hash
-      end
-
-      # Client SDK language
-      module XLanguage
-        extend Stagehand::Internal::Type::Enum
-
-        TaggedSymbol =
-          T.type_alias { T.all(Symbol, Stagehand::SessionEndParams::XLanguage) }
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        TYPESCRIPT =
-          T.let(
-            :typescript,
-            Stagehand::SessionEndParams::XLanguage::TaggedSymbol
-          )
-        PYTHON =
-          T.let(:python, Stagehand::SessionEndParams::XLanguage::TaggedSymbol)
-        PLAYGROUND =
-          T.let(
-            :playground,
-            Stagehand::SessionEndParams::XLanguage::TaggedSymbol
-          )
-
-        sig do
-          override.returns(
-            T::Array[Stagehand::SessionEndParams::XLanguage::TaggedSymbol]
-          )
-        end
-        def self.values
-        end
       end
 
       # Whether to stream the response via SSE

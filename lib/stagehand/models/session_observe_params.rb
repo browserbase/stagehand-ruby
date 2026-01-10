@@ -26,18 +26,6 @@ module Stagehand
       #   @return [Stagehand::Models::SessionObserveParams::Options, nil]
       optional :options, -> { Stagehand::SessionObserveParams::Options }
 
-      # @!attribute x_language
-      #   Client SDK language
-      #
-      #   @return [Symbol, Stagehand::Models::SessionObserveParams::XLanguage, nil]
-      optional :x_language, enum: -> { Stagehand::SessionObserveParams::XLanguage }
-
-      # @!attribute x_sdk_version
-      #   Version of the Stagehand SDK
-      #
-      #   @return [String, nil]
-      optional :x_sdk_version, String
-
       # @!attribute x_sent_at
       #   ISO timestamp when request was sent
       #
@@ -50,16 +38,12 @@ module Stagehand
       #   @return [Symbol, Stagehand::Models::SessionObserveParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { Stagehand::SessionObserveParams::XStreamResponse }
 
-      # @!method initialize(frame_id: nil, instruction: nil, options: nil, x_language: nil, x_sdk_version: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @!method initialize(frame_id: nil, instruction: nil, options: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
       #   @param frame_id [String] Target frame ID for the observation
       #
       #   @param instruction [String] Natural language instruction for what actions to find
       #
       #   @param options [Stagehand::Models::SessionObserveParams::Options]
-      #
-      #   @param x_language [Symbol, Stagehand::Models::SessionObserveParams::XLanguage] Client SDK language
-      #
-      #   @param x_sdk_version [String] Version of the Stagehand SDK
       #
       #   @param x_sent_at [Time] ISO timestamp when request was sent
       #
@@ -96,18 +80,6 @@ module Stagehand
         #   @param selector [String] CSS selector to scope observation to a specific element
         #
         #   @param timeout [Float] Timeout in ms for the observation
-      end
-
-      # Client SDK language
-      module XLanguage
-        extend Stagehand::Internal::Type::Enum
-
-        TYPESCRIPT = :typescript
-        PYTHON = :python
-        PLAYGROUND = :playground
-
-        # @!method self.values
-        #   @return [Array<Symbol>]
       end
 
       # Whether to stream the response via SSE

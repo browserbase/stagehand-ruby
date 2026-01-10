@@ -39,26 +39,6 @@ module Stagehand
       sig { params(frame_id: String).void }
       attr_writer :frame_id
 
-      # Client SDK language
-      sig do
-        returns(T.nilable(Stagehand::SessionExecuteParams::XLanguage::OrSymbol))
-      end
-      attr_reader :x_language
-
-      sig do
-        params(
-          x_language: Stagehand::SessionExecuteParams::XLanguage::OrSymbol
-        ).void
-      end
-      attr_writer :x_language
-
-      # Version of the Stagehand SDK
-      sig { returns(T.nilable(String)) }
-      attr_reader :x_sdk_version
-
-      sig { params(x_sdk_version: String).void }
-      attr_writer :x_sdk_version
-
       # ISO timestamp when request was sent
       sig { returns(T.nilable(Time)) }
       attr_reader :x_sent_at
@@ -88,8 +68,6 @@ module Stagehand
           execute_options:
             Stagehand::SessionExecuteParams::ExecuteOptions::OrHash,
           frame_id: String,
-          x_language: Stagehand::SessionExecuteParams::XLanguage::OrSymbol,
-          x_sdk_version: String,
           x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionExecuteParams::XStreamResponse::OrSymbol,
@@ -101,10 +79,6 @@ module Stagehand
         execute_options:,
         # Target frame ID for the agent
         frame_id: nil,
-        # Client SDK language
-        x_language: nil,
-        # Version of the Stagehand SDK
-        x_sdk_version: nil,
         # ISO timestamp when request was sent
         x_sent_at: nil,
         # Whether to stream the response via SSE
@@ -119,8 +93,6 @@ module Stagehand
             agent_config: Stagehand::SessionExecuteParams::AgentConfig,
             execute_options: Stagehand::SessionExecuteParams::ExecuteOptions,
             frame_id: String,
-            x_language: Stagehand::SessionExecuteParams::XLanguage::OrSymbol,
-            x_sdk_version: String,
             x_sent_at: Time,
             x_stream_response:
               Stagehand::SessionExecuteParams::XStreamResponse::OrSymbol,
@@ -326,41 +298,6 @@ module Stagehand
           )
         end
         def to_hash
-        end
-      end
-
-      # Client SDK language
-      module XLanguage
-        extend Stagehand::Internal::Type::Enum
-
-        TaggedSymbol =
-          T.type_alias do
-            T.all(Symbol, Stagehand::SessionExecuteParams::XLanguage)
-          end
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        TYPESCRIPT =
-          T.let(
-            :typescript,
-            Stagehand::SessionExecuteParams::XLanguage::TaggedSymbol
-          )
-        PYTHON =
-          T.let(
-            :python,
-            Stagehand::SessionExecuteParams::XLanguage::TaggedSymbol
-          )
-        PLAYGROUND =
-          T.let(
-            :playground,
-            Stagehand::SessionExecuteParams::XLanguage::TaggedSymbol
-          )
-
-        sig do
-          override.returns(
-            T::Array[Stagehand::SessionExecuteParams::XLanguage::TaggedSymbol]
-          )
-        end
-        def self.values
         end
       end
 

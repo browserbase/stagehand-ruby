@@ -26,18 +26,6 @@ module Stagehand
       #   @return [Stagehand::Models::SessionActParams::Options, nil]
       optional :options, -> { Stagehand::SessionActParams::Options }
 
-      # @!attribute x_language
-      #   Client SDK language
-      #
-      #   @return [Symbol, Stagehand::Models::SessionActParams::XLanguage, nil]
-      optional :x_language, enum: -> { Stagehand::SessionActParams::XLanguage }
-
-      # @!attribute x_sdk_version
-      #   Version of the Stagehand SDK
-      #
-      #   @return [String, nil]
-      optional :x_sdk_version, String
-
       # @!attribute x_sent_at
       #   ISO timestamp when request was sent
       #
@@ -50,16 +38,12 @@ module Stagehand
       #   @return [Symbol, Stagehand::Models::SessionActParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { Stagehand::SessionActParams::XStreamResponse }
 
-      # @!method initialize(input:, frame_id: nil, options: nil, x_language: nil, x_sdk_version: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @!method initialize(input:, frame_id: nil, options: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
       #   @param input [String, Stagehand::Models::Action] Natural language instruction or Action object
       #
       #   @param frame_id [String] Target frame ID for the action
       #
       #   @param options [Stagehand::Models::SessionActParams::Options]
-      #
-      #   @param x_language [Symbol, Stagehand::Models::SessionActParams::XLanguage] Client SDK language
-      #
-      #   @param x_sdk_version [String] Version of the Stagehand SDK
       #
       #   @param x_sent_at [Time] ISO timestamp when request was sent
       #
@@ -109,18 +93,6 @@ module Stagehand
         #   @param timeout [Float] Timeout in ms for the action
         #
         #   @param variables [Hash{Symbol=>String}] Variables to substitute in the action instruction
-      end
-
-      # Client SDK language
-      module XLanguage
-        extend Stagehand::Internal::Type::Enum
-
-        TYPESCRIPT = :typescript
-        PYTHON = :python
-        PLAYGROUND = :playground
-
-        # @!method self.values
-        #   @return [Array<Symbol>]
       end
 
       # Whether to stream the response via SSE
