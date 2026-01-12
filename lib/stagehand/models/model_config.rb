@@ -14,7 +14,7 @@ module Stagehand
 
       class ModelConfigObject < Stagehand::Internal::Type::BaseModel
         # @!attribute model_name
-        #   Model name string without prefix (e.g., 'gpt-5-nano', 'claude-4.5-opus')
+        #   Model name string (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
         #
         #   @return [String]
         required :model_name, String, api_name: :modelName
@@ -38,7 +38,7 @@ module Stagehand
         optional :provider, enum: -> { Stagehand::ModelConfig::ModelConfigObject::Provider }
 
         # @!method initialize(model_name:, api_key: nil, base_url: nil, provider: nil)
-        #   @param model_name [String] Model name string without prefix (e.g., 'gpt-5-nano', 'claude-4.5-opus')
+        #   @param model_name [String] Model name string (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
         #
         #   @param api_key [String] API key for the model provider
         #

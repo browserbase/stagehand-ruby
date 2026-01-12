@@ -21,7 +21,7 @@ module Stagehand
             )
           end
 
-        # Model name string without prefix (e.g., 'gpt-5-nano', 'claude-4.5-opus')
+        # Model name string (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
         sig { returns(String) }
         attr_accessor :model_name
 
@@ -67,7 +67,7 @@ module Stagehand
           ).returns(T.attached_class)
         end
         def self.new(
-          # Model name string without prefix (e.g., 'gpt-5-nano', 'claude-4.5-opus')
+          # Model name string (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
           model_name:,
           # API key for the model provider
           api_key: nil,

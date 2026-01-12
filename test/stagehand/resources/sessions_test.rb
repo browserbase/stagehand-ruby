@@ -114,7 +114,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
   def test_start_required_params
     skip("Prism tests are disabled")
 
-    response = @stagehand.sessions.start(model_name: "gpt-4o")
+    response = @stagehand.sessions.start(model_name: "openai/gpt-4o")
 
     assert_pattern do
       response => Stagehand::Models::SessionStartResponse
