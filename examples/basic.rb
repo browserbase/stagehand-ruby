@@ -17,33 +17,24 @@ client = Stagehand::Client.new(
 )
 
 # Start a new browser session
-# x_language and x_sdk_version headers are required for the v3 API
 start_response = client.sessions.start(
-  model_name: "openai/gpt-5-nano",
-  x_language: :typescript,
-  x_sdk_version: "3.0.6"
+  model_name: "openai/gpt-5-nano"
 )
 puts "Session started: #{start_response.data.session_id}"
 
 session_id = start_response.data.session_id
 
 # Navigate to a webpage
-# frame_id is required - use empty string for the main frame
 client.sessions.navigate(
   session_id,
-  url: "https://news.ycombinator.com",
-  frame_id: "",
-  x_language: :typescript,
-  x_sdk_version: "3.0.6"
+  url: "https://news.ycombinator.com"
 )
 puts "Navigated to Hacker News"
 
 # Use Observe to find possible actions on the page
 observe_response = client.sessions.observe(
   session_id,
-  instruction: "find the link to view comments for the top post",
-  x_language: :typescript,
-  x_sdk_version: "3.0.6"
+  instruction: "find the link to view comments for the top post"
 )
 
 actions = observe_response.data.result
@@ -62,9 +53,7 @@ puts "Acting on: #{action.description}"
 # Convert the observe result to a hash and ensure method is set to "click"
 act_response = client.sessions.act(
   session_id,
-  input: action.to_h.merge(method: "click"),
-  x_language: :typescript,
-  x_sdk_version: "3.0.6"
+  input: action.to_h.merge(method: "click")
 )
 puts "Act completed: #{act_response.data.result[:message]}"
 
@@ -86,9 +75,7 @@ extract_response = client.sessions.extract(
       }
     },
     required: ["comment_text"]
-  },
-  x_language: :typescript,
-  x_sdk_version: "3.0.6"
+  }
 )
 puts "Extracted data: #{extract_response.data.result}"
 
@@ -112,18 +99,12 @@ execute_response = client.sessions.execute(
       api_key: ENV["MODEL_API_KEY"]
     ),
     cua: false
-  },
-  x_language: :typescript,
-  x_sdk_version: "3.0.6"
+  }
 )
 puts "Agent completed: #{execute_response.data.result[:message]}"
 puts "Agent success: #{execute_response.data.result[:success]}"
 puts "Agent actions taken: #{execute_response.data.result[:actions]&.length || 0}"
 
 # End the session to cleanup browser resources
-client.sessions.end_(
-  session_id,
-  x_language: :typescript,
-  x_sdk_version: "3.0.6"
-)
+client.sessions.end_(session_id)
 puts "Session ended"
