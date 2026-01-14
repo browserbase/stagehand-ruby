@@ -27,7 +27,7 @@ module Stagehand
         input:,
         # Body param: Target frame ID for the action
         frame_id: nil,
-        # Body param:
+        # Body param
         options: nil,
         # Header param: ISO timestamp when request was sent
         x_sent_at: nil,
@@ -64,7 +64,7 @@ module Stagehand
         input:,
         # Body param: Target frame ID for the action
         frame_id: nil,
-        # Body param:
+        # Body param
         options: nil,
         # Header param: ISO timestamp when request was sent
         x_sent_at: nil,
@@ -91,7 +91,7 @@ module Stagehand
       def end_(
         # Path param: Unique session identifier
         id,
-        # Body param:
+        # Body param
         _force_body: nil,
         # Header param: ISO timestamp when request was sent
         x_sent_at: nil,
@@ -122,9 +122,9 @@ module Stagehand
       def execute(
         # Path param: Unique session identifier
         id,
-        # Body param:
+        # Body param
         agent_config:,
-        # Body param:
+        # Body param
         execute_options:,
         # Body param: Target frame ID for the agent
         frame_id: nil,
@@ -160,9 +160,9 @@ module Stagehand
       def execute_streaming(
         # Path param: Unique session identifier
         id,
-        # Body param:
+        # Body param
         agent_config:,
-        # Body param:
+        # Body param
         execute_options:,
         # Body param: Target frame ID for the agent
         frame_id: nil,
@@ -203,7 +203,7 @@ module Stagehand
         frame_id: nil,
         # Body param: Natural language instruction for what to extract
         instruction: nil,
-        # Body param:
+        # Body param
         options: nil,
         # Body param: JSON Schema defining the structure of data to extract
         schema: nil,
@@ -243,7 +243,7 @@ module Stagehand
         frame_id: nil,
         # Body param: Natural language instruction for what to extract
         instruction: nil,
-        # Body param:
+        # Body param
         options: nil,
         # Body param: JSON Schema defining the structure of data to extract
         schema: nil,
@@ -280,7 +280,7 @@ module Stagehand
         url:,
         # Body param: Target frame ID for the navigation
         frame_id: nil,
-        # Body param:
+        # Body param
         options: nil,
         # Body param: Whether to stream the response via SSE
         stream_response: nil,
@@ -317,7 +317,7 @@ module Stagehand
         frame_id: nil,
         # Body param: Natural language instruction for what actions to find
         instruction: nil,
-        # Body param:
+        # Body param
         options: nil,
         # Header param: ISO timestamp when request was sent
         x_sent_at: nil,
@@ -355,7 +355,7 @@ module Stagehand
         frame_id: nil,
         # Body param: Natural language instruction for what actions to find
         instruction: nil,
-        # Body param:
+        # Body param
         options: nil,
         # Header param: ISO timestamp when request was sent
         x_sent_at: nil,
@@ -396,15 +396,15 @@ module Stagehand
         model_name:,
         # Body param: Timeout in ms for act operations (deprecated, v2 only)
         act_timeout_ms: nil,
-        # Body param:
+        # Body param
         browser: nil,
-        # Body param:
+        # Body param
         browserbase_session_create_params: nil,
         # Body param: Existing Browserbase session ID to resume
         browserbase_session_id: nil,
         # Body param: Timeout in ms to wait for DOM to settle
         dom_settle_timeout_ms: nil,
-        # Body param:
+        # Body param
         experimental: nil,
         # Body param: Enable self-healing for failed actions
         self_heal: nil,

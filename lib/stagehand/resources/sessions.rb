@@ -16,7 +16,7 @@ module Stagehand
       #
       # @param frame_id [String] Body param: Target frame ID for the action
       #
-      # @param options [Stagehand::Models::SessionActParams::Options] Body param:
+      # @param options [Stagehand::Models::SessionActParams::Options] Body param
       #
       # @param x_sent_at [Time] Header param: ISO timestamp when request was sent
       #
@@ -57,7 +57,7 @@ module Stagehand
       #
       # @param frame_id [String] Body param: Target frame ID for the action
       #
-      # @param options [Stagehand::Models::SessionActParams::Options] Body param:
+      # @param options [Stagehand::Models::SessionActParams::Options] Body param
       #
       # @param x_sent_at [Time] Header param: ISO timestamp when request was sent
       #
@@ -96,7 +96,7 @@ module Stagehand
       #
       # @param id [String] Path param: Unique session identifier
       #
-      # @param _force_body [Object] Body param:
+      # @param _force_body [Object] Body param
       #
       # @param x_sent_at [Time] Header param: ISO timestamp when request was sent
       #
@@ -129,9 +129,9 @@ module Stagehand
       #
       # @param id [String] Path param: Unique session identifier
       #
-      # @param agent_config [Stagehand::Models::SessionExecuteParams::AgentConfig] Body param:
+      # @param agent_config [Stagehand::Models::SessionExecuteParams::AgentConfig] Body param
       #
-      # @param execute_options [Stagehand::Models::SessionExecuteParams::ExecuteOptions] Body param:
+      # @param execute_options [Stagehand::Models::SessionExecuteParams::ExecuteOptions] Body param
       #
       # @param frame_id [String] Body param: Target frame ID for the agent
       #
@@ -169,9 +169,9 @@ module Stagehand
       #
       # @param id [String] Path param: Unique session identifier
       #
-      # @param agent_config [Stagehand::Models::SessionExecuteParams::AgentConfig] Body param:
+      # @param agent_config [Stagehand::Models::SessionExecuteParams::AgentConfig] Body param
       #
-      # @param execute_options [Stagehand::Models::SessionExecuteParams::ExecuteOptions] Body param:
+      # @param execute_options [Stagehand::Models::SessionExecuteParams::ExecuteOptions] Body param
       #
       # @param frame_id [String] Body param: Target frame ID for the agent
       #
@@ -219,7 +219,7 @@ module Stagehand
       #
       # @param instruction [String] Body param: Natural language instruction for what to extract
       #
-      # @param options [Stagehand::Models::SessionExtractParams::Options] Body param:
+      # @param options [Stagehand::Models::SessionExtractParams::Options] Body param
       #
       # @param schema [Hash{Symbol=>Object}] Body param: JSON Schema defining the structure of data to extract
       #
@@ -261,7 +261,7 @@ module Stagehand
       #
       # @param instruction [String] Body param: Natural language instruction for what to extract
       #
-      # @param options [Stagehand::Models::SessionExtractParams::Options] Body param:
+      # @param options [Stagehand::Models::SessionExtractParams::Options] Body param
       #
       # @param schema [Hash{Symbol=>Object}] Body param: JSON Schema defining the structure of data to extract
       #
@@ -306,7 +306,7 @@ module Stagehand
       #
       # @param frame_id [String] Body param: Target frame ID for the navigation
       #
-      # @param options [Stagehand::Models::SessionNavigateParams::Options] Body param:
+      # @param options [Stagehand::Models::SessionNavigateParams::Options] Body param
       #
       # @param stream_response [Boolean] Body param: Whether to stream the response via SSE
       #
@@ -346,7 +346,7 @@ module Stagehand
       #
       # @param instruction [String] Body param: Natural language instruction for what actions to find
       #
-      # @param options [Stagehand::Models::SessionObserveParams::Options] Body param:
+      # @param options [Stagehand::Models::SessionObserveParams::Options] Body param
       #
       # @param x_sent_at [Time] Header param: ISO timestamp when request was sent
       #
@@ -387,7 +387,7 @@ module Stagehand
       #
       # @param instruction [String] Body param: Natural language instruction for what actions to find
       #
-      # @param options [Stagehand::Models::SessionObserveParams::Options] Body param:
+      # @param options [Stagehand::Models::SessionObserveParams::Options] Body param
       #
       # @param x_sent_at [Time] Header param: ISO timestamp when request was sent
       #
@@ -429,15 +429,15 @@ module Stagehand
       #
       # @param act_timeout_ms [Float] Body param: Timeout in ms for act operations (deprecated, v2 only)
       #
-      # @param browser [Stagehand::Models::SessionStartParams::Browser] Body param:
+      # @param browser [Stagehand::Models::SessionStartParams::Browser] Body param
       #
-      # @param browserbase_session_create_params [Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams] Body param:
+      # @param browserbase_session_create_params [Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams] Body param
       #
       # @param browserbase_session_id [String] Body param: Existing Browserbase session ID to resume
       #
       # @param dom_settle_timeout_ms [Float] Body param: Timeout in ms to wait for DOM to settle
       #
-      # @param experimental [Boolean] Body param:
+      # @param experimental [Boolean] Body param
       #
       # @param self_heal [Boolean] Body param: Enable self-healing for failed actions
       #
