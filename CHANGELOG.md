@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.1 (2026-01-15)
+
+Full Changelog: [v0.6.2...v3.0.1](https://github.com/browserbase/stagehand-ruby/compare/v0.6.2...v3.0.1)
+
 ## 0.6.2 (2026-01-13)
 
 Full Changelog: [v0.6.1...v0.6.2](https://github.com/browserbase/stagehand-ruby/compare/v0.6.1...v0.6.2)
