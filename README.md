@@ -15,7 +15,7 @@ Use the Stagehand MCP Server to enable AI assistants to interact with this API, 
 
 ## Documentation
 
-Documentation for releases of this gem can be found [on RubyDoc](https://gemdocs.org/gems/stagehand).
+Documentation for releases of this gem can be found [on RubyDoc](https://gemdocs.org/gems/stagehand-sdk).
 
 The REST API documentation can be found on [docs.stagehand.dev](https://docs.stagehand.dev).
 
@@ -26,7 +26,7 @@ To use this gem, install via Bundler by adding the following to your application
 <!-- x-release-please-start-version -->
 
 ```ruby
-gem "stagehand", "~> 0.6.2"
+gem "stagehand-sdk", "~> 0.6.2"
 ```
 
 <!-- x-release-please-end -->
@@ -35,9 +35,9 @@ gem "stagehand", "~> 0.6.2"
 
 ```ruby
 require "bundler/setup"
-require "stagehand"
+require "stagehand_sdk"
 
-stagehand = Stagehand::Client.new(
+stagehand = StagehandSDK::Client.new(
   browserbase_api_key: ENV["BROWSERBASE_API_KEY"], # This is the default and can be omitted
   browserbase_project_id: ENV["BROWSERBASE_PROJECT_ID"], # This is the default and can be omitted
   model_api_key: ENV["MODEL_API_KEY"] # This is the default and can be omitted
@@ -65,17 +65,17 @@ end
 
 ### Handling errors
 
-When the library is unable to connect to the API, or if the API returns a non-success status code (i.e., 4xx or 5xx response), a subclass of `Stagehand::Errors::APIError` will be thrown:
+When the library is unable to connect to the API, or if the API returns a non-success status code (i.e., 4xx or 5xx response), a subclass of `StagehandSDK::Errors::APIError` will be thrown:
 
 ```ruby
 begin
   session = stagehand.sessions.start(model_name: "openai/gpt-5-nano")
-rescue Stagehand::Errors::APIConnectionError => e
+rescue StagehandSDK::Errors::APIConnectionError => e
   puts("The server could not be reached")
   puts(e.cause)  # an underlying Exception, likely raised within `net/http`
-rescue Stagehand::Errors::RateLimitError => e
+rescue StagehandSDK::Errors::RateLimitError => e
   puts("A 429 status code was received; we should back off a bit.")
-rescue Stagehand::Errors::APIStatusError => e
+rescue StagehandSDK::Errors::APIStatusError => e
   puts("Another non-200-range status code was received")
   puts(e.status)
 end
@@ -107,7 +107,7 @@ You can use the `max_retries` option to configure or disable this:
 
 ```ruby
 # Configure the default for all requests:
-stagehand = Stagehand::Client.new(
+stagehand = StagehandSDK::Client.new(
   max_retries: 0 # default is 2
 )
 
@@ -121,7 +121,7 @@ By default, requests will time out after 60 seconds. You can use the timeout opt
 
 ```ruby
 # Configure the default for all requests:
-stagehand = Stagehand::Client.new(
+stagehand = StagehandSDK::Client.new(
   timeout: nil # default is 60
 )
 
@@ -129,7 +129,7 @@ stagehand = Stagehand::Client.new(
 stagehand.sessions.start(model_name: "openai/gpt-5-nano", request_options: {timeout: 5})
 ```
 
-On timeout, `Stagehand::Errors::APITimeoutError` is raised.
+On timeout, `StagehandSDK::Errors::APITimeoutError` is raised.
 
 Note that requests that time out are retried by default.
 
@@ -137,7 +137,7 @@ Note that requests that time out are retried by default.
 
 ### BaseModel
 
-All parameter and response objects inherit from `Stagehand::Internal::Type::BaseModel`, which provides several conveniences, including:
+All parameter and response objects inherit from `StagehandSDK::Internal::Type::BaseModel`, which provides several conveniences, including:
 
 1. All fields, including unknown ones, are accessible with `obj[:prop]` syntax, and can be destructured with `obj => {prop: prop}` or pattern-matching syntax.
 
@@ -189,9 +189,9 @@ response = client.request(
 
 ### Concurrency & connection pooling
 
-The `Stagehand::Client` instances are threadsafe, but are only are fork-safe when there are no in-flight HTTP requests.
+The `StagehandSDK::Client` instances are threadsafe, but are only are fork-safe when there are no in-flight HTTP requests.
 
-Each instance of `Stagehand::Client` has its own HTTP connection pool with a default size of 99. As such, we recommend instantiating the client once per application in most settings.
+Each instance of `StagehandSDK::Client` has its own HTTP connection pool with a default size of 99. As such, we recommend instantiating the client once per application in most settings.
 
 When all available connections from the pool are checked out, requests wait for a new connection to become available, with queue time counting towards the request timeout.
 
@@ -214,7 +214,7 @@ Or, equivalently:
 stagehand.sessions.act("00000000-your-session-id-000000000000", input: "click the first link on the page")
 
 # You can also splat a full Params class:
-params = Stagehand::SessionActParams.new(input: "click the first link on the page")
+params = StagehandSDK::SessionActParams.new(input: "click the first link on the page")
 stagehand.sessions.act("00000000-your-session-id-000000000000", **params)
 ```
 
@@ -224,10 +224,10 @@ Since this library does not depend on `sorbet-runtime`, it cannot provide [`T::E
 
 ```ruby
 # :true
-puts(Stagehand::SessionActParams::XStreamResponse::TRUE)
+puts(StagehandSDK::SessionActParams::XStreamResponse::TRUE)
 
-# Revealed type: `T.all(Stagehand::SessionActParams::XStreamResponse, Symbol)`
-T.reveal_type(Stagehand::SessionActParams::XStreamResponse::TRUE)
+# Revealed type: `T.all(StagehandSDK::SessionActParams::XStreamResponse, Symbol)`
+T.reveal_type(StagehandSDK::SessionActParams::XStreamResponse::TRUE)
 ```
 
 Enum parameters have a "relaxed" type, so you can either pass in enum constants or their literal value:
@@ -235,7 +235,7 @@ Enum parameters have a "relaxed" type, so you can either pass in enum constants 
 ```ruby
 # Using the enum constants preserves the tagged type information:
 stagehand.sessions.act(
-  x_stream_response: Stagehand::SessionActParams::XStreamResponse::TRUE,
+  x_stream_response: StagehandSDK::SessionActParams::XStreamResponse::TRUE,
   # …
 )
 

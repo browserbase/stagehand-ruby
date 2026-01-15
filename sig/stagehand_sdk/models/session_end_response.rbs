@@ -1,0 +1,13 @@
+module StagehandSDK
+  module Models
+    type session_end_response = { success: bool }
+
+    class SessionEndResponse < StagehandSDK::Internal::Type::BaseModel
+      attr_accessor success: bool
+
+      def initialize: (success: bool) -> void
+
+      def to_hash: -> { success: bool }
+    end
+  end
+end

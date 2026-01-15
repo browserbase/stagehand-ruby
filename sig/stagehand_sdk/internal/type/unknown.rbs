@@ -1,0 +1,26 @@
+module StagehandSDK
+  module Internal
+    module Type
+      class Unknown
+        extend StagehandSDK::Internal::Type::Converter
+        extend StagehandSDK::Internal::Util::SorbetRuntimeSupport
+
+        def self.===: (top other) -> bool
+
+        def self.==: (top other) -> bool
+
+        def self.coerce: (
+          top value,
+          state: StagehandSDK::Internal::Type::Converter::coerce_state
+        ) -> top
+
+        def self.dump: (
+          top value,
+          state: StagehandSDK::Internal::Type::Converter::dump_state
+        ) -> top
+
+        def self.to_sorbet_type: -> top
+      end
+    end
+  end
+end

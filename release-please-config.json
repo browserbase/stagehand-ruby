@@ -60,7 +60,7 @@
     }
   ],
   "release-type": "ruby",
-  "version-file": "lib/stagehand/version.rb",
+  "version-file": "lib/stagehand_sdk/version.rb",
   "extra-files": [
     {
       "type": "ruby-readme",

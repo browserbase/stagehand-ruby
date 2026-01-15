@@ -1,0 +1,3 @@
+module StagehandSDK
+  VERSION: String
+end

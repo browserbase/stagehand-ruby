@@ -1,0 +1,117 @@
+module StagehandSDK
+  module Errors
+    class Error < StandardError
+      attr_accessor cause: StandardError?
+    end
+
+    class ConversionError < StagehandSDK::Errors::Error
+      def cause: -> StandardError?
+
+      def initialize: (
+        on: Class,
+        method: Symbol,
+        target: top,
+        value: top,
+        ?cause: StandardError?
+      ) -> void
+    end
+
+    class APIError < StagehandSDK::Errors::Error
+      attr_accessor url: URI::Generic
+
+      attr_accessor status: Integer?
+
+      attr_accessor headers: ::Hash[String, String]?
+
+      attr_accessor body: top?
+
+      def initialize: (
+        url: URI::Generic,
+        ?status: Integer?,
+        ?headers: ::Hash[String, String]?,
+        ?body: Object?,
+        ?request: nil,
+        ?response: nil,
+        ?message: String?
+      ) -> void
+    end
+
+    class APIConnectionError < StagehandSDK::Errors::APIError
+      def initialize: (
+        url: URI::Generic,
+        ?status: nil,
+        ?headers: ::Hash[String, String]?,
+        ?body: nil,
+        ?request: nil,
+        ?response: nil,
+        ?message: String?
+      ) -> void
+    end
+
+    class APITimeoutError < StagehandSDK::Errors::APIConnectionError
+      def initialize: (
+        url: URI::Generic,
+        ?status: nil,
+        ?headers: ::Hash[String, String]?,
+        ?body: nil,
+        ?request: nil,
+        ?response: nil,
+        ?message: String?
+      ) -> void
+    end
+
+    class APIStatusError < StagehandSDK::Errors::APIError
+      def self.for: (
+        url: URI::Generic,
+        status: Integer,
+        headers: ::Hash[String, String]?,
+        body: Object?,
+        request: nil,
+        response: nil,
+        ?message: String?
+      ) -> instance
+
+      def initialize: (
+        url: URI::Generic,
+        status: Integer,
+        headers: ::Hash[String, String]?,
+        body: Object?,
+        request: nil,
+        response: nil,
+        ?message: String?
+      ) -> void
+    end
+
+    class BadRequestError < StagehandSDK::Errors::APIStatusError
+      HTTP_STATUS: 400
+    end
+
+    class AuthenticationError < StagehandSDK::Errors::APIStatusError
+      HTTP_STATUS: 401
+    end
+
+    class PermissionDeniedError < StagehandSDK::Errors::APIStatusError
+      HTTP_STATUS: 403
+    end
+
+    class NotFoundError < StagehandSDK::Errors::APIStatusError
+      HTTP_STATUS: 404
+    end
+
+    class ConflictError < StagehandSDK::Errors::APIStatusError
+      HTTP_STATUS: 409
+    end
+
+    class UnprocessableEntityError < StagehandSDK::Errors::APIStatusError
+      HTTP_STATUS: 422
+    end
+
+    class RateLimitError < StagehandSDK::Errors::APIStatusError
+      HTTP_STATUS: 429
+    end
+
+    class InternalServerError < StagehandSDK::Errors::APIStatusError
+      HTTP_STATUS: Range[Integer]
+    end
+  end
+end

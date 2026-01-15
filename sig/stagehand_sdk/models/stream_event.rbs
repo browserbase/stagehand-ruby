@@ -1,0 +1,109 @@
+module StagehandSDK
+  module Models
+    type stream_event =
+      {
+        id: String,
+        data: StagehandSDK::Models::StreamEvent::data,
+        type: StagehandSDK::Models::StreamEvent::type_
+      }
+
+    class StreamEvent < StagehandSDK::Internal::Type::BaseModel
+      attr_accessor id: String
+
+      attr_accessor data: StagehandSDK::Models::StreamEvent::data
+
+      attr_accessor type: StagehandSDK::Models::StreamEvent::type_
+
+      def initialize: (
+        id: String,
+        data: StagehandSDK::Models::StreamEvent::data,
+        type: StagehandSDK::Models::StreamEvent::type_
+      ) -> void
+
+      def to_hash: -> {
+        id: String,
+        data: StagehandSDK::Models::StreamEvent::data,
+        type: StagehandSDK::Models::StreamEvent::type_
+      }
+
+      type data =
+        StagehandSDK::StreamEvent::Data::StreamEventSystemDataOutput
+        | StagehandSDK::StreamEvent::Data::StreamEventLogDataOutput
+
+      module Data
+        extend StagehandSDK::Internal::Type::Union
+
+        type stream_event_system_data_output =
+          {
+            status: StagehandSDK::Models::StreamEvent::Data::StreamEventSystemDataOutput::status,
+            error: String,
+            result: top
+          }
+
+        class StreamEventSystemDataOutput < StagehandSDK::Internal::Type::BaseModel
+          attr_accessor status: StagehandSDK::Models::StreamEvent::Data::StreamEventSystemDataOutput::status
+
+          attr_reader error: String?
+
+          def error=: (String) -> String
+
+          attr_reader result: top?
+
+          def result=: (top) -> top
+
+          def initialize: (
+            status: StagehandSDK::Models::StreamEvent::Data::StreamEventSystemDataOutput::status,
+            ?error: String,
+            ?result: top
+          ) -> void
+
+          def to_hash: -> {
+            status: StagehandSDK::Models::StreamEvent::Data::StreamEventSystemDataOutput::status,
+            error: String,
+            result: top
+          }
+
+          type status = :starting | :connected | :running | :finished | :error
+
+          module Status
+            extend StagehandSDK::Internal::Type::Enum
+
+            STARTING: :starting
+            CONNECTED: :connected
+            RUNNING: :running
+            FINISHED: :finished
+            ERROR: :error
+
+            def self?.values: -> ::Array[StagehandSDK::Models::StreamEvent::Data::StreamEventSystemDataOutput::status]
+          end
+        end
+
+        type stream_event_log_data_output =
+          { message: String, status: :running }
+
+        class StreamEventLogDataOutput < StagehandSDK::Internal::Type::BaseModel
+          attr_accessor message: String
+
+          attr_accessor status: :running
+
+          def initialize: (message: String, ?status: :running) -> void
+
+          def to_hash: -> { message: String, status: :running }
+        end
+
+        def self?.variants: -> ::Array[StagehandSDK::Models::StreamEvent::data]
+      end
+
+      type type_ = :system | :log
+
+      module Type
+        extend StagehandSDK::Internal::Type::Enum
+
+        SYSTEM: :system
+        LOG: :log
+
+        def self?.values: -> ::Array[StagehandSDK::Models::StreamEvent::type_]
+      end
+    end
+  end
+end

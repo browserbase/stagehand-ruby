@@ -1,0 +1,38 @@
+module StagehandSDK
+  class Client < StagehandSDK::Internal::Transport::BaseClient
+    DEFAULT_MAX_RETRIES: 2
+
+    DEFAULT_TIMEOUT_IN_SECONDS: Float
+
+    DEFAULT_INITIAL_RETRY_DELAY: Float
+
+    DEFAULT_MAX_RETRY_DELAY: Float
+
+    attr_reader browserbase_api_key: String
+
+    attr_reader browserbase_project_id: String
+
+    attr_reader model_api_key: String
+
+    attr_reader sessions: StagehandSDK::Resources::Sessions
+
+    private def auth_headers: -> ::Hash[String, String]
+
+    private def bb_api_key_auth: -> ::Hash[String, String]
+
+    private def bb_project_id_auth: -> ::Hash[String, String]
+
+    private def llm_model_api_key_auth: -> ::Hash[String, String]
+
+    def initialize: (
+      ?browserbase_api_key: String?,
+      ?browserbase_project_id: String?,
+      ?model_api_key: String?,
+      ?base_url: String?,
+      ?max_retries: Integer,
+      ?timeout: Float,
+      ?initial_retry_delay: Float,
+      ?max_retry_delay: Float
+    ) -> void
+  end
+end

@@ -1,0 +1,55 @@
+module StagehandSDK
+  module Models
+    type session_end_params =
+      {
+        _force_body: top,
+        x_sent_at: Time,
+        x_stream_response: StagehandSDK::Models::SessionEndParams::x_stream_response
+      }
+      & StagehandSDK::Internal::Type::request_parameters
+
+    class SessionEndParams < StagehandSDK::Internal::Type::BaseModel
+      extend StagehandSDK::Internal::Type::RequestParameters::Converter
+      include StagehandSDK::Internal::Type::RequestParameters
+
+      attr_reader _force_body: top?
+
+      def _force_body=: (top) -> top
+
+      attr_reader x_sent_at: Time?
+
+      def x_sent_at=: (Time) -> Time
+
+      attr_reader x_stream_response: StagehandSDK::Models::SessionEndParams::x_stream_response?
+
+      def x_stream_response=: (
+        StagehandSDK::Models::SessionEndParams::x_stream_response
+      ) -> StagehandSDK::Models::SessionEndParams::x_stream_response
+
+      def initialize: (
+        ?_force_body: top,
+        ?x_sent_at: Time,
+        ?x_stream_response: StagehandSDK::Models::SessionEndParams::x_stream_response,
+        ?request_options: StagehandSDK::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        _force_body: top,
+        x_sent_at: Time,
+        x_stream_response: StagehandSDK::Models::SessionEndParams::x_stream_response,
+        request_options: StagehandSDK::RequestOptions
+      }
+
+      type x_stream_response = :true | :false
+
+      module XStreamResponse
+        extend StagehandSDK::Internal::Type::Enum
+
+        TRUE: :true
+        FALSE: :false
+
+        def self?.values: -> ::Array[StagehandSDK::Models::SessionEndParams::x_stream_response]
+      end
+    end
+  end
+end

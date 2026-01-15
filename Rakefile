@@ -162,7 +162,7 @@ multitask(:"build:gem") do
     sig/*
   GLOB
 
-  sh(*%w[gem build -- stagehand.gemspec])
+  sh(*%w[gem build -- stagehand_sdk.gemspec])
   rm_rf(ignore_file)
 end
 

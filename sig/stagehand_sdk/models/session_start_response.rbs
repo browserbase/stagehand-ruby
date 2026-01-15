@@ -1,0 +1,44 @@
+module StagehandSDK
+  module Models
+    type session_start_response =
+      { data: StagehandSDK::Models::SessionStartResponse::Data, success: bool }
+
+    class SessionStartResponse < StagehandSDK::Internal::Type::BaseModel
+      attr_accessor data: StagehandSDK::Models::SessionStartResponse::Data
+
+      attr_accessor success: bool
+
+      def initialize: (
+        data: StagehandSDK::Models::SessionStartResponse::Data,
+        success: bool
+      ) -> void
+
+      def to_hash: -> {
+        data: StagehandSDK::Models::SessionStartResponse::Data,
+        success: bool
+      }
+
+      type data = { available: bool, session_id: String, cdp_url: String? }
+
+      class Data < StagehandSDK::Internal::Type::BaseModel
+        attr_accessor available: bool
+
+        attr_accessor session_id: String
+
+        attr_accessor cdp_url: String?
+
+        def initialize: (
+          available: bool,
+          session_id: String,
+          ?cdp_url: String?
+        ) -> void
+
+        def to_hash: -> {
+          available: bool,
+          session_id: String,
+          cdp_url: String?
+        }
+      end
+    end
+  end
+end

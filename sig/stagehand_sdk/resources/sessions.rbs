@@ -1,0 +1,125 @@
+module StagehandSDK
+  module Resources
+    class Sessions
+      def act: (
+        String id,
+        input: StagehandSDK::Models::SessionActParams::input,
+        ?frame_id: String,
+        ?options: StagehandSDK::SessionActParams::Options,
+        ?x_sent_at: Time,
+        ?x_stream_response: StagehandSDK::Models::SessionActParams::x_stream_response,
+        ?request_options: StagehandSDK::request_opts
+      ) -> StagehandSDK::Models::SessionActResponse
+
+      def act_streaming: (
+        String id,
+        input: StagehandSDK::Models::SessionActParams::input,
+        ?frame_id: String,
+        ?options: StagehandSDK::SessionActParams::Options,
+        ?x_sent_at: Time,
+        ?x_stream_response: StagehandSDK::Models::SessionActParams::x_stream_response,
+        ?request_options: StagehandSDK::request_opts
+      ) -> StagehandSDK::Internal::Stream[StagehandSDK::StreamEvent]
+
+      def end_: (
+        String id,
+        ?_force_body: top,
+        ?x_sent_at: Time,
+        ?x_stream_response: StagehandSDK::Models::SessionEndParams::x_stream_response,
+        ?request_options: StagehandSDK::request_opts
+      ) -> StagehandSDK::Models::SessionEndResponse
+
+      def execute: (
+        String id,
+        agent_config: StagehandSDK::SessionExecuteParams::AgentConfig,
+        execute_options: StagehandSDK::SessionExecuteParams::ExecuteOptions,
+        ?frame_id: String,
+        ?x_sent_at: Time,
+        ?x_stream_response: StagehandSDK::Models::SessionExecuteParams::x_stream_response,
+        ?request_options: StagehandSDK::request_opts
+      ) -> StagehandSDK::Models::SessionExecuteResponse
+
+      def execute_streaming: (
+        String id,
+        agent_config: StagehandSDK::SessionExecuteParams::AgentConfig,
+        execute_options: StagehandSDK::SessionExecuteParams::ExecuteOptions,
+        ?frame_id: String,
+        ?x_sent_at: Time,
+        ?x_stream_response: StagehandSDK::Models::SessionExecuteParams::x_stream_response,
+        ?request_options: StagehandSDK::request_opts
+      ) -> StagehandSDK::Internal::Stream[StagehandSDK::StreamEvent]
+
+      def extract: (
+        String id,
+        ?frame_id: String,
+        ?instruction: String,
+        ?options: StagehandSDK::SessionExtractParams::Options,
+        ?schema: ::Hash[Symbol, top],
+        ?x_sent_at: Time,
+        ?x_stream_response: StagehandSDK::Models::SessionExtractParams::x_stream_response,
+        ?request_options: StagehandSDK::request_opts
+      ) -> StagehandSDK::Models::SessionExtractResponse
+
+      def extract_streaming: (
+        String id,
+        ?frame_id: String,
+        ?instruction: String,
+        ?options: StagehandSDK::SessionExtractParams::Options,
+        ?schema: ::Hash[Symbol, top],
+        ?x_sent_at: Time,
+        ?x_stream_response: StagehandSDK::Models::SessionExtractParams::x_stream_response,
+        ?request_options: StagehandSDK::request_opts
+      ) -> StagehandSDK::Internal::Stream[StagehandSDK::StreamEvent]
+
+      def navigate: (
+        String id,
+        url: String,
+        ?frame_id: String,
+        ?options: StagehandSDK::SessionNavigateParams::Options,
+        ?stream_response: bool,
+        ?x_sent_at: Time,
+        ?x_stream_response: StagehandSDK::Models::SessionNavigateParams::x_stream_response,
+        ?request_options: StagehandSDK::request_opts
+      ) -> StagehandSDK::Models::SessionNavigateResponse
+
+      def observe: (
+        String id,
+        ?frame_id: String,
+        ?instruction: String,
+        ?options: StagehandSDK::SessionObserveParams::Options,
+        ?x_sent_at: Time,
+        ?x_stream_response: StagehandSDK::Models::SessionObserveParams::x_stream_response,
+        ?request_options: StagehandSDK::request_opts
+      ) -> StagehandSDK::Models::SessionObserveResponse
+
+      def observe_streaming: (
+        String id,
+        ?frame_id: String,
+        ?instruction: String,
+        ?options: StagehandSDK::SessionObserveParams::Options,
+        ?x_sent_at: Time,
+        ?x_stream_response: StagehandSDK::Models::SessionObserveParams::x_stream_response,
+        ?request_options: StagehandSDK::request_opts
+      ) -> StagehandSDK::Internal::Stream[StagehandSDK::StreamEvent]
+
+      def start: (
+        model_name: String,
+        ?act_timeout_ms: Float,
+        ?browser: StagehandSDK::SessionStartParams::Browser,
+        ?browserbase_session_create_params: StagehandSDK::SessionStartParams::BrowserbaseSessionCreateParams,
+        ?browserbase_session_id: String,
+        ?dom_settle_timeout_ms: Float,
+        ?experimental: bool,
+        ?self_heal: bool,
+        ?system_prompt: String,
+        ?verbose: StagehandSDK::Models::SessionStartParams::verbose,
+        ?wait_for_captcha_solves: bool,
+        ?x_sent_at: Time,
+        ?x_stream_response: StagehandSDK::Models::SessionStartParams::x_stream_response,
+        ?request_options: StagehandSDK::request_opts
+      ) -> StagehandSDK::Models::SessionStartResponse
+
+      def initialize: (client: StagehandSDK::Client) -> void
+    end
+  end
+end
