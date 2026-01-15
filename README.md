@@ -26,7 +26,7 @@ To use this gem, install via Bundler by adding the following to your application
 <!-- x-release-please-start-version -->
 
 ```ruby
-gem "stagehand-sdk", "~> 0.6.2"
+gem "stagehand-sdk", "~> 3.0.1"
 ```
 
 <!-- x-release-please-end -->
