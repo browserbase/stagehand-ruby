@@ -14,7 +14,9 @@ module StagehandSDK
           )
         end
 
-      # Model name to use for AI operations
+      # Model name to use for AI operations. Always use the format 'provider/model-name'
+      # (e.g., 'openai/gpt-4o', 'anthropic/claude-sonnet-4-5-20250929',
+      # 'google/gemini-2.0-flash')
       sig { returns(String) }
       attr_accessor :model_name
 
@@ -102,13 +104,6 @@ module StagehandSDK
       sig { params(wait_for_captcha_solves: T::Boolean).void }
       attr_writer :wait_for_captcha_solves
 
-      # ISO timestamp when request was sent
-      sig { returns(T.nilable(Time)) }
-      attr_reader :x_sent_at
-
-      sig { params(x_sent_at: Time).void }
-      attr_writer :x_sent_at
-
       # Whether to stream the response via SSE
       sig do
         returns(
@@ -139,14 +134,15 @@ module StagehandSDK
           system_prompt: String,
           verbose: StagehandSDK::SessionStartParams::Verbose::OrFloat,
           wait_for_captcha_solves: T::Boolean,
-          x_sent_at: Time,
           x_stream_response:
             StagehandSDK::SessionStartParams::XStreamResponse::OrSymbol,
           request_options: StagehandSDK::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
-        # Model name to use for AI operations
+        # Model name to use for AI operations. Always use the format 'provider/model-name'
+        # (e.g., 'openai/gpt-4o', 'anthropic/claude-sonnet-4-5-20250929',
+        # 'google/gemini-2.0-flash')
         model_name:,
         # Timeout in ms for act operations (deprecated, v2 only)
         act_timeout_ms: nil,
@@ -165,8 +161,6 @@ module StagehandSDK
         verbose: nil,
         # Wait for captcha solves (deprecated, v2 only)
         wait_for_captcha_solves: nil,
-        # ISO timestamp when request was sent
-        x_sent_at: nil,
         # Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
@@ -188,7 +182,6 @@ module StagehandSDK
             system_prompt: String,
             verbose: StagehandSDK::SessionStartParams::Verbose::OrFloat,
             wait_for_captcha_solves: T::Boolean,
-            x_sent_at: Time,
             x_stream_response:
               StagehandSDK::SessionStartParams::XStreamResponse::OrSymbol,
             request_options: StagehandSDK::RequestOptions

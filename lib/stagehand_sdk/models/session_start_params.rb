@@ -8,7 +8,9 @@ module StagehandSDK
       include StagehandSDK::Internal::Type::RequestParameters
 
       # @!attribute model_name
-      #   Model name to use for AI operations
+      #   Model name to use for AI operations. Always use the format 'provider/model-name'
+      #   (e.g., 'openai/gpt-4o', 'anthropic/claude-sonnet-4-5-20250929',
+      #   'google/gemini-2.0-flash')
       #
       #   @return [String]
       required :model_name, String, api_name: :modelName
@@ -74,20 +76,17 @@ module StagehandSDK
                StagehandSDK::Internal::Type::Boolean,
                api_name: :waitForCaptchaSolves
 
-      # @!attribute x_sent_at
-      #   ISO timestamp when request was sent
-      #
-      #   @return [Time, nil]
-      optional :x_sent_at, Time
-
       # @!attribute x_stream_response
       #   Whether to stream the response via SSE
       #
       #   @return [Symbol, StagehandSDK::Models::SessionStartParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { StagehandSDK::SessionStartParams::XStreamResponse }
 
-      # @!method initialize(model_name:, act_timeout_ms: nil, browser: nil, browserbase_session_create_params: nil, browserbase_session_id: nil, dom_settle_timeout_ms: nil, experimental: nil, self_heal: nil, system_prompt: nil, verbose: nil, wait_for_captcha_solves: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
-      #   @param model_name [String] Model name to use for AI operations
+      # @!method initialize(model_name:, act_timeout_ms: nil, browser: nil, browserbase_session_create_params: nil, browserbase_session_id: nil, dom_settle_timeout_ms: nil, experimental: nil, self_heal: nil, system_prompt: nil, verbose: nil, wait_for_captcha_solves: nil, x_stream_response: nil, request_options: {})
+      #   Some parameter documentations has been truncated, see
+      #   {StagehandSDK::Models::SessionStartParams} for more details.
+      #
+      #   @param model_name [String] Model name to use for AI operations. Always use the format 'provider/model-name'
       #
       #   @param act_timeout_ms [Float] Timeout in ms for act operations (deprecated, v2 only)
       #
@@ -108,8 +107,6 @@ module StagehandSDK
       #   @param verbose [Float, StagehandSDK::Models::SessionStartParams::Verbose] Logging verbosity level (0=quiet, 1=normal, 2=debug)
       #
       #   @param wait_for_captcha_solves [Boolean] Wait for captcha solves (deprecated, v2 only)
-      #
-      #   @param x_sent_at [Time] ISO timestamp when request was sent
       #
       #   @param x_stream_response [Symbol, StagehandSDK::Models::SessionStartParams::XStreamResponse] Whether to stream the response via SSE
       #

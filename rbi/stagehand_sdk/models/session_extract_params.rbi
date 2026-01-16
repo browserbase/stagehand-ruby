@@ -16,10 +16,7 @@ module StagehandSDK
 
       # Target frame ID for the extraction
       sig { returns(T.nilable(String)) }
-      attr_reader :frame_id
-
-      sig { params(frame_id: String).void }
-      attr_writer :frame_id
+      attr_accessor :frame_id
 
       # Natural language instruction for what to extract
       sig { returns(T.nilable(String)) }
@@ -45,13 +42,6 @@ module StagehandSDK
       sig { params(schema: T::Hash[Symbol, T.anything]).void }
       attr_writer :schema
 
-      # ISO timestamp when request was sent
-      sig { returns(T.nilable(Time)) }
-      attr_reader :x_sent_at
-
-      sig { params(x_sent_at: Time).void }
-      attr_writer :x_sent_at
-
       # Whether to stream the response via SSE
       sig do
         returns(
@@ -72,11 +62,10 @@ module StagehandSDK
 
       sig do
         params(
-          frame_id: String,
+          frame_id: T.nilable(String),
           instruction: String,
           options: StagehandSDK::SessionExtractParams::Options::OrHash,
           schema: T::Hash[Symbol, T.anything],
-          x_sent_at: Time,
           x_stream_response:
             StagehandSDK::SessionExtractParams::XStreamResponse::OrSymbol,
           request_options: StagehandSDK::RequestOptions::OrHash
@@ -90,8 +79,6 @@ module StagehandSDK
         options: nil,
         # JSON Schema defining the structure of data to extract
         schema: nil,
-        # ISO timestamp when request was sent
-        x_sent_at: nil,
         # Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
@@ -101,11 +88,10 @@ module StagehandSDK
       sig do
         override.returns(
           {
-            frame_id: String,
+            frame_id: T.nilable(String),
             instruction: String,
             options: StagehandSDK::SessionExtractParams::Options,
             schema: T::Hash[Symbol, T.anything],
-            x_sent_at: Time,
             x_stream_response:
               StagehandSDK::SessionExtractParams::XStreamResponse::OrSymbol,
             request_options: StagehandSDK::RequestOptions
@@ -124,8 +110,9 @@ module StagehandSDK
             )
           end
 
-        # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-        # 'anthropic/claude-4.5-opus')
+        # Model name string with provider prefix. Always use the format
+        # 'provider/model-name' (e.g., 'openai/gpt-4o',
+        # 'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
         sig do
           returns(
             T.nilable(
@@ -172,8 +159,9 @@ module StagehandSDK
           ).returns(T.attached_class)
         end
         def self.new(
-          # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-          # 'anthropic/claude-4.5-opus')
+          # Model name string with provider prefix. Always use the format
+          # 'provider/model-name' (e.g., 'openai/gpt-4o',
+          # 'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
           model: nil,
           # CSS selector to scope extraction to a specific element
           selector: nil,

@@ -2,10 +2,9 @@ module StagehandSDK
   module Models
     type session_observe_params =
       {
-        frame_id: String,
+        frame_id: String?,
         instruction: String,
         options: StagehandSDK::SessionObserveParams::Options,
-        x_sent_at: Time,
         x_stream_response: StagehandSDK::Models::SessionObserveParams::x_stream_response
       }
       & StagehandSDK::Internal::Type::request_parameters
@@ -14,9 +13,7 @@ module StagehandSDK
       extend StagehandSDK::Internal::Type::RequestParameters::Converter
       include StagehandSDK::Internal::Type::RequestParameters
 
-      attr_reader frame_id: String?
-
-      def frame_id=: (String) -> String
+      attr_accessor frame_id: String?
 
       attr_reader instruction: String?
 
@@ -28,10 +25,6 @@ module StagehandSDK
         StagehandSDK::SessionObserveParams::Options
       ) -> StagehandSDK::SessionObserveParams::Options
 
-      attr_reader x_sent_at: Time?
-
-      def x_sent_at=: (Time) -> Time
-
       attr_reader x_stream_response: StagehandSDK::Models::SessionObserveParams::x_stream_response?
 
       def x_stream_response=: (
@@ -39,19 +32,17 @@ module StagehandSDK
       ) -> StagehandSDK::Models::SessionObserveParams::x_stream_response
 
       def initialize: (
-        ?frame_id: String,
+        ?frame_id: String?,
         ?instruction: String,
         ?options: StagehandSDK::SessionObserveParams::Options,
-        ?x_sent_at: Time,
         ?x_stream_response: StagehandSDK::Models::SessionObserveParams::x_stream_response,
         ?request_options: StagehandSDK::request_opts
       ) -> void
 
       def to_hash: -> {
-        frame_id: String,
+        frame_id: String?,
         instruction: String,
         options: StagehandSDK::SessionObserveParams::Options,
-        x_sent_at: Time,
         x_stream_response: StagehandSDK::Models::SessionObserveParams::x_stream_response,
         request_options: StagehandSDK::RequestOptions
       }

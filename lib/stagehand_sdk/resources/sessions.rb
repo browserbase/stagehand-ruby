@@ -8,17 +8,15 @@ module StagehandSDK
       # Executes a browser action using natural language instructions or a predefined
       # Action object.
       #
-      # @overload act(id, input:, frame_id: nil, options: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @overload act(id, input:, frame_id: nil, options: nil, x_stream_response: nil, request_options: {})
       #
       # @param id [String] Path param: Unique session identifier
       #
       # @param input [String, StagehandSDK::Models::Action] Body param: Natural language instruction or Action object
       #
-      # @param frame_id [String] Body param: Target frame ID for the action
+      # @param frame_id [String, nil] Body param: Target frame ID for the action
       #
       # @param options [StagehandSDK::Models::SessionActParams::Options] Body param
-      #
-      # @param x_sent_at [Time] Header param: ISO timestamp when request was sent
       #
       # @param x_stream_response [Symbol, StagehandSDK::Models::SessionActParams::XStreamResponse] Header param: Whether to stream the response via SSE
       #
@@ -33,7 +31,7 @@ module StagehandSDK
           message = "Please use `#act_streaming` for the streaming use case."
           raise ArgumentError.new(message)
         end
-        header_params = {x_sent_at: "x-sent-at", x_stream_response: "x-stream-response"}
+        header_params = {x_stream_response: "x-stream-response"}
         @client.request(
           method: :post,
           path: ["v1/sessions/%1$s/act", id],
@@ -49,17 +47,15 @@ module StagehandSDK
       # Executes a browser action using natural language instructions or a predefined
       # Action object.
       #
-      # @overload act_streaming(id, input:, frame_id: nil, options: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @overload act_streaming(id, input:, frame_id: nil, options: nil, x_stream_response: nil, request_options: {})
       #
       # @param id [String] Path param: Unique session identifier
       #
       # @param input [String, StagehandSDK::Models::Action] Body param: Natural language instruction or Action object
       #
-      # @param frame_id [String] Body param: Target frame ID for the action
+      # @param frame_id [String, nil] Body param: Target frame ID for the action
       #
       # @param options [StagehandSDK::Models::SessionActParams::Options] Body param
-      #
-      # @param x_sent_at [Time] Header param: ISO timestamp when request was sent
       #
       # @param x_stream_response [Symbol, StagehandSDK::Models::SessionActParams::XStreamResponse] Header param: Whether to stream the response via SSE
       #
@@ -75,7 +71,7 @@ module StagehandSDK
           raise ArgumentError.new(message)
         end
         parsed.store(:streamResponse, true)
-        header_params = {x_sent_at: "x-sent-at", x_stream_response: "x-stream-response"}
+        header_params = {x_stream_response: "x-stream-response"}
         @client.request(
           method: :post,
           path: ["v1/sessions/%1$s/act", id],
@@ -92,13 +88,11 @@ module StagehandSDK
 
       # Terminates the browser session and releases all associated resources.
       #
-      # @overload end_(id, _force_body: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @overload end_(id, _force_body: nil, x_stream_response: nil, request_options: {})
       #
       # @param id [String] Path param: Unique session identifier
       #
       # @param _force_body [Object] Body param
-      #
-      # @param x_sent_at [Time] Header param: ISO timestamp when request was sent
       #
       # @param x_stream_response [Symbol, StagehandSDK::Models::SessionEndParams::XStreamResponse] Header param: Whether to stream the response via SSE
       #
@@ -109,7 +103,7 @@ module StagehandSDK
       # @see StagehandSDK::Models::SessionEndParams
       def end_(id, params = {})
         parsed, options = StagehandSDK::SessionEndParams.dump_request(params)
-        header_params = {x_sent_at: "x-sent-at", x_stream_response: "x-stream-response"}
+        header_params = {x_stream_response: "x-stream-response"}
         @client.request(
           method: :post,
           path: ["v1/sessions/%1$s/end", id],
@@ -125,7 +119,7 @@ module StagehandSDK
       #
       # Runs an autonomous AI agent that can perform complex multi-step browser tasks.
       #
-      # @overload execute(id, agent_config:, execute_options:, frame_id: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @overload execute(id, agent_config:, execute_options:, frame_id: nil, x_stream_response: nil, request_options: {})
       #
       # @param id [String] Path param: Unique session identifier
       #
@@ -133,9 +127,7 @@ module StagehandSDK
       #
       # @param execute_options [StagehandSDK::Models::SessionExecuteParams::ExecuteOptions] Body param
       #
-      # @param frame_id [String] Body param: Target frame ID for the agent
-      #
-      # @param x_sent_at [Time] Header param: ISO timestamp when request was sent
+      # @param frame_id [String, nil] Body param: Target frame ID for the agent
       #
       # @param x_stream_response [Symbol, StagehandSDK::Models::SessionExecuteParams::XStreamResponse] Header param: Whether to stream the response via SSE
       #
@@ -150,7 +142,7 @@ module StagehandSDK
           message = "Please use `#execute_streaming` for the streaming use case."
           raise ArgumentError.new(message)
         end
-        header_params = {x_sent_at: "x-sent-at", x_stream_response: "x-stream-response"}
+        header_params = {x_stream_response: "x-stream-response"}
         @client.request(
           method: :post,
           path: ["v1/sessions/%1$s/agentExecute", id],
@@ -165,7 +157,7 @@ module StagehandSDK
       #
       # Runs an autonomous AI agent that can perform complex multi-step browser tasks.
       #
-      # @overload execute_streaming(id, agent_config:, execute_options:, frame_id: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @overload execute_streaming(id, agent_config:, execute_options:, frame_id: nil, x_stream_response: nil, request_options: {})
       #
       # @param id [String] Path param: Unique session identifier
       #
@@ -173,9 +165,7 @@ module StagehandSDK
       #
       # @param execute_options [StagehandSDK::Models::SessionExecuteParams::ExecuteOptions] Body param
       #
-      # @param frame_id [String] Body param: Target frame ID for the agent
-      #
-      # @param x_sent_at [Time] Header param: ISO timestamp when request was sent
+      # @param frame_id [String, nil] Body param: Target frame ID for the agent
       #
       # @param x_stream_response [Symbol, StagehandSDK::Models::SessionExecuteParams::XStreamResponse] Header param: Whether to stream the response via SSE
       #
@@ -191,7 +181,7 @@ module StagehandSDK
           raise ArgumentError.new(message)
         end
         parsed.store(:streamResponse, true)
-        header_params = {x_sent_at: "x-sent-at", x_stream_response: "x-stream-response"}
+        header_params = {x_stream_response: "x-stream-response"}
         @client.request(
           method: :post,
           path: ["v1/sessions/%1$s/agentExecute", id],
@@ -211,19 +201,17 @@ module StagehandSDK
       #
       # Extracts structured data from the current page using AI-powered analysis.
       #
-      # @overload extract(id, frame_id: nil, instruction: nil, options: nil, schema: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @overload extract(id, frame_id: nil, instruction: nil, options: nil, schema: nil, x_stream_response: nil, request_options: {})
       #
       # @param id [String] Path param: Unique session identifier
       #
-      # @param frame_id [String] Body param: Target frame ID for the extraction
+      # @param frame_id [String, nil] Body param: Target frame ID for the extraction
       #
       # @param instruction [String] Body param: Natural language instruction for what to extract
       #
       # @param options [StagehandSDK::Models::SessionExtractParams::Options] Body param
       #
       # @param schema [Hash{Symbol=>Object}] Body param: JSON Schema defining the structure of data to extract
-      #
-      # @param x_sent_at [Time] Header param: ISO timestamp when request was sent
       #
       # @param x_stream_response [Symbol, StagehandSDK::Models::SessionExtractParams::XStreamResponse] Header param: Whether to stream the response via SSE
       #
@@ -238,7 +226,7 @@ module StagehandSDK
           message = "Please use `#extract_streaming` for the streaming use case."
           raise ArgumentError.new(message)
         end
-        header_params = {x_sent_at: "x-sent-at", x_stream_response: "x-stream-response"}
+        header_params = {x_stream_response: "x-stream-response"}
         @client.request(
           method: :post,
           path: ["v1/sessions/%1$s/extract", id],
@@ -253,19 +241,17 @@ module StagehandSDK
       #
       # Extracts structured data from the current page using AI-powered analysis.
       #
-      # @overload extract_streaming(id, frame_id: nil, instruction: nil, options: nil, schema: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @overload extract_streaming(id, frame_id: nil, instruction: nil, options: nil, schema: nil, x_stream_response: nil, request_options: {})
       #
       # @param id [String] Path param: Unique session identifier
       #
-      # @param frame_id [String] Body param: Target frame ID for the extraction
+      # @param frame_id [String, nil] Body param: Target frame ID for the extraction
       #
       # @param instruction [String] Body param: Natural language instruction for what to extract
       #
       # @param options [StagehandSDK::Models::SessionExtractParams::Options] Body param
       #
       # @param schema [Hash{Symbol=>Object}] Body param: JSON Schema defining the structure of data to extract
-      #
-      # @param x_sent_at [Time] Header param: ISO timestamp when request was sent
       #
       # @param x_stream_response [Symbol, StagehandSDK::Models::SessionExtractParams::XStreamResponse] Header param: Whether to stream the response via SSE
       #
@@ -281,7 +267,7 @@ module StagehandSDK
           raise ArgumentError.new(message)
         end
         parsed.store(:streamResponse, true)
-        header_params = {x_sent_at: "x-sent-at", x_stream_response: "x-stream-response"}
+        header_params = {x_stream_response: "x-stream-response"}
         @client.request(
           method: :post,
           path: ["v1/sessions/%1$s/extract", id],
@@ -298,19 +284,17 @@ module StagehandSDK
 
       # Navigates the browser to the specified URL.
       #
-      # @overload navigate(id, url:, frame_id: nil, options: nil, stream_response: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @overload navigate(id, url:, frame_id: nil, options: nil, stream_response: nil, x_stream_response: nil, request_options: {})
       #
       # @param id [String] Path param: Unique session identifier
       #
       # @param url [String] Body param: URL to navigate to
       #
-      # @param frame_id [String] Body param: Target frame ID for the navigation
+      # @param frame_id [String, nil] Body param: Target frame ID for the navigation
       #
       # @param options [StagehandSDK::Models::SessionNavigateParams::Options] Body param
       #
       # @param stream_response [Boolean] Body param: Whether to stream the response via SSE
-      #
-      # @param x_sent_at [Time] Header param: ISO timestamp when request was sent
       #
       # @param x_stream_response [Symbol, StagehandSDK::Models::SessionNavigateParams::XStreamResponse] Header param: Whether to stream the response via SSE
       #
@@ -321,7 +305,7 @@ module StagehandSDK
       # @see StagehandSDK::Models::SessionNavigateParams
       def navigate(id, params)
         parsed, options = StagehandSDK::SessionNavigateParams.dump_request(params)
-        header_params = {x_sent_at: "x-sent-at", x_stream_response: "x-stream-response"}
+        header_params = {x_stream_response: "x-stream-response"}
         @client.request(
           method: :post,
           path: ["v1/sessions/%1$s/navigate", id],
@@ -338,17 +322,15 @@ module StagehandSDK
       # Identifies and returns available actions on the current page that match the
       # given instruction.
       #
-      # @overload observe(id, frame_id: nil, instruction: nil, options: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @overload observe(id, frame_id: nil, instruction: nil, options: nil, x_stream_response: nil, request_options: {})
       #
       # @param id [String] Path param: Unique session identifier
       #
-      # @param frame_id [String] Body param: Target frame ID for the observation
+      # @param frame_id [String, nil] Body param: Target frame ID for the observation
       #
       # @param instruction [String] Body param: Natural language instruction for what actions to find
       #
       # @param options [StagehandSDK::Models::SessionObserveParams::Options] Body param
-      #
-      # @param x_sent_at [Time] Header param: ISO timestamp when request was sent
       #
       # @param x_stream_response [Symbol, StagehandSDK::Models::SessionObserveParams::XStreamResponse] Header param: Whether to stream the response via SSE
       #
@@ -363,7 +345,7 @@ module StagehandSDK
           message = "Please use `#observe_streaming` for the streaming use case."
           raise ArgumentError.new(message)
         end
-        header_params = {x_sent_at: "x-sent-at", x_stream_response: "x-stream-response"}
+        header_params = {x_stream_response: "x-stream-response"}
         @client.request(
           method: :post,
           path: ["v1/sessions/%1$s/observe", id],
@@ -379,17 +361,15 @@ module StagehandSDK
       # Identifies and returns available actions on the current page that match the
       # given instruction.
       #
-      # @overload observe_streaming(id, frame_id: nil, instruction: nil, options: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @overload observe_streaming(id, frame_id: nil, instruction: nil, options: nil, x_stream_response: nil, request_options: {})
       #
       # @param id [String] Path param: Unique session identifier
       #
-      # @param frame_id [String] Body param: Target frame ID for the observation
+      # @param frame_id [String, nil] Body param: Target frame ID for the observation
       #
       # @param instruction [String] Body param: Natural language instruction for what actions to find
       #
       # @param options [StagehandSDK::Models::SessionObserveParams::Options] Body param
-      #
-      # @param x_sent_at [Time] Header param: ISO timestamp when request was sent
       #
       # @param x_stream_response [Symbol, StagehandSDK::Models::SessionObserveParams::XStreamResponse] Header param: Whether to stream the response via SSE
       #
@@ -405,7 +385,7 @@ module StagehandSDK
           raise ArgumentError.new(message)
         end
         parsed.store(:streamResponse, true)
-        header_params = {x_sent_at: "x-sent-at", x_stream_response: "x-stream-response"}
+        header_params = {x_stream_response: "x-stream-response"}
         @client.request(
           method: :post,
           path: ["v1/sessions/%1$s/observe", id],
@@ -420,12 +400,15 @@ module StagehandSDK
         )
       end
 
+      # Some parameter documentations has been truncated, see
+      # {StagehandSDK::Models::SessionStartParams} for more details.
+      #
       # Creates a new browser session with the specified configuration. Returns a
       # session ID used for all subsequent operations.
       #
-      # @overload start(model_name:, act_timeout_ms: nil, browser: nil, browserbase_session_create_params: nil, browserbase_session_id: nil, dom_settle_timeout_ms: nil, experimental: nil, self_heal: nil, system_prompt: nil, verbose: nil, wait_for_captcha_solves: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @overload start(model_name:, act_timeout_ms: nil, browser: nil, browserbase_session_create_params: nil, browserbase_session_id: nil, dom_settle_timeout_ms: nil, experimental: nil, self_heal: nil, system_prompt: nil, verbose: nil, wait_for_captcha_solves: nil, x_stream_response: nil, request_options: {})
       #
-      # @param model_name [String] Body param: Model name to use for AI operations
+      # @param model_name [String] Body param: Model name to use for AI operations. Always use the format 'provider
       #
       # @param act_timeout_ms [Float] Body param: Timeout in ms for act operations (deprecated, v2 only)
       #
@@ -447,8 +430,6 @@ module StagehandSDK
       #
       # @param wait_for_captcha_solves [Boolean] Body param: Wait for captcha solves (deprecated, v2 only)
       #
-      # @param x_sent_at [Time] Header param: ISO timestamp when request was sent
-      #
       # @param x_stream_response [Symbol, StagehandSDK::Models::SessionStartParams::XStreamResponse] Header param: Whether to stream the response via SSE
       #
       # @param request_options [StagehandSDK::RequestOptions, Hash{Symbol=>Object}, nil]
@@ -458,7 +439,7 @@ module StagehandSDK
       # @see StagehandSDK::Models::SessionStartParams
       def start(params)
         parsed, options = StagehandSDK::SessionStartParams.dump_request(params)
-        header_params = {x_sent_at: "x-sent-at", x_stream_response: "x-stream-response"}
+        header_params = {x_stream_response: "x-stream-response"}
         @client.request(
           method: :post,
           path: "v1/sessions/start",

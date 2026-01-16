@@ -3,10 +3,9 @@ module StagehandSDK
     type session_navigate_params =
       {
         url: String,
-        frame_id: String,
+        frame_id: String?,
         options: StagehandSDK::SessionNavigateParams::Options,
         stream_response: bool,
-        x_sent_at: Time,
         x_stream_response: StagehandSDK::Models::SessionNavigateParams::x_stream_response
       }
       & StagehandSDK::Internal::Type::request_parameters
@@ -17,9 +16,7 @@ module StagehandSDK
 
       attr_accessor url: String
 
-      attr_reader frame_id: String?
-
-      def frame_id=: (String) -> String
+      attr_accessor frame_id: String?
 
       attr_reader options: StagehandSDK::SessionNavigateParams::Options?
 
@@ -31,10 +28,6 @@ module StagehandSDK
 
       def stream_response=: (bool) -> bool
 
-      attr_reader x_sent_at: Time?
-
-      def x_sent_at=: (Time) -> Time
-
       attr_reader x_stream_response: StagehandSDK::Models::SessionNavigateParams::x_stream_response?
 
       def x_stream_response=: (
@@ -43,20 +36,18 @@ module StagehandSDK
 
       def initialize: (
         url: String,
-        ?frame_id: String,
+        ?frame_id: String?,
         ?options: StagehandSDK::SessionNavigateParams::Options,
         ?stream_response: bool,
-        ?x_sent_at: Time,
         ?x_stream_response: StagehandSDK::Models::SessionNavigateParams::x_stream_response,
         ?request_options: StagehandSDK::request_opts
       ) -> void
 
       def to_hash: -> {
         url: String,
-        frame_id: String,
+        frame_id: String?,
         options: StagehandSDK::SessionNavigateParams::Options,
         stream_response: bool,
-        x_sent_at: Time,
         x_stream_response: StagehandSDK::Models::SessionNavigateParams::x_stream_response,
         request_options: StagehandSDK::RequestOptions
       }

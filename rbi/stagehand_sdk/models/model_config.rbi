@@ -2,8 +2,9 @@
 
 module StagehandSDK
   module Models
-    # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-    # 'anthropic/claude-4.5-opus')
+    # Model name string with provider prefix. Always use the format
+    # 'provider/model-name' (e.g., 'openai/gpt-4o',
+    # 'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
     module ModelConfig
       extend StagehandSDK::Internal::Type::Union
 
@@ -21,7 +22,9 @@ module StagehandSDK
             )
           end
 
-        # Model name string (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
+        # Model name string with provider prefix. Always use the format
+        # 'provider/model-name' (e.g., 'openai/gpt-4o',
+        # 'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
         sig { returns(String) }
         attr_accessor :model_name
 
@@ -67,7 +70,9 @@ module StagehandSDK
           ).returns(T.attached_class)
         end
         def self.new(
-          # Model name string (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
+          # Model name string with provider prefix. Always use the format
+          # 'provider/model-name' (e.g., 'openai/gpt-4o',
+          # 'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
           model_name:,
           # API key for the model provider
           api_key: nil,

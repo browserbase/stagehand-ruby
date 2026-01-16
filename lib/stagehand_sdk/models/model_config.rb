@@ -2,19 +2,22 @@
 
 module StagehandSDK
   module Models
-    # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-    # 'anthropic/claude-4.5-opus')
+    # Model name string with provider prefix. Always use the format
+    # 'provider/model-name' (e.g., 'openai/gpt-4o',
+    # 'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
     module ModelConfig
       extend StagehandSDK::Internal::Type::Union
 
-      # Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
+      # Model name string with provider prefix. Always use the format 'provider/model-name' (e.g., 'openai/gpt-4o', 'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
       variant String
 
       variant -> { StagehandSDK::ModelConfig::ModelConfigObject }
 
       class ModelConfigObject < StagehandSDK::Internal::Type::BaseModel
         # @!attribute model_name
-        #   Model name string (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
+        #   Model name string with provider prefix. Always use the format
+        #   'provider/model-name' (e.g., 'openai/gpt-4o',
+        #   'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
         #
         #   @return [String]
         required :model_name, String, api_name: :modelName
@@ -38,7 +41,10 @@ module StagehandSDK
         optional :provider, enum: -> { StagehandSDK::ModelConfig::ModelConfigObject::Provider }
 
         # @!method initialize(model_name:, api_key: nil, base_url: nil, provider: nil)
-        #   @param model_name [String] Model name string (e.g., 'openai/gpt-5-nano', 'anthropic/claude-4.5-opus')
+        #   Some parameter documentations has been truncated, see
+        #   {StagehandSDK::Models::ModelConfig::ModelConfigObject} for more details.
+        #
+        #   @param model_name [String] Model name string with provider prefix. Always use the format 'provider/model-na
         #
         #   @param api_key [String] API key for the model provider
         #

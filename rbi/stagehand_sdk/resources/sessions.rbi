@@ -11,9 +11,8 @@ module StagehandSDK
         params(
           id: String,
           input: T.any(String, StagehandSDK::Action::OrHash),
-          frame_id: String,
+          frame_id: T.nilable(String),
           options: StagehandSDK::SessionActParams::Options::OrHash,
-          x_sent_at: Time,
           x_stream_response:
             StagehandSDK::SessionActParams::XStreamResponse::OrSymbol,
           stream_response: T.noreturn,
@@ -29,8 +28,6 @@ module StagehandSDK
         frame_id: nil,
         # Body param
         options: nil,
-        # Header param: ISO timestamp when request was sent
-        x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
         # There is no need to provide `stream_response:`. Instead, use `#act_streaming` or
@@ -48,9 +45,8 @@ module StagehandSDK
         params(
           id: String,
           input: T.any(String, StagehandSDK::Action::OrHash),
-          frame_id: String,
+          frame_id: T.nilable(String),
           options: StagehandSDK::SessionActParams::Options::OrHash,
-          x_sent_at: Time,
           x_stream_response:
             StagehandSDK::SessionActParams::XStreamResponse::OrSymbol,
           stream_response: T.noreturn,
@@ -66,8 +62,6 @@ module StagehandSDK
         frame_id: nil,
         # Body param
         options: nil,
-        # Header param: ISO timestamp when request was sent
-        x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
         # There is no need to provide `stream_response:`. Instead, use `#act_streaming` or
@@ -82,7 +76,6 @@ module StagehandSDK
         params(
           id: String,
           _force_body: T.anything,
-          x_sent_at: Time,
           x_stream_response:
             StagehandSDK::SessionEndParams::XStreamResponse::OrSymbol,
           request_options: StagehandSDK::RequestOptions::OrHash
@@ -93,8 +86,6 @@ module StagehandSDK
         id,
         # Body param
         _force_body: nil,
-        # Header param: ISO timestamp when request was sent
-        x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
@@ -111,8 +102,7 @@ module StagehandSDK
           agent_config: StagehandSDK::SessionExecuteParams::AgentConfig::OrHash,
           execute_options:
             StagehandSDK::SessionExecuteParams::ExecuteOptions::OrHash,
-          frame_id: String,
-          x_sent_at: Time,
+          frame_id: T.nilable(String),
           x_stream_response:
             StagehandSDK::SessionExecuteParams::XStreamResponse::OrSymbol,
           stream_response: T.noreturn,
@@ -128,8 +118,6 @@ module StagehandSDK
         execute_options:,
         # Body param: Target frame ID for the agent
         frame_id: nil,
-        # Header param: ISO timestamp when request was sent
-        x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
         # There is no need to provide `stream_response:`. Instead, use
@@ -149,8 +137,7 @@ module StagehandSDK
           agent_config: StagehandSDK::SessionExecuteParams::AgentConfig::OrHash,
           execute_options:
             StagehandSDK::SessionExecuteParams::ExecuteOptions::OrHash,
-          frame_id: String,
-          x_sent_at: Time,
+          frame_id: T.nilable(String),
           x_stream_response:
             StagehandSDK::SessionExecuteParams::XStreamResponse::OrSymbol,
           stream_response: T.noreturn,
@@ -166,8 +153,6 @@ module StagehandSDK
         execute_options:,
         # Body param: Target frame ID for the agent
         frame_id: nil,
-        # Header param: ISO timestamp when request was sent
-        x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
         # There is no need to provide `stream_response:`. Instead, use
@@ -185,11 +170,10 @@ module StagehandSDK
       sig do
         params(
           id: String,
-          frame_id: String,
+          frame_id: T.nilable(String),
           instruction: String,
           options: StagehandSDK::SessionExtractParams::Options::OrHash,
           schema: T::Hash[Symbol, T.anything],
-          x_sent_at: Time,
           x_stream_response:
             StagehandSDK::SessionExtractParams::XStreamResponse::OrSymbol,
           stream_response: T.noreturn,
@@ -207,8 +191,6 @@ module StagehandSDK
         options: nil,
         # Body param: JSON Schema defining the structure of data to extract
         schema: nil,
-        # Header param: ISO timestamp when request was sent
-        x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
         # There is no need to provide `stream_response:`. Instead, use
@@ -225,11 +207,10 @@ module StagehandSDK
       sig do
         params(
           id: String,
-          frame_id: String,
+          frame_id: T.nilable(String),
           instruction: String,
           options: StagehandSDK::SessionExtractParams::Options::OrHash,
           schema: T::Hash[Symbol, T.anything],
-          x_sent_at: Time,
           x_stream_response:
             StagehandSDK::SessionExtractParams::XStreamResponse::OrSymbol,
           stream_response: T.noreturn,
@@ -247,8 +228,6 @@ module StagehandSDK
         options: nil,
         # Body param: JSON Schema defining the structure of data to extract
         schema: nil,
-        # Header param: ISO timestamp when request was sent
-        x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
         # There is no need to provide `stream_response:`. Instead, use
@@ -264,10 +243,9 @@ module StagehandSDK
         params(
           id: String,
           url: String,
-          frame_id: String,
+          frame_id: T.nilable(String),
           options: StagehandSDK::SessionNavigateParams::Options::OrHash,
           stream_response: T::Boolean,
-          x_sent_at: Time,
           x_stream_response:
             StagehandSDK::SessionNavigateParams::XStreamResponse::OrSymbol,
           request_options: StagehandSDK::RequestOptions::OrHash
@@ -284,8 +262,6 @@ module StagehandSDK
         options: nil,
         # Body param: Whether to stream the response via SSE
         stream_response: nil,
-        # Header param: ISO timestamp when request was sent
-        x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
@@ -300,10 +276,9 @@ module StagehandSDK
       sig do
         params(
           id: String,
-          frame_id: String,
+          frame_id: T.nilable(String),
           instruction: String,
           options: StagehandSDK::SessionObserveParams::Options::OrHash,
-          x_sent_at: Time,
           x_stream_response:
             StagehandSDK::SessionObserveParams::XStreamResponse::OrSymbol,
           stream_response: T.noreturn,
@@ -319,8 +294,6 @@ module StagehandSDK
         instruction: nil,
         # Body param
         options: nil,
-        # Header param: ISO timestamp when request was sent
-        x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
         # There is no need to provide `stream_response:`. Instead, use
@@ -338,10 +311,9 @@ module StagehandSDK
       sig do
         params(
           id: String,
-          frame_id: String,
+          frame_id: T.nilable(String),
           instruction: String,
           options: StagehandSDK::SessionObserveParams::Options::OrHash,
-          x_sent_at: Time,
           x_stream_response:
             StagehandSDK::SessionObserveParams::XStreamResponse::OrSymbol,
           stream_response: T.noreturn,
@@ -357,8 +329,6 @@ module StagehandSDK
         instruction: nil,
         # Body param
         options: nil,
-        # Header param: ISO timestamp when request was sent
-        x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
         # There is no need to provide `stream_response:`. Instead, use
@@ -385,14 +355,15 @@ module StagehandSDK
           system_prompt: String,
           verbose: StagehandSDK::SessionStartParams::Verbose::OrFloat,
           wait_for_captcha_solves: T::Boolean,
-          x_sent_at: Time,
           x_stream_response:
             StagehandSDK::SessionStartParams::XStreamResponse::OrSymbol,
           request_options: StagehandSDK::RequestOptions::OrHash
         ).returns(StagehandSDK::Models::SessionStartResponse)
       end
       def start(
-        # Body param: Model name to use for AI operations
+        # Body param: Model name to use for AI operations. Always use the format
+        # 'provider/model-name' (e.g., 'openai/gpt-4o',
+        # 'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
         model_name:,
         # Body param: Timeout in ms for act operations (deprecated, v2 only)
         act_timeout_ms: nil,
@@ -414,8 +385,6 @@ module StagehandSDK
         verbose: nil,
         # Body param: Wait for captcha solves (deprecated, v2 only)
         wait_for_captcha_solves: nil,
-        # Header param: ISO timestamp when request was sent
-        x_sent_at: nil,
         # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}

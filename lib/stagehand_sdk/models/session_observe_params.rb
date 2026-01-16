@@ -13,7 +13,7 @@ module StagehandSDK
       #   Target frame ID for the observation
       #
       #   @return [String, nil]
-      optional :frame_id, String, api_name: :frameId
+      optional :frame_id, String, api_name: :frameId, nil?: true
 
       # @!attribute instruction
       #   Natural language instruction for what actions to find
@@ -26,26 +26,18 @@ module StagehandSDK
       #   @return [StagehandSDK::Models::SessionObserveParams::Options, nil]
       optional :options, -> { StagehandSDK::SessionObserveParams::Options }
 
-      # @!attribute x_sent_at
-      #   ISO timestamp when request was sent
-      #
-      #   @return [Time, nil]
-      optional :x_sent_at, Time
-
       # @!attribute x_stream_response
       #   Whether to stream the response via SSE
       #
       #   @return [Symbol, StagehandSDK::Models::SessionObserveParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { StagehandSDK::SessionObserveParams::XStreamResponse }
 
-      # @!method initialize(frame_id: nil, instruction: nil, options: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
-      #   @param frame_id [String] Target frame ID for the observation
+      # @!method initialize(frame_id: nil, instruction: nil, options: nil, x_stream_response: nil, request_options: {})
+      #   @param frame_id [String, nil] Target frame ID for the observation
       #
       #   @param instruction [String] Natural language instruction for what actions to find
       #
       #   @param options [StagehandSDK::Models::SessionObserveParams::Options]
-      #
-      #   @param x_sent_at [Time] ISO timestamp when request was sent
       #
       #   @param x_stream_response [Symbol, StagehandSDK::Models::SessionObserveParams::XStreamResponse] Whether to stream the response via SSE
       #
@@ -53,8 +45,9 @@ module StagehandSDK
 
       class Options < StagehandSDK::Internal::Type::BaseModel
         # @!attribute model
-        #   Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-        #   'anthropic/claude-4.5-opus')
+        #   Model name string with provider prefix. Always use the format
+        #   'provider/model-name' (e.g., 'openai/gpt-4o',
+        #   'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
         #
         #   @return [String, StagehandSDK::Models::ModelConfig::ModelConfigObject, nil]
         optional :model, union: -> { StagehandSDK::ModelConfig }
@@ -75,7 +68,7 @@ module StagehandSDK
         #   Some parameter documentations has been truncated, see
         #   {StagehandSDK::Models::SessionObserveParams::Options} for more details.
         #
-        #   @param model [String, StagehandSDK::Models::ModelConfig::ModelConfigObject] Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/cl
+        #   @param model [String, StagehandSDK::Models::ModelConfig::ModelConfigObject] Model name string with provider prefix. Always use the format 'provider/model-na
         #
         #   @param selector [String] CSS selector to scope observation to a specific element
         #

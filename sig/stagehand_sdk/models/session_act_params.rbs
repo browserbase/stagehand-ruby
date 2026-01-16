@@ -3,9 +3,8 @@ module StagehandSDK
     type session_act_params =
       {
         input: StagehandSDK::Models::SessionActParams::input,
-        frame_id: String,
+        frame_id: String?,
         options: StagehandSDK::SessionActParams::Options,
-        x_sent_at: Time,
         x_stream_response: StagehandSDK::Models::SessionActParams::x_stream_response
       }
       & StagehandSDK::Internal::Type::request_parameters
@@ -16,19 +15,13 @@ module StagehandSDK
 
       attr_accessor input: StagehandSDK::Models::SessionActParams::input
 
-      attr_reader frame_id: String?
-
-      def frame_id=: (String) -> String
+      attr_accessor frame_id: String?
 
       attr_reader options: StagehandSDK::SessionActParams::Options?
 
       def options=: (
         StagehandSDK::SessionActParams::Options
       ) -> StagehandSDK::SessionActParams::Options
-
-      attr_reader x_sent_at: Time?
-
-      def x_sent_at=: (Time) -> Time
 
       attr_reader x_stream_response: StagehandSDK::Models::SessionActParams::x_stream_response?
 
@@ -38,18 +31,16 @@ module StagehandSDK
 
       def initialize: (
         input: StagehandSDK::Models::SessionActParams::input,
-        ?frame_id: String,
+        ?frame_id: String?,
         ?options: StagehandSDK::SessionActParams::Options,
-        ?x_sent_at: Time,
         ?x_stream_response: StagehandSDK::Models::SessionActParams::x_stream_response,
         ?request_options: StagehandSDK::request_opts
       ) -> void
 
       def to_hash: -> {
         input: StagehandSDK::Models::SessionActParams::input,
-        frame_id: String,
+        frame_id: String?,
         options: StagehandSDK::SessionActParams::Options,
-        x_sent_at: Time,
         x_stream_response: StagehandSDK::Models::SessionActParams::x_stream_response,
         request_options: StagehandSDK::RequestOptions
       }

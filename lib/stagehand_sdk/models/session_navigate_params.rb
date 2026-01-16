@@ -17,7 +17,7 @@ module StagehandSDK
       #   Target frame ID for the navigation
       #
       #   @return [String, nil]
-      optional :frame_id, String, api_name: :frameId
+      optional :frame_id, String, api_name: :frameId, nil?: true
 
       # @!attribute options
       #
@@ -30,28 +30,20 @@ module StagehandSDK
       #   @return [Boolean, nil]
       optional :stream_response, StagehandSDK::Internal::Type::Boolean, api_name: :streamResponse
 
-      # @!attribute x_sent_at
-      #   ISO timestamp when request was sent
-      #
-      #   @return [Time, nil]
-      optional :x_sent_at, Time
-
       # @!attribute x_stream_response
       #   Whether to stream the response via SSE
       #
       #   @return [Symbol, StagehandSDK::Models::SessionNavigateParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { StagehandSDK::SessionNavigateParams::XStreamResponse }
 
-      # @!method initialize(url:, frame_id: nil, options: nil, stream_response: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @!method initialize(url:, frame_id: nil, options: nil, stream_response: nil, x_stream_response: nil, request_options: {})
       #   @param url [String] URL to navigate to
       #
-      #   @param frame_id [String] Target frame ID for the navigation
+      #   @param frame_id [String, nil] Target frame ID for the navigation
       #
       #   @param options [StagehandSDK::Models::SessionNavigateParams::Options]
       #
       #   @param stream_response [Boolean] Whether to stream the response via SSE
-      #
-      #   @param x_sent_at [Time] ISO timestamp when request was sent
       #
       #   @param x_stream_response [Symbol, StagehandSDK::Models::SessionNavigateParams::XStreamResponse] Whether to stream the response via SSE
       #

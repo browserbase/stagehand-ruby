@@ -4,8 +4,7 @@ module StagehandSDK
       {
         agent_config: StagehandSDK::SessionExecuteParams::AgentConfig,
         execute_options: StagehandSDK::SessionExecuteParams::ExecuteOptions,
-        frame_id: String,
-        x_sent_at: Time,
+        frame_id: String?,
         x_stream_response: StagehandSDK::Models::SessionExecuteParams::x_stream_response
       }
       & StagehandSDK::Internal::Type::request_parameters
@@ -18,13 +17,7 @@ module StagehandSDK
 
       attr_accessor execute_options: StagehandSDK::SessionExecuteParams::ExecuteOptions
 
-      attr_reader frame_id: String?
-
-      def frame_id=: (String) -> String
-
-      attr_reader x_sent_at: Time?
-
-      def x_sent_at=: (Time) -> Time
+      attr_accessor frame_id: String?
 
       attr_reader x_stream_response: StagehandSDK::Models::SessionExecuteParams::x_stream_response?
 
@@ -35,8 +28,7 @@ module StagehandSDK
       def initialize: (
         agent_config: StagehandSDK::SessionExecuteParams::AgentConfig,
         execute_options: StagehandSDK::SessionExecuteParams::ExecuteOptions,
-        ?frame_id: String,
-        ?x_sent_at: Time,
+        ?frame_id: String?,
         ?x_stream_response: StagehandSDK::Models::SessionExecuteParams::x_stream_response,
         ?request_options: StagehandSDK::request_opts
       ) -> void
@@ -44,8 +36,7 @@ module StagehandSDK
       def to_hash: -> {
         agent_config: StagehandSDK::SessionExecuteParams::AgentConfig,
         execute_options: StagehandSDK::SessionExecuteParams::ExecuteOptions,
-        frame_id: String,
-        x_sent_at: Time,
+        frame_id: String?,
         x_stream_response: StagehandSDK::Models::SessionExecuteParams::x_stream_response,
         request_options: StagehandSDK::RequestOptions
       }

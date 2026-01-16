@@ -13,7 +13,7 @@ module StagehandSDK
       #   Target frame ID for the extraction
       #
       #   @return [String, nil]
-      optional :frame_id, String, api_name: :frameId
+      optional :frame_id, String, api_name: :frameId, nil?: true
 
       # @!attribute instruction
       #   Natural language instruction for what to extract
@@ -32,20 +32,14 @@ module StagehandSDK
       #   @return [Hash{Symbol=>Object}, nil]
       optional :schema, StagehandSDK::Internal::Type::HashOf[StagehandSDK::Internal::Type::Unknown]
 
-      # @!attribute x_sent_at
-      #   ISO timestamp when request was sent
-      #
-      #   @return [Time, nil]
-      optional :x_sent_at, Time
-
       # @!attribute x_stream_response
       #   Whether to stream the response via SSE
       #
       #   @return [Symbol, StagehandSDK::Models::SessionExtractParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { StagehandSDK::SessionExtractParams::XStreamResponse }
 
-      # @!method initialize(frame_id: nil, instruction: nil, options: nil, schema: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
-      #   @param frame_id [String] Target frame ID for the extraction
+      # @!method initialize(frame_id: nil, instruction: nil, options: nil, schema: nil, x_stream_response: nil, request_options: {})
+      #   @param frame_id [String, nil] Target frame ID for the extraction
       #
       #   @param instruction [String] Natural language instruction for what to extract
       #
@@ -53,16 +47,15 @@ module StagehandSDK
       #
       #   @param schema [Hash{Symbol=>Object}] JSON Schema defining the structure of data to extract
       #
-      #   @param x_sent_at [Time] ISO timestamp when request was sent
-      #
       #   @param x_stream_response [Symbol, StagehandSDK::Models::SessionExtractParams::XStreamResponse] Whether to stream the response via SSE
       #
       #   @param request_options [StagehandSDK::RequestOptions, Hash{Symbol=>Object}]
 
       class Options < StagehandSDK::Internal::Type::BaseModel
         # @!attribute model
-        #   Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-        #   'anthropic/claude-4.5-opus')
+        #   Model name string with provider prefix. Always use the format
+        #   'provider/model-name' (e.g., 'openai/gpt-4o',
+        #   'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
         #
         #   @return [String, StagehandSDK::Models::ModelConfig::ModelConfigObject, nil]
         optional :model, union: -> { StagehandSDK::ModelConfig }
@@ -83,7 +76,7 @@ module StagehandSDK
         #   Some parameter documentations has been truncated, see
         #   {StagehandSDK::Models::SessionExtractParams::Options} for more details.
         #
-        #   @param model [String, StagehandSDK::Models::ModelConfig::ModelConfigObject] Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/cl
+        #   @param model [String, StagehandSDK::Models::ModelConfig::ModelConfigObject] Model name string with provider prefix. Always use the format 'provider/model-na
         #
         #   @param selector [String] CSS selector to scope extraction to a specific element
         #

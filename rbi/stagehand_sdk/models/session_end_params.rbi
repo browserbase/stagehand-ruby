@@ -17,13 +17,6 @@ module StagehandSDK
       sig { params(_force_body: T.anything).void }
       attr_writer :_force_body
 
-      # ISO timestamp when request was sent
-      sig { returns(T.nilable(Time)) }
-      attr_reader :x_sent_at
-
-      sig { params(x_sent_at: Time).void }
-      attr_writer :x_sent_at
-
       # Whether to stream the response via SSE
       sig do
         returns(
@@ -43,7 +36,6 @@ module StagehandSDK
       sig do
         params(
           _force_body: T.anything,
-          x_sent_at: Time,
           x_stream_response:
             StagehandSDK::SessionEndParams::XStreamResponse::OrSymbol,
           request_options: StagehandSDK::RequestOptions::OrHash
@@ -51,8 +43,6 @@ module StagehandSDK
       end
       def self.new(
         _force_body: nil,
-        # ISO timestamp when request was sent
-        x_sent_at: nil,
         # Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
@@ -63,7 +53,6 @@ module StagehandSDK
         override.returns(
           {
             _force_body: T.anything,
-            x_sent_at: Time,
             x_stream_response:
               StagehandSDK::SessionEndParams::XStreamResponse::OrSymbol,
             request_options: StagehandSDK::RequestOptions

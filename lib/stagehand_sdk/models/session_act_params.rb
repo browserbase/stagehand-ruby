@@ -19,18 +19,12 @@ module StagehandSDK
       #   Target frame ID for the action
       #
       #   @return [String, nil]
-      optional :frame_id, String, api_name: :frameId
+      optional :frame_id, String, api_name: :frameId, nil?: true
 
       # @!attribute options
       #
       #   @return [StagehandSDK::Models::SessionActParams::Options, nil]
       optional :options, -> { StagehandSDK::SessionActParams::Options }
-
-      # @!attribute x_sent_at
-      #   ISO timestamp when request was sent
-      #
-      #   @return [Time, nil]
-      optional :x_sent_at, Time
 
       # @!attribute x_stream_response
       #   Whether to stream the response via SSE
@@ -38,14 +32,12 @@ module StagehandSDK
       #   @return [Symbol, StagehandSDK::Models::SessionActParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { StagehandSDK::SessionActParams::XStreamResponse }
 
-      # @!method initialize(input:, frame_id: nil, options: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @!method initialize(input:, frame_id: nil, options: nil, x_stream_response: nil, request_options: {})
       #   @param input [String, StagehandSDK::Models::Action] Natural language instruction or Action object
       #
-      #   @param frame_id [String] Target frame ID for the action
+      #   @param frame_id [String, nil] Target frame ID for the action
       #
       #   @param options [StagehandSDK::Models::SessionActParams::Options]
-      #
-      #   @param x_sent_at [Time] ISO timestamp when request was sent
       #
       #   @param x_stream_response [Symbol, StagehandSDK::Models::SessionActParams::XStreamResponse] Whether to stream the response via SSE
       #
@@ -66,8 +58,9 @@ module StagehandSDK
 
       class Options < StagehandSDK::Internal::Type::BaseModel
         # @!attribute model
-        #   Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-        #   'anthropic/claude-4.5-opus')
+        #   Model name string with provider prefix. Always use the format
+        #   'provider/model-name' (e.g., 'openai/gpt-4o',
+        #   'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
         #
         #   @return [String, StagehandSDK::Models::ModelConfig::ModelConfigObject, nil]
         optional :model, union: -> { StagehandSDK::ModelConfig }
@@ -88,7 +81,7 @@ module StagehandSDK
         #   Some parameter documentations has been truncated, see
         #   {StagehandSDK::Models::SessionActParams::Options} for more details.
         #
-        #   @param model [String, StagehandSDK::Models::ModelConfig::ModelConfigObject] Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/cl
+        #   @param model [String, StagehandSDK::Models::ModelConfig::ModelConfigObject] Model name string with provider prefix. Always use the format 'provider/model-na
         #
         #   @param timeout [Float] Timeout in ms for the action
         #

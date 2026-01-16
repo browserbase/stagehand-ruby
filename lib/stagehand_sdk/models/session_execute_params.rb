@@ -25,13 +25,7 @@ module StagehandSDK
       #   Target frame ID for the agent
       #
       #   @return [String, nil]
-      optional :frame_id, String, api_name: :frameId
-
-      # @!attribute x_sent_at
-      #   ISO timestamp when request was sent
-      #
-      #   @return [Time, nil]
-      optional :x_sent_at, Time
+      optional :frame_id, String, api_name: :frameId, nil?: true
 
       # @!attribute x_stream_response
       #   Whether to stream the response via SSE
@@ -39,14 +33,12 @@ module StagehandSDK
       #   @return [Symbol, StagehandSDK::Models::SessionExecuteParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { StagehandSDK::SessionExecuteParams::XStreamResponse }
 
-      # @!method initialize(agent_config:, execute_options:, frame_id: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @!method initialize(agent_config:, execute_options:, frame_id: nil, x_stream_response: nil, request_options: {})
       #   @param agent_config [StagehandSDK::Models::SessionExecuteParams::AgentConfig]
       #
       #   @param execute_options [StagehandSDK::Models::SessionExecuteParams::ExecuteOptions]
       #
-      #   @param frame_id [String] Target frame ID for the agent
-      #
-      #   @param x_sent_at [Time] ISO timestamp when request was sent
+      #   @param frame_id [String, nil] Target frame ID for the agent
       #
       #   @param x_stream_response [Symbol, StagehandSDK::Models::SessionExecuteParams::XStreamResponse] Whether to stream the response via SSE
       #
@@ -60,8 +52,9 @@ module StagehandSDK
         optional :cua, StagehandSDK::Internal::Type::Boolean
 
         # @!attribute model
-        #   Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-        #   'anthropic/claude-4.5-opus')
+        #   Model name string with provider prefix. Always use the format
+        #   'provider/model-name' (e.g., 'openai/gpt-4o',
+        #   'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
         #
         #   @return [String, StagehandSDK::Models::ModelConfig::ModelConfigObject, nil]
         optional :model, union: -> { StagehandSDK::ModelConfig }
@@ -84,7 +77,7 @@ module StagehandSDK
         #
         #   @param cua [Boolean] Enable Computer Use Agent mode
         #
-        #   @param model [String, StagehandSDK::Models::ModelConfig::ModelConfigObject] Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/cl
+        #   @param model [String, StagehandSDK::Models::ModelConfig::ModelConfigObject] Model name string with provider prefix. Always use the format 'provider/model-na
         #
         #   @param provider [Symbol, StagehandSDK::Models::SessionExecuteParams::AgentConfig::Provider] AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
         #

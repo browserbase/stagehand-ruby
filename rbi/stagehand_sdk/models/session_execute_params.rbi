@@ -37,17 +37,7 @@ module StagehandSDK
 
       # Target frame ID for the agent
       sig { returns(T.nilable(String)) }
-      attr_reader :frame_id
-
-      sig { params(frame_id: String).void }
-      attr_writer :frame_id
-
-      # ISO timestamp when request was sent
-      sig { returns(T.nilable(Time)) }
-      attr_reader :x_sent_at
-
-      sig { params(x_sent_at: Time).void }
-      attr_writer :x_sent_at
+      attr_accessor :frame_id
 
       # Whether to stream the response via SSE
       sig do
@@ -72,8 +62,7 @@ module StagehandSDK
           agent_config: StagehandSDK::SessionExecuteParams::AgentConfig::OrHash,
           execute_options:
             StagehandSDK::SessionExecuteParams::ExecuteOptions::OrHash,
-          frame_id: String,
-          x_sent_at: Time,
+          frame_id: T.nilable(String),
           x_stream_response:
             StagehandSDK::SessionExecuteParams::XStreamResponse::OrSymbol,
           request_options: StagehandSDK::RequestOptions::OrHash
@@ -84,8 +73,6 @@ module StagehandSDK
         execute_options:,
         # Target frame ID for the agent
         frame_id: nil,
-        # ISO timestamp when request was sent
-        x_sent_at: nil,
         # Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
@@ -97,8 +84,7 @@ module StagehandSDK
           {
             agent_config: StagehandSDK::SessionExecuteParams::AgentConfig,
             execute_options: StagehandSDK::SessionExecuteParams::ExecuteOptions,
-            frame_id: String,
-            x_sent_at: Time,
+            frame_id: T.nilable(String),
             x_stream_response:
               StagehandSDK::SessionExecuteParams::XStreamResponse::OrSymbol,
             request_options: StagehandSDK::RequestOptions
@@ -124,8 +110,9 @@ module StagehandSDK
         sig { params(cua: T::Boolean).void }
         attr_writer :cua
 
-        # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-        # 'anthropic/claude-4.5-opus')
+        # Model name string with provider prefix. Always use the format
+        # 'provider/model-name' (e.g., 'openai/gpt-4o',
+        # 'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
         sig do
           returns(
             T.nilable(
@@ -187,8 +174,9 @@ module StagehandSDK
         def self.new(
           # Enable Computer Use Agent mode
           cua: nil,
-          # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-          # 'anthropic/claude-4.5-opus')
+          # Model name string with provider prefix. Always use the format
+          # 'provider/model-name' (e.g., 'openai/gpt-4o',
+          # 'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
           model: nil,
           # AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
           provider: nil,

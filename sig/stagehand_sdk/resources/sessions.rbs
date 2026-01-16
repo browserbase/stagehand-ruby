@@ -4,9 +4,8 @@ module StagehandSDK
       def act: (
         String id,
         input: StagehandSDK::Models::SessionActParams::input,
-        ?frame_id: String,
+        ?frame_id: String?,
         ?options: StagehandSDK::SessionActParams::Options,
-        ?x_sent_at: Time,
         ?x_stream_response: StagehandSDK::Models::SessionActParams::x_stream_response,
         ?request_options: StagehandSDK::request_opts
       ) -> StagehandSDK::Models::SessionActResponse
@@ -14,9 +13,8 @@ module StagehandSDK
       def act_streaming: (
         String id,
         input: StagehandSDK::Models::SessionActParams::input,
-        ?frame_id: String,
+        ?frame_id: String?,
         ?options: StagehandSDK::SessionActParams::Options,
-        ?x_sent_at: Time,
         ?x_stream_response: StagehandSDK::Models::SessionActParams::x_stream_response,
         ?request_options: StagehandSDK::request_opts
       ) -> StagehandSDK::Internal::Stream[StagehandSDK::StreamEvent]
@@ -24,7 +22,6 @@ module StagehandSDK
       def end_: (
         String id,
         ?_force_body: top,
-        ?x_sent_at: Time,
         ?x_stream_response: StagehandSDK::Models::SessionEndParams::x_stream_response,
         ?request_options: StagehandSDK::request_opts
       ) -> StagehandSDK::Models::SessionEndResponse
@@ -33,8 +30,7 @@ module StagehandSDK
         String id,
         agent_config: StagehandSDK::SessionExecuteParams::AgentConfig,
         execute_options: StagehandSDK::SessionExecuteParams::ExecuteOptions,
-        ?frame_id: String,
-        ?x_sent_at: Time,
+        ?frame_id: String?,
         ?x_stream_response: StagehandSDK::Models::SessionExecuteParams::x_stream_response,
         ?request_options: StagehandSDK::request_opts
       ) -> StagehandSDK::Models::SessionExecuteResponse
@@ -43,30 +39,27 @@ module StagehandSDK
         String id,
         agent_config: StagehandSDK::SessionExecuteParams::AgentConfig,
         execute_options: StagehandSDK::SessionExecuteParams::ExecuteOptions,
-        ?frame_id: String,
-        ?x_sent_at: Time,
+        ?frame_id: String?,
         ?x_stream_response: StagehandSDK::Models::SessionExecuteParams::x_stream_response,
         ?request_options: StagehandSDK::request_opts
       ) -> StagehandSDK::Internal::Stream[StagehandSDK::StreamEvent]
 
       def extract: (
         String id,
-        ?frame_id: String,
+        ?frame_id: String?,
         ?instruction: String,
         ?options: StagehandSDK::SessionExtractParams::Options,
         ?schema: ::Hash[Symbol, top],
-        ?x_sent_at: Time,
         ?x_stream_response: StagehandSDK::Models::SessionExtractParams::x_stream_response,
         ?request_options: StagehandSDK::request_opts
       ) -> StagehandSDK::Models::SessionExtractResponse
 
       def extract_streaming: (
         String id,
-        ?frame_id: String,
+        ?frame_id: String?,
         ?instruction: String,
         ?options: StagehandSDK::SessionExtractParams::Options,
         ?schema: ::Hash[Symbol, top],
-        ?x_sent_at: Time,
         ?x_stream_response: StagehandSDK::Models::SessionExtractParams::x_stream_response,
         ?request_options: StagehandSDK::request_opts
       ) -> StagehandSDK::Internal::Stream[StagehandSDK::StreamEvent]
@@ -74,30 +67,27 @@ module StagehandSDK
       def navigate: (
         String id,
         url: String,
-        ?frame_id: String,
+        ?frame_id: String?,
         ?options: StagehandSDK::SessionNavigateParams::Options,
         ?stream_response: bool,
-        ?x_sent_at: Time,
         ?x_stream_response: StagehandSDK::Models::SessionNavigateParams::x_stream_response,
         ?request_options: StagehandSDK::request_opts
       ) -> StagehandSDK::Models::SessionNavigateResponse
 
       def observe: (
         String id,
-        ?frame_id: String,
+        ?frame_id: String?,
         ?instruction: String,
         ?options: StagehandSDK::SessionObserveParams::Options,
-        ?x_sent_at: Time,
         ?x_stream_response: StagehandSDK::Models::SessionObserveParams::x_stream_response,
         ?request_options: StagehandSDK::request_opts
       ) -> StagehandSDK::Models::SessionObserveResponse
 
       def observe_streaming: (
         String id,
-        ?frame_id: String,
+        ?frame_id: String?,
         ?instruction: String,
         ?options: StagehandSDK::SessionObserveParams::Options,
-        ?x_sent_at: Time,
         ?x_stream_response: StagehandSDK::Models::SessionObserveParams::x_stream_response,
         ?request_options: StagehandSDK::request_opts
       ) -> StagehandSDK::Internal::Stream[StagehandSDK::StreamEvent]
@@ -114,7 +104,6 @@ module StagehandSDK
         ?system_prompt: String,
         ?verbose: StagehandSDK::Models::SessionStartParams::verbose,
         ?wait_for_captcha_solves: bool,
-        ?x_sent_at: Time,
         ?x_stream_response: StagehandSDK::Models::SessionStartParams::x_stream_response,
         ?request_options: StagehandSDK::request_opts
       ) -> StagehandSDK::Models::SessionStartResponse

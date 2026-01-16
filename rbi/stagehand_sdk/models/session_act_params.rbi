@@ -17,10 +17,7 @@ module StagehandSDK
 
       # Target frame ID for the action
       sig { returns(T.nilable(String)) }
-      attr_reader :frame_id
-
-      sig { params(frame_id: String).void }
-      attr_writer :frame_id
+      attr_accessor :frame_id
 
       sig { returns(T.nilable(StagehandSDK::SessionActParams::Options)) }
       attr_reader :options
@@ -29,13 +26,6 @@ module StagehandSDK
         params(options: StagehandSDK::SessionActParams::Options::OrHash).void
       end
       attr_writer :options
-
-      # ISO timestamp when request was sent
-      sig { returns(T.nilable(Time)) }
-      attr_reader :x_sent_at
-
-      sig { params(x_sent_at: Time).void }
-      attr_writer :x_sent_at
 
       # Whether to stream the response via SSE
       sig do
@@ -56,9 +46,8 @@ module StagehandSDK
       sig do
         params(
           input: T.any(String, StagehandSDK::Action::OrHash),
-          frame_id: String,
+          frame_id: T.nilable(String),
           options: StagehandSDK::SessionActParams::Options::OrHash,
-          x_sent_at: Time,
           x_stream_response:
             StagehandSDK::SessionActParams::XStreamResponse::OrSymbol,
           request_options: StagehandSDK::RequestOptions::OrHash
@@ -70,8 +59,6 @@ module StagehandSDK
         # Target frame ID for the action
         frame_id: nil,
         options: nil,
-        # ISO timestamp when request was sent
-        x_sent_at: nil,
         # Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
@@ -82,9 +69,8 @@ module StagehandSDK
         override.returns(
           {
             input: T.any(String, StagehandSDK::Action),
-            frame_id: String,
+            frame_id: T.nilable(String),
             options: StagehandSDK::SessionActParams::Options,
-            x_sent_at: Time,
             x_stream_response:
               StagehandSDK::SessionActParams::XStreamResponse::OrSymbol,
             request_options: StagehandSDK::RequestOptions
@@ -118,8 +104,9 @@ module StagehandSDK
             )
           end
 
-        # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-        # 'anthropic/claude-4.5-opus')
+        # Model name string with provider prefix. Always use the format
+        # 'provider/model-name' (e.g., 'openai/gpt-4o',
+        # 'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
         sig do
           returns(
             T.nilable(
@@ -166,8 +153,9 @@ module StagehandSDK
           ).returns(T.attached_class)
         end
         def self.new(
-          # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-          # 'anthropic/claude-4.5-opus')
+          # Model name string with provider prefix. Always use the format
+          # 'provider/model-name' (e.g., 'openai/gpt-4o',
+          # 'anthropic/claude-sonnet-4-5-20250929', 'google/gemini-2.0-flash')
           model: nil,
           # Timeout in ms for the action
           timeout: nil,

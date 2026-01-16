@@ -20,10 +20,7 @@ module StagehandSDK
 
       # Target frame ID for the navigation
       sig { returns(T.nilable(String)) }
-      attr_reader :frame_id
-
-      sig { params(frame_id: String).void }
-      attr_writer :frame_id
+      attr_accessor :frame_id
 
       sig { returns(T.nilable(StagehandSDK::SessionNavigateParams::Options)) }
       attr_reader :options
@@ -41,13 +38,6 @@ module StagehandSDK
 
       sig { params(stream_response: T::Boolean).void }
       attr_writer :stream_response
-
-      # ISO timestamp when request was sent
-      sig { returns(T.nilable(Time)) }
-      attr_reader :x_sent_at
-
-      sig { params(x_sent_at: Time).void }
-      attr_writer :x_sent_at
 
       # Whether to stream the response via SSE
       sig do
@@ -70,10 +60,9 @@ module StagehandSDK
       sig do
         params(
           url: String,
-          frame_id: String,
+          frame_id: T.nilable(String),
           options: StagehandSDK::SessionNavigateParams::Options::OrHash,
           stream_response: T::Boolean,
-          x_sent_at: Time,
           x_stream_response:
             StagehandSDK::SessionNavigateParams::XStreamResponse::OrSymbol,
           request_options: StagehandSDK::RequestOptions::OrHash
@@ -87,8 +76,6 @@ module StagehandSDK
         options: nil,
         # Whether to stream the response via SSE
         stream_response: nil,
-        # ISO timestamp when request was sent
-        x_sent_at: nil,
         # Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
@@ -99,10 +86,9 @@ module StagehandSDK
         override.returns(
           {
             url: String,
-            frame_id: String,
+            frame_id: T.nilable(String),
             options: StagehandSDK::SessionNavigateParams::Options,
             stream_response: T::Boolean,
-            x_sent_at: Time,
             x_stream_response:
               StagehandSDK::SessionNavigateParams::XStreamResponse::OrSymbol,
             request_options: StagehandSDK::RequestOptions

@@ -13,7 +13,6 @@ module StagehandSDK
         system_prompt: String,
         verbose: StagehandSDK::Models::SessionStartParams::verbose,
         wait_for_captcha_solves: bool,
-        x_sent_at: Time,
         x_stream_response: StagehandSDK::Models::SessionStartParams::x_stream_response
       }
       & StagehandSDK::Internal::Type::request_parameters
@@ -70,10 +69,6 @@ module StagehandSDK
 
       def wait_for_captcha_solves=: (bool) -> bool
 
-      attr_reader x_sent_at: Time?
-
-      def x_sent_at=: (Time) -> Time
-
       attr_reader x_stream_response: StagehandSDK::Models::SessionStartParams::x_stream_response?
 
       def x_stream_response=: (
@@ -92,7 +87,6 @@ module StagehandSDK
         ?system_prompt: String,
         ?verbose: StagehandSDK::Models::SessionStartParams::verbose,
         ?wait_for_captcha_solves: bool,
-        ?x_sent_at: Time,
         ?x_stream_response: StagehandSDK::Models::SessionStartParams::x_stream_response,
         ?request_options: StagehandSDK::request_opts
       ) -> void
@@ -109,7 +103,6 @@ module StagehandSDK
         system_prompt: String,
         verbose: StagehandSDK::Models::SessionStartParams::verbose,
         wait_for_captcha_solves: bool,
-        x_sent_at: Time,
         x_stream_response: StagehandSDK::Models::SessionStartParams::x_stream_response,
         request_options: StagehandSDK::RequestOptions
       }
