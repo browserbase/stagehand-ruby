@@ -11,12 +11,6 @@ module Stagehand
           T.any(Stagehand::SessionEndParams, Stagehand::Internal::AnyHash)
         end
 
-      sig { returns(T.nilable(T.anything)) }
-      attr_reader :_force_body
-
-      sig { params(_force_body: T.anything).void }
-      attr_writer :_force_body
-
       # Whether to stream the response via SSE
       sig do
         returns(
@@ -35,14 +29,12 @@ module Stagehand
 
       sig do
         params(
-          _force_body: T.anything,
           x_stream_response:
             Stagehand::SessionEndParams::XStreamResponse::OrSymbol,
           request_options: Stagehand::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
-        _force_body: nil,
         # Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
@@ -52,7 +44,6 @@ module Stagehand
       sig do
         override.returns(
           {
-            _force_body: T.anything,
             x_stream_response:
               Stagehand::SessionEndParams::XStreamResponse::OrSymbol,
             request_options: Stagehand::RequestOptions

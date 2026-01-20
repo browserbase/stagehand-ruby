@@ -21,7 +21,6 @@ module Stagehand
 
       def end_: (
         String id,
-        ?_force_body: top,
         ?x_stream_response: Stagehand::Models::SessionEndParams::x_stream_response,
         ?request_options: Stagehand::request_opts
       ) -> Stagehand::Models::SessionEndResponse

@@ -364,6 +364,12 @@ module Stagehand
           sig { params(locale: String).void }
           attr_writer :locale
 
+          sig { returns(T.nilable(Float)) }
+          attr_reader :port
+
+          sig { params(port: Float).void }
+          attr_writer :port
+
           sig { returns(T.nilable(T::Boolean)) }
           attr_reader :preserve_user_data_dir
 
@@ -427,6 +433,7 @@ module Stagehand
                 Stagehand::SessionStartParams::Browser::LaunchOptions::IgnoreDefaultArgs::Variants,
               ignore_https_errors: T::Boolean,
               locale: String,
+              port: Float,
               preserve_user_data_dir: T::Boolean,
               proxy:
                 Stagehand::SessionStartParams::Browser::LaunchOptions::Proxy::OrHash,
@@ -450,6 +457,7 @@ module Stagehand
             ignore_default_args: nil,
             ignore_https_errors: nil,
             locale: nil,
+            port: nil,
             preserve_user_data_dir: nil,
             proxy: nil,
             user_data_dir: nil,
@@ -475,6 +483,7 @@ module Stagehand
                   Stagehand::SessionStartParams::Browser::LaunchOptions::IgnoreDefaultArgs::Variants,
                 ignore_https_errors: T::Boolean,
                 locale: String,
+                port: Float,
                 preserve_user_data_dir: T::Boolean,
                 proxy:
                   Stagehand::SessionStartParams::Browser::LaunchOptions::Proxy,

@@ -75,18 +75,15 @@ module Stagehand
       sig do
         params(
           id: String,
-          _force_body: T.anything,
           x_stream_response:
             Stagehand::SessionEndParams::XStreamResponse::OrSymbol,
           request_options: Stagehand::RequestOptions::OrHash
         ).returns(Stagehand::Models::SessionEndResponse)
       end
       def end_(
-        # Path param: Unique session identifier
+        # Unique session identifier
         id,
-        # Body param
-        _force_body: nil,
-        # Header param: Whether to stream the response via SSE
+        # Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
       )

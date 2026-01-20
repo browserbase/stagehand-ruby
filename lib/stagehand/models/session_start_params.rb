@@ -206,6 +206,11 @@ module Stagehand
           #   @return [String, nil]
           optional :locale, String
 
+          # @!attribute port
+          #
+          #   @return [Float, nil]
+          optional :port, Float
+
           # @!attribute preserve_user_data_dir
           #
           #   @return [Boolean, nil]
@@ -226,7 +231,7 @@ module Stagehand
           #   @return [Stagehand::Models::SessionStartParams::Browser::LaunchOptions::Viewport, nil]
           optional :viewport, -> { Stagehand::SessionStartParams::Browser::LaunchOptions::Viewport }
 
-          # @!method initialize(accept_downloads: nil, args: nil, cdp_url: nil, chromium_sandbox: nil, connect_timeout_ms: nil, device_scale_factor: nil, devtools: nil, downloads_path: nil, executable_path: nil, has_touch: nil, headless: nil, ignore_default_args: nil, ignore_https_errors: nil, locale: nil, preserve_user_data_dir: nil, proxy: nil, user_data_dir: nil, viewport: nil)
+          # @!method initialize(accept_downloads: nil, args: nil, cdp_url: nil, chromium_sandbox: nil, connect_timeout_ms: nil, device_scale_factor: nil, devtools: nil, downloads_path: nil, executable_path: nil, has_touch: nil, headless: nil, ignore_default_args: nil, ignore_https_errors: nil, locale: nil, port: nil, preserve_user_data_dir: nil, proxy: nil, user_data_dir: nil, viewport: nil)
           #   @param accept_downloads [Boolean]
           #   @param args [Array<String>]
           #   @param cdp_url [String]
@@ -241,6 +246,7 @@ module Stagehand
           #   @param ignore_default_args [Boolean, Array<String>]
           #   @param ignore_https_errors [Boolean]
           #   @param locale [String]
+          #   @param port [Float]
           #   @param preserve_user_data_dir [Boolean]
           #   @param proxy [Stagehand::Models::SessionStartParams::Browser::LaunchOptions::Proxy]
           #   @param user_data_dir [String]

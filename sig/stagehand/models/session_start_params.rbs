@@ -159,6 +159,7 @@ module Stagehand
             ignore_default_args: Stagehand::Models::SessionStartParams::Browser::LaunchOptions::ignore_default_args,
             ignore_https_errors: bool,
             locale: String,
+            port: Float,
             preserve_user_data_dir: bool,
             proxy: Stagehand::SessionStartParams::Browser::LaunchOptions::Proxy,
             user_data_dir: String,
@@ -224,6 +225,10 @@ module Stagehand
 
           def locale=: (String) -> String
 
+          attr_reader port: Float?
+
+          def port=: (Float) -> Float
+
           attr_reader preserve_user_data_dir: bool?
 
           def preserve_user_data_dir=: (bool) -> bool
@@ -259,6 +264,7 @@ module Stagehand
             ?ignore_default_args: Stagehand::Models::SessionStartParams::Browser::LaunchOptions::ignore_default_args,
             ?ignore_https_errors: bool,
             ?locale: String,
+            ?port: Float,
             ?preserve_user_data_dir: bool,
             ?proxy: Stagehand::SessionStartParams::Browser::LaunchOptions::Proxy,
             ?user_data_dir: String,
@@ -280,6 +286,7 @@ module Stagehand
             ignore_default_args: Stagehand::Models::SessionStartParams::Browser::LaunchOptions::ignore_default_args,
             ignore_https_errors: bool,
             locale: String,
+            port: Float,
             preserve_user_data_dir: bool,
             proxy: Stagehand::SessionStartParams::Browser::LaunchOptions::Proxy,
             user_data_dir: String,

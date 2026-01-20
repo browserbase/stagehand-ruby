@@ -88,13 +88,11 @@ module Stagehand
 
       # Terminates the browser session and releases all associated resources.
       #
-      # @overload end_(id, _force_body: nil, x_stream_response: nil, request_options: {})
+      # @overload end_(id, x_stream_response: nil, request_options: {})
       #
-      # @param id [String] Path param: Unique session identifier
+      # @param id [String] Unique session identifier
       #
-      # @param _force_body [Object] Body param
-      #
-      # @param x_stream_response [Symbol, Stagehand::Models::SessionEndParams::XStreamResponse] Header param: Whether to stream the response via SSE
+      # @param x_stream_response [Symbol, Stagehand::Models::SessionEndParams::XStreamResponse] Whether to stream the response via SSE
       #
       # @param request_options [Stagehand::RequestOptions, Hash{Symbol=>Object}, nil]
       #
@@ -103,12 +101,10 @@ module Stagehand
       # @see Stagehand::Models::SessionEndParams
       def end_(id, params = {})
         parsed, options = Stagehand::SessionEndParams.dump_request(params)
-        header_params = {x_stream_response: "x-stream-response"}
         @client.request(
           method: :post,
           path: ["v1/sessions/%1$s/end", id],
-          headers: parsed.slice(*header_params.keys).transform_keys(header_params),
-          body: parsed.except(*header_params.keys),
+          headers: parsed.transform_keys(x_stream_response: "x-stream-response"),
           model: Stagehand::Models::SessionEndResponse,
           options: options
         )
