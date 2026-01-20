@@ -1,9 +1,0 @@
-module StagehandSDK
-  module Internal
-    extend StagehandSDK::Internal::Util::SorbetRuntimeSupport
-
-    type file_input = Pathname | StringIO | IO | String | StagehandSDK::FilePart
-
-    OMIT: Object
-  end
-end

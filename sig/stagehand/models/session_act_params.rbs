@@ -1,0 +1,101 @@
+module Stagehand
+  module Models
+    type session_act_params =
+      {
+        input: Stagehand::Models::SessionActParams::input,
+        frame_id: String?,
+        options: Stagehand::SessionActParams::Options,
+        x_stream_response: Stagehand::Models::SessionActParams::x_stream_response
+      }
+      & Stagehand::Internal::Type::request_parameters
+
+    class SessionActParams < Stagehand::Internal::Type::BaseModel
+      extend Stagehand::Internal::Type::RequestParameters::Converter
+      include Stagehand::Internal::Type::RequestParameters
+
+      attr_accessor input: Stagehand::Models::SessionActParams::input
+
+      attr_accessor frame_id: String?
+
+      attr_reader options: Stagehand::SessionActParams::Options?
+
+      def options=: (
+        Stagehand::SessionActParams::Options
+      ) -> Stagehand::SessionActParams::Options
+
+      attr_reader x_stream_response: Stagehand::Models::SessionActParams::x_stream_response?
+
+      def x_stream_response=: (
+        Stagehand::Models::SessionActParams::x_stream_response
+      ) -> Stagehand::Models::SessionActParams::x_stream_response
+
+      def initialize: (
+        input: Stagehand::Models::SessionActParams::input,
+        ?frame_id: String?,
+        ?options: Stagehand::SessionActParams::Options,
+        ?x_stream_response: Stagehand::Models::SessionActParams::x_stream_response,
+        ?request_options: Stagehand::request_opts
+      ) -> void
+
+      def to_hash: -> {
+        input: Stagehand::Models::SessionActParams::input,
+        frame_id: String?,
+        options: Stagehand::SessionActParams::Options,
+        x_stream_response: Stagehand::Models::SessionActParams::x_stream_response,
+        request_options: Stagehand::RequestOptions
+      }
+
+      type input = String | Stagehand::Action
+
+      module Input
+        extend Stagehand::Internal::Type::Union
+
+        def self?.variants: -> ::Array[Stagehand::Models::SessionActParams::input]
+      end
+
+      type options =
+        {
+          model: Stagehand::ModelConfig,
+          timeout: Float,
+          variables: ::Hash[Symbol, String]
+        }
+
+      class Options < Stagehand::Internal::Type::BaseModel
+        attr_reader model: Stagehand::ModelConfig?
+
+        def model=: (Stagehand::ModelConfig) -> Stagehand::ModelConfig
+
+        attr_reader timeout: Float?
+
+        def timeout=: (Float) -> Float
+
+        attr_reader variables: ::Hash[Symbol, String]?
+
+        def variables=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+        def initialize: (
+          ?model: Stagehand::ModelConfig,
+          ?timeout: Float,
+          ?variables: ::Hash[Symbol, String]
+        ) -> void
+
+        def to_hash: -> {
+          model: Stagehand::ModelConfig,
+          timeout: Float,
+          variables: ::Hash[Symbol, String]
+        }
+      end
+
+      type x_stream_response = :true | :false
+
+      module XStreamResponse
+        extend Stagehand::Internal::Type::Enum
+
+        TRUE: :true
+        FALSE: :false
+
+        def self?.values: -> ::Array[Stagehand::Models::SessionActParams::x_stream_response]
+      end
+    end
+  end
+end

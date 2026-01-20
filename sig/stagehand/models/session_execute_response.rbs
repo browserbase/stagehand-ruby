@@ -1,0 +1,192 @@
+module Stagehand
+  module Models
+    type session_execute_response =
+      { data: Stagehand::Models::SessionExecuteResponse::Data, success: bool }
+
+    class SessionExecuteResponse < Stagehand::Internal::Type::BaseModel
+      attr_accessor data: Stagehand::Models::SessionExecuteResponse::Data
+
+      attr_accessor success: bool
+
+      def initialize: (
+        data: Stagehand::Models::SessionExecuteResponse::Data,
+        success: bool
+      ) -> void
+
+      def to_hash: -> {
+        data: Stagehand::Models::SessionExecuteResponse::Data,
+        success: bool
+      }
+
+      type data =
+        { result: Stagehand::Models::SessionExecuteResponse::Data::Result }
+
+      class Data < Stagehand::Internal::Type::BaseModel
+        attr_accessor result: Stagehand::Models::SessionExecuteResponse::Data::Result
+
+        def initialize: (
+          result: Stagehand::Models::SessionExecuteResponse::Data::Result
+        ) -> void
+
+        def to_hash: -> {
+          result: Stagehand::Models::SessionExecuteResponse::Data::Result
+        }
+
+        type result =
+          {
+            actions: ::Array[Stagehand::Models::SessionExecuteResponse::Data::Result::Action],
+            completed: bool,
+            message: String,
+            success: bool,
+            metadata: ::Hash[Symbol, top],
+            usage: Stagehand::Models::SessionExecuteResponse::Data::Result::Usage
+          }
+
+        class Result < Stagehand::Internal::Type::BaseModel
+          attr_accessor actions: ::Array[Stagehand::Models::SessionExecuteResponse::Data::Result::Action]
+
+          attr_accessor completed: bool
+
+          attr_accessor message: String
+
+          attr_accessor success: bool
+
+          attr_reader metadata: ::Hash[Symbol, top]?
+
+          def metadata=: (::Hash[Symbol, top]) -> ::Hash[Symbol, top]
+
+          attr_reader usage: Stagehand::Models::SessionExecuteResponse::Data::Result::Usage?
+
+          def usage=: (
+            Stagehand::Models::SessionExecuteResponse::Data::Result::Usage
+          ) -> Stagehand::Models::SessionExecuteResponse::Data::Result::Usage
+
+          def initialize: (
+            actions: ::Array[Stagehand::Models::SessionExecuteResponse::Data::Result::Action],
+            completed: bool,
+            message: String,
+            success: bool,
+            ?metadata: ::Hash[Symbol, top],
+            ?usage: Stagehand::Models::SessionExecuteResponse::Data::Result::Usage
+          ) -> void
+
+          def to_hash: -> {
+            actions: ::Array[Stagehand::Models::SessionExecuteResponse::Data::Result::Action],
+            completed: bool,
+            message: String,
+            success: bool,
+            metadata: ::Hash[Symbol, top],
+            usage: Stagehand::Models::SessionExecuteResponse::Data::Result::Usage
+          }
+
+          type action =
+            {
+              type: String,
+              action: String,
+              instruction: String,
+              page_text: String,
+              page_url: String,
+              reasoning: String,
+              task_completed: bool,
+              time_ms: Float
+            }
+
+          class Action < Stagehand::Internal::Type::BaseModel
+            attr_accessor type: String
+
+            attr_reader action: String?
+
+            def action=: (String) -> String
+
+            attr_reader instruction: String?
+
+            def instruction=: (String) -> String
+
+            attr_reader page_text: String?
+
+            def page_text=: (String) -> String
+
+            attr_reader page_url: String?
+
+            def page_url=: (String) -> String
+
+            attr_reader reasoning: String?
+
+            def reasoning=: (String) -> String
+
+            attr_reader task_completed: bool?
+
+            def task_completed=: (bool) -> bool
+
+            attr_reader time_ms: Float?
+
+            def time_ms=: (Float) -> Float
+
+            def initialize: (
+              type: String,
+              ?action: String,
+              ?instruction: String,
+              ?page_text: String,
+              ?page_url: String,
+              ?reasoning: String,
+              ?task_completed: bool,
+              ?time_ms: Float
+            ) -> void
+
+            def to_hash: -> {
+              type: String,
+              action: String,
+              instruction: String,
+              page_text: String,
+              page_url: String,
+              reasoning: String,
+              task_completed: bool,
+              time_ms: Float
+            }
+          end
+
+          type usage =
+            {
+              inference_time_ms: Float,
+              input_tokens: Float,
+              output_tokens: Float,
+              cached_input_tokens: Float,
+              reasoning_tokens: Float
+            }
+
+          class Usage < Stagehand::Internal::Type::BaseModel
+            attr_accessor inference_time_ms: Float
+
+            attr_accessor input_tokens: Float
+
+            attr_accessor output_tokens: Float
+
+            attr_reader cached_input_tokens: Float?
+
+            def cached_input_tokens=: (Float) -> Float
+
+            attr_reader reasoning_tokens: Float?
+
+            def reasoning_tokens=: (Float) -> Float
+
+            def initialize: (
+              inference_time_ms: Float,
+              input_tokens: Float,
+              output_tokens: Float,
+              ?cached_input_tokens: Float,
+              ?reasoning_tokens: Float
+            ) -> void
+
+            def to_hash: -> {
+              inference_time_ms: Float,
+              input_tokens: Float,
+              output_tokens: Float,
+              cached_input_tokens: Float,
+              reasoning_tokens: Float
+            }
+          end
+        end
+      end
+    end
+  end
+end

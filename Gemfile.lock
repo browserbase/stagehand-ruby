@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    stagehand-sdk (3.0.1)
+    stagehand (3.0.1)
       cgi
       connection_pool
 
@@ -215,7 +215,7 @@ DEPENDENCIES
   redcarpet
   rubocop
   sorbet
-  stagehand-sdk!
+  stagehand!
   steep
   syntax_tree
   syntax_tree-rbs!

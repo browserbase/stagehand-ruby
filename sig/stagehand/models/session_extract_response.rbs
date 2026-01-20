@@ -1,0 +1,36 @@
+module Stagehand
+  module Models
+    type session_extract_response =
+      { data: Stagehand::Models::SessionExtractResponse::Data, success: bool }
+
+    class SessionExtractResponse < Stagehand::Internal::Type::BaseModel
+      attr_accessor data: Stagehand::Models::SessionExtractResponse::Data
+
+      attr_accessor success: bool
+
+      def initialize: (
+        data: Stagehand::Models::SessionExtractResponse::Data,
+        success: bool
+      ) -> void
+
+      def to_hash: -> {
+        data: Stagehand::Models::SessionExtractResponse::Data,
+        success: bool
+      }
+
+      type data = { result: top, action_id: String }
+
+      class Data < Stagehand::Internal::Type::BaseModel
+        attr_accessor result: top
+
+        attr_reader action_id: String?
+
+        def action_id=: (String) -> String
+
+        def initialize: (result: top, ?action_id: String) -> void
+
+        def to_hash: -> { result: top, action_id: String }
+      end
+    end
+  end
+end

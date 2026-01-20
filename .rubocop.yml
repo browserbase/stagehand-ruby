@@ -40,9 +40,9 @@ Layout/LineLength:
   AllowedPatterns:
     - "^\\s*#.*$"
     - ^require(_relative)?
-    - "StagehandSDK::Internal::Type::BaseModel$"
+    - "Stagehand::Internal::Type::BaseModel$"
     - "^\\s*[A-Z0-9_]+ = :"
-    - "StagehandSDK::(Models|Resources|Test)::"
+    - "Stagehand::(Models|Resources|Test)::"
   Max: 110
 
 Layout/MultilineArrayLineBreaks:
