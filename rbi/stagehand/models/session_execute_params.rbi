@@ -36,6 +36,13 @@ module Stagehand
       sig { returns(T.nilable(String)) }
       attr_accessor :frame_id
 
+      # If true, the server captures a cache entry and returns it to the client
+      sig { returns(T.nilable(T::Boolean)) }
+      attr_reader :should_cache
+
+      sig { params(should_cache: T::Boolean).void }
+      attr_writer :should_cache
+
       # Whether to stream the response via SSE
       sig do
         returns(
@@ -58,6 +65,7 @@ module Stagehand
           execute_options:
             Stagehand::SessionExecuteParams::ExecuteOptions::OrHash,
           frame_id: T.nilable(String),
+          should_cache: T::Boolean,
           x_stream_response:
             Stagehand::SessionExecuteParams::XStreamResponse::OrSymbol,
           request_options: Stagehand::RequestOptions::OrHash
@@ -68,6 +76,8 @@ module Stagehand
         execute_options:,
         # Target frame ID for the agent
         frame_id: nil,
+        # If true, the server captures a cache entry and returns it to the client
+        should_cache: nil,
         # Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
@@ -80,6 +90,7 @@ module Stagehand
             agent_config: Stagehand::SessionExecuteParams::AgentConfig,
             execute_options: Stagehand::SessionExecuteParams::ExecuteOptions,
             frame_id: T.nilable(String),
+            should_cache: T::Boolean,
             x_stream_response:
               Stagehand::SessionExecuteParams::XStreamResponse::OrSymbol,
             request_options: Stagehand::RequestOptions

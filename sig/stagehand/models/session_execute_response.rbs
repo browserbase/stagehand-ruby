@@ -19,17 +19,28 @@ module Stagehand
       }
 
       type data =
-        { result: Stagehand::Models::SessionExecuteResponse::Data::Result }
+        {
+          result: Stagehand::Models::SessionExecuteResponse::Data::Result,
+          cache_entry: Stagehand::Models::SessionExecuteResponse::Data::CacheEntry
+        }
 
       class Data < Stagehand::Internal::Type::BaseModel
         attr_accessor result: Stagehand::Models::SessionExecuteResponse::Data::Result
 
+        attr_reader cache_entry: Stagehand::Models::SessionExecuteResponse::Data::CacheEntry?
+
+        def cache_entry=: (
+          Stagehand::Models::SessionExecuteResponse::Data::CacheEntry
+        ) -> Stagehand::Models::SessionExecuteResponse::Data::CacheEntry
+
         def initialize: (
-          result: Stagehand::Models::SessionExecuteResponse::Data::Result
+          result: Stagehand::Models::SessionExecuteResponse::Data::Result,
+          ?cache_entry: Stagehand::Models::SessionExecuteResponse::Data::CacheEntry
         ) -> void
 
         def to_hash: -> {
-          result: Stagehand::Models::SessionExecuteResponse::Data::Result
+          result: Stagehand::Models::SessionExecuteResponse::Data::Result,
+          cache_entry: Stagehand::Models::SessionExecuteResponse::Data::CacheEntry
         }
 
         type result =
@@ -185,6 +196,18 @@ module Stagehand
               reasoning_tokens: Float
             }
           end
+        end
+
+        type cache_entry = { cache_key: String, entry: top }
+
+        class CacheEntry < Stagehand::Internal::Type::BaseModel
+          attr_accessor cache_key: String
+
+          attr_accessor entry: top
+
+          def initialize: (cache_key: String, entry: top) -> void
+
+          def to_hash: -> { cache_key: String, entry: top }
         end
       end
     end

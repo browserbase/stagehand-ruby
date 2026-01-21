@@ -29,8 +29,16 @@ module Stagehand
         #   @return [Stagehand::Models::SessionExecuteResponse::Data::Result]
         required :result, -> { Stagehand::Models::SessionExecuteResponse::Data::Result }
 
-        # @!method initialize(result:)
+        # @!attribute cache_entry
+        #
+        #   @return [Stagehand::Models::SessionExecuteResponse::Data::CacheEntry, nil]
+        optional :cache_entry,
+                 -> { Stagehand::Models::SessionExecuteResponse::Data::CacheEntry },
+                 api_name: :cacheEntry
+
+        # @!method initialize(result:, cache_entry: nil)
         #   @param result [Stagehand::Models::SessionExecuteResponse::Data::Result]
+        #   @param cache_entry [Stagehand::Models::SessionExecuteResponse::Data::CacheEntry]
 
         # @see Stagehand::Models::SessionExecuteResponse::Data#result
         class Result < Stagehand::Internal::Type::BaseModel
@@ -177,6 +185,26 @@ module Stagehand
             #   @param cached_input_tokens [Float]
             #   @param reasoning_tokens [Float]
           end
+        end
+
+        # @see Stagehand::Models::SessionExecuteResponse::Data#cache_entry
+        class CacheEntry < Stagehand::Internal::Type::BaseModel
+          # @!attribute cache_key
+          #   Opaque cache identifier computed from instruction, URL, options, and config
+          #
+          #   @return [String]
+          required :cache_key, String, api_name: :cacheKey
+
+          # @!attribute entry
+          #   Serialized cache entry that can be written to disk
+          #
+          #   @return [Object]
+          required :entry, Stagehand::Internal::Type::Unknown
+
+          # @!method initialize(cache_key:, entry:)
+          #   @param cache_key [String] Opaque cache identifier computed from instruction, URL, options, and config
+          #
+          #   @param entry [Object] Serialized cache entry that can be written to disk
         end
       end
     end

@@ -5,6 +5,7 @@ module Stagehand
         agent_config: Stagehand::SessionExecuteParams::AgentConfig,
         execute_options: Stagehand::SessionExecuteParams::ExecuteOptions,
         frame_id: String?,
+        should_cache: bool,
         x_stream_response: Stagehand::Models::SessionExecuteParams::x_stream_response
       }
       & Stagehand::Internal::Type::request_parameters
@@ -19,6 +20,10 @@ module Stagehand
 
       attr_accessor frame_id: String?
 
+      attr_reader should_cache: bool?
+
+      def should_cache=: (bool) -> bool
+
       attr_reader x_stream_response: Stagehand::Models::SessionExecuteParams::x_stream_response?
 
       def x_stream_response=: (
@@ -29,6 +34,7 @@ module Stagehand
         agent_config: Stagehand::SessionExecuteParams::AgentConfig,
         execute_options: Stagehand::SessionExecuteParams::ExecuteOptions,
         ?frame_id: String?,
+        ?should_cache: bool,
         ?x_stream_response: Stagehand::Models::SessionExecuteParams::x_stream_response,
         ?request_options: Stagehand::request_opts
       ) -> void
@@ -37,6 +43,7 @@ module Stagehand
         agent_config: Stagehand::SessionExecuteParams::AgentConfig,
         execute_options: Stagehand::SessionExecuteParams::ExecuteOptions,
         frame_id: String?,
+        should_cache: bool,
         x_stream_response: Stagehand::Models::SessionExecuteParams::x_stream_response,
         request_options: Stagehand::RequestOptions
       }

@@ -27,18 +27,26 @@ module Stagehand
       #   @return [String, nil]
       optional :frame_id, String, api_name: :frameId, nil?: true
 
+      # @!attribute should_cache
+      #   If true, the server captures a cache entry and returns it to the client
+      #
+      #   @return [Boolean, nil]
+      optional :should_cache, Stagehand::Internal::Type::Boolean, api_name: :shouldCache
+
       # @!attribute x_stream_response
       #   Whether to stream the response via SSE
       #
       #   @return [Symbol, Stagehand::Models::SessionExecuteParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { Stagehand::SessionExecuteParams::XStreamResponse }
 
-      # @!method initialize(agent_config:, execute_options:, frame_id: nil, x_stream_response: nil, request_options: {})
+      # @!method initialize(agent_config:, execute_options:, frame_id: nil, should_cache: nil, x_stream_response: nil, request_options: {})
       #   @param agent_config [Stagehand::Models::SessionExecuteParams::AgentConfig]
       #
       #   @param execute_options [Stagehand::Models::SessionExecuteParams::ExecuteOptions]
       #
       #   @param frame_id [String, nil] Target frame ID for the agent
+      #
+      #   @param should_cache [Boolean] If true, the server captures a cache entry and returns it to the client
       #
       #   @param x_stream_response [Symbol, Stagehand::Models::SessionExecuteParams::XStreamResponse] Whether to stream the response via SSE
       #

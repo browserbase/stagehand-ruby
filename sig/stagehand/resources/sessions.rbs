@@ -30,6 +30,7 @@ module Stagehand
         agent_config: Stagehand::SessionExecuteParams::AgentConfig,
         execute_options: Stagehand::SessionExecuteParams::ExecuteOptions,
         ?frame_id: String?,
+        ?should_cache: bool,
         ?x_stream_response: Stagehand::Models::SessionExecuteParams::x_stream_response,
         ?request_options: Stagehand::request_opts
       ) -> Stagehand::Models::SessionExecuteResponse
@@ -39,6 +40,7 @@ module Stagehand
         agent_config: Stagehand::SessionExecuteParams::AgentConfig,
         execute_options: Stagehand::SessionExecuteParams::ExecuteOptions,
         ?frame_id: String?,
+        ?should_cache: bool,
         ?x_stream_response: Stagehand::Models::SessionExecuteParams::x_stream_response,
         ?request_options: Stagehand::request_opts
       ) -> Stagehand::Internal::Stream[Stagehand::StreamEvent]

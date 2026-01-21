@@ -113,9 +113,12 @@ module Stagehand
       # See {Stagehand::Resources::Sessions#execute_streaming} for streaming
       # counterpart.
       #
+      # Some parameter documentations has been truncated, see
+      # {Stagehand::Models::SessionExecuteParams} for more details.
+      #
       # Runs an autonomous AI agent that can perform complex multi-step browser tasks.
       #
-      # @overload execute(id, agent_config:, execute_options:, frame_id: nil, x_stream_response: nil, request_options: {})
+      # @overload execute(id, agent_config:, execute_options:, frame_id: nil, should_cache: nil, x_stream_response: nil, request_options: {})
       #
       # @param id [String] Path param: Unique session identifier
       #
@@ -124,6 +127,8 @@ module Stagehand
       # @param execute_options [Stagehand::Models::SessionExecuteParams::ExecuteOptions] Body param
       #
       # @param frame_id [String, nil] Body param: Target frame ID for the agent
+      #
+      # @param should_cache [Boolean] Body param: If true, the server captures a cache entry and returns it to the cli
       #
       # @param x_stream_response [Symbol, Stagehand::Models::SessionExecuteParams::XStreamResponse] Header param: Whether to stream the response via SSE
       #
@@ -151,9 +156,12 @@ module Stagehand
 
       # See {Stagehand::Resources::Sessions#execute} for non-streaming counterpart.
       #
+      # Some parameter documentations has been truncated, see
+      # {Stagehand::Models::SessionExecuteParams} for more details.
+      #
       # Runs an autonomous AI agent that can perform complex multi-step browser tasks.
       #
-      # @overload execute_streaming(id, agent_config:, execute_options:, frame_id: nil, x_stream_response: nil, request_options: {})
+      # @overload execute_streaming(id, agent_config:, execute_options:, frame_id: nil, should_cache: nil, x_stream_response: nil, request_options: {})
       #
       # @param id [String] Path param: Unique session identifier
       #
@@ -162,6 +170,8 @@ module Stagehand
       # @param execute_options [Stagehand::Models::SessionExecuteParams::ExecuteOptions] Body param
       #
       # @param frame_id [String, nil] Body param: Target frame ID for the agent
+      #
+      # @param should_cache [Boolean] Body param: If true, the server captures a cache entry and returns it to the cli
       #
       # @param x_stream_response [Symbol, Stagehand::Models::SessionExecuteParams::XStreamResponse] Header param: Whether to stream the response via SSE
       #

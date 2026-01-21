@@ -100,6 +100,7 @@ module Stagehand
           execute_options:
             Stagehand::SessionExecuteParams::ExecuteOptions::OrHash,
           frame_id: T.nilable(String),
+          should_cache: T::Boolean,
           x_stream_response:
             Stagehand::SessionExecuteParams::XStreamResponse::OrSymbol,
           stream_response: T.noreturn,
@@ -115,6 +116,9 @@ module Stagehand
         execute_options:,
         # Body param: Target frame ID for the agent
         frame_id: nil,
+        # Body param: If true, the server captures a cache entry and returns it to the
+        # client
+        should_cache: nil,
         # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
         # There is no need to provide `stream_response:`. Instead, use
@@ -135,6 +139,7 @@ module Stagehand
           execute_options:
             Stagehand::SessionExecuteParams::ExecuteOptions::OrHash,
           frame_id: T.nilable(String),
+          should_cache: T::Boolean,
           x_stream_response:
             Stagehand::SessionExecuteParams::XStreamResponse::OrSymbol,
           stream_response: T.noreturn,
@@ -150,6 +155,9 @@ module Stagehand
         execute_options:,
         # Body param: Target frame ID for the agent
         frame_id: nil,
+        # Body param: If true, the server captures a cache entry and returns it to the
+        # client
+        should_cache: nil,
         # Header param: Whether to stream the response via SSE
         x_stream_response: nil,
         # There is no need to provide `stream_response:`. Instead, use
