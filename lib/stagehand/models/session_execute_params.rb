@@ -60,9 +60,10 @@ module Stagehand
         optional :cua, Stagehand::Internal::Type::Boolean
 
         # @!attribute model
+        #   Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #
-        #   @return [Stagehand::Models::ModelConfig, nil]
-        optional :model, -> { Stagehand::ModelConfig }
+        #   @return [Stagehand::Models::ModelConfig, String, nil]
+        optional :model, union: -> { Stagehand::SessionExecuteParams::AgentConfig::Model }
 
         # @!attribute provider
         #   AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
@@ -79,11 +80,25 @@ module Stagehand
         # @!method initialize(cua: nil, model: nil, provider: nil, system_prompt: nil)
         #   @param cua [Boolean] Enable Computer Use Agent mode
         #
-        #   @param model [Stagehand::Models::ModelConfig]
+        #   @param model [Stagehand::Models::ModelConfig, String] Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #
         #   @param provider [Symbol, Stagehand::Models::SessionExecuteParams::AgentConfig::Provider] AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
         #
         #   @param system_prompt [String] Custom system prompt for the agent
+
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
+        #
+        # @see Stagehand::Models::SessionExecuteParams::AgentConfig#model
+        module Model
+          extend Stagehand::Internal::Type::Union
+
+          variant -> { Stagehand::ModelConfig }
+
+          variant String
+
+          # @!method self.variants
+          #   @return [Array(Stagehand::Models::ModelConfig, String)]
+        end
 
         # AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
         #

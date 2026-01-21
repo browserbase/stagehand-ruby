@@ -116,10 +116,13 @@ module Stagehand
         sig { params(cua: T::Boolean).void }
         attr_writer :cua
 
-        sig { returns(T.nilable(Stagehand::ModelConfig)) }
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
+        sig { returns(T.nilable(T.any(Stagehand::ModelConfig, String))) }
         attr_reader :model
 
-        sig { params(model: Stagehand::ModelConfig::OrHash).void }
+        sig do
+          params(model: T.any(Stagehand::ModelConfig::OrHash, String)).void
+        end
         attr_writer :model
 
         # AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
@@ -150,7 +153,7 @@ module Stagehand
         sig do
           params(
             cua: T::Boolean,
-            model: Stagehand::ModelConfig::OrHash,
+            model: T.any(Stagehand::ModelConfig::OrHash, String),
             provider:
               Stagehand::SessionExecuteParams::AgentConfig::Provider::OrSymbol,
             system_prompt: String
@@ -159,6 +162,7 @@ module Stagehand
         def self.new(
           # Enable Computer Use Agent mode
           cua: nil,
+          # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
           model: nil,
           # AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
           provider: nil,
@@ -171,7 +175,7 @@ module Stagehand
           override.returns(
             {
               cua: T::Boolean,
-              model: Stagehand::ModelConfig,
+              model: T.any(Stagehand::ModelConfig, String),
               provider:
                 Stagehand::SessionExecuteParams::AgentConfig::Provider::OrSymbol,
               system_prompt: String
@@ -179,6 +183,23 @@ module Stagehand
           )
         end
         def to_hash
+        end
+
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
+        module Model
+          extend Stagehand::Internal::Type::Union
+
+          Variants = T.type_alias { T.any(Stagehand::ModelConfig, String) }
+
+          sig do
+            override.returns(
+              T::Array[
+                Stagehand::SessionExecuteParams::AgentConfig::Model::Variants
+              ]
+            )
+          end
+          def self.variants
+          end
         end
 
         # AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)

@@ -55,15 +55,17 @@ module Stagehand
 
       type options =
         {
-          model: Stagehand::ModelConfig,
+          model: Stagehand::Models::SessionActParams::Options::model,
           timeout: Float,
           variables: ::Hash[Symbol, String]
         }
 
       class Options < Stagehand::Internal::Type::BaseModel
-        attr_reader model: Stagehand::ModelConfig?
+        attr_reader model: Stagehand::Models::SessionActParams::Options::model?
 
-        def model=: (Stagehand::ModelConfig) -> Stagehand::ModelConfig
+        def model=: (
+          Stagehand::Models::SessionActParams::Options::model
+        ) -> Stagehand::Models::SessionActParams::Options::model
 
         attr_reader timeout: Float?
 
@@ -74,16 +76,24 @@ module Stagehand
         def variables=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
 
         def initialize: (
-          ?model: Stagehand::ModelConfig,
+          ?model: Stagehand::Models::SessionActParams::Options::model,
           ?timeout: Float,
           ?variables: ::Hash[Symbol, String]
         ) -> void
 
         def to_hash: -> {
-          model: Stagehand::ModelConfig,
+          model: Stagehand::Models::SessionActParams::Options::model,
           timeout: Float,
           variables: ::Hash[Symbol, String]
         }
+
+        type model = Stagehand::ModelConfig | String
+
+        module Model
+          extend Stagehand::Internal::Type::Union
+
+          def self?.variants: -> ::Array[Stagehand::Models::SessionActParams::Options::model]
+        end
       end
 
       type x_stream_response = :true | :false

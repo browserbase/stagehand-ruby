@@ -102,10 +102,13 @@ module Stagehand
             )
           end
 
-        sig { returns(T.nilable(Stagehand::ModelConfig)) }
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
+        sig { returns(T.nilable(T.any(Stagehand::ModelConfig, String))) }
         attr_reader :model
 
-        sig { params(model: Stagehand::ModelConfig::OrHash).void }
+        sig do
+          params(model: T.any(Stagehand::ModelConfig::OrHash, String)).void
+        end
         attr_writer :model
 
         # Timeout in ms for the action
@@ -124,12 +127,13 @@ module Stagehand
 
         sig do
           params(
-            model: Stagehand::ModelConfig::OrHash,
+            model: T.any(Stagehand::ModelConfig::OrHash, String),
             timeout: Float,
             variables: T::Hash[Symbol, String]
           ).returns(T.attached_class)
         end
         def self.new(
+          # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
           model: nil,
           # Timeout in ms for the action
           timeout: nil,
@@ -141,13 +145,28 @@ module Stagehand
         sig do
           override.returns(
             {
-              model: Stagehand::ModelConfig,
+              model: T.any(Stagehand::ModelConfig, String),
               timeout: Float,
               variables: T::Hash[Symbol, String]
             }
           )
         end
         def to_hash
+        end
+
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
+        module Model
+          extend Stagehand::Internal::Type::Union
+
+          Variants = T.type_alias { T.any(Stagehand::ModelConfig, String) }
+
+          sig do
+            override.returns(
+              T::Array[Stagehand::SessionActParams::Options::Model::Variants]
+            )
+          end
+          def self.variants
+          end
         end
       end
 

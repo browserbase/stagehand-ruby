@@ -53,9 +53,10 @@ module Stagehand
 
       class Options < Stagehand::Internal::Type::BaseModel
         # @!attribute model
+        #   Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #
-        #   @return [Stagehand::Models::ModelConfig, nil]
-        optional :model, -> { Stagehand::ModelConfig }
+        #   @return [Stagehand::Models::ModelConfig, String, nil]
+        optional :model, union: -> { Stagehand::SessionExtractParams::Options::Model }
 
         # @!attribute selector
         #   CSS selector to scope extraction to a specific element
@@ -70,11 +71,25 @@ module Stagehand
         optional :timeout, Float
 
         # @!method initialize(model: nil, selector: nil, timeout: nil)
-        #   @param model [Stagehand::Models::ModelConfig]
+        #   @param model [Stagehand::Models::ModelConfig, String] Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #
         #   @param selector [String] CSS selector to scope extraction to a specific element
         #
         #   @param timeout [Float] Timeout in ms for the extraction
+
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
+        #
+        # @see Stagehand::Models::SessionExtractParams::Options#model
+        module Model
+          extend Stagehand::Internal::Type::Union
+
+          variant -> { Stagehand::ModelConfig }
+
+          variant String
+
+          # @!method self.variants
+          #   @return [Array(Stagehand::Models::ModelConfig, String)]
+        end
       end
 
       # Whether to stream the response via SSE

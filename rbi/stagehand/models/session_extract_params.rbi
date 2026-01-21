@@ -103,10 +103,13 @@ module Stagehand
             )
           end
 
-        sig { returns(T.nilable(Stagehand::ModelConfig)) }
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
+        sig { returns(T.nilable(T.any(Stagehand::ModelConfig, String))) }
         attr_reader :model
 
-        sig { params(model: Stagehand::ModelConfig::OrHash).void }
+        sig do
+          params(model: T.any(Stagehand::ModelConfig::OrHash, String)).void
+        end
         attr_writer :model
 
         # CSS selector to scope extraction to a specific element
@@ -125,12 +128,13 @@ module Stagehand
 
         sig do
           params(
-            model: Stagehand::ModelConfig::OrHash,
+            model: T.any(Stagehand::ModelConfig::OrHash, String),
             selector: String,
             timeout: Float
           ).returns(T.attached_class)
         end
         def self.new(
+          # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
           model: nil,
           # CSS selector to scope extraction to a specific element
           selector: nil,
@@ -141,10 +145,31 @@ module Stagehand
 
         sig do
           override.returns(
-            { model: Stagehand::ModelConfig, selector: String, timeout: Float }
+            {
+              model: T.any(Stagehand::ModelConfig, String),
+              selector: String,
+              timeout: Float
+            }
           )
         end
         def to_hash
+        end
+
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
+        module Model
+          extend Stagehand::Internal::Type::Union
+
+          Variants = T.type_alias { T.any(Stagehand::ModelConfig, String) }
+
+          sig do
+            override.returns(
+              T::Array[
+                Stagehand::SessionExtractParams::Options::Model::Variants
+              ]
+            )
+          end
+          def self.variants
+          end
         end
       end
 

@@ -58,9 +58,10 @@ module Stagehand
 
       class Options < Stagehand::Internal::Type::BaseModel
         # @!attribute model
+        #   Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #
-        #   @return [Stagehand::Models::ModelConfig, nil]
-        optional :model, -> { Stagehand::ModelConfig }
+        #   @return [Stagehand::Models::ModelConfig, String, nil]
+        optional :model, union: -> { Stagehand::SessionActParams::Options::Model }
 
         # @!attribute timeout
         #   Timeout in ms for the action
@@ -75,11 +76,25 @@ module Stagehand
         optional :variables, Stagehand::Internal::Type::HashOf[String]
 
         # @!method initialize(model: nil, timeout: nil, variables: nil)
-        #   @param model [Stagehand::Models::ModelConfig]
+        #   @param model [Stagehand::Models::ModelConfig, String] Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #
         #   @param timeout [Float] Timeout in ms for the action
         #
         #   @param variables [Hash{Symbol=>String}] Variables to substitute in the action instruction
+
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
+        #
+        # @see Stagehand::Models::SessionActParams::Options#model
+        module Model
+          extend Stagehand::Internal::Type::Union
+
+          variant -> { Stagehand::ModelConfig }
+
+          variant String
+
+          # @!method self.variants
+          #   @return [Array(Stagehand::Models::ModelConfig, String)]
+        end
       end
 
       # Whether to stream the response via SSE

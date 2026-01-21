@@ -55,12 +55,18 @@ module Stagehand
       }
 
       type options =
-        { model: Stagehand::ModelConfig, selector: String, timeout: Float }
+        {
+          model: Stagehand::Models::SessionExtractParams::Options::model,
+          selector: String,
+          timeout: Float
+        }
 
       class Options < Stagehand::Internal::Type::BaseModel
-        attr_reader model: Stagehand::ModelConfig?
+        attr_reader model: Stagehand::Models::SessionExtractParams::Options::model?
 
-        def model=: (Stagehand::ModelConfig) -> Stagehand::ModelConfig
+        def model=: (
+          Stagehand::Models::SessionExtractParams::Options::model
+        ) -> Stagehand::Models::SessionExtractParams::Options::model
 
         attr_reader selector: String?
 
@@ -71,16 +77,24 @@ module Stagehand
         def timeout=: (Float) -> Float
 
         def initialize: (
-          ?model: Stagehand::ModelConfig,
+          ?model: Stagehand::Models::SessionExtractParams::Options::model,
           ?selector: String,
           ?timeout: Float
         ) -> void
 
         def to_hash: -> {
-          model: Stagehand::ModelConfig,
+          model: Stagehand::Models::SessionExtractParams::Options::model,
           selector: String,
           timeout: Float
         }
+
+        type model = Stagehand::ModelConfig | String
+
+        module Model
+          extend Stagehand::Internal::Type::Union
+
+          def self?.variants: -> ::Array[Stagehand::Models::SessionExtractParams::Options::model]
+        end
       end
 
       type x_stream_response = :true | :false
