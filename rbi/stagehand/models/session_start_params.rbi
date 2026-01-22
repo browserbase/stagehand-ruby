@@ -99,33 +99,6 @@ module Stagehand
       sig { params(wait_for_captcha_solves: T::Boolean).void }
       attr_writer :wait_for_captcha_solves
 
-      # Client SDK language
-      sig do
-        returns(T.nilable(Stagehand::SessionStartParams::XLanguage::OrSymbol))
-      end
-      attr_reader :x_language
-
-      sig do
-        params(
-          x_language: Stagehand::SessionStartParams::XLanguage::OrSymbol
-        ).void
-      end
-      attr_writer :x_language
-
-      # Version of the Stagehand SDK
-      sig { returns(T.nilable(String)) }
-      attr_reader :x_sdk_version
-
-      sig { params(x_sdk_version: String).void }
-      attr_writer :x_sdk_version
-
-      # ISO timestamp when request was sent
-      sig { returns(T.nilable(Time)) }
-      attr_reader :x_sent_at
-
-      sig { params(x_sent_at: Time).void }
-      attr_writer :x_sent_at
-
       # Whether to stream the response via SSE
       sig do
         returns(
@@ -156,9 +129,6 @@ module Stagehand
           system_prompt: String,
           verbose: Stagehand::SessionStartParams::Verbose::OrFloat,
           wait_for_captcha_solves: T::Boolean,
-          x_language: Stagehand::SessionStartParams::XLanguage::OrSymbol,
-          x_sdk_version: String,
-          x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionStartParams::XStreamResponse::OrSymbol,
           request_options: Stagehand::RequestOptions::OrHash
@@ -184,12 +154,6 @@ module Stagehand
         verbose: nil,
         # Wait for captcha solves (deprecated, v2 only)
         wait_for_captcha_solves: nil,
-        # Client SDK language
-        x_language: nil,
-        # Version of the Stagehand SDK
-        x_sdk_version: nil,
-        # ISO timestamp when request was sent
-        x_sent_at: nil,
         # Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
@@ -211,9 +175,6 @@ module Stagehand
             system_prompt: String,
             verbose: Stagehand::SessionStartParams::Verbose::OrFloat,
             wait_for_captcha_solves: T::Boolean,
-            x_language: Stagehand::SessionStartParams::XLanguage::OrSymbol,
-            x_sdk_version: String,
-            x_sent_at: Time,
             x_stream_response:
               Stagehand::SessionStartParams::XStreamResponse::OrSymbol,
             request_options: Stagehand::RequestOptions
@@ -403,6 +364,12 @@ module Stagehand
           sig { params(locale: String).void }
           attr_writer :locale
 
+          sig { returns(T.nilable(Float)) }
+          attr_reader :port
+
+          sig { params(port: Float).void }
+          attr_writer :port
+
           sig { returns(T.nilable(T::Boolean)) }
           attr_reader :preserve_user_data_dir
 
@@ -466,6 +433,7 @@ module Stagehand
                 Stagehand::SessionStartParams::Browser::LaunchOptions::IgnoreDefaultArgs::Variants,
               ignore_https_errors: T::Boolean,
               locale: String,
+              port: Float,
               preserve_user_data_dir: T::Boolean,
               proxy:
                 Stagehand::SessionStartParams::Browser::LaunchOptions::Proxy::OrHash,
@@ -489,6 +457,7 @@ module Stagehand
             ignore_default_args: nil,
             ignore_https_errors: nil,
             locale: nil,
+            port: nil,
             preserve_user_data_dir: nil,
             proxy: nil,
             user_data_dir: nil,
@@ -514,6 +483,7 @@ module Stagehand
                   Stagehand::SessionStartParams::Browser::LaunchOptions::IgnoreDefaultArgs::Variants,
                 ignore_https_errors: T::Boolean,
                 locale: String,
+                port: Float,
                 preserve_user_data_dir: T::Boolean,
                 proxy:
                   Stagehand::SessionStartParams::Browser::LaunchOptions::Proxy,
@@ -1691,38 +1661,6 @@ module Stagehand
         sig do
           override.returns(
             T::Array[Stagehand::SessionStartParams::Verbose::TaggedFloat]
-          )
-        end
-        def self.values
-        end
-      end
-
-      # Client SDK language
-      module XLanguage
-        extend Stagehand::Internal::Type::Enum
-
-        TaggedSymbol =
-          T.type_alias do
-            T.all(Symbol, Stagehand::SessionStartParams::XLanguage)
-          end
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        TYPESCRIPT =
-          T.let(
-            :typescript,
-            Stagehand::SessionStartParams::XLanguage::TaggedSymbol
-          )
-        PYTHON =
-          T.let(:python, Stagehand::SessionStartParams::XLanguage::TaggedSymbol)
-        PLAYGROUND =
-          T.let(
-            :playground,
-            Stagehand::SessionStartParams::XLanguage::TaggedSymbol
-          )
-
-        sig do
-          override.returns(
-            T::Array[Stagehand::SessionStartParams::XLanguage::TaggedSymbol]
           )
         end
         def self.values

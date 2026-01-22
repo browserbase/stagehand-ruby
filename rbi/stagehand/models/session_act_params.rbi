@@ -17,43 +17,13 @@ module Stagehand
 
       # Target frame ID for the action
       sig { returns(T.nilable(String)) }
-      attr_reader :frame_id
-
-      sig { params(frame_id: String).void }
-      attr_writer :frame_id
+      attr_accessor :frame_id
 
       sig { returns(T.nilable(Stagehand::SessionActParams::Options)) }
       attr_reader :options
 
       sig { params(options: Stagehand::SessionActParams::Options::OrHash).void }
       attr_writer :options
-
-      # Client SDK language
-      sig do
-        returns(T.nilable(Stagehand::SessionActParams::XLanguage::OrSymbol))
-      end
-      attr_reader :x_language
-
-      sig do
-        params(
-          x_language: Stagehand::SessionActParams::XLanguage::OrSymbol
-        ).void
-      end
-      attr_writer :x_language
-
-      # Version of the Stagehand SDK
-      sig { returns(T.nilable(String)) }
-      attr_reader :x_sdk_version
-
-      sig { params(x_sdk_version: String).void }
-      attr_writer :x_sdk_version
-
-      # ISO timestamp when request was sent
-      sig { returns(T.nilable(Time)) }
-      attr_reader :x_sent_at
-
-      sig { params(x_sent_at: Time).void }
-      attr_writer :x_sent_at
 
       # Whether to stream the response via SSE
       sig do
@@ -74,11 +44,8 @@ module Stagehand
       sig do
         params(
           input: T.any(String, Stagehand::Action::OrHash),
-          frame_id: String,
+          frame_id: T.nilable(String),
           options: Stagehand::SessionActParams::Options::OrHash,
-          x_language: Stagehand::SessionActParams::XLanguage::OrSymbol,
-          x_sdk_version: String,
-          x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionActParams::XStreamResponse::OrSymbol,
           request_options: Stagehand::RequestOptions::OrHash
@@ -90,12 +57,6 @@ module Stagehand
         # Target frame ID for the action
         frame_id: nil,
         options: nil,
-        # Client SDK language
-        x_language: nil,
-        # Version of the Stagehand SDK
-        x_sdk_version: nil,
-        # ISO timestamp when request was sent
-        x_sent_at: nil,
         # Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
@@ -106,11 +67,8 @@ module Stagehand
         override.returns(
           {
             input: T.any(String, Stagehand::Action),
-            frame_id: String,
+            frame_id: T.nilable(String),
             options: Stagehand::SessionActParams::Options,
-            x_language: Stagehand::SessionActParams::XLanguage::OrSymbol,
-            x_sdk_version: String,
-            x_sent_at: Time,
             x_stream_response:
               Stagehand::SessionActParams::XStreamResponse::OrSymbol,
             request_options: Stagehand::RequestOptions
@@ -144,20 +102,12 @@ module Stagehand
             )
           end
 
-        # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-        # 'anthropic/claude-4.5-opus')
-        sig do
-          returns(
-            T.nilable(T.any(String, Stagehand::ModelConfig::ModelConfigObject))
-          )
-        end
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
+        sig { returns(T.nilable(T.any(Stagehand::ModelConfig, String))) }
         attr_reader :model
 
         sig do
-          params(
-            model:
-              T.any(String, Stagehand::ModelConfig::ModelConfigObject::OrHash)
-          ).void
+          params(model: T.any(Stagehand::ModelConfig::OrHash, String)).void
         end
         attr_writer :model
 
@@ -177,15 +127,13 @@ module Stagehand
 
         sig do
           params(
-            model:
-              T.any(String, Stagehand::ModelConfig::ModelConfigObject::OrHash),
+            model: T.any(Stagehand::ModelConfig::OrHash, String),
             timeout: Float,
             variables: T::Hash[Symbol, String]
           ).returns(T.attached_class)
         end
         def self.new(
-          # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-          # 'anthropic/claude-4.5-opus')
+          # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
           model: nil,
           # Timeout in ms for the action
           timeout: nil,
@@ -197,7 +145,7 @@ module Stagehand
         sig do
           override.returns(
             {
-              model: T.any(String, Stagehand::ModelConfig::ModelConfigObject),
+              model: T.any(Stagehand::ModelConfig, String),
               timeout: Float,
               variables: T::Hash[Symbol, String]
             }
@@ -205,35 +153,20 @@ module Stagehand
         end
         def to_hash
         end
-      end
 
-      # Client SDK language
-      module XLanguage
-        extend Stagehand::Internal::Type::Enum
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
+        module Model
+          extend Stagehand::Internal::Type::Union
 
-        TaggedSymbol =
-          T.type_alias { T.all(Symbol, Stagehand::SessionActParams::XLanguage) }
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
+          Variants = T.type_alias { T.any(Stagehand::ModelConfig, String) }
 
-        TYPESCRIPT =
-          T.let(
-            :typescript,
-            Stagehand::SessionActParams::XLanguage::TaggedSymbol
-          )
-        PYTHON =
-          T.let(:python, Stagehand::SessionActParams::XLanguage::TaggedSymbol)
-        PLAYGROUND =
-          T.let(
-            :playground,
-            Stagehand::SessionActParams::XLanguage::TaggedSymbol
-          )
-
-        sig do
-          override.returns(
-            T::Array[Stagehand::SessionActParams::XLanguage::TaggedSymbol]
-          )
-        end
-        def self.values
+          sig do
+            override.returns(
+              T::Array[Stagehand::SessionActParams::Options::Model::Variants]
+            )
+          end
+          def self.variants
+          end
         end
       end
 

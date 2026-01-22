@@ -34,37 +34,14 @@ module Stagehand
 
       # Target frame ID for the agent
       sig { returns(T.nilable(String)) }
-      attr_reader :frame_id
+      attr_accessor :frame_id
 
-      sig { params(frame_id: String).void }
-      attr_writer :frame_id
+      # If true, the server captures a cache entry and returns it to the client
+      sig { returns(T.nilable(T::Boolean)) }
+      attr_reader :should_cache
 
-      # Client SDK language
-      sig do
-        returns(T.nilable(Stagehand::SessionExecuteParams::XLanguage::OrSymbol))
-      end
-      attr_reader :x_language
-
-      sig do
-        params(
-          x_language: Stagehand::SessionExecuteParams::XLanguage::OrSymbol
-        ).void
-      end
-      attr_writer :x_language
-
-      # Version of the Stagehand SDK
-      sig { returns(T.nilable(String)) }
-      attr_reader :x_sdk_version
-
-      sig { params(x_sdk_version: String).void }
-      attr_writer :x_sdk_version
-
-      # ISO timestamp when request was sent
-      sig { returns(T.nilable(Time)) }
-      attr_reader :x_sent_at
-
-      sig { params(x_sent_at: Time).void }
-      attr_writer :x_sent_at
+      sig { params(should_cache: T::Boolean).void }
+      attr_writer :should_cache
 
       # Whether to stream the response via SSE
       sig do
@@ -87,10 +64,8 @@ module Stagehand
           agent_config: Stagehand::SessionExecuteParams::AgentConfig::OrHash,
           execute_options:
             Stagehand::SessionExecuteParams::ExecuteOptions::OrHash,
-          frame_id: String,
-          x_language: Stagehand::SessionExecuteParams::XLanguage::OrSymbol,
-          x_sdk_version: String,
-          x_sent_at: Time,
+          frame_id: T.nilable(String),
+          should_cache: T::Boolean,
           x_stream_response:
             Stagehand::SessionExecuteParams::XStreamResponse::OrSymbol,
           request_options: Stagehand::RequestOptions::OrHash
@@ -101,12 +76,8 @@ module Stagehand
         execute_options:,
         # Target frame ID for the agent
         frame_id: nil,
-        # Client SDK language
-        x_language: nil,
-        # Version of the Stagehand SDK
-        x_sdk_version: nil,
-        # ISO timestamp when request was sent
-        x_sent_at: nil,
+        # If true, the server captures a cache entry and returns it to the client
+        should_cache: nil,
         # Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
@@ -118,10 +89,8 @@ module Stagehand
           {
             agent_config: Stagehand::SessionExecuteParams::AgentConfig,
             execute_options: Stagehand::SessionExecuteParams::ExecuteOptions,
-            frame_id: String,
-            x_language: Stagehand::SessionExecuteParams::XLanguage::OrSymbol,
-            x_sdk_version: String,
-            x_sent_at: Time,
+            frame_id: T.nilable(String),
+            should_cache: T::Boolean,
             x_stream_response:
               Stagehand::SessionExecuteParams::XStreamResponse::OrSymbol,
             request_options: Stagehand::RequestOptions
@@ -147,20 +116,12 @@ module Stagehand
         sig { params(cua: T::Boolean).void }
         attr_writer :cua
 
-        # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-        # 'anthropic/claude-4.5-opus')
-        sig do
-          returns(
-            T.nilable(T.any(String, Stagehand::ModelConfig::ModelConfigObject))
-          )
-        end
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
+        sig { returns(T.nilable(T.any(Stagehand::ModelConfig, String))) }
         attr_reader :model
 
         sig do
-          params(
-            model:
-              T.any(String, Stagehand::ModelConfig::ModelConfigObject::OrHash)
-          ).void
+          params(model: T.any(Stagehand::ModelConfig::OrHash, String)).void
         end
         attr_writer :model
 
@@ -192,8 +153,7 @@ module Stagehand
         sig do
           params(
             cua: T::Boolean,
-            model:
-              T.any(String, Stagehand::ModelConfig::ModelConfigObject::OrHash),
+            model: T.any(Stagehand::ModelConfig::OrHash, String),
             provider:
               Stagehand::SessionExecuteParams::AgentConfig::Provider::OrSymbol,
             system_prompt: String
@@ -202,8 +162,7 @@ module Stagehand
         def self.new(
           # Enable Computer Use Agent mode
           cua: nil,
-          # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-          # 'anthropic/claude-4.5-opus')
+          # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
           model: nil,
           # AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
           provider: nil,
@@ -216,7 +175,7 @@ module Stagehand
           override.returns(
             {
               cua: T::Boolean,
-              model: T.any(String, Stagehand::ModelConfig::ModelConfigObject),
+              model: T.any(Stagehand::ModelConfig, String),
               provider:
                 Stagehand::SessionExecuteParams::AgentConfig::Provider::OrSymbol,
               system_prompt: String
@@ -224,6 +183,23 @@ module Stagehand
           )
         end
         def to_hash
+        end
+
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
+        module Model
+          extend Stagehand::Internal::Type::Union
+
+          Variants = T.type_alias { T.any(Stagehand::ModelConfig, String) }
+
+          sig do
+            override.returns(
+              T::Array[
+                Stagehand::SessionExecuteParams::AgentConfig::Model::Variants
+              ]
+            )
+          end
+          def self.variants
+          end
         end
 
         # AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
@@ -326,41 +302,6 @@ module Stagehand
           )
         end
         def to_hash
-        end
-      end
-
-      # Client SDK language
-      module XLanguage
-        extend Stagehand::Internal::Type::Enum
-
-        TaggedSymbol =
-          T.type_alias do
-            T.all(Symbol, Stagehand::SessionExecuteParams::XLanguage)
-          end
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        TYPESCRIPT =
-          T.let(
-            :typescript,
-            Stagehand::SessionExecuteParams::XLanguage::TaggedSymbol
-          )
-        PYTHON =
-          T.let(
-            :python,
-            Stagehand::SessionExecuteParams::XLanguage::TaggedSymbol
-          )
-        PLAYGROUND =
-          T.let(
-            :playground,
-            Stagehand::SessionExecuteParams::XLanguage::TaggedSymbol
-          )
-
-        sig do
-          override.returns(
-            T::Array[Stagehand::SessionExecuteParams::XLanguage::TaggedSymbol]
-          )
-        end
-        def self.values
         end
       end
 

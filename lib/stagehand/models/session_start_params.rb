@@ -72,31 +72,13 @@ module Stagehand
       #   @return [Boolean, nil]
       optional :wait_for_captcha_solves, Stagehand::Internal::Type::Boolean, api_name: :waitForCaptchaSolves
 
-      # @!attribute x_language
-      #   Client SDK language
-      #
-      #   @return [Symbol, Stagehand::Models::SessionStartParams::XLanguage, nil]
-      optional :x_language, enum: -> { Stagehand::SessionStartParams::XLanguage }
-
-      # @!attribute x_sdk_version
-      #   Version of the Stagehand SDK
-      #
-      #   @return [String, nil]
-      optional :x_sdk_version, String
-
-      # @!attribute x_sent_at
-      #   ISO timestamp when request was sent
-      #
-      #   @return [Time, nil]
-      optional :x_sent_at, Time
-
       # @!attribute x_stream_response
       #   Whether to stream the response via SSE
       #
       #   @return [Symbol, Stagehand::Models::SessionStartParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { Stagehand::SessionStartParams::XStreamResponse }
 
-      # @!method initialize(model_name:, act_timeout_ms: nil, browser: nil, browserbase_session_create_params: nil, browserbase_session_id: nil, dom_settle_timeout_ms: nil, experimental: nil, self_heal: nil, system_prompt: nil, verbose: nil, wait_for_captcha_solves: nil, x_language: nil, x_sdk_version: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @!method initialize(model_name:, act_timeout_ms: nil, browser: nil, browserbase_session_create_params: nil, browserbase_session_id: nil, dom_settle_timeout_ms: nil, experimental: nil, self_heal: nil, system_prompt: nil, verbose: nil, wait_for_captcha_solves: nil, x_stream_response: nil, request_options: {})
       #   @param model_name [String] Model name to use for AI operations
       #
       #   @param act_timeout_ms [Float] Timeout in ms for act operations (deprecated, v2 only)
@@ -118,12 +100,6 @@ module Stagehand
       #   @param verbose [Float, Stagehand::Models::SessionStartParams::Verbose] Logging verbosity level (0=quiet, 1=normal, 2=debug)
       #
       #   @param wait_for_captcha_solves [Boolean] Wait for captcha solves (deprecated, v2 only)
-      #
-      #   @param x_language [Symbol, Stagehand::Models::SessionStartParams::XLanguage] Client SDK language
-      #
-      #   @param x_sdk_version [String] Version of the Stagehand SDK
-      #
-      #   @param x_sent_at [Time] ISO timestamp when request was sent
       #
       #   @param x_stream_response [Symbol, Stagehand::Models::SessionStartParams::XStreamResponse] Whether to stream the response via SSE
       #
@@ -230,6 +206,11 @@ module Stagehand
           #   @return [String, nil]
           optional :locale, String
 
+          # @!attribute port
+          #
+          #   @return [Float, nil]
+          optional :port, Float
+
           # @!attribute preserve_user_data_dir
           #
           #   @return [Boolean, nil]
@@ -250,7 +231,7 @@ module Stagehand
           #   @return [Stagehand::Models::SessionStartParams::Browser::LaunchOptions::Viewport, nil]
           optional :viewport, -> { Stagehand::SessionStartParams::Browser::LaunchOptions::Viewport }
 
-          # @!method initialize(accept_downloads: nil, args: nil, cdp_url: nil, chromium_sandbox: nil, connect_timeout_ms: nil, device_scale_factor: nil, devtools: nil, downloads_path: nil, executable_path: nil, has_touch: nil, headless: nil, ignore_default_args: nil, ignore_https_errors: nil, locale: nil, preserve_user_data_dir: nil, proxy: nil, user_data_dir: nil, viewport: nil)
+          # @!method initialize(accept_downloads: nil, args: nil, cdp_url: nil, chromium_sandbox: nil, connect_timeout_ms: nil, device_scale_factor: nil, devtools: nil, downloads_path: nil, executable_path: nil, has_touch: nil, headless: nil, ignore_default_args: nil, ignore_https_errors: nil, locale: nil, port: nil, preserve_user_data_dir: nil, proxy: nil, user_data_dir: nil, viewport: nil)
           #   @param accept_downloads [Boolean]
           #   @param args [Array<String>]
           #   @param cdp_url [String]
@@ -265,6 +246,7 @@ module Stagehand
           #   @param ignore_default_args [Boolean, Array<String>]
           #   @param ignore_https_errors [Boolean]
           #   @param locale [String]
+          #   @param port [Float]
           #   @param preserve_user_data_dir [Boolean]
           #   @param proxy [Stagehand::Models::SessionStartParams::Browser::LaunchOptions::Proxy]
           #   @param user_data_dir [String]
@@ -763,18 +745,6 @@ module Stagehand
 
         # @!method self.values
         #   @return [Array<Float>]
-      end
-
-      # Client SDK language
-      module XLanguage
-        extend Stagehand::Internal::Type::Enum
-
-        TYPESCRIPT = :typescript
-        PYTHON = :python
-        PLAYGROUND = :playground
-
-        # @!method self.values
-        #   @return [Array<Symbol>]
       end
 
       # Whether to stream the response via SSE

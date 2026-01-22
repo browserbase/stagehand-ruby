@@ -3,12 +3,9 @@ module Stagehand
     type session_navigate_params =
       {
         url: String,
-        frame_id: String,
+        frame_id: String?,
         options: Stagehand::SessionNavigateParams::Options,
         stream_response: bool,
-        x_language: Stagehand::Models::SessionNavigateParams::x_language,
-        x_sdk_version: String,
-        x_sent_at: Time,
         x_stream_response: Stagehand::Models::SessionNavigateParams::x_stream_response
       }
       & Stagehand::Internal::Type::request_parameters
@@ -19,9 +16,7 @@ module Stagehand
 
       attr_accessor url: String
 
-      attr_reader frame_id: String?
-
-      def frame_id=: (String) -> String
+      attr_accessor frame_id: String?
 
       attr_reader options: Stagehand::SessionNavigateParams::Options?
 
@@ -33,20 +28,6 @@ module Stagehand
 
       def stream_response=: (bool) -> bool
 
-      attr_reader x_language: Stagehand::Models::SessionNavigateParams::x_language?
-
-      def x_language=: (
-        Stagehand::Models::SessionNavigateParams::x_language
-      ) -> Stagehand::Models::SessionNavigateParams::x_language
-
-      attr_reader x_sdk_version: String?
-
-      def x_sdk_version=: (String) -> String
-
-      attr_reader x_sent_at: Time?
-
-      def x_sent_at=: (Time) -> Time
-
       attr_reader x_stream_response: Stagehand::Models::SessionNavigateParams::x_stream_response?
 
       def x_stream_response=: (
@@ -55,24 +36,18 @@ module Stagehand
 
       def initialize: (
         url: String,
-        ?frame_id: String,
+        ?frame_id: String?,
         ?options: Stagehand::SessionNavigateParams::Options,
         ?stream_response: bool,
-        ?x_language: Stagehand::Models::SessionNavigateParams::x_language,
-        ?x_sdk_version: String,
-        ?x_sent_at: Time,
         ?x_stream_response: Stagehand::Models::SessionNavigateParams::x_stream_response,
         ?request_options: Stagehand::request_opts
       ) -> void
 
       def to_hash: -> {
         url: String,
-        frame_id: String,
+        frame_id: String?,
         options: Stagehand::SessionNavigateParams::Options,
         stream_response: bool,
-        x_language: Stagehand::Models::SessionNavigateParams::x_language,
-        x_sdk_version: String,
-        x_sent_at: Time,
         x_stream_response: Stagehand::Models::SessionNavigateParams::x_stream_response,
         request_options: Stagehand::RequestOptions
       }
@@ -122,18 +97,6 @@ module Stagehand
 
           def self?.values: -> ::Array[Stagehand::Models::SessionNavigateParams::Options::wait_until]
         end
-      end
-
-      type x_language = :typescript | :python | :playground
-
-      module XLanguage
-        extend Stagehand::Internal::Type::Enum
-
-        TYPESCRIPT: :typescript
-        PYTHON: :python
-        PLAYGROUND: :playground
-
-        def self?.values: -> ::Array[Stagehand::Models::SessionNavigateParams::x_language]
       end
 
       type x_stream_response = :true | :false

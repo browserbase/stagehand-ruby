@@ -1,64 +1,56 @@
 module Stagehand
   module Models
-    type model_config = String | Stagehand::ModelConfig::ModelConfigObject
+    type model_config =
+      {
+        model_name: String,
+        api_key: String,
+        base_url: String,
+        provider: Stagehand::Models::ModelConfig::provider
+      }
 
-    module ModelConfig
-      extend Stagehand::Internal::Type::Union
+    class ModelConfig < Stagehand::Internal::Type::BaseModel
+      attr_accessor model_name: String
 
-      type model_config_object =
-        {
-          model_name: String,
-          api_key: String,
-          base_url: String,
-          provider: Stagehand::Models::ModelConfig::ModelConfigObject::provider
-        }
+      attr_reader api_key: String?
 
-      class ModelConfigObject < Stagehand::Internal::Type::BaseModel
-        attr_accessor model_name: String
+      def api_key=: (String) -> String
 
-        attr_reader api_key: String?
+      attr_reader base_url: String?
 
-        def api_key=: (String) -> String
+      def base_url=: (String) -> String
 
-        attr_reader base_url: String?
+      attr_reader provider: Stagehand::Models::ModelConfig::provider?
 
-        def base_url=: (String) -> String
+      def provider=: (
+        Stagehand::Models::ModelConfig::provider
+      ) -> Stagehand::Models::ModelConfig::provider
 
-        attr_reader provider: Stagehand::Models::ModelConfig::ModelConfigObject::provider?
+      def initialize: (
+        model_name: String,
+        ?api_key: String,
+        ?base_url: String,
+        ?provider: Stagehand::Models::ModelConfig::provider
+      ) -> void
 
-        def provider=: (
-          Stagehand::Models::ModelConfig::ModelConfigObject::provider
-        ) -> Stagehand::Models::ModelConfig::ModelConfigObject::provider
+      def to_hash: -> {
+        model_name: String,
+        api_key: String,
+        base_url: String,
+        provider: Stagehand::Models::ModelConfig::provider
+      }
 
-        def initialize: (
-          model_name: String,
-          ?api_key: String,
-          ?base_url: String,
-          ?provider: Stagehand::Models::ModelConfig::ModelConfigObject::provider
-        ) -> void
+      type provider = :openai | :anthropic | :google | :microsoft
 
-        def to_hash: -> {
-          model_name: String,
-          api_key: String,
-          base_url: String,
-          provider: Stagehand::Models::ModelConfig::ModelConfigObject::provider
-        }
+      module Provider
+        extend Stagehand::Internal::Type::Enum
 
-        type provider = :openai | :anthropic | :google | :microsoft
+        OPENAI: :openai
+        ANTHROPIC: :anthropic
+        GOOGLE: :google
+        MICROSOFT: :microsoft
 
-        module Provider
-          extend Stagehand::Internal::Type::Enum
-
-          OPENAI: :openai
-          ANTHROPIC: :anthropic
-          GOOGLE: :google
-          MICROSOFT: :microsoft
-
-          def self?.values: -> ::Array[Stagehand::Models::ModelConfig::ModelConfigObject::provider]
-        end
+        def self?.values: -> ::Array[Stagehand::Models::ModelConfig::provider]
       end
-
-      def self?.variants: -> ::Array[Stagehand::Models::model_config]
     end
   end
 end

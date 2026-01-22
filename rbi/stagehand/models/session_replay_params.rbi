@@ -2,19 +2,19 @@
 
 module Stagehand
   module Models
-    class SessionEndParams < Stagehand::Internal::Type::BaseModel
+    class SessionReplayParams < Stagehand::Internal::Type::BaseModel
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters
 
       OrHash =
         T.type_alias do
-          T.any(Stagehand::SessionEndParams, Stagehand::Internal::AnyHash)
+          T.any(Stagehand::SessionReplayParams, Stagehand::Internal::AnyHash)
         end
 
       # Whether to stream the response via SSE
       sig do
         returns(
-          T.nilable(Stagehand::SessionEndParams::XStreamResponse::OrSymbol)
+          T.nilable(Stagehand::SessionReplayParams::XStreamResponse::OrSymbol)
         )
       end
       attr_reader :x_stream_response
@@ -22,7 +22,7 @@ module Stagehand
       sig do
         params(
           x_stream_response:
-            Stagehand::SessionEndParams::XStreamResponse::OrSymbol
+            Stagehand::SessionReplayParams::XStreamResponse::OrSymbol
         ).void
       end
       attr_writer :x_stream_response
@@ -30,7 +30,7 @@ module Stagehand
       sig do
         params(
           x_stream_response:
-            Stagehand::SessionEndParams::XStreamResponse::OrSymbol,
+            Stagehand::SessionReplayParams::XStreamResponse::OrSymbol,
           request_options: Stagehand::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
@@ -45,7 +45,7 @@ module Stagehand
         override.returns(
           {
             x_stream_response:
-              Stagehand::SessionEndParams::XStreamResponse::OrSymbol,
+              Stagehand::SessionReplayParams::XStreamResponse::OrSymbol,
             request_options: Stagehand::RequestOptions
           }
         )
@@ -59,24 +59,26 @@ module Stagehand
 
         TaggedSymbol =
           T.type_alias do
-            T.all(Symbol, Stagehand::SessionEndParams::XStreamResponse)
+            T.all(Symbol, Stagehand::SessionReplayParams::XStreamResponse)
           end
         OrSymbol = T.type_alias { T.any(Symbol, String) }
 
         TRUE =
           T.let(
             :true,
-            Stagehand::SessionEndParams::XStreamResponse::TaggedSymbol
+            Stagehand::SessionReplayParams::XStreamResponse::TaggedSymbol
           )
         FALSE =
           T.let(
             :false,
-            Stagehand::SessionEndParams::XStreamResponse::TaggedSymbol
+            Stagehand::SessionReplayParams::XStreamResponse::TaggedSymbol
           )
 
         sig do
           override.returns(
-            T::Array[Stagehand::SessionEndParams::XStreamResponse::TaggedSymbol]
+            T::Array[
+              Stagehand::SessionReplayParams::XStreamResponse::TaggedSymbol
+            ]
           )
         end
         def self.values
