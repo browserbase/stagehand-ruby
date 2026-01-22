@@ -13,9 +13,6 @@ module Stagehand
         system_prompt: String,
         verbose: Stagehand::Models::SessionStartParams::verbose,
         wait_for_captcha_solves: bool,
-        x_language: Stagehand::Models::SessionStartParams::x_language,
-        x_sdk_version: String,
-        x_sent_at: Time,
         x_stream_response: Stagehand::Models::SessionStartParams::x_stream_response
       }
       & Stagehand::Internal::Type::request_parameters
@@ -72,20 +69,6 @@ module Stagehand
 
       def wait_for_captcha_solves=: (bool) -> bool
 
-      attr_reader x_language: Stagehand::Models::SessionStartParams::x_language?
-
-      def x_language=: (
-        Stagehand::Models::SessionStartParams::x_language
-      ) -> Stagehand::Models::SessionStartParams::x_language
-
-      attr_reader x_sdk_version: String?
-
-      def x_sdk_version=: (String) -> String
-
-      attr_reader x_sent_at: Time?
-
-      def x_sent_at=: (Time) -> Time
-
       attr_reader x_stream_response: Stagehand::Models::SessionStartParams::x_stream_response?
 
       def x_stream_response=: (
@@ -104,9 +87,6 @@ module Stagehand
         ?system_prompt: String,
         ?verbose: Stagehand::Models::SessionStartParams::verbose,
         ?wait_for_captcha_solves: bool,
-        ?x_language: Stagehand::Models::SessionStartParams::x_language,
-        ?x_sdk_version: String,
-        ?x_sent_at: Time,
         ?x_stream_response: Stagehand::Models::SessionStartParams::x_stream_response,
         ?request_options: Stagehand::request_opts
       ) -> void
@@ -123,9 +103,6 @@ module Stagehand
         system_prompt: String,
         verbose: Stagehand::Models::SessionStartParams::verbose,
         wait_for_captcha_solves: bool,
-        x_language: Stagehand::Models::SessionStartParams::x_language,
-        x_sdk_version: String,
-        x_sent_at: Time,
         x_stream_response: Stagehand::Models::SessionStartParams::x_stream_response,
         request_options: Stagehand::RequestOptions
       }
@@ -182,6 +159,7 @@ module Stagehand
             ignore_default_args: Stagehand::Models::SessionStartParams::Browser::LaunchOptions::ignore_default_args,
             ignore_https_errors: bool,
             locale: String,
+            port: Float,
             preserve_user_data_dir: bool,
             proxy: Stagehand::SessionStartParams::Browser::LaunchOptions::Proxy,
             user_data_dir: String,
@@ -247,6 +225,10 @@ module Stagehand
 
           def locale=: (String) -> String
 
+          attr_reader port: Float?
+
+          def port=: (Float) -> Float
+
           attr_reader preserve_user_data_dir: bool?
 
           def preserve_user_data_dir=: (bool) -> bool
@@ -282,6 +264,7 @@ module Stagehand
             ?ignore_default_args: Stagehand::Models::SessionStartParams::Browser::LaunchOptions::ignore_default_args,
             ?ignore_https_errors: bool,
             ?locale: String,
+            ?port: Float,
             ?preserve_user_data_dir: bool,
             ?proxy: Stagehand::SessionStartParams::Browser::LaunchOptions::Proxy,
             ?user_data_dir: String,
@@ -303,6 +286,7 @@ module Stagehand
             ignore_default_args: Stagehand::Models::SessionStartParams::Browser::LaunchOptions::ignore_default_args,
             ignore_https_errors: bool,
             locale: String,
+            port: Float,
             preserve_user_data_dir: bool,
             proxy: Stagehand::SessionStartParams::Browser::LaunchOptions::Proxy,
             user_data_dir: String,
@@ -865,18 +849,6 @@ module Stagehand
         VERBOSE_2: 2
 
         def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::verbose]
-      end
-
-      type x_language = :typescript | :python | :playground
-
-      module XLanguage
-        extend Stagehand::Internal::Type::Enum
-
-        TYPESCRIPT: :typescript
-        PYTHON: :python
-        PLAYGROUND: :playground
-
-        def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::x_language]
       end
 
       type x_stream_response = :true | :false

@@ -1,0 +1,137 @@
+module Stagehand
+  module Models
+    type session_replay_response =
+      { data: Stagehand::Models::SessionReplayResponse::Data, success: bool }
+
+    class SessionReplayResponse < Stagehand::Internal::Type::BaseModel
+      attr_accessor data: Stagehand::Models::SessionReplayResponse::Data
+
+      attr_accessor success: bool
+
+      def initialize: (
+        data: Stagehand::Models::SessionReplayResponse::Data,
+        success: bool
+      ) -> void
+
+      def to_hash: -> {
+        data: Stagehand::Models::SessionReplayResponse::Data,
+        success: bool
+      }
+
+      type data =
+        { pages: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page] }
+
+      class Data < Stagehand::Internal::Type::BaseModel
+        attr_reader pages: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page]?
+
+        def pages=: (
+          ::Array[Stagehand::Models::SessionReplayResponse::Data::Page]
+        ) -> ::Array[Stagehand::Models::SessionReplayResponse::Data::Page]
+
+        def initialize: (
+          ?pages: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page]
+        ) -> void
+
+        def to_hash: -> {
+          pages: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page]
+        }
+
+        type page =
+          {
+            actions: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page::Action]
+          }
+
+        class Page < Stagehand::Internal::Type::BaseModel
+          attr_reader actions: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page::Action]?
+
+          def actions=: (
+            ::Array[Stagehand::Models::SessionReplayResponse::Data::Page::Action]
+          ) -> ::Array[Stagehand::Models::SessionReplayResponse::Data::Page::Action]
+
+          def initialize: (
+            ?actions: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page::Action]
+          ) -> void
+
+          def to_hash: -> {
+            actions: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page::Action]
+          }
+
+          type action =
+            {
+              method_: String,
+              token_usage: Stagehand::Models::SessionReplayResponse::Data::Page::Action::TokenUsage
+            }
+
+          class Action < Stagehand::Internal::Type::BaseModel
+            attr_reader method_: String?
+
+            def method_=: (String) -> String
+
+            attr_reader token_usage: Stagehand::Models::SessionReplayResponse::Data::Page::Action::TokenUsage?
+
+            def token_usage=: (
+              Stagehand::Models::SessionReplayResponse::Data::Page::Action::TokenUsage
+            ) -> Stagehand::Models::SessionReplayResponse::Data::Page::Action::TokenUsage
+
+            def initialize: (
+              ?method_: String,
+              ?token_usage: Stagehand::Models::SessionReplayResponse::Data::Page::Action::TokenUsage
+            ) -> void
+
+            def to_hash: -> {
+              method_: String,
+              token_usage: Stagehand::Models::SessionReplayResponse::Data::Page::Action::TokenUsage
+            }
+
+            type token_usage =
+              {
+                cached_input_tokens: Float,
+                input_tokens: Float,
+                output_tokens: Float,
+                reasoning_tokens: Float,
+                time_ms: Float
+              }
+
+            class TokenUsage < Stagehand::Internal::Type::BaseModel
+              attr_reader cached_input_tokens: Float?
+
+              def cached_input_tokens=: (Float) -> Float
+
+              attr_reader input_tokens: Float?
+
+              def input_tokens=: (Float) -> Float
+
+              attr_reader output_tokens: Float?
+
+              def output_tokens=: (Float) -> Float
+
+              attr_reader reasoning_tokens: Float?
+
+              def reasoning_tokens=: (Float) -> Float
+
+              attr_reader time_ms: Float?
+
+              def time_ms=: (Float) -> Float
+
+              def initialize: (
+                ?cached_input_tokens: Float,
+                ?input_tokens: Float,
+                ?output_tokens: Float,
+                ?reasoning_tokens: Float,
+                ?time_ms: Float
+              ) -> void
+
+              def to_hash: -> {
+                cached_input_tokens: Float,
+                input_tokens: Float,
+                output_tokens: Float,
+                reasoning_tokens: Float,
+                time_ms: Float
+              }
+            end
+          end
+        end
+      end
+    end
+  end
+end

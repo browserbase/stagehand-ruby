@@ -13,7 +13,7 @@ module Stagehand
       #   Target frame ID for the observation
       #
       #   @return [String, nil]
-      optional :frame_id, String, api_name: :frameId
+      optional :frame_id, String, api_name: :frameId, nil?: true
 
       # @!attribute instruction
       #   Natural language instruction for what actions to find
@@ -26,42 +26,18 @@ module Stagehand
       #   @return [Stagehand::Models::SessionObserveParams::Options, nil]
       optional :options, -> { Stagehand::SessionObserveParams::Options }
 
-      # @!attribute x_language
-      #   Client SDK language
-      #
-      #   @return [Symbol, Stagehand::Models::SessionObserveParams::XLanguage, nil]
-      optional :x_language, enum: -> { Stagehand::SessionObserveParams::XLanguage }
-
-      # @!attribute x_sdk_version
-      #   Version of the Stagehand SDK
-      #
-      #   @return [String, nil]
-      optional :x_sdk_version, String
-
-      # @!attribute x_sent_at
-      #   ISO timestamp when request was sent
-      #
-      #   @return [Time, nil]
-      optional :x_sent_at, Time
-
       # @!attribute x_stream_response
       #   Whether to stream the response via SSE
       #
       #   @return [Symbol, Stagehand::Models::SessionObserveParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { Stagehand::SessionObserveParams::XStreamResponse }
 
-      # @!method initialize(frame_id: nil, instruction: nil, options: nil, x_language: nil, x_sdk_version: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
-      #   @param frame_id [String] Target frame ID for the observation
+      # @!method initialize(frame_id: nil, instruction: nil, options: nil, x_stream_response: nil, request_options: {})
+      #   @param frame_id [String, nil] Target frame ID for the observation
       #
       #   @param instruction [String] Natural language instruction for what actions to find
       #
       #   @param options [Stagehand::Models::SessionObserveParams::Options]
-      #
-      #   @param x_language [Symbol, Stagehand::Models::SessionObserveParams::XLanguage] Client SDK language
-      #
-      #   @param x_sdk_version [String] Version of the Stagehand SDK
-      #
-      #   @param x_sent_at [Time] ISO timestamp when request was sent
       #
       #   @param x_stream_response [Symbol, Stagehand::Models::SessionObserveParams::XStreamResponse] Whether to stream the response via SSE
       #
@@ -69,11 +45,10 @@ module Stagehand
 
       class Options < Stagehand::Internal::Type::BaseModel
         # @!attribute model
-        #   Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-        #   'anthropic/claude-4.5-opus')
+        #   Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #
-        #   @return [String, Stagehand::Models::ModelConfig::ModelConfigObject, nil]
-        optional :model, union: -> { Stagehand::ModelConfig }
+        #   @return [Stagehand::Models::ModelConfig, String, nil]
+        optional :model, union: -> { Stagehand::SessionObserveParams::Options::Model }
 
         # @!attribute selector
         #   CSS selector to scope observation to a specific element
@@ -88,26 +63,25 @@ module Stagehand
         optional :timeout, Float
 
         # @!method initialize(model: nil, selector: nil, timeout: nil)
-        #   Some parameter documentations has been truncated, see
-        #   {Stagehand::Models::SessionObserveParams::Options} for more details.
-        #
-        #   @param model [String, Stagehand::Models::ModelConfig::ModelConfigObject] Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/cl
+        #   @param model [Stagehand::Models::ModelConfig, String] Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #
         #   @param selector [String] CSS selector to scope observation to a specific element
         #
         #   @param timeout [Float] Timeout in ms for the observation
-      end
 
-      # Client SDK language
-      module XLanguage
-        extend Stagehand::Internal::Type::Enum
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
+        #
+        # @see Stagehand::Models::SessionObserveParams::Options#model
+        module Model
+          extend Stagehand::Internal::Type::Union
 
-        TYPESCRIPT = :typescript
-        PYTHON = :python
-        PLAYGROUND = :playground
+          variant -> { Stagehand::ModelConfig }
 
-        # @!method self.values
-        #   @return [Array<Symbol>]
+          variant String
+
+          # @!method self.variants
+          #   @return [Array(Stagehand::Models::ModelConfig, String)]
+        end
       end
 
       # Whether to stream the response via SSE

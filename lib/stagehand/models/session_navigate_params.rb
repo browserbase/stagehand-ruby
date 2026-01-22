@@ -17,7 +17,7 @@ module Stagehand
       #   Target frame ID for the navigation
       #
       #   @return [String, nil]
-      optional :frame_id, String, api_name: :frameId
+      optional :frame_id, String, api_name: :frameId, nil?: true
 
       # @!attribute options
       #
@@ -30,44 +30,20 @@ module Stagehand
       #   @return [Boolean, nil]
       optional :stream_response, Stagehand::Internal::Type::Boolean, api_name: :streamResponse
 
-      # @!attribute x_language
-      #   Client SDK language
-      #
-      #   @return [Symbol, Stagehand::Models::SessionNavigateParams::XLanguage, nil]
-      optional :x_language, enum: -> { Stagehand::SessionNavigateParams::XLanguage }
-
-      # @!attribute x_sdk_version
-      #   Version of the Stagehand SDK
-      #
-      #   @return [String, nil]
-      optional :x_sdk_version, String
-
-      # @!attribute x_sent_at
-      #   ISO timestamp when request was sent
-      #
-      #   @return [Time, nil]
-      optional :x_sent_at, Time
-
       # @!attribute x_stream_response
       #   Whether to stream the response via SSE
       #
       #   @return [Symbol, Stagehand::Models::SessionNavigateParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { Stagehand::SessionNavigateParams::XStreamResponse }
 
-      # @!method initialize(url:, frame_id: nil, options: nil, stream_response: nil, x_language: nil, x_sdk_version: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @!method initialize(url:, frame_id: nil, options: nil, stream_response: nil, x_stream_response: nil, request_options: {})
       #   @param url [String] URL to navigate to
       #
-      #   @param frame_id [String] Target frame ID for the navigation
+      #   @param frame_id [String, nil] Target frame ID for the navigation
       #
       #   @param options [Stagehand::Models::SessionNavigateParams::Options]
       #
       #   @param stream_response [Boolean] Whether to stream the response via SSE
-      #
-      #   @param x_language [Symbol, Stagehand::Models::SessionNavigateParams::XLanguage] Client SDK language
-      #
-      #   @param x_sdk_version [String] Version of the Stagehand SDK
-      #
-      #   @param x_sent_at [Time] ISO timestamp when request was sent
       #
       #   @param x_stream_response [Symbol, Stagehand::Models::SessionNavigateParams::XStreamResponse] Whether to stream the response via SSE
       #
@@ -114,18 +90,6 @@ module Stagehand
           # @!method self.values
           #   @return [Array<Symbol>]
         end
-      end
-
-      # Client SDK language
-      module XLanguage
-        extend Stagehand::Internal::Type::Enum
-
-        TYPESCRIPT = :typescript
-        PYTHON = :python
-        PLAYGROUND = :playground
-
-        # @!method self.values
-        #   @return [Array<Symbol>]
       end
 
       # Whether to stream the response via SSE

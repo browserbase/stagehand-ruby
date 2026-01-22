@@ -46,7 +46,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(model_name: "gpt-4o")
+      stagehand.sessions.start(model_name: "openai/gpt-4o")
     end
 
     assert_requested(:any, /./, times: 3)
@@ -65,7 +65,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(model_name: "gpt-4o")
+      stagehand.sessions.start(model_name: "openai/gpt-4o")
     end
 
     assert_requested(:any, /./, times: 4)
@@ -83,7 +83,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(model_name: "gpt-4o", request_options: {max_retries: 3})
+      stagehand.sessions.start(model_name: "openai/gpt-4o", request_options: {max_retries: 3})
     end
 
     assert_requested(:any, /./, times: 4)
@@ -102,7 +102,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(model_name: "gpt-4o", request_options: {max_retries: 4})
+      stagehand.sessions.start(model_name: "openai/gpt-4o", request_options: {max_retries: 4})
     end
 
     assert_requested(:any, /./, times: 5)
@@ -125,7 +125,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(model_name: "gpt-4o")
+      stagehand.sessions.start(model_name: "openai/gpt-4o")
     end
 
     assert_requested(:any, /./, times: 2)
@@ -150,7 +150,7 @@ class StagehandTest < Minitest::Test
 
     assert_raises(Stagehand::Errors::InternalServerError) do
       Thread.current.thread_variable_set(:time_now, Time.now)
-      stagehand.sessions.start(model_name: "gpt-4o")
+      stagehand.sessions.start(model_name: "openai/gpt-4o")
       Thread.current.thread_variable_set(:time_now, nil)
     end
 
@@ -175,7 +175,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(model_name: "gpt-4o")
+      stagehand.sessions.start(model_name: "openai/gpt-4o")
     end
 
     assert_requested(:any, /./, times: 2)
@@ -194,7 +194,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::InternalServerError) do
-      stagehand.sessions.start(model_name: "gpt-4o")
+      stagehand.sessions.start(model_name: "openai/gpt-4o")
     end
 
     3.times do
@@ -215,7 +215,7 @@ class StagehandTest < Minitest::Test
 
     assert_raises(Stagehand::Errors::InternalServerError) do
       stagehand.sessions.start(
-        model_name: "gpt-4o",
+        model_name: "openai/gpt-4o",
         request_options: {extra_headers: {"x-stainless-retry-count" => nil}}
       )
     end
@@ -238,7 +238,7 @@ class StagehandTest < Minitest::Test
 
     assert_raises(Stagehand::Errors::InternalServerError) do
       stagehand.sessions.start(
-        model_name: "gpt-4o",
+        model_name: "openai/gpt-4o",
         request_options: {extra_headers: {"x-stainless-retry-count" => "42"}}
       )
     end
@@ -266,7 +266,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::APIConnectionError) do
-      stagehand.sessions.start(model_name: "gpt-4o", request_options: {extra_headers: {}})
+      stagehand.sessions.start(model_name: "openai/gpt-4o", request_options: {extra_headers: {}})
     end
 
     recorded, = WebMock::RequestRegistry.instance.requested_signatures.hash.first
@@ -301,7 +301,7 @@ class StagehandTest < Minitest::Test
       )
 
     assert_raises(Stagehand::Errors::APIConnectionError) do
-      stagehand.sessions.start(model_name: "gpt-4o", request_options: {extra_headers: {}})
+      stagehand.sessions.start(model_name: "openai/gpt-4o", request_options: {extra_headers: {}})
     end
 
     assert_requested(:get, "http://localhost/redirected", times: Stagehand::Client::MAX_REDIRECTS) do
@@ -332,7 +332,7 @@ class StagehandTest < Minitest::Test
 
     assert_raises(Stagehand::Errors::APIConnectionError) do
       stagehand.sessions.start(
-        model_name: "gpt-4o",
+        model_name: "openai/gpt-4o",
         request_options: {extra_headers: {"authorization" => "Bearer xyz"}}
       )
     end
@@ -368,7 +368,7 @@ class StagehandTest < Minitest::Test
 
     assert_raises(Stagehand::Errors::APIConnectionError) do
       stagehand.sessions.start(
-        model_name: "gpt-4o",
+        model_name: "openai/gpt-4o",
         request_options: {extra_headers: {"authorization" => "Bearer xyz"}}
       )
     end
@@ -390,7 +390,7 @@ class StagehandTest < Minitest::Test
         model_api_key: "My Model API Key"
       )
 
-    stagehand.sessions.start(model_name: "gpt-4o")
+    stagehand.sessions.start(model_name: "openai/gpt-4o")
 
     assert_requested(:any, /./) do |req|
       headers = req.headers.transform_keys(&:downcase).fetch_values("accept", "content-type")

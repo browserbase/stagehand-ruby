@@ -25,25 +25,13 @@ module Stagehand
       #   Target frame ID for the agent
       #
       #   @return [String, nil]
-      optional :frame_id, String, api_name: :frameId
+      optional :frame_id, String, api_name: :frameId, nil?: true
 
-      # @!attribute x_language
-      #   Client SDK language
+      # @!attribute should_cache
+      #   If true, the server captures a cache entry and returns it to the client
       #
-      #   @return [Symbol, Stagehand::Models::SessionExecuteParams::XLanguage, nil]
-      optional :x_language, enum: -> { Stagehand::SessionExecuteParams::XLanguage }
-
-      # @!attribute x_sdk_version
-      #   Version of the Stagehand SDK
-      #
-      #   @return [String, nil]
-      optional :x_sdk_version, String
-
-      # @!attribute x_sent_at
-      #   ISO timestamp when request was sent
-      #
-      #   @return [Time, nil]
-      optional :x_sent_at, Time
+      #   @return [Boolean, nil]
+      optional :should_cache, Stagehand::Internal::Type::Boolean, api_name: :shouldCache
 
       # @!attribute x_stream_response
       #   Whether to stream the response via SSE
@@ -51,18 +39,14 @@ module Stagehand
       #   @return [Symbol, Stagehand::Models::SessionExecuteParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { Stagehand::SessionExecuteParams::XStreamResponse }
 
-      # @!method initialize(agent_config:, execute_options:, frame_id: nil, x_language: nil, x_sdk_version: nil, x_sent_at: nil, x_stream_response: nil, request_options: {})
+      # @!method initialize(agent_config:, execute_options:, frame_id: nil, should_cache: nil, x_stream_response: nil, request_options: {})
       #   @param agent_config [Stagehand::Models::SessionExecuteParams::AgentConfig]
       #
       #   @param execute_options [Stagehand::Models::SessionExecuteParams::ExecuteOptions]
       #
-      #   @param frame_id [String] Target frame ID for the agent
+      #   @param frame_id [String, nil] Target frame ID for the agent
       #
-      #   @param x_language [Symbol, Stagehand::Models::SessionExecuteParams::XLanguage] Client SDK language
-      #
-      #   @param x_sdk_version [String] Version of the Stagehand SDK
-      #
-      #   @param x_sent_at [Time] ISO timestamp when request was sent
+      #   @param should_cache [Boolean] If true, the server captures a cache entry and returns it to the client
       #
       #   @param x_stream_response [Symbol, Stagehand::Models::SessionExecuteParams::XStreamResponse] Whether to stream the response via SSE
       #
@@ -76,11 +60,10 @@ module Stagehand
         optional :cua, Stagehand::Internal::Type::Boolean
 
         # @!attribute model
-        #   Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-        #   'anthropic/claude-4.5-opus')
+        #   Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #
-        #   @return [String, Stagehand::Models::ModelConfig::ModelConfigObject, nil]
-        optional :model, union: -> { Stagehand::ModelConfig }
+        #   @return [Stagehand::Models::ModelConfig, String, nil]
+        optional :model, union: -> { Stagehand::SessionExecuteParams::AgentConfig::Model }
 
         # @!attribute provider
         #   AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
@@ -95,16 +78,27 @@ module Stagehand
         optional :system_prompt, String, api_name: :systemPrompt
 
         # @!method initialize(cua: nil, model: nil, provider: nil, system_prompt: nil)
-        #   Some parameter documentations has been truncated, see
-        #   {Stagehand::Models::SessionExecuteParams::AgentConfig} for more details.
-        #
         #   @param cua [Boolean] Enable Computer Use Agent mode
         #
-        #   @param model [String, Stagehand::Models::ModelConfig::ModelConfigObject] Model name string with provider prefix (e.g., 'openai/gpt-5-nano', 'anthropic/cl
+        #   @param model [Stagehand::Models::ModelConfig, String] Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #
         #   @param provider [Symbol, Stagehand::Models::SessionExecuteParams::AgentConfig::Provider] AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
         #
         #   @param system_prompt [String] Custom system prompt for the agent
+
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
+        #
+        # @see Stagehand::Models::SessionExecuteParams::AgentConfig#model
+        module Model
+          extend Stagehand::Internal::Type::Union
+
+          variant -> { Stagehand::ModelConfig }
+
+          variant String
+
+          # @!method self.variants
+          #   @return [Array(Stagehand::Models::ModelConfig, String)]
+        end
 
         # AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
         #
@@ -147,18 +141,6 @@ module Stagehand
         #   @param highlight_cursor [Boolean] Whether to visually highlight the cursor during execution
         #
         #   @param max_steps [Float] Maximum number of steps the agent can take
-      end
-
-      # Client SDK language
-      module XLanguage
-        extend Stagehand::Internal::Type::Enum
-
-        TYPESCRIPT = :typescript
-        PYTHON = :python
-        PLAYGROUND = :playground
-
-        # @!method self.values
-        #   @return [Array<Symbol>]
       end
 
       # Whether to stream the response via SSE

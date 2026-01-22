@@ -70,17 +70,40 @@ module Stagehand
         attr_writer :result
 
         sig do
+          returns(
+            T.nilable(
+              Stagehand::Models::SessionExecuteResponse::Data::CacheEntry
+            )
+          )
+        end
+        attr_reader :cache_entry
+
+        sig do
+          params(
+            cache_entry:
+              Stagehand::Models::SessionExecuteResponse::Data::CacheEntry::OrHash
+          ).void
+        end
+        attr_writer :cache_entry
+
+        sig do
           params(
             result:
-              Stagehand::Models::SessionExecuteResponse::Data::Result::OrHash
+              Stagehand::Models::SessionExecuteResponse::Data::Result::OrHash,
+            cache_entry:
+              Stagehand::Models::SessionExecuteResponse::Data::CacheEntry::OrHash
           ).returns(T.attached_class)
         end
-        def self.new(result:)
+        def self.new(result:, cache_entry: nil)
         end
 
         sig do
           override.returns(
-            { result: Stagehand::Models::SessionExecuteResponse::Data::Result }
+            {
+              result: Stagehand::Models::SessionExecuteResponse::Data::Result,
+              cache_entry:
+                Stagehand::Models::SessionExecuteResponse::Data::CacheEntry
+            }
           )
         end
         def to_hash
@@ -348,6 +371,41 @@ module Stagehand
             end
             def to_hash
             end
+          end
+        end
+
+        class CacheEntry < Stagehand::Internal::Type::BaseModel
+          OrHash =
+            T.type_alias do
+              T.any(
+                Stagehand::Models::SessionExecuteResponse::Data::CacheEntry,
+                Stagehand::Internal::AnyHash
+              )
+            end
+
+          # Opaque cache identifier computed from instruction, URL, options, and config
+          sig { returns(String) }
+          attr_accessor :cache_key
+
+          # Serialized cache entry that can be written to disk
+          sig { returns(T.anything) }
+          attr_accessor :entry
+
+          sig do
+            params(cache_key: String, entry: T.anything).returns(
+              T.attached_class
+            )
+          end
+          def self.new(
+            # Opaque cache identifier computed from instruction, URL, options, and config
+            cache_key:,
+            # Serialized cache entry that can be written to disk
+            entry:
+          )
+          end
+
+          sig { override.returns({ cache_key: String, entry: T.anything }) }
+          def to_hash
           end
         end
       end

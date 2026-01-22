@@ -272,12 +272,7 @@ module Stagehand
         #
         # @return [Hash{String=>Array<String>}]
         def decode_query(query)
-          return {} if query.nil? || query.empty?
-
-          # Use URI.decode_www_form for Ruby 3.2+ and 4.0+ compatibility
-          URI.decode_www_form(query.to_s).each_with_object({}) do |(key, value), hash|
-            (hash[key] ||= []) << value
-          end
+          CGI.parse(query.to_s)
         end
 
         # @api private

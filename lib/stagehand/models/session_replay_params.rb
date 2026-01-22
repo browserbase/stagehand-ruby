@@ -2,19 +2,19 @@
 
 module Stagehand
   module Models
-    # @see Stagehand::Resources::Sessions#end_
-    class SessionEndParams < Stagehand::Internal::Type::BaseModel
+    # @see Stagehand::Resources::Sessions#replay
+    class SessionReplayParams < Stagehand::Internal::Type::BaseModel
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters
 
       # @!attribute x_stream_response
       #   Whether to stream the response via SSE
       #
-      #   @return [Symbol, Stagehand::Models::SessionEndParams::XStreamResponse, nil]
-      optional :x_stream_response, enum: -> { Stagehand::SessionEndParams::XStreamResponse }
+      #   @return [Symbol, Stagehand::Models::SessionReplayParams::XStreamResponse, nil]
+      optional :x_stream_response, enum: -> { Stagehand::SessionReplayParams::XStreamResponse }
 
       # @!method initialize(x_stream_response: nil, request_options: {})
-      #   @param x_stream_response [Symbol, Stagehand::Models::SessionEndParams::XStreamResponse] Whether to stream the response via SSE
+      #   @param x_stream_response [Symbol, Stagehand::Models::SessionReplayParams::XStreamResponse] Whether to stream the response via SSE
       #
       #   @param request_options [Stagehand::RequestOptions, Hash{Symbol=>Object}]
 

@@ -4,7 +4,6 @@
 .prism.log
 .ruby-lsp/
 .yardoc/
-.env
 bin/tapioca
 Brewfile.lock.json
 doc/

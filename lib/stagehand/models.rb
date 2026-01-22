@@ -55,6 +55,8 @@ module Stagehand
 
   SessionObserveParams = Stagehand::Models::SessionObserveParams
 
+  SessionReplayParams = Stagehand::Models::SessionReplayParams
+
   SessionStartParams = Stagehand::Models::SessionStartParams
 
   StreamEvent = Stagehand::Models::StreamEvent

@@ -13,10 +13,7 @@ module Stagehand
 
       # Target frame ID for the extraction
       sig { returns(T.nilable(String)) }
-      attr_reader :frame_id
-
-      sig { params(frame_id: String).void }
-      attr_writer :frame_id
+      attr_accessor :frame_id
 
       # Natural language instruction for what to extract
       sig { returns(T.nilable(String)) }
@@ -40,33 +37,6 @@ module Stagehand
       sig { params(schema: T::Hash[Symbol, T.anything]).void }
       attr_writer :schema
 
-      # Client SDK language
-      sig do
-        returns(T.nilable(Stagehand::SessionExtractParams::XLanguage::OrSymbol))
-      end
-      attr_reader :x_language
-
-      sig do
-        params(
-          x_language: Stagehand::SessionExtractParams::XLanguage::OrSymbol
-        ).void
-      end
-      attr_writer :x_language
-
-      # Version of the Stagehand SDK
-      sig { returns(T.nilable(String)) }
-      attr_reader :x_sdk_version
-
-      sig { params(x_sdk_version: String).void }
-      attr_writer :x_sdk_version
-
-      # ISO timestamp when request was sent
-      sig { returns(T.nilable(Time)) }
-      attr_reader :x_sent_at
-
-      sig { params(x_sent_at: Time).void }
-      attr_writer :x_sent_at
-
       # Whether to stream the response via SSE
       sig do
         returns(
@@ -85,13 +55,10 @@ module Stagehand
 
       sig do
         params(
-          frame_id: String,
+          frame_id: T.nilable(String),
           instruction: String,
           options: Stagehand::SessionExtractParams::Options::OrHash,
           schema: T::Hash[Symbol, T.anything],
-          x_language: Stagehand::SessionExtractParams::XLanguage::OrSymbol,
-          x_sdk_version: String,
-          x_sent_at: Time,
           x_stream_response:
             Stagehand::SessionExtractParams::XStreamResponse::OrSymbol,
           request_options: Stagehand::RequestOptions::OrHash
@@ -105,12 +72,6 @@ module Stagehand
         options: nil,
         # JSON Schema defining the structure of data to extract
         schema: nil,
-        # Client SDK language
-        x_language: nil,
-        # Version of the Stagehand SDK
-        x_sdk_version: nil,
-        # ISO timestamp when request was sent
-        x_sent_at: nil,
         # Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
@@ -120,13 +81,10 @@ module Stagehand
       sig do
         override.returns(
           {
-            frame_id: String,
+            frame_id: T.nilable(String),
             instruction: String,
             options: Stagehand::SessionExtractParams::Options,
             schema: T::Hash[Symbol, T.anything],
-            x_language: Stagehand::SessionExtractParams::XLanguage::OrSymbol,
-            x_sdk_version: String,
-            x_sent_at: Time,
             x_stream_response:
               Stagehand::SessionExtractParams::XStreamResponse::OrSymbol,
             request_options: Stagehand::RequestOptions
@@ -145,20 +103,12 @@ module Stagehand
             )
           end
 
-        # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-        # 'anthropic/claude-4.5-opus')
-        sig do
-          returns(
-            T.nilable(T.any(String, Stagehand::ModelConfig::ModelConfigObject))
-          )
-        end
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
+        sig { returns(T.nilable(T.any(Stagehand::ModelConfig, String))) }
         attr_reader :model
 
         sig do
-          params(
-            model:
-              T.any(String, Stagehand::ModelConfig::ModelConfigObject::OrHash)
-          ).void
+          params(model: T.any(Stagehand::ModelConfig::OrHash, String)).void
         end
         attr_writer :model
 
@@ -178,15 +128,13 @@ module Stagehand
 
         sig do
           params(
-            model:
-              T.any(String, Stagehand::ModelConfig::ModelConfigObject::OrHash),
+            model: T.any(Stagehand::ModelConfig::OrHash, String),
             selector: String,
             timeout: Float
           ).returns(T.attached_class)
         end
         def self.new(
-          # Model name string with provider prefix (e.g., 'openai/gpt-5-nano',
-          # 'anthropic/claude-4.5-opus')
+          # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
           model: nil,
           # CSS selector to scope extraction to a specific element
           selector: nil,
@@ -198,7 +146,7 @@ module Stagehand
         sig do
           override.returns(
             {
-              model: T.any(String, Stagehand::ModelConfig::ModelConfigObject),
+              model: T.any(Stagehand::ModelConfig, String),
               selector: String,
               timeout: Float
             }
@@ -206,40 +154,22 @@ module Stagehand
         end
         def to_hash
         end
-      end
 
-      # Client SDK language
-      module XLanguage
-        extend Stagehand::Internal::Type::Enum
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
+        module Model
+          extend Stagehand::Internal::Type::Union
 
-        TaggedSymbol =
-          T.type_alias do
-            T.all(Symbol, Stagehand::SessionExtractParams::XLanguage)
+          Variants = T.type_alias { T.any(Stagehand::ModelConfig, String) }
+
+          sig do
+            override.returns(
+              T::Array[
+                Stagehand::SessionExtractParams::Options::Model::Variants
+              ]
+            )
           end
-        OrSymbol = T.type_alias { T.any(Symbol, String) }
-
-        TYPESCRIPT =
-          T.let(
-            :typescript,
-            Stagehand::SessionExtractParams::XLanguage::TaggedSymbol
-          )
-        PYTHON =
-          T.let(
-            :python,
-            Stagehand::SessionExtractParams::XLanguage::TaggedSymbol
-          )
-        PLAYGROUND =
-          T.let(
-            :playground,
-            Stagehand::SessionExtractParams::XLanguage::TaggedSymbol
-          )
-
-        sig do
-          override.returns(
-            T::Array[Stagehand::SessionExtractParams::XLanguage::TaggedSymbol]
-          )
-        end
-        def self.values
+          def self.variants
+          end
         end
       end
 

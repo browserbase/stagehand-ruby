@@ -4,10 +4,8 @@ module Stagehand
       {
         agent_config: Stagehand::SessionExecuteParams::AgentConfig,
         execute_options: Stagehand::SessionExecuteParams::ExecuteOptions,
-        frame_id: String,
-        x_language: Stagehand::Models::SessionExecuteParams::x_language,
-        x_sdk_version: String,
-        x_sent_at: Time,
+        frame_id: String?,
+        should_cache: bool,
         x_stream_response: Stagehand::Models::SessionExecuteParams::x_stream_response
       }
       & Stagehand::Internal::Type::request_parameters
@@ -20,23 +18,11 @@ module Stagehand
 
       attr_accessor execute_options: Stagehand::SessionExecuteParams::ExecuteOptions
 
-      attr_reader frame_id: String?
+      attr_accessor frame_id: String?
 
-      def frame_id=: (String) -> String
+      attr_reader should_cache: bool?
 
-      attr_reader x_language: Stagehand::Models::SessionExecuteParams::x_language?
-
-      def x_language=: (
-        Stagehand::Models::SessionExecuteParams::x_language
-      ) -> Stagehand::Models::SessionExecuteParams::x_language
-
-      attr_reader x_sdk_version: String?
-
-      def x_sdk_version=: (String) -> String
-
-      attr_reader x_sent_at: Time?
-
-      def x_sent_at=: (Time) -> Time
+      def should_cache=: (bool) -> bool
 
       attr_reader x_stream_response: Stagehand::Models::SessionExecuteParams::x_stream_response?
 
@@ -47,10 +33,8 @@ module Stagehand
       def initialize: (
         agent_config: Stagehand::SessionExecuteParams::AgentConfig,
         execute_options: Stagehand::SessionExecuteParams::ExecuteOptions,
-        ?frame_id: String,
-        ?x_language: Stagehand::Models::SessionExecuteParams::x_language,
-        ?x_sdk_version: String,
-        ?x_sent_at: Time,
+        ?frame_id: String?,
+        ?should_cache: bool,
         ?x_stream_response: Stagehand::Models::SessionExecuteParams::x_stream_response,
         ?request_options: Stagehand::request_opts
       ) -> void
@@ -58,10 +42,8 @@ module Stagehand
       def to_hash: -> {
         agent_config: Stagehand::SessionExecuteParams::AgentConfig,
         execute_options: Stagehand::SessionExecuteParams::ExecuteOptions,
-        frame_id: String,
-        x_language: Stagehand::Models::SessionExecuteParams::x_language,
-        x_sdk_version: String,
-        x_sent_at: Time,
+        frame_id: String?,
+        should_cache: bool,
         x_stream_response: Stagehand::Models::SessionExecuteParams::x_stream_response,
         request_options: Stagehand::RequestOptions
       }
@@ -69,7 +51,7 @@ module Stagehand
       type agent_config =
         {
           cua: bool,
-          model: Stagehand::Models::model_config,
+          model: Stagehand::Models::SessionExecuteParams::AgentConfig::model,
           provider: Stagehand::Models::SessionExecuteParams::AgentConfig::provider,
           system_prompt: String
         }
@@ -79,11 +61,11 @@ module Stagehand
 
         def cua=: (bool) -> bool
 
-        attr_reader model: Stagehand::Models::model_config?
+        attr_reader model: Stagehand::Models::SessionExecuteParams::AgentConfig::model?
 
         def model=: (
-          Stagehand::Models::model_config
-        ) -> Stagehand::Models::model_config
+          Stagehand::Models::SessionExecuteParams::AgentConfig::model
+        ) -> Stagehand::Models::SessionExecuteParams::AgentConfig::model
 
         attr_reader provider: Stagehand::Models::SessionExecuteParams::AgentConfig::provider?
 
@@ -97,17 +79,25 @@ module Stagehand
 
         def initialize: (
           ?cua: bool,
-          ?model: Stagehand::Models::model_config,
+          ?model: Stagehand::Models::SessionExecuteParams::AgentConfig::model,
           ?provider: Stagehand::Models::SessionExecuteParams::AgentConfig::provider,
           ?system_prompt: String
         ) -> void
 
         def to_hash: -> {
           cua: bool,
-          model: Stagehand::Models::model_config,
+          model: Stagehand::Models::SessionExecuteParams::AgentConfig::model,
           provider: Stagehand::Models::SessionExecuteParams::AgentConfig::provider,
           system_prompt: String
         }
+
+        type model = Stagehand::ModelConfig | String
+
+        module Model
+          extend Stagehand::Internal::Type::Union
+
+          def self?.variants: -> ::Array[Stagehand::Models::SessionExecuteParams::AgentConfig::model]
+        end
 
         type provider = :openai | :anthropic | :google | :microsoft
 
@@ -148,18 +138,6 @@ module Stagehand
           highlight_cursor: bool,
           max_steps: Float
         }
-      end
-
-      type x_language = :typescript | :python | :playground
-
-      module XLanguage
-        extend Stagehand::Internal::Type::Enum
-
-        TYPESCRIPT: :typescript
-        PYTHON: :python
-        PLAYGROUND: :playground
-
-        def self?.values: -> ::Array[Stagehand::Models::SessionExecuteParams::x_language]
       end
 
       type x_stream_response = :true | :false
