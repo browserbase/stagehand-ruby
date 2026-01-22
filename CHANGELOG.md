@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.2 (2026-01-22)
+
+Full Changelog: [v3.0.1...v3.0.2](https://github.com/browserbase/stagehand-ruby/compare/v3.0.1...v3.0.2)
+
+### Chores
+
+* remove custom code ([3943364](https://github.com/browserbase/stagehand-ruby/commit/394336419ed210704639af03445858f44f03ba13))
+
 ## 3.0.1 (2026-01-15)
 
 Full Changelog: [v0.6.2...v3.0.1](https://github.com/browserbase/stagehand-ruby/compare/v0.6.2...v3.0.1)
