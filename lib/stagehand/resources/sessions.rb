@@ -406,6 +406,30 @@ module Stagehand
         )
       end
 
+      # Retrieves replay metrics for a session.
+      #
+      # @overload replay(id, x_stream_response: nil, request_options: {})
+      #
+      # @param id [String] Unique session identifier
+      #
+      # @param x_stream_response [Symbol, Stagehand::Models::SessionReplayParams::XStreamResponse] Whether to stream the response via SSE
+      #
+      # @param request_options [Stagehand::RequestOptions, Hash{Symbol=>Object}, nil]
+      #
+      # @return [Stagehand::Models::SessionReplayResponse]
+      #
+      # @see Stagehand::Models::SessionReplayParams
+      def replay(id, params = {})
+        parsed, options = Stagehand::SessionReplayParams.dump_request(params)
+        @client.request(
+          method: :get,
+          path: ["v1/sessions/%1$s/replay", id],
+          headers: parsed.transform_keys(x_stream_response: "x-stream-response"),
+          model: Stagehand::Models::SessionReplayResponse,
+          options: options
+        )
+      end
+
       # Creates a new browser session with the specified configuration. Returns a
       # session ID used for all subsequent operations.
       #

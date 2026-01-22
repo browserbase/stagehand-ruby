@@ -111,6 +111,23 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
     end
   end
 
+  def test_replay
+    skip("Prism tests are disabled")
+
+    response = @stagehand.sessions.replay("c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123")
+
+    assert_pattern do
+      response => Stagehand::Models::SessionReplayResponse
+    end
+
+    assert_pattern do
+      response => {
+        data: Stagehand::Models::SessionReplayResponse::Data,
+        success: Stagehand::Internal::Type::Boolean
+      }
+    end
+  end
+
   def test_start_required_params
     skip("Prism tests are disabled")
 

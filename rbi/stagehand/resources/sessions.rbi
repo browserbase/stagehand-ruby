@@ -344,6 +344,24 @@ module Stagehand
       )
       end
 
+      # Retrieves replay metrics for a session.
+      sig do
+        params(
+          id: String,
+          x_stream_response:
+            Stagehand::SessionReplayParams::XStreamResponse::OrSymbol,
+          request_options: Stagehand::RequestOptions::OrHash
+        ).returns(Stagehand::Models::SessionReplayResponse)
+      end
+      def replay(
+        # Unique session identifier
+        id,
+        # Whether to stream the response via SSE
+        x_stream_response: nil,
+        request_options: {}
+      )
+      end
+
       # Creates a new browser session with the specified configuration. Returns a
       # session ID used for all subsequent operations.
       sig do

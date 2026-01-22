@@ -93,6 +93,12 @@ module Stagehand
         ?request_options: Stagehand::request_opts
       ) -> Stagehand::Internal::Stream[Stagehand::StreamEvent]
 
+      def replay: (
+        String id,
+        ?x_stream_response: Stagehand::Models::SessionReplayParams::x_stream_response,
+        ?request_options: Stagehand::request_opts
+      ) -> Stagehand::Models::SessionReplayResponse
+
       def start: (
         model_name: String,
         ?act_timeout_ms: Float,
