@@ -69,6 +69,8 @@ module Stagehand
     # @param model_api_key [String, nil] Your LLM provider API key (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
     # Defaults to `ENV["MODEL_API_KEY"]`
     #
+    # @param server [String] Server mode to use ("remote" or "local"). Defaults to "remote"
+    #
     # @param base_url [String, nil] Override the default base URL for the API, e.g.,
     # `"https://api.example.com/v2/"`. Defaults to `ENV["STAGEHAND_BASE_URL"]`
     #
@@ -83,6 +85,7 @@ module Stagehand
       browserbase_api_key: ENV["BROWSERBASE_API_KEY"],
       browserbase_project_id: ENV["BROWSERBASE_PROJECT_ID"],
       model_api_key: ENV["MODEL_API_KEY"],
+      server: "remote",
       base_url: ENV["STAGEHAND_BASE_URL"],
       max_retries: self.class::DEFAULT_MAX_RETRIES,
       timeout: self.class::DEFAULT_TIMEOUT_IN_SECONDS,

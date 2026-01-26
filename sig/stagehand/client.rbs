@@ -28,11 +28,14 @@ module Stagehand
       ?browserbase_api_key: String?,
       ?browserbase_project_id: String?,
       ?model_api_key: String?,
+      ?server: String,
       ?base_url: String?,
       ?max_retries: Integer,
       ?timeout: Float,
       ?initial_retry_delay: Float,
       ?max_retry_delay: Float
     ) -> void
+
+    def close: () -> void
   end
 end

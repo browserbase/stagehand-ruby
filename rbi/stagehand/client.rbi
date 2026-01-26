@@ -51,6 +51,7 @@ module Stagehand
         browserbase_api_key: T.nilable(String),
         browserbase_project_id: T.nilable(String),
         model_api_key: T.nilable(String),
+        server: String,
         base_url: T.nilable(String),
         max_retries: Integer,
         timeout: Float,
@@ -68,6 +69,8 @@ module Stagehand
       # Your LLM provider API key (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
       # Defaults to `ENV["MODEL_API_KEY"]`
       model_api_key: ENV["MODEL_API_KEY"],
+      # Server mode to use ("remote" or "local"). Defaults to "remote"
+      server: "remote",
       # Override the default base URL for the API, e.g.,
       # `"https://api.example.com/v2/"`. Defaults to `ENV["STAGEHAND_BASE_URL"]`
       base_url: ENV["STAGEHAND_BASE_URL"],
@@ -78,5 +81,8 @@ module Stagehand
       max_retry_delay: Stagehand::Client::DEFAULT_MAX_RETRY_DELAY
     )
     end
+
+    sig { void }
+    def close; end
   end
 end

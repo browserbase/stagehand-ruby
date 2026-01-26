@@ -16,6 +16,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir[
     "lib/**/*.rb",
+    "lib/stagehand/_sea/*",
     "rbi/**/*.rbi",
     "sig/**/*.rbs",
     "manifest.yaml",
