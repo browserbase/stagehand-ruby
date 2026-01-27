@@ -10,3 +10,6 @@ Brewfile.lock.json
 doc/
 sorbet/tapioca/*
 vendor/
+*.png
+package.json
+package-lock.json

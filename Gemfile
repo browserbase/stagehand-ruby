@@ -30,3 +30,6 @@ group :development, :docs do
   gem "webrick"
   gem "yard"
 end
+
+gem "playwright-ruby-client", "~> 1.57", :group => :examples
+gem "watir", "~> 7.3", :group => :examples

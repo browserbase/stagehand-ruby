@@ -44,11 +44,11 @@ def normalize_url(url)
 end
 
 def resolve_page_target_id(cdp_session, page_url)
-  info = cdp_session.send("Target.getTargetInfo")
+  info = cdp_session.send_message("Target.getTargetInfo")
   target_id = info.dig("targetInfo", "targetId")
   return target_id unless target_id.to_s.empty?
 
-  targets = cdp_session.send("Target.getTargets")
+  targets = cdp_session.send_message("Target.getTargets")
   entries = targets["targetInfos"] || []
   normalized = normalize_url(page_url)
 
@@ -93,7 +93,8 @@ begin
     begin
       context = browser.contexts.first || browser.new_context
       page = context.pages.first || context.new_page
-      page.goto("https://example.com", wait_until: "domcontentloaded")
+      page.goto("https://example.com")
+      page.wait_for_load_state(state: "domcontentloaded")
 
       cdp_session = context.new_cdp_session(page)
       page_target_id = resolve_page_target_id(cdp_session, page.url)

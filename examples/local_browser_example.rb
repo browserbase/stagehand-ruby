@@ -22,7 +22,12 @@ session_id = nil
 begin
   start_response = client.sessions.start(
     model_name: "openai/gpt-5-nano",
-    browser: {type: :local}
+    browser: {
+      type: :local,
+      launch_options: {
+        headless: false
+      }
+    }
   )
   session_id = start_response.data.session_id
   puts("Session started: #{session_id}")

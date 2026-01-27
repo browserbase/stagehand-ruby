@@ -187,9 +187,7 @@ module Stagehand
 
           download_with_redirects(URI(location), dest_path, limit: limit - 1)
         when Net::HTTPSuccess
-          File.open(dest_path, "wb") do |file|
-            response.read_body { |chunk| file.write(chunk) }
-          end
+          File.binwrite(dest_path, response.body)
           nil
         else
           raise "Failed to download binary: #{response.code} #{response.message}"
