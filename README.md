@@ -186,20 +186,20 @@ Install dependencies, set credentials, and run the scripts below.
 bundle install
 ```
 
-Remote API example:
+Remote browser example:
 
 ```bash
 export BROWSERBASE_API_KEY="your-browserbase-api-key"
 export BROWSERBASE_PROJECT_ID="your-browserbase-project-id"
 export MODEL_API_KEY="your-openai-api-key"
-bundle exec ruby examples/basic.rb
+bundle exec ruby examples/remote_browser_example.rb
 ```
 
 Local mode example (embedded server, local Chrome/Chromium):
 
 ```bash
 export MODEL_API_KEY="your-openai-api-key"
-bundle exec ruby examples/local.rb
+bundle exec ruby examples/local_browser_example.rb
 ```
 
 Playwright local example:
