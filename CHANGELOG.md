@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.2.0 (2026-01-27)
+
+Full Changelog: [v3.1.0...v3.2.0](https://github.com/browserbase/stagehand-ruby/compare/v3.1.0...v3.2.0)
+
+### Features
+
+* add auto-bedrock support based on bedrock/provider.model-name ([fb3762b](https://github.com/browserbase/stagehand-ruby/commit/fb3762b610c4f3049bc74790424556c770bffcf4))
+
 ## 3.1.0 (2026-01-27)
 
 Full Changelog: [v3.0.3...v3.1.0](https://github.com/browserbase/stagehand-ruby/compare/v3.0.3...v3.1.0)
