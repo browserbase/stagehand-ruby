@@ -54,10 +54,17 @@ module Stagehand
 
       class AgentConfig < Stagehand::Internal::Type::BaseModel
         # @!attribute cua
-        #   Enable Computer Use Agent mode
+        #   Deprecated. Use mode: 'cua' instead. If both are provided, mode takes
+        #   precedence.
         #
         #   @return [Boolean, nil]
         optional :cua, Stagehand::Internal::Type::Boolean
+
+        # @!attribute mode
+        #   Tool mode for the agent (dom, hybrid, cua). If set, overrides cua.
+        #
+        #   @return [Symbol, Stagehand::Models::SessionExecuteParams::AgentConfig::Mode, nil]
+        optional :mode, enum: -> { Stagehand::SessionExecuteParams::AgentConfig::Mode }
 
         # @!attribute model
         #   Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
@@ -77,14 +84,33 @@ module Stagehand
         #   @return [String, nil]
         optional :system_prompt, String, api_name: :systemPrompt
 
-        # @!method initialize(cua: nil, model: nil, provider: nil, system_prompt: nil)
-        #   @param cua [Boolean] Enable Computer Use Agent mode
+        # @!method initialize(cua: nil, mode: nil, model: nil, provider: nil, system_prompt: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {Stagehand::Models::SessionExecuteParams::AgentConfig} for more details.
+        #
+        #   @param cua [Boolean] Deprecated. Use mode: 'cua' instead. If both are provided, mode takes precedence
+        #
+        #   @param mode [Symbol, Stagehand::Models::SessionExecuteParams::AgentConfig::Mode] Tool mode for the agent (dom, hybrid, cua). If set, overrides cua.
         #
         #   @param model [Stagehand::Models::ModelConfig, String] Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #
         #   @param provider [Symbol, Stagehand::Models::SessionExecuteParams::AgentConfig::Provider] AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
         #
         #   @param system_prompt [String] Custom system prompt for the agent
+
+        # Tool mode for the agent (dom, hybrid, cua). If set, overrides cua.
+        #
+        # @see Stagehand::Models::SessionExecuteParams::AgentConfig#mode
+        module Mode
+          extend Stagehand::Internal::Type::Enum
+
+          DOM = :dom
+          HYBRID = :hybrid
+          CUA = :cua
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
 
         # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #
