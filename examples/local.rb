@@ -22,19 +22,19 @@ session_id = nil
 begin
   start_response = client.sessions.start(
     model_name: "openai/gpt-5-nano",
-    browser: { type: :local }
+    browser: {type: :local}
   )
   session_id = start_response.data.session_id
-  puts "Session started: #{session_id}"
+  puts("Session started: #{session_id}")
 
   client.sessions.navigate(session_id, url: "https://example.com")
-  puts "Navigated to example.com"
+  puts("Navigated to example.com")
 
   observe_response = client.sessions.observe(
     session_id,
     instruction: "Find all clickable links on this page"
   )
-  puts "Found #{observe_response.data.result.length} possible actions"
+  puts("Found #{observe_response.data.result.length} possible actions")
 
   action = observe_response.data.result.first
   act_input = action ? action.to_h.merge(method: "click") : "Click the 'Learn more' link"
@@ -42,7 +42,7 @@ begin
     session_id,
     input: act_input
   )
-  puts "Act completed: #{act_response.data.result[:message]}"
+  puts("Act completed: #{act_response.data.result[:message]}")
 
   extract_response = client.sessions.extract(
     session_id,
@@ -50,12 +50,12 @@ begin
     schema: {
       type: "object",
       properties: {
-        heading: { type: "string" },
-        links: { type: "array", items: { type: "string" } }
+        heading: {type: "string"},
+        links: {type: "array", items: {type: "string"}}
       }
     }
   )
-  puts "Extracted: #{extract_response.data.result}"
+  puts("Extracted: #{extract_response.data.result}")
 
   execute_response = client.sessions.execute(
     session_id,
@@ -64,15 +64,15 @@ begin
       max_steps: 3
     },
     agent_config: {
-      model: Stagehand::ModelConfig::ModelConfigObject.new(
+      model: Stagehand::ModelConfig.new(
         model_name: "openai/gpt-5-nano",
         api_key: model_key
       ),
       cua: false
     }
   )
-  puts "Agent completed: #{execute_response.data.result[:message]}"
-  puts "Agent success: #{execute_response.data.result[:success]}"
+  puts("Agent completed: #{execute_response.data.result[:message]}")
+  puts("Agent success: #{execute_response.data.result[:success]}")
 ensure
   client.sessions.end_(session_id) if session_id
   client.close

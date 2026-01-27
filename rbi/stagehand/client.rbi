@@ -83,6 +83,7 @@ module Stagehand
     end
 
     sig { void }
-    def close; end
+    def close
+    end
   end
 end

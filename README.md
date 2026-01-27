@@ -395,11 +395,11 @@ stagehand.sessions.act("00000000-your-session-id-000000000000", **params)
 Since this library does not depend on `sorbet-runtime`, it cannot provide [`T::Enum`](https://sorbet.org/docs/tenum) instances. Instead, we provide "tagged symbols" instead, which is always a primitive at runtime:
 
 ```ruby
-# :typescript
-puts(Stagehand::SessionActParams::XLanguage::TYPESCRIPT)
+# :true
+puts(Stagehand::SessionActParams::XStreamResponse::TRUE)
 
-# Revealed type: `T.all(Stagehand::SessionActParams::XLanguage, Symbol)`
-T.reveal_type(Stagehand::SessionActParams::XLanguage::TYPESCRIPT)
+# Revealed type: `T.all(Stagehand::SessionActParams::XStreamResponse, Symbol)`
+T.reveal_type(Stagehand::SessionActParams::XStreamResponse::TRUE)
 ```
 
 Enum parameters have a "relaxed" type, so you can either pass in enum constants or their literal value:
@@ -407,13 +407,13 @@ Enum parameters have a "relaxed" type, so you can either pass in enum constants 
 ```ruby
 # Using the enum constants preserves the tagged type information:
 stagehand.sessions.act(
-  x_language: Stagehand::SessionActParams::XLanguage::TYPESCRIPT,
+  x_stream_response: Stagehand::SessionActParams::XStreamResponse::TRUE,
   # …
 )
 
 # Literal values are also permissible:
 stagehand.sessions.act(
-  x_language: :typescript,
+  x_stream_response: :true,
   # …
 )
 ```

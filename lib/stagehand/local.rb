@@ -53,8 +53,10 @@ module Stagehand
       missing << "browserbase_project_id" if client.browserbase_project_id.to_s.empty?
       return if missing.empty?
 
-      raise ArgumentError,
-            "Browserbase credentials are required when launching a Browserbase browser: missing #{missing.join(', ')}."
+      message =
+        "Browserbase credentials are required when launching a Browserbase browser: " \
+        "missing #{missing.join(', ')}."
+      raise ArgumentError, message
     end
 
     def self.windows?
@@ -70,12 +72,12 @@ module Stagehand
 
       def platform_tag
         platform = if Stagehand::Local.macos?
-                     "darwin"
-                   elsif Stagehand::Local.windows?
-                     "win32"
-                   else
-                     "linux"
-                   end
+          "darwin"
+        elsif Stagehand::Local.windows?
+          "win32"
+        else
+          "linux"
+        end
         cpu = RbConfig::CONFIG["host_cpu"].to_s.downcase
         arch = cpu.include?("arm") || cpu.include?("aarch64") ? "arm64" : "x64"
         [platform, arch]
@@ -93,9 +95,6 @@ module Stagehand
         return ensure_executable(env) unless env.empty?
 
         filename = binary_filename
-        packaged = File.join(__dir__, "_sea", filename)
-        return ensure_executable(packaged) if File.file?(packaged)
-
         cache_path = File.join(cache_dir, filename)
         return ensure_executable(cache_path) if File.file?(cache_path)
 
@@ -120,7 +119,8 @@ module Stagehand
           else
             ENV["XDG_CACHE_HOME"] || File.join(home_dir || Dir.tmpdir, ".cache")
           end
-        File.join(root, "stagehand", "local")
+        version = Stagehand::VERSION.to_s
+        File.join(root, "stagehand", "lib", "ruby_#{version}")
       end
 
       def home_dir
@@ -169,7 +169,8 @@ module Stagehand
       end
 
       def manual_download_hint(filename, dest_path)
-        "Download #{filename} from https://github.com/#{STAGEHAND_REPO}/releases and save it to: #{dest_path}."
+        "Download #{filename} from https://github.com/#{STAGEHAND_REPO}/releases " \
+          "and save it to: #{dest_path}."
       end
 
       def download_with_redirects(url, dest_path, limit:)
@@ -184,12 +185,12 @@ module Stagehand
           location = response["location"]
           raise "Missing redirect location." if location.nil?
 
-          return download_with_redirects(URI(location), dest_path, limit: limit - 1)
+          download_with_redirects(URI(location), dest_path, limit: limit - 1)
         when Net::HTTPSuccess
           File.open(dest_path, "wb") do |file|
             response.read_body { |chunk| file.write(chunk) }
           end
-          return
+          nil
         else
           raise "Failed to download binary: #{response.code} #{response.message}"
         end
@@ -349,9 +350,7 @@ module Stagehand
         while Process.clock_gettime(Process::CLOCK_MONOTONIC) < deadline
           raise "Stagehand local server exited unexpectedly" unless running?
 
-          paths.each do |path|
-            return if ready_path?(base_url, path)
-          end
+          return if paths.any? { |path| ready_path?(base_url, path) }
           sleep(0.1)
         end
 
@@ -377,8 +376,10 @@ module Stagehand
         if @server_mode == "local"
           base_url = kwargs[:base_url]
           kwargs[:base_url] = base_url.nil? ? "http://#{DEFAULT_HOST}" : base_url
-          kwargs[:browserbase_api_key] = kwargs[:browserbase_api_key] || ENV["BROWSERBASE_API_KEY"] || ""
-          kwargs[:browserbase_project_id] = kwargs[:browserbase_project_id] || ENV["BROWSERBASE_PROJECT_ID"] || ""
+          kwargs[:browserbase_api_key] =
+            kwargs[:browserbase_api_key] || ENV["BROWSERBASE_API_KEY"] || ""
+          kwargs[:browserbase_project_id] =
+            kwargs[:browserbase_project_id] || ENV["BROWSERBASE_PROJECT_ID"] || ""
         end
 
         super(**kwargs)

@@ -36,6 +36,6 @@ module Stagehand
       ?max_retry_delay: Float
     ) -> void
 
-    def close: () -> void
+    def close: -> void
   end
 end

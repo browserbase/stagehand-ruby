@@ -92,16 +92,20 @@ module Stagehand
       initial_retry_delay: self.class::DEFAULT_INITIAL_RETRY_DELAY,
       max_retry_delay: self.class::DEFAULT_MAX_RETRY_DELAY
     )
+      @server = server
       base_url ||= "https://api.stagehand.browserbase.com"
 
       if browserbase_api_key.nil?
-        raise ArgumentError.new("browserbase_api_key is required, and can be set via environ: \"BROWSERBASE_API_KEY\"")
+        raise ArgumentError,
+              "browserbase_api_key is required, and can be set via environ: \"BROWSERBASE_API_KEY\""
       end
       if browserbase_project_id.nil?
-        raise ArgumentError.new("browserbase_project_id is required, and can be set via environ: \"BROWSERBASE_PROJECT_ID\"")
+        raise ArgumentError,
+              "browserbase_project_id is required, and can be set via environ: \"BROWSERBASE_PROJECT_ID\""
       end
       if model_api_key.nil?
-        raise ArgumentError.new("model_api_key is required, and can be set via environ: \"MODEL_API_KEY\"")
+        raise ArgumentError,
+              "model_api_key is required, and can be set via environ: \"MODEL_API_KEY\""
       end
 
       @browserbase_api_key = browserbase_api_key.to_s

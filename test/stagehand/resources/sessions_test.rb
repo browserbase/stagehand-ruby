@@ -44,7 +44,9 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
       @stagehand.sessions.execute(
         "c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123",
         agent_config: {},
-        execute_options: {instruction: "Log in with username 'demo' and password 'test123', then navigate to settings"}
+        execute_options: {
+          instruction: "Log in with username 'demo' and password 'test123', then navigate to settings"
+        }
       )
 
     assert_pattern do
