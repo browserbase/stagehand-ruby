@@ -209,7 +209,19 @@ gem install playwright-ruby-client
 npm install playwright
 ./node_modules/.bin/playwright install chromium
 export MODEL_API_KEY="your-openai-api-key"
-bundle exec ruby examples/playwright_local_example.rb
+bundle exec ruby examples/local_playwright_example.rb
+```
+
+Playwright remote example:
+
+```bash
+gem install playwright-ruby-client
+npm install playwright
+./node_modules/.bin/playwright install chromium
+export BROWSERBASE_API_KEY="your-browserbase-api-key"
+export BROWSERBASE_PROJECT_ID="your-browserbase-project-id"
+export MODEL_API_KEY="your-openai-api-key"
+bundle exec ruby examples/remote_playwright_example.rb
 ```
 
 Watir local example:
@@ -217,7 +229,7 @@ Watir local example:
 ```bash
 gem install watir
 export MODEL_API_KEY="your-openai-api-key"
-bundle exec ruby examples/watir_local_example.rb
+bundle exec ruby examples/local_watir_example.rb
 ```
 
 ### Streaming

@@ -19,7 +19,7 @@ require "stagehand"
 #       gem install watir
 #
 # Run:
-#   bundle exec ruby examples/watir_local_example.rb
+#   bundle exec ruby examples/local_watir_example.rb
 
 begin
   require("watir")

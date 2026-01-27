@@ -21,7 +21,7 @@ require "stagehand"
 #       ./node_modules/.bin/playwright install chromium
 #
 # Run:
-#   bundle exec ruby examples/playwright_local_example.rb
+#   bundle exec ruby examples/local_playwright_example.rb
 
 begin
   require("playwright")
