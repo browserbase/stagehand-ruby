@@ -70,7 +70,7 @@ To use this gem, install via Bundler by adding the following to your application
 <!-- x-release-please-start-version -->
 
 ```ruby
-gem "stagehand", "~> 3.2.0"
+gem "stagehand", :git => "git://github.com/browserbase/stagehand-ruby.git"
 ```
 
 <!-- x-release-please-end -->
