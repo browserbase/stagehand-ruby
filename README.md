@@ -1,23 +1,67 @@
-# Stagehand Ruby API library
+<div id="toc" align="center" style="margin-bottom: 0;">
+  <ul style="list-style: none; margin: 0; padding: 0;">
+    <a href="https://stagehand.dev">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/browserbase/stagehand/main/media/dark_logo.png" />
+        <img alt="Stagehand" src="https://raw.githubusercontent.com/browserbase/stagehand/main/media/light_logo.png" width="200" style="margin-right: 30px;" />
+      </picture>
+    </a>
+  </ul>
+</div>
+<p align="center">
+  <strong>The AI Browser Automation Framework</strong><br>
+  <a href="https://docs.stagehand.dev/v3/sdk/ruby">Read the Docs</a>
+</p>
 
-The Stagehand Ruby library provides convenient access to the Stagehand REST API from any Ruby 3.2.0+ application. It ships with comprehensive types & docstrings in Yard, RBS, and RBI – [see below](https://github.com/browserbase/stagehand-ruby#Sorbet) for usage with Sorbet. The standard library's `net/http` is used as the HTTP transport, with connection pooling via the `connection_pool` gem.
+<p align="center">
+  <a href="https://github.com/browserbase/stagehand/tree/main?tab=MIT-1-ov-file#MIT-1-ov-file">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/browserbase/stagehand/main/media/dark_license.svg" />
+      <img alt="MIT License" src="https://raw.githubusercontent.com/browserbase/stagehand/main/media/light_license.svg" />
+    </picture>
+  </a>
+  <a href="https://stagehand.dev/discord">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/browserbase/stagehand/main/media/dark_discord.svg" />
+      <img alt="Discord Community" src="https://raw.githubusercontent.com/browserbase/stagehand/main/media/light_discord.svg" />
+    </picture>
+  </a>
+</p>
 
-It is generated with [Stainless](https://www.stainless.com/).
+<p align="center">
+	<a href="https://trendshift.io/repositories/12122" target="_blank"><img src="https://trendshift.io/api/badge/repositories/12122" alt="browserbase%2Fstagehand | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+</p>
 
-## MCP Server
+<p align="center">
+If you're looking for other languages, you can find them
+<a href="https://docs.stagehand.dev/v3/first-steps/introduction"> here</a>
+</p>
 
-Use the Stagehand MCP Server to enable AI assistants to interact with this API, allowing them to explore endpoints, make test requests, and use documentation to help integrate this SDK into your application.
+<div align="center" style="display: flex; align-items: center; justify-content: center; gap: 4px; margin-bottom: 0;">
+  <b>Vibe code</b>
+  <span style="font-size: 1.05em;"> Stagehand with </span>
+  <a href="https://director.ai" style="display: flex; align-items: center;">
+    <span>Director</span>
+  </a>
+  <span> </span>
+  <picture>
+    <img alt="Director" src="https://raw.githubusercontent.com/browserbase/stagehand/main/media/director_icon.svg" width="25" />
+  </picture>
+</div>
 
-[![Add to Cursor](https://cursor.com/deeplink/mcp-install-dark.svg)](https://cursor.com/en-US/install-mcp?name=stagehand-mcp&config=eyJjb21tYW5kIjoibnB4IiwiYXJncyI6WyIteSIsInN0YWdlaGFuZC1tY3AiXX0)
-[![Install in VS Code](https://img.shields.io/badge/_-Add_to_VS_Code-blue?style=for-the-badge&logo=data:image/svg%2bxml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGZpbGw9Im5vbmUiIHZpZXdCb3g9IjAgMCA0MCA0MCI+PHBhdGggZmlsbD0iI0VFRSIgZmlsbC1ydWxlPSJldmVub2RkIiBkPSJNMzAuMjM1IDM5Ljg4NGEyLjQ5MSAyLjQ5MSAwIDAgMS0xLjc4MS0uNzNMMTIuNyAyNC43OGwtMy40NiAyLjYyNC0zLjQwNiAyLjU4MmExLjY2NSAxLjY2NSAwIDAgMS0xLjA4Mi4zMzggMS42NjQgMS42NjQgMCAwIDEtMS4wNDYtLjQzMWwtMi4yLTJhMS42NjYgMS42NjYgMCAwIDEgMC0yLjQ2M0w3LjQ1OCAyMCA0LjY3IDE3LjQ1MyAxLjUwNyAxNC41N2ExLjY2NSAxLjY2NSAwIDAgMSAwLTIuNDYzbDIuMi0yYTEuNjY1IDEuNjY1IDAgMCAxIDIuMTMtLjA5N2w2Ljg2MyA1LjIwOUwyOC40NTIuODQ0YTIuNDg4IDIuNDg4IDAgMCAxIDEuODQxLS43MjljLjM1MS4wMDkuNjk5LjA5MSAxLjAxOS4yNDVsOC4yMzYgMy45NjFhMi41IDIuNSAwIDAgMSAxLjQxNSAyLjI1M3YuMDk5LS4wNDVWMzMuMzd2LS4wNDUuMDk1YTIuNTAxIDIuNTAxIDAgMCAxLTEuNDE2IDIuMjU3bC04LjIzNSAzLjk2MWEyLjQ5MiAyLjQ5MiAwIDAgMS0xLjA3Ny4yNDZabS43MTYtMjguOTQ3LTExLjk0OCA5LjA2MiAxMS45NTIgOS4wNjUtLjAwNC0xOC4xMjdaIi8+PC9zdmc+)](https://vscode.stainless.com/mcp/%7B%22name%22%3A%22stagehand-mcp%22%2C%22command%22%3A%22npx%22%2C%22args%22%3A%5B%22-y%22%2C%22stagehand-mcp%22%5D%7D)
+## What is Stagehand?
 
-> Note: You may need to set environment variables in your MCP client.
+Stagehand is a browser automation framework used to control web browsers with natural language and code. By combining the power of AI with the precision of code, Stagehand makes web automation flexible, maintainable, and actually reliable.
 
-## Documentation
+## Why Stagehand?
 
-Documentation for releases of this gem can be found [on RubyDoc](https://gemdocs.org/gems/stagehand).
+Most existing browser automation tools either require you to write low-level code in a framework like Selenium, Playwright, or Puppeteer, or use high-level agents that can be unpredictable in production. By letting developers choose what to write in code vs. natural language (and bridging the gap between the two) Stagehand is the natural choice for browser automations in production.
 
-The REST API documentation can be found on [docs.stagehand.dev](https://docs.stagehand.dev).
+1. **Choose when to write code vs. natural language**: use AI when you want to navigate unfamiliar pages, and use code when you know exactly what you want to do.
+
+2. **Go from AI-driven to repeatable workflows**: Stagehand lets you preview AI actions before running them, and also helps you easily cache repeatable actions to save time and tokens.
+
+3. **Write once, run forever**: Stagehand's auto-caching combined with self-healing remembers previous actions, runs without LLM inference, and knows when to involve AI whenever the website changes and your automation breaks.
 
 ## Installation
 
@@ -26,7 +70,7 @@ To use this gem, install via Bundler by adding the following to your application
 <!-- x-release-please-start-version -->
 
 ```ruby
-gem "stagehand", "~> 3.0.2"
+gem "stagehand", "~> 3.0.1"
 ```
 
 <!-- x-release-please-end -->
@@ -37,15 +81,155 @@ gem "stagehand", "~> 3.0.2"
 require "bundler/setup"
 require "stagehand"
 
-stagehand = Stagehand::Client.new(
-  browserbase_api_key: ENV["BROWSERBASE_API_KEY"], # This is the default and can be omitted
-  browserbase_project_id: ENV["BROWSERBASE_PROJECT_ID"], # This is the default and can be omitted
-  model_api_key: ENV["MODEL_API_KEY"] # This is the default and can be omitted
+# Create a new Stagehand client with your credentials
+client = Stagehand::Client.new(
+  browserbase_api_key: ENV["BROWSERBASE_API_KEY"],      # defaults to ENV["BROWSERBASE_API_KEY"]
+  browserbase_project_id: ENV["BROWSERBASE_PROJECT_ID"], # defaults to ENV["BROWSERBASE_PROJECT_ID"]
+  model_api_key: ENV["MODEL_API_KEY"]                   # defaults to ENV["MODEL_API_KEY"]
 )
 
-response = stagehand.sessions.act("00000000-your-session-id-000000000000", input: "click the first link on the page")
+# Start a new browser session
+start_response = client.sessions.start(
+  model_name: "openai/gpt-5-nano"
+)
+puts "Session started: #{start_response.data.session_id}"
 
-puts(response.data)
+session_id = start_response.data.session_id
+
+# Navigate to a webpage
+client.sessions.navigate(
+  session_id,
+  url: "https://news.ycombinator.com"
+)
+puts "Navigated to Hacker News"
+
+# Use Observe to find possible actions on the page
+observe_response = client.sessions.observe(
+  session_id,
+  instruction: "find the link to view comments for the top post"
+)
+
+actions = observe_response.data.result
+puts "Found #{actions.length} possible actions"
+
+# Take the first action returned by Observe
+action = actions.first
+puts "Acting on: #{action.description}"
+
+# Pass the structured action to Act
+# Convert the observe result to a hash and ensure method is set to "click"
+act_response = client.sessions.act(
+  session_id,
+  input: action.to_h.merge(method: "click")
+)
+puts "Act completed: #{act_response.data.result[:message]}"
+
+# Extract data from the page
+# We're now on the comments page, so extract the top comment text
+extract_response = client.sessions.extract(
+  session_id,
+  instruction: "extract the text of the top comment on this page",
+  schema: {
+    type: "object",
+    properties: {
+      comment_text: {
+        type: "string",
+        description: "The text content of the top comment"
+      },
+      author: {
+        type: "string",
+        description: "The username of the comment author"
+      }
+    },
+    required: ["comment_text"]
+  }
+)
+puts "Extracted data: #{extract_response.data.result}"
+
+# Get the author from the extracted data
+extracted_data = extract_response.data.result
+author = extracted_data[:author]
+puts "Looking up profile for author: #{author}"
+
+# Use the Agent to find the author's profile
+# Execute runs an autonomous agent that can navigate and interact with pages
+execute_response = client.sessions.execute(
+  session_id,
+  execute_options: {
+    instruction: "Find any personal website, GitHub, LinkedIn, or other best profile URL for the Hacker News user '#{author}'. " \
+                 "Click on their username to go to their profile page and look for any links they have shared.",
+    max_steps: 15
+  },
+  agent_config: {
+    model: Stagehand::ModelConfig::ModelConfigObject.new(
+      model_name: "openai/gpt-5-nano",
+      api_key: ENV["MODEL_API_KEY"]
+    ),
+    cua: false
+  }
+)
+puts "Agent completed: #{execute_response.data.result[:message]}"
+puts "Agent success: #{execute_response.data.result[:success]}"
+puts "Agent actions taken: #{execute_response.data.result[:actions]&.length || 0}"
+
+# End the session to cleanup browser resources
+client.sessions.end_(session_id)
+puts "Session ended"
+```
+
+### Running the Examples
+
+Install dependencies, set credentials, and run the scripts below.
+
+```bash
+# Install the gem dependencies
+bundle install
+```
+
+Remote browser example:
+
+```bash
+export BROWSERBASE_API_KEY="your-browserbase-api-key"
+export BROWSERBASE_PROJECT_ID="your-browserbase-project-id"
+export MODEL_API_KEY="your-openai-api-key"
+bundle exec ruby examples/remote_browser_example.rb
+```
+
+Local mode example (embedded server, local Chrome/Chromium):
+
+```bash
+export MODEL_API_KEY="your-openai-api-key"
+bundle exec ruby examples/local_browser_example.rb
+```
+
+Playwright local example:
+
+```bash
+gem install playwright-ruby-client
+npm install playwright
+./node_modules/.bin/playwright install chromium
+export MODEL_API_KEY="your-openai-api-key"
+bundle exec ruby examples/local_playwright_example.rb
+```
+
+Playwright remote example:
+
+```bash
+gem install playwright-ruby-client
+npm install playwright
+./node_modules/.bin/playwright install chromium
+export BROWSERBASE_API_KEY="your-browserbase-api-key"
+export BROWSERBASE_PROJECT_ID="your-browserbase-project-id"
+export MODEL_API_KEY="your-openai-api-key"
+bundle exec ruby examples/remote_playwright_example.rb
+```
+
+Watir local example:
+
+```bash
+gem install watir
+export MODEL_API_KEY="your-openai-api-key"
+bundle exec ruby examples/local_watir_example.rb
 ```
 
 ### Streaming

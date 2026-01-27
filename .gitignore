@@ -2,9 +2,14 @@
 .idea/
 .ignore
 .prism.log
+.env
 .ruby-lsp/
 .yardoc/
 bin/tapioca
 Brewfile.lock.json
 doc/
 sorbet/tapioca/*
+vendor/
+*.png
+package.json
+package-lock.json

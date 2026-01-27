@@ -69,6 +69,8 @@ module Stagehand
     # @param model_api_key [String, nil] Your LLM provider API key (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
     # Defaults to `ENV["MODEL_API_KEY"]`
     #
+    # @param server [String] Server mode to use ("remote" or "local"). Defaults to "remote"
+    #
     # @param base_url [String, nil] Override the default base URL for the API, e.g.,
     # `"https://api.example.com/v2/"`. Defaults to `ENV["STAGEHAND_BASE_URL"]`
     #
@@ -83,22 +85,27 @@ module Stagehand
       browserbase_api_key: ENV["BROWSERBASE_API_KEY"],
       browserbase_project_id: ENV["BROWSERBASE_PROJECT_ID"],
       model_api_key: ENV["MODEL_API_KEY"],
+      server: "remote",
       base_url: ENV["STAGEHAND_BASE_URL"],
       max_retries: self.class::DEFAULT_MAX_RETRIES,
       timeout: self.class::DEFAULT_TIMEOUT_IN_SECONDS,
       initial_retry_delay: self.class::DEFAULT_INITIAL_RETRY_DELAY,
       max_retry_delay: self.class::DEFAULT_MAX_RETRY_DELAY
     )
+      @server = server
       base_url ||= "https://api.stagehand.browserbase.com"
 
       if browserbase_api_key.nil?
-        raise ArgumentError.new("browserbase_api_key is required, and can be set via environ: \"BROWSERBASE_API_KEY\"")
+        raise ArgumentError,
+              "browserbase_api_key is required, and can be set via environ: \"BROWSERBASE_API_KEY\""
       end
       if browserbase_project_id.nil?
-        raise ArgumentError.new("browserbase_project_id is required, and can be set via environ: \"BROWSERBASE_PROJECT_ID\"")
+        raise ArgumentError,
+              "browserbase_project_id is required, and can be set via environ: \"BROWSERBASE_PROJECT_ID\""
       end
       if model_api_key.nil?
-        raise ArgumentError.new("model_api_key is required, and can be set via environ: \"MODEL_API_KEY\"")
+        raise ArgumentError,
+              "model_api_key is required, and can be set via environ: \"MODEL_API_KEY\""
       end
 
       @browserbase_api_key = browserbase_api_key.to_s
