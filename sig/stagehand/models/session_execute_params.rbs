@@ -51,6 +51,7 @@ module Stagehand
       type agent_config =
         {
           cua: bool,
+          mode: Stagehand::Models::SessionExecuteParams::AgentConfig::mode,
           model: Stagehand::Models::SessionExecuteParams::AgentConfig::model,
           provider: Stagehand::Models::SessionExecuteParams::AgentConfig::provider,
           system_prompt: String
@@ -60,6 +61,12 @@ module Stagehand
         attr_reader cua: bool?
 
         def cua=: (bool) -> bool
+
+        attr_reader mode: Stagehand::Models::SessionExecuteParams::AgentConfig::mode?
+
+        def mode=: (
+          Stagehand::Models::SessionExecuteParams::AgentConfig::mode
+        ) -> Stagehand::Models::SessionExecuteParams::AgentConfig::mode
 
         attr_reader model: Stagehand::Models::SessionExecuteParams::AgentConfig::model?
 
@@ -79,6 +86,7 @@ module Stagehand
 
         def initialize: (
           ?cua: bool,
+          ?mode: Stagehand::Models::SessionExecuteParams::AgentConfig::mode,
           ?model: Stagehand::Models::SessionExecuteParams::AgentConfig::model,
           ?provider: Stagehand::Models::SessionExecuteParams::AgentConfig::provider,
           ?system_prompt: String
@@ -86,10 +94,23 @@ module Stagehand
 
         def to_hash: -> {
           cua: bool,
+          mode: Stagehand::Models::SessionExecuteParams::AgentConfig::mode,
           model: Stagehand::Models::SessionExecuteParams::AgentConfig::model,
           provider: Stagehand::Models::SessionExecuteParams::AgentConfig::provider,
           system_prompt: String
         }
+
+        type mode = :dom | :hybrid | :cua
+
+        module Mode
+          extend Stagehand::Internal::Type::Enum
+
+          DOM: :dom
+          HYBRID: :hybrid
+          CUA: :cua
+
+          def self?.values: -> ::Array[Stagehand::Models::SessionExecuteParams::AgentConfig::mode]
+        end
 
         type model = Stagehand::ModelConfig | String
 
