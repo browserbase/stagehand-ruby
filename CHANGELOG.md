@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.3.0 (2026-01-29)
+
+Full Changelog: [v3.2.1...v3.3.0](https://github.com/browserbase/stagehand-ruby/compare/v3.2.1...v3.3.0)
+
+### Features
+
+* Update stainless.yml for project and publish settings ([c55365a](https://github.com/browserbase/stagehand-ruby/commit/c55365a3bbc0ba0bdea32a10e13c58e5863e3ce4))
+
+
+### Bug Fixes
+
+* **docs:** fix mcp installation instructions for remote servers ([cd5418d](https://github.com/browserbase/stagehand-ruby/commit/cd5418d7b003862fcee89f5723a1e6449bdee8fa))
+
 ## 3.2.1 (2026-01-27)
 
 Full Changelog: [v3.2.0...v3.2.1](https://github.com/browserbase/stagehand-ruby/compare/v3.2.0...v3.2.1)

@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    stagehand (3.2.1)
+    stagehand (3.3.0)
       cgi
       connection_pool
 
