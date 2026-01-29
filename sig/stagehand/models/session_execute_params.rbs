@@ -51,6 +51,7 @@ module Stagehand
       type agent_config =
         {
           cua: bool,
+          execution_model: Stagehand::Models::SessionExecuteParams::AgentConfig::execution_model,
           mode: Stagehand::Models::SessionExecuteParams::AgentConfig::mode,
           model: Stagehand::Models::SessionExecuteParams::AgentConfig::model,
           provider: Stagehand::Models::SessionExecuteParams::AgentConfig::provider,
@@ -61,6 +62,12 @@ module Stagehand
         attr_reader cua: bool?
 
         def cua=: (bool) -> bool
+
+        attr_reader execution_model: Stagehand::Models::SessionExecuteParams::AgentConfig::execution_model?
+
+        def execution_model=: (
+          Stagehand::Models::SessionExecuteParams::AgentConfig::execution_model
+        ) -> Stagehand::Models::SessionExecuteParams::AgentConfig::execution_model
 
         attr_reader mode: Stagehand::Models::SessionExecuteParams::AgentConfig::mode?
 
@@ -86,6 +93,7 @@ module Stagehand
 
         def initialize: (
           ?cua: bool,
+          ?execution_model: Stagehand::Models::SessionExecuteParams::AgentConfig::execution_model,
           ?mode: Stagehand::Models::SessionExecuteParams::AgentConfig::mode,
           ?model: Stagehand::Models::SessionExecuteParams::AgentConfig::model,
           ?provider: Stagehand::Models::SessionExecuteParams::AgentConfig::provider,
@@ -94,11 +102,20 @@ module Stagehand
 
         def to_hash: -> {
           cua: bool,
+          execution_model: Stagehand::Models::SessionExecuteParams::AgentConfig::execution_model,
           mode: Stagehand::Models::SessionExecuteParams::AgentConfig::mode,
           model: Stagehand::Models::SessionExecuteParams::AgentConfig::model,
           provider: Stagehand::Models::SessionExecuteParams::AgentConfig::provider,
           system_prompt: String
         }
+
+        type execution_model = Stagehand::ModelConfig | String
+
+        module ExecutionModel
+          extend Stagehand::Internal::Type::Union
+
+          def self?.variants: -> ::Array[Stagehand::Models::SessionExecuteParams::AgentConfig::execution_model]
+        end
 
         type mode = :dom | :hybrid | :cua
 
