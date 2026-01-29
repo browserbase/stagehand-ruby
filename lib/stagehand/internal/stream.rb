@@ -23,7 +23,7 @@ module Stagehand
             next if consume
 
             case msg
-            in {data: String => data} if data.start_with?("finished")
+            in {data: String => data} if data.start_with?("{\"data\":{\"status\":\"finished\"")
               consume = true
               next
             in {data: String => data} if data.start_with?("error")
