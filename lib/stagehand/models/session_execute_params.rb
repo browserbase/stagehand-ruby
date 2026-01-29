@@ -60,6 +60,16 @@ module Stagehand
         #   @return [Boolean, nil]
         optional :cua, Stagehand::Internal::Type::Boolean
 
+        # @!attribute execution_model
+        #   Model configuration object or model name string (e.g., 'openai/gpt-5-nano') for
+        #   tool execution (observe/act calls within agent tools). If not specified,
+        #   inherits from the main model configuration.
+        #
+        #   @return [Stagehand::Models::ModelConfig, String, nil]
+        optional :execution_model,
+                 union: -> { Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel },
+                 api_name: :executionModel
+
         # @!attribute mode
         #   Tool mode for the agent (dom, hybrid, cua). If set, overrides cua.
         #
@@ -84,11 +94,13 @@ module Stagehand
         #   @return [String, nil]
         optional :system_prompt, String, api_name: :systemPrompt
 
-        # @!method initialize(cua: nil, mode: nil, model: nil, provider: nil, system_prompt: nil)
+        # @!method initialize(cua: nil, execution_model: nil, mode: nil, model: nil, provider: nil, system_prompt: nil)
         #   Some parameter documentations has been truncated, see
         #   {Stagehand::Models::SessionExecuteParams::AgentConfig} for more details.
         #
         #   @param cua [Boolean] Deprecated. Use mode: 'cua' instead. If both are provided, mode takes precedence
+        #
+        #   @param execution_model [Stagehand::Models::ModelConfig, String] Model configuration object or model name string (e.g., 'openai/gpt-5-nano') for
         #
         #   @param mode [Symbol, Stagehand::Models::SessionExecuteParams::AgentConfig::Mode] Tool mode for the agent (dom, hybrid, cua). If set, overrides cua.
         #
@@ -97,6 +109,22 @@ module Stagehand
         #   @param provider [Symbol, Stagehand::Models::SessionExecuteParams::AgentConfig::Provider] AI provider for the agent (legacy, use model: openai/gpt-5-nano instead)
         #
         #   @param system_prompt [String] Custom system prompt for the agent
+
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano') for
+        # tool execution (observe/act calls within agent tools). If not specified,
+        # inherits from the main model configuration.
+        #
+        # @see Stagehand::Models::SessionExecuteParams::AgentConfig#execution_model
+        module ExecutionModel
+          extend Stagehand::Internal::Type::Union
+
+          variant -> { Stagehand::ModelConfig }
+
+          variant String
+
+          # @!method self.variants
+          #   @return [Array(Stagehand::Models::ModelConfig, String)]
+        end
 
         # Tool mode for the agent (dom, hybrid, cua). If set, overrides cua.
         #

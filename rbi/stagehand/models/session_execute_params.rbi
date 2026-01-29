@@ -117,6 +117,19 @@ module Stagehand
         sig { params(cua: T::Boolean).void }
         attr_writer :cua
 
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano') for
+        # tool execution (observe/act calls within agent tools). If not specified,
+        # inherits from the main model configuration.
+        sig { returns(T.nilable(T.any(Stagehand::ModelConfig, String))) }
+        attr_reader :execution_model
+
+        sig do
+          params(
+            execution_model: T.any(Stagehand::ModelConfig::OrHash, String)
+          ).void
+        end
+        attr_writer :execution_model
+
         # Tool mode for the agent (dom, hybrid, cua). If set, overrides cua.
         sig do
           returns(
@@ -171,6 +184,7 @@ module Stagehand
         sig do
           params(
             cua: T::Boolean,
+            execution_model: T.any(Stagehand::ModelConfig::OrHash, String),
             mode: Stagehand::SessionExecuteParams::AgentConfig::Mode::OrSymbol,
             model: T.any(Stagehand::ModelConfig::OrHash, String),
             provider:
@@ -182,6 +196,10 @@ module Stagehand
           # Deprecated. Use mode: 'cua' instead. If both are provided, mode takes
           # precedence.
           cua: nil,
+          # Model configuration object or model name string (e.g., 'openai/gpt-5-nano') for
+          # tool execution (observe/act calls within agent tools). If not specified,
+          # inherits from the main model configuration.
+          execution_model: nil,
           # Tool mode for the agent (dom, hybrid, cua). If set, overrides cua.
           mode: nil,
           # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
@@ -197,6 +215,7 @@ module Stagehand
           override.returns(
             {
               cua: T::Boolean,
+              execution_model: T.any(Stagehand::ModelConfig, String),
               mode:
                 Stagehand::SessionExecuteParams::AgentConfig::Mode::OrSymbol,
               model: T.any(Stagehand::ModelConfig, String),
@@ -207,6 +226,25 @@ module Stagehand
           )
         end
         def to_hash
+        end
+
+        # Model configuration object or model name string (e.g., 'openai/gpt-5-nano') for
+        # tool execution (observe/act calls within agent tools). If not specified,
+        # inherits from the main model configuration.
+        module ExecutionModel
+          extend Stagehand::Internal::Type::Union
+
+          Variants = T.type_alias { T.any(Stagehand::ModelConfig, String) }
+
+          sig do
+            override.returns(
+              T::Array[
+                Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::Variants
+              ]
+            )
+          end
+          def self.variants
+          end
         end
 
         # Tool mode for the agent (dom, hybrid, cua). If set, overrides cua.
