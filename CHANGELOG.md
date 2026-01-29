@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.4.0 (2026-01-29)
+
+Full Changelog: [v3.3.0...v3.4.0](https://github.com/browserbase/stagehand-ruby/compare/v3.3.0...v3.4.0)
+
+### Features
+
+* Add executionModel serialization to api client ([2042742](https://github.com/browserbase/stagehand-ruby/commit/20427425012c9ee785d18a74596808471be2dc7b))
+
 ## 3.3.0 (2026-01-29)
 
 Full Changelog: [v3.2.1...v3.3.0](https://github.com/browserbase/stagehand-ruby/compare/v3.2.1...v3.3.0)
