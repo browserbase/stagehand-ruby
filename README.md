@@ -1,67 +1,14 @@
-<div id="toc" align="center" style="margin-bottom: 0;">
-  <ul style="list-style: none; margin: 0; padding: 0;">
-    <a href="https://stagehand.dev">
-      <picture>
-        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/browserbase/stagehand/main/media/dark_logo.png" />
-        <img alt="Stagehand" src="https://raw.githubusercontent.com/browserbase/stagehand/main/media/light_logo.png" width="200" style="margin-right: 30px;" />
-      </picture>
-    </a>
-  </ul>
-</div>
-<p align="center">
-  <strong>The AI Browser Automation Framework</strong><br>
-  <a href="https://docs.stagehand.dev/v3/sdk/ruby">Read the Docs</a>
-</p>
+# Stagehand Ruby API library
 
-<p align="center">
-  <a href="https://github.com/browserbase/stagehand/tree/main?tab=MIT-1-ov-file#MIT-1-ov-file">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/browserbase/stagehand/main/media/dark_license.svg" />
-      <img alt="MIT License" src="https://raw.githubusercontent.com/browserbase/stagehand/main/media/light_license.svg" />
-    </picture>
-  </a>
-  <a href="https://stagehand.dev/discord">
-    <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/browserbase/stagehand/main/media/dark_discord.svg" />
-      <img alt="Discord Community" src="https://raw.githubusercontent.com/browserbase/stagehand/main/media/light_discord.svg" />
-    </picture>
-  </a>
-</p>
+The Stagehand Ruby library provides convenient access to the Stagehand REST API from any Ruby 3.2.0+ application. It ships with comprehensive types & docstrings in Yard, RBS, and RBI – [see below](https://github.com/browserbase/stagehand-ruby#Sorbet) for usage with Sorbet. The standard library's `net/http` is used as the HTTP transport, with connection pooling via the `connection_pool` gem.
 
-<p align="center">
-	<a href="https://trendshift.io/repositories/12122" target="_blank"><img src="https://trendshift.io/api/badge/repositories/12122" alt="browserbase%2Fstagehand | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
-</p>
+It is generated with [Stainless](https://www.stainless.com/).
 
-<p align="center">
-If you're looking for other languages, you can find them
-<a href="https://docs.stagehand.dev/v3/first-steps/introduction"> here</a>
-</p>
+## Documentation
 
-<div align="center" style="display: flex; align-items: center; justify-content: center; gap: 4px; margin-bottom: 0;">
-  <b>Vibe code</b>
-  <span style="font-size: 1.05em;"> Stagehand with </span>
-  <a href="https://director.ai" style="display: flex; align-items: center;">
-    <span>Director</span>
-  </a>
-  <span> </span>
-  <picture>
-    <img alt="Director" src="https://raw.githubusercontent.com/browserbase/stagehand/main/media/director_icon.svg" width="25" />
-  </picture>
-</div>
+Documentation for releases of this gem can be found [on RubyDoc](https://gemdocs.org/gems/stagehand).
 
-## What is Stagehand?
-
-Stagehand is a browser automation framework used to control web browsers with natural language and code. By combining the power of AI with the precision of code, Stagehand makes web automation flexible, maintainable, and actually reliable.
-
-## Why Stagehand?
-
-Most existing browser automation tools either require you to write low-level code in a framework like Selenium, Playwright, or Puppeteer, or use high-level agents that can be unpredictable in production. By letting developers choose what to write in code vs. natural language (and bridging the gap between the two) Stagehand is the natural choice for browser automations in production.
-
-1. **Choose when to write code vs. natural language**: use AI when you want to navigate unfamiliar pages, and use code when you know exactly what you want to do.
-
-2. **Go from AI-driven to repeatable workflows**: Stagehand lets you preview AI actions before running them, and also helps you easily cache repeatable actions to save time and tokens.
-
-3. **Write once, run forever**: Stagehand's auto-caching combined with self-healing remembers previous actions, runs without LLM inference, and knows when to involve AI whenever the website changes and your automation breaks.
+The REST API documentation can be found on [docs.stagehand.dev](https://docs.stagehand.dev).
 
 ## Installation
 
