@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.5.0 (2026-02-03)
+
+Full Changelog: [v3.4.0...v3.5.0](https://github.com/browserbase/stagehand-ruby/compare/v3.4.0...v3.5.0)
+
+### Features
+
+* Removed MCP from readme for now ([ad8d58e](https://github.com/browserbase/stagehand-ruby/commit/ad8d58ef0e542592e9001b32ef3e921f480218da))
+
 ## 3.4.0 (2026-01-29)
 
 Full Changelog: [v3.3.0...v3.4.0](https://github.com/browserbase/stagehand-ruby/compare/v3.3.0...v3.4.0)
