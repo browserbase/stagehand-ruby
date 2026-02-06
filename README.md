@@ -168,7 +168,7 @@ npm install playwright
 export BROWSERBASE_API_KEY="your-browserbase-api-key"
 export BROWSERBASE_PROJECT_ID="your-browserbase-project-id"
 export MODEL_API_KEY="your-openai-api-key"
-bundle exec ruby examples/remote_playwright_example.rb
+bundle exec ruby examples/remote_browser_playwright_example.rb
 ```
 
 Watir local example:
