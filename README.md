@@ -149,7 +149,7 @@ export MODEL_API_KEY="your-openai-api-key"
 bundle exec ruby examples/local_browser_example.rb
 ```
 
-Playwright local example:
+Playwright local example (SSE streaming):
 
 ```bash
 gem install playwright-ruby-client
@@ -157,6 +157,8 @@ npm install playwright
 ./node_modules/.bin/playwright install chromium
 export MODEL_API_KEY="your-openai-api-key"
 bundle exec ruby examples/local_playwright_example.rb
+
+bundle exec ruby examples/local_browser_playwright_example.rb
 ```
 
 Playwright remote example:
