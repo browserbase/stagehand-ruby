@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.5.2 (2026-02-07)
+
+Full Changelog: [v3.5.1...v3.5.2](https://github.com/browserbase/stagehand-ruby/compare/v3.5.1...v3.5.2)
+
+### Bug Fixes
+
+* **client:** loosen json header parsing ([ea4142c](https://github.com/browserbase/stagehand-ruby/commit/ea4142cc5973c9207a81c7336c8425c9dbe63a30))
+
+
+### Chores
+
+* **docs:** remove www prefix ([8498bdd](https://github.com/browserbase/stagehand-ruby/commit/8498bdd34e0288b8a1c28e789d35dcecf91cd8b7))
+
 ## 3.5.1 (2026-02-03)
 
 Full Changelog: [v3.5.0...v3.5.1](https://github.com/browserbase/stagehand-ruby/compare/v3.5.0...v3.5.1)
