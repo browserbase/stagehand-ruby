@@ -5,19 +5,8 @@
 require "bundler/setup"
 require "stagehand"
 
-# Example: Using Playwright with Stagehand remote mode (Browserbase browser).
-#
-# Prerequisites:
-#   - Set MODEL_API_KEY or OPENAI_API_KEY environment variable
-#   - Set BROWSERBASE_API_KEY and BROWSERBASE_PROJECT_ID
-#   - Install Playwright (outside this gem):
-#       gem install playwright-ruby-client
-#       npm install playwright
-#       ./node_modules/.bin/playwright install chromium
-#
-# Run:
-#   bundle exec ruby examples/remote_browser_playwright_example.rb
-
+require_relative "env"
+ExampleEnv.load!
 begin
   require("playwright")
 rescue LoadError
@@ -25,7 +14,7 @@ rescue LoadError
   exit(1)
 end
 
-model_key = ENV["MODEL_API_KEY"] || ENV["OPENAI_API_KEY"]
+model_key = ENV["MODEL_API_KEY"]
 browserbase_api_key = ENV["BROWSERBASE_API_KEY"].to_s
 browserbase_project_id = ENV["BROWSERBASE_PROJECT_ID"].to_s
 
