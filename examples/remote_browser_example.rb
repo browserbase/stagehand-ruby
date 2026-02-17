@@ -64,7 +64,7 @@ session_id = nil
 
 begin
   start_response = client.sessions.start(
-    model_name: "openai/gpt-5-nano"
+    model_name: "anthropic/claude-sonnet-4-6"
   )
   session_id = start_response.data.session_id
   puts("Session started: #{session_id}")
@@ -136,7 +136,7 @@ begin
     },
     agent_config: {
       model: Stagehand::ModelConfig.new(
-        model_name: "openai/gpt-5-nano",
+        model_name: "anthropic/claude-sonnet-4-6",
         api_key: model_key
       ),
       cua: false

@@ -1,5 +1,58 @@
 # Stagehand Ruby API library
 
+<!-- x-stagehand-custom-start -->
+<div id="toc" align="center" style="margin-bottom: 0;">
+  <ul style="list-style: none; margin: 0; padding: 0;">
+    <a href="https://stagehand.dev">
+      <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/browserbase/stagehand/main/media/dark_logo.png" />
+        <img alt="Stagehand" src="https://raw.githubusercontent.com/browserbase/stagehand/main/media/light_logo.png" width="200" style="margin-right: 30px;" />
+      </picture>
+    </a>
+  </ul>
+</div>
+<p align="center">
+  <strong>The AI Browser Automation Framework</strong><br>
+  <a href="https://docs.stagehand.dev/v3/sdk/ruby">Read the Docs</a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/browserbase/stagehand/tree/main?tab=MIT-1-ov-file#MIT-1-ov-file">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/browserbase/stagehand/main/media/dark_license.svg" />
+      <img alt="MIT License" src="https://raw.githubusercontent.com/browserbase/stagehand/main/media/light_license.svg" />
+    </picture>
+  </a>
+  <a href="https://stagehand.dev/discord">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/browserbase/stagehand/main/media/dark_discord.svg" />
+      <img alt="Discord Community" src="https://raw.githubusercontent.com/browserbase/stagehand/main/media/light_discord.svg" />
+    </picture>
+  </a>
+</p>
+
+<p align="center">
+	<a href="https://trendshift.io/repositories/12122" target="_blank"><img src="https://trendshift.io/api/badge/repositories/12122" alt="browserbase%2Fstagehand | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+</p>
+
+<p align="center">
+If you're looking for other languages, you can find them
+<a href="https://docs.stagehand.dev/v3/first-steps/introduction"> here</a>
+</p>
+
+<div align="center" style="display: flex; align-items: center; justify-content: center; gap: 4px; margin-bottom: 0;">
+  <b>Vibe code</b>
+  <span style="font-size: 1.05em;"> Stagehand with </span>
+  <a href="https://director.ai" style="display: flex; align-items: center;">
+    <span>Director</span>
+  </a>
+  <span> </span>
+  <picture>
+    <img alt="Director" src="https://raw.githubusercontent.com/browserbase/stagehand/main/media/director_icon.svg" width="25" />
+  </picture>
+</div>
+<!-- x-stagehand-custom-end -->
+
 The Stagehand Ruby library provides convenient access to the Stagehand REST API from any Ruby 3.2.0+ application. It ships with comprehensive types & docstrings in Yard, RBS, and RBI – [see below](https://github.com/browserbase/stagehand-ruby#Sorbet) for usage with Sorbet. The standard library's `net/http` is used as the HTTP transport, with connection pooling via the `connection_pool` gem.
 
 It is generated with [Stainless](https://www.stainless.com/).
@@ -24,163 +77,117 @@ gem "stagehand", :git => "git://github.com/browserbase/stagehand-ruby.git"
 
 ## Usage
 
+This mirrors `examples/remote_browser_playwright_example.rb`.
+
 ```ruby
 require "bundler/setup"
 require "stagehand"
 
-# Create a new Stagehand client with your credentials
+require_relative "examples/env"
+ExampleEnv.load!
+
+require "playwright"
+
 client = Stagehand::Client.new(
-  browserbase_api_key: ENV["BROWSERBASE_API_KEY"],      # defaults to ENV["BROWSERBASE_API_KEY"]
-  browserbase_project_id: ENV["BROWSERBASE_PROJECT_ID"], # defaults to ENV["BROWSERBASE_PROJECT_ID"]
-  model_api_key: ENV["MODEL_API_KEY"]                   # defaults to ENV["MODEL_API_KEY"]
+  browserbase_api_key: ENV["BROWSERBASE_API_KEY"],
+  browserbase_project_id: ENV["BROWSERBASE_PROJECT_ID"],
+  model_api_key: ENV["MODEL_API_KEY"],
+  server: "remote"
 )
 
-# Start a new browser session
 start_response = client.sessions.start(
-  model_name: "openai/gpt-5-nano"
+  model_name: "anthropic/claude-sonnet-4-6",
+  browser: { type: :browserbase }
 )
-puts "Session started: #{start_response.data.session_id}"
 
 session_id = start_response.data.session_id
+cdp_url = start_response.data.cdp_url
+raise "No CDP URL returned for this session." if cdp_url.to_s.empty?
 
-# Navigate to a webpage
-client.sessions.navigate(
-  session_id,
-  url: "https://news.ycombinator.com"
-)
-puts "Navigated to Hacker News"
+Playwright.create(playwright_cli_executable_path: "./node_modules/.bin/playwright") do |playwright|
+  browser = playwright.chromium.connect_over_cdp(cdp_url)
+  context = browser.contexts.first || browser.new_context
+  page = context.pages.first || context.new_page
 
-# Use Observe to find possible actions on the page
-observe_response = client.sessions.observe(
-  session_id,
-  instruction: "find the link to view comments for the top post"
-)
+  client.sessions.navigate(session_id, url: "https://news.ycombinator.com")
+  page.wait_for_load_state(state: "domcontentloaded")
 
-actions = observe_response.data.result
-puts "Found #{actions.length} possible actions"
+  observe_stream = client.sessions.observe_streaming(
+    session_id,
+    instruction: "find the link to view comments for the top post"
+  )
+  observe_stream.each { |_event| }
 
-# Take the first action returned by Observe
-action = actions.first
-puts "Acting on: #{action.description}"
+  act_stream = client.sessions.act_streaming(
+    session_id,
+    input: "Click the comments link for the top post"
+  )
+  act_stream.each { |_event| }
 
-# Pass the structured action to Act
-# Convert the observe result to a hash and ensure method is set to "click"
-act_response = client.sessions.act(
-  session_id,
-  input: action.to_h.merge(method: "click")
-)
-puts "Act completed: #{act_response.data.result[:message]}"
-
-# Extract data from the page
-# We're now on the comments page, so extract the top comment text
-extract_response = client.sessions.extract(
-  session_id,
-  instruction: "extract the text of the top comment on this page",
-  schema: {
-    type: "object",
-    properties: {
-      comment_text: {
-        type: "string",
-        description: "The text content of the top comment"
+  extract_stream = client.sessions.extract_streaming(
+    session_id,
+    instruction: "extract the text of the top comment on this page",
+    schema: {
+      type: "object",
+      properties: {
+        commentText: {type: "string"},
+        author: {type: "string"}
       },
-      author: {
-        type: "string",
-        description: "The username of the comment author"
-      }
+      required: ["commentText"]
+    }
+  )
+  extract_stream.each { |_event| }
+
+  execute_stream = client.sessions.execute_streaming(
+    session_id,
+    execute_options: {
+      instruction: "Click the 'Learn more' link if available",
+      max_steps: 3
     },
-    required: ["comment_text"]
-  }
-)
-puts "Extracted data: #{extract_response.data.result}"
+    agent_config: {
+      model: Stagehand::ModelConfig.new(
+        model_name: "anthropic/claude-sonnet-4-6",
+        api_key: ENV["MODEL_API_KEY"]
+      ),
+      cua: false
+    }
+  )
+  execute_stream.each { |_event| }
+end
 
-# Get the author from the extracted data
-extracted_data = extract_response.data.result
-author = extracted_data[:author]
-puts "Looking up profile for author: #{author}"
-
-# Use the Agent to find the author's profile
-# Execute runs an autonomous agent that can navigate and interact with pages
-execute_response = client.sessions.execute(
-  session_id,
-  execute_options: {
-    instruction: "Find any personal website, GitHub, LinkedIn, or other best profile URL for the Hacker News user '#{author}'. " \
-                 "Click on their username to go to their profile page and look for any links they have shared.",
-    max_steps: 15
-  },
-  agent_config: {
-    model: Stagehand::ModelConfig::ModelConfigObject.new(
-      model_name: "openai/gpt-5-nano",
-      api_key: ENV["MODEL_API_KEY"]
-    ),
-    cua: false
-  }
-)
-puts "Agent completed: #{execute_response.data.result[:message]}"
-puts "Agent success: #{execute_response.data.result[:success]}"
-puts "Agent actions taken: #{execute_response.data.result[:actions]&.length || 0}"
-
-# End the session to cleanup browser resources
 client.sessions.end_(session_id)
-puts "Session ended"
 ```
 
-### Running the Examples
+## Running the Example
 
-Install dependencies, set credentials, and run the scripts below.
+Set your environment variables (from `examples/.env.example`):
 
-```bash
-# Install the gem dependencies
-bundle install
-```
-
-Remote browser example:
+- `STAGEHAND_API_URL`
+- `MODEL_API_KEY`
+- `BROWSERBASE_API_KEY`
+- `BROWSERBASE_PROJECT_ID`
 
 ```bash
 cp examples/.env.example examples/.env
 # Edit examples/.env with your credentials.
-bundle exec ruby examples/remote_browser_example.rb
 ```
 
 The examples load `examples/.env` automatically.
 
-Local mode example (embedded server, local Chrome/Chromium):
+Examples and dependencies:
+
+- `examples/remote_browser_example.rb`: stagehand only
+- `examples/local_browser_example.rb`: stagehand only
+- `examples/remote_browser_playwright_example.rb`: `playwright-ruby-client` + Playwright browsers
+- `examples/local_browser_playwright_example.rb`: `playwright-ruby-client` + Playwright browsers
+- `examples/local_playwright_example.rb`: `playwright-ruby-client` + Playwright browsers
+- `examples/local_watir_example.rb`: `watir`
+
+Install dependencies for the example you want to run, then execute it:
 
 ```bash
-cp examples/.env.example examples/.env
-# Edit examples/.env with your credentials.
-bundle exec ruby examples/local_browser_example.rb
-```
-
-Playwright local example (SSE streaming):
-
-```bash
-gem install playwright-ruby-client
-npm install playwright
-./node_modules/.bin/playwright install chromium
-export MODEL_API_KEY="your-openai-api-key"
-bundle exec ruby examples/local_playwright_example.rb
-
-bundle exec ruby examples/local_browser_playwright_example.rb
-```
-
-Playwright remote example:
-
-```bash
-gem install playwright-ruby-client
-npm install playwright
-./node_modules/.bin/playwright install chromium
-export BROWSERBASE_API_KEY="your-browserbase-api-key"
-export BROWSERBASE_PROJECT_ID="your-browserbase-project-id"
-export MODEL_API_KEY="your-openai-api-key"
+bundle install
 bundle exec ruby examples/remote_browser_playwright_example.rb
-```
-
-Watir local example:
-
-```bash
-gem install watir
-export MODEL_API_KEY="your-openai-api-key"
-bundle exec ruby examples/local_watir_example.rb
 ```
 
 ### Streaming
@@ -204,7 +211,7 @@ When the library is unable to connect to the API, or if the API returns a non-su
 
 ```ruby
 begin
-  session = stagehand.sessions.start(model_name: "openai/gpt-5-nano")
+  session = stagehand.sessions.start(model_name: "anthropic/claude-sonnet-4-6")
 rescue Stagehand::Errors::APIConnectionError => e
   puts("The server could not be reached")
   puts(e.cause)  # an underlying Exception, likely raised within `net/http`
@@ -247,7 +254,7 @@ stagehand = Stagehand::Client.new(
 )
 
 # Or, configure per-request:
-stagehand.sessions.start(model_name: "openai/gpt-5-nano", request_options: {max_retries: 5})
+stagehand.sessions.start(model_name: "anthropic/claude-sonnet-4-6", request_options: {max_retries: 5})
 ```
 
 ### Timeouts
@@ -261,7 +268,7 @@ stagehand = Stagehand::Client.new(
 )
 
 # Or, configure per-request:
-stagehand.sessions.start(model_name: "openai/gpt-5-nano", request_options: {timeout: 5})
+stagehand.sessions.start(model_name: "anthropic/claude-sonnet-4-6", request_options: {timeout: 5})
 ```
 
 On timeout, `Stagehand::Errors::APITimeoutError` is raised.
@@ -293,7 +300,7 @@ Note: the `extra_` parameters of the same name overrides the documented paramete
 ```ruby
 response =
   stagehand.sessions.start(
-    model_name: "openai/gpt-5-nano",
+    model_name: "anthropic/claude-sonnet-4-6",
     request_options: {
       extra_query: {my_query_parameter: value},
       extra_body: {my_body_parameter: value},
