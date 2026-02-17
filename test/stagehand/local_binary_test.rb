@@ -7,14 +7,14 @@ class Stagehand::LocalBinaryTest < Minitest::Test
 
   @mutex = Mutex.new
 
-  def self.mutex
-    @mutex
+  class << self
+    attr_reader :mutex
   end
 
   def setup
     super
     @tmp_home = Dir.mktmpdir
-    @old_home = ENV["HOME"]
+    @old_home = Dir.home if ENV.key?("HOME")
     @old_xdg = ENV["XDG_CACHE_HOME"]
     @old_local = ENV["LOCALAPPDATA"]
     ENV["HOME"] = @tmp_home
@@ -26,7 +26,11 @@ class Stagehand::LocalBinaryTest < Minitest::Test
   end
 
   def teardown
-    ENV["HOME"] = @old_home
+    if @old_home
+      ENV["HOME"] = @old_home
+    else
+      ENV.delete("HOME")
+    end
     ENV["XDG_CACHE_HOME"] = @old_xdg
     ENV["LOCALAPPDATA"] = @old_local
     FileUtils.remove_entry(@tmp_home) if @tmp_home && File.directory?(@tmp_home)
@@ -47,35 +51,35 @@ class Stagehand::LocalBinaryTest < Minitest::Test
     File.binwrite(cache_path, "cached")
 
     path = Stagehand::Local::Binary.resolve_binary_path
-    assert_equal cache_path, path
+    assert_equal(cache_path, path)
   end
 
   def test_downloads_latest_tag_when_missing
     filename = Stagehand::Local::Binary.binary_filename
 
     stub_request(:get, "https://api.github.com/repos/browserbase/stagehand/releases?per_page=15")
-      .to_return(status: 200, body: [{ tag_name: "stagehand-server/v9.9.9" }].to_json)
+      .to_return(status: 200, body: [{tag_name: "stagehand-server/v9.9.9"}].to_json)
 
     stub_request(:get, "https://github.com/browserbase/stagehand/releases/download/stagehand-server/v9.9.9/#{filename}")
       .to_return(status: 200, body: "binary")
 
     path = Stagehand::Local::Binary.resolve_binary_path
 
-    assert File.exist?(path)
-    assert_equal "binary", File.binread(path)
+    assert(File.exist?(path))
+    assert_equal("binary", File.binread(path))
   end
 
   def test_download_error_includes_manual_hint
     filename = Stagehand::Local::Binary.binary_filename
 
     stub_request(:get, "https://api.github.com/repos/browserbase/stagehand/releases?per_page=15")
-      .to_return(status: 200, body: [{ tag_name: "stagehand-server/v1.2.3" }].to_json)
+      .to_return(status: 200, body: [{tag_name: "stagehand-server/v1.2.3"}].to_json)
 
     stub_request(:get, "https://github.com/browserbase/stagehand/releases/download/stagehand-server/v1.2.3/#{filename}")
       .to_return(status: 404, body: "not found")
 
     err = assert_raises(RuntimeError) { Stagehand::Local::Binary.resolve_binary_path }
-    assert_includes err.message, "Failed to download Stagehand driver binary"
-    assert_includes err.message, filename
+    assert_includes(err.message, "Failed to download Stagehand driver binary")
+    assert_includes(err.message, filename)
   end
 end
