@@ -146,7 +146,7 @@ Playwright.create(playwright_cli_executable_path: "./node_modules/.bin/playwrigh
     },
     agent_config: {
       model: Stagehand::ModelConfig.new(
-        model_name: "anthropic/claude-sonnet-4-6",
+        model_name: "anthropic/claude-opus-4-6",
         api_key: ENV["MODEL_API_KEY"]
       ),
       cua: false

@@ -136,7 +136,7 @@ begin
     },
     agent_config: {
       model: Stagehand::ModelConfig.new(
-        model_name: "anthropic/claude-sonnet-4-6",
+        model_name: "anthropic/claude-opus-4-6",
         api_key: model_key
       ),
       cua: false
