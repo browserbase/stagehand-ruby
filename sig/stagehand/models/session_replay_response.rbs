@@ -19,53 +19,81 @@ module Stagehand
       }
 
       type data =
-        { pages: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page] }
+        {
+          pages: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page],
+          client_language: String
+        }
 
       class Data < Stagehand::Internal::Type::BaseModel
-        attr_reader pages: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page]?
+        attr_accessor pages: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page]
 
-        def pages=: (
-          ::Array[Stagehand::Models::SessionReplayResponse::Data::Page]
-        ) -> ::Array[Stagehand::Models::SessionReplayResponse::Data::Page]
+        attr_reader client_language: String?
+
+        def client_language=: (String) -> String
 
         def initialize: (
-          ?pages: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page]
+          pages: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page],
+          ?client_language: String
         ) -> void
 
         def to_hash: -> {
-          pages: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page]
+          pages: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page],
+          client_language: String
         }
 
         type page =
           {
-            actions: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page::Action]
+            actions: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page::Action],
+            duration: Float,
+            timestamp: Float,
+            url: String
           }
 
         class Page < Stagehand::Internal::Type::BaseModel
-          attr_reader actions: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page::Action]?
+          attr_accessor actions: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page::Action]
 
-          def actions=: (
-            ::Array[Stagehand::Models::SessionReplayResponse::Data::Page::Action]
-          ) -> ::Array[Stagehand::Models::SessionReplayResponse::Data::Page::Action]
+          attr_accessor duration: Float
+
+          attr_accessor timestamp: Float
+
+          attr_accessor url: String
 
           def initialize: (
-            ?actions: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page::Action]
+            actions: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page::Action],
+            duration: Float,
+            timestamp: Float,
+            url: String
           ) -> void
 
           def to_hash: -> {
-            actions: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page::Action]
+            actions: ::Array[Stagehand::Models::SessionReplayResponse::Data::Page::Action],
+            duration: Float,
+            timestamp: Float,
+            url: String
           }
 
           type action =
             {
               method_: String,
+              parameters: ::Hash[Symbol, top],
+              result: ::Hash[Symbol, top],
+              timestamp: Float,
+              end_time: Float,
               token_usage: Stagehand::Models::SessionReplayResponse::Data::Page::Action::TokenUsage
             }
 
           class Action < Stagehand::Internal::Type::BaseModel
-            attr_reader method_: String?
+            attr_accessor method_: String
 
-            def method_=: (String) -> String
+            attr_accessor parameters: ::Hash[Symbol, top]
+
+            attr_accessor result: ::Hash[Symbol, top]
+
+            attr_accessor timestamp: Float
+
+            attr_reader end_time: Float?
+
+            def end_time=: (Float) -> Float
 
             attr_reader token_usage: Stagehand::Models::SessionReplayResponse::Data::Page::Action::TokenUsage?
 
@@ -74,28 +102,35 @@ module Stagehand
             ) -> Stagehand::Models::SessionReplayResponse::Data::Page::Action::TokenUsage
 
             def initialize: (
-              ?method_: String,
+              method_: String,
+              parameters: ::Hash[Symbol, top],
+              result: ::Hash[Symbol, top],
+              timestamp: Float,
+              ?end_time: Float,
               ?token_usage: Stagehand::Models::SessionReplayResponse::Data::Page::Action::TokenUsage
             ) -> void
 
             def to_hash: -> {
               method_: String,
+              parameters: ::Hash[Symbol, top],
+              result: ::Hash[Symbol, top],
+              timestamp: Float,
+              end_time: Float,
               token_usage: Stagehand::Models::SessionReplayResponse::Data::Page::Action::TokenUsage
             }
 
             type token_usage =
               {
-                cached_input_tokens: Float,
+                cost: Float,
                 input_tokens: Float,
                 output_tokens: Float,
-                reasoning_tokens: Float,
                 time_ms: Float
               }
 
             class TokenUsage < Stagehand::Internal::Type::BaseModel
-              attr_reader cached_input_tokens: Float?
+              attr_reader cost: Float?
 
-              def cached_input_tokens=: (Float) -> Float
+              def cost=: (Float) -> Float
 
               attr_reader input_tokens: Float?
 
@@ -105,27 +140,21 @@ module Stagehand
 
               def output_tokens=: (Float) -> Float
 
-              attr_reader reasoning_tokens: Float?
-
-              def reasoning_tokens=: (Float) -> Float
-
               attr_reader time_ms: Float?
 
               def time_ms=: (Float) -> Float
 
               def initialize: (
-                ?cached_input_tokens: Float,
+                ?cost: Float,
                 ?input_tokens: Float,
                 ?output_tokens: Float,
-                ?reasoning_tokens: Float,
                 ?time_ms: Float
               ) -> void
 
               def to_hash: -> {
-                cached_input_tokens: Float,
+                cost: Float,
                 input_tokens: Float,
                 output_tokens: Float,
-                reasoning_tokens: Float,
                 time_ms: Float
               }
             end
