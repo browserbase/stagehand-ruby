@@ -60,39 +60,35 @@ module Stagehand
 
         sig do
           returns(
-            T.nilable(
-              T::Array[Stagehand::Models::SessionReplayResponse::Data::Page]
-            )
+            T::Array[Stagehand::Models::SessionReplayResponse::Data::Page]
           )
         end
-        attr_reader :pages
+        attr_accessor :pages
+
+        sig { returns(T.nilable(String)) }
+        attr_reader :client_language
+
+        sig { params(client_language: String).void }
+        attr_writer :client_language
 
         sig do
           params(
             pages:
               T::Array[
                 Stagehand::Models::SessionReplayResponse::Data::Page::OrHash
-              ]
-          ).void
-        end
-        attr_writer :pages
-
-        sig do
-          params(
-            pages:
-              T::Array[
-                Stagehand::Models::SessionReplayResponse::Data::Page::OrHash
-              ]
+              ],
+            client_language: String
           ).returns(T.attached_class)
         end
-        def self.new(pages: nil)
+        def self.new(pages:, client_language: nil)
         end
 
         sig do
           override.returns(
             {
               pages:
-                T::Array[Stagehand::Models::SessionReplayResponse::Data::Page]
+                T::Array[Stagehand::Models::SessionReplayResponse::Data::Page],
+              client_language: String
             }
           )
         end
@@ -110,34 +106,34 @@ module Stagehand
 
           sig do
             returns(
-              T.nilable(
-                T::Array[
-                  Stagehand::Models::SessionReplayResponse::Data::Page::Action
-                ]
-              )
+              T::Array[
+                Stagehand::Models::SessionReplayResponse::Data::Page::Action
+              ]
             )
           end
-          attr_reader :actions
+          attr_accessor :actions
+
+          sig { returns(Float) }
+          attr_accessor :duration
+
+          sig { returns(Float) }
+          attr_accessor :timestamp
+
+          sig { returns(String) }
+          attr_accessor :url
 
           sig do
             params(
               actions:
                 T::Array[
                   Stagehand::Models::SessionReplayResponse::Data::Page::Action::OrHash
-                ]
-            ).void
-          end
-          attr_writer :actions
-
-          sig do
-            params(
-              actions:
-                T::Array[
-                  Stagehand::Models::SessionReplayResponse::Data::Page::Action::OrHash
-                ]
+                ],
+              duration: Float,
+              timestamp: Float,
+              url: String
             ).returns(T.attached_class)
           end
-          def self.new(actions: nil)
+          def self.new(actions:, duration:, timestamp:, url:)
           end
 
           sig do
@@ -146,7 +142,10 @@ module Stagehand
                 actions:
                   T::Array[
                     Stagehand::Models::SessionReplayResponse::Data::Page::Action
-                  ]
+                  ],
+                duration: Float,
+                timestamp: Float,
+                url: String
               }
             )
           end
@@ -162,11 +161,23 @@ module Stagehand
                 )
               end
 
-            sig { returns(T.nilable(String)) }
-            attr_reader :method_
+            sig { returns(String) }
+            attr_accessor :method_
 
-            sig { params(method_: String).void }
-            attr_writer :method_
+            sig { returns(T::Hash[Symbol, T.anything]) }
+            attr_accessor :parameters
+
+            sig { returns(T::Hash[Symbol, T.anything]) }
+            attr_accessor :result
+
+            sig { returns(Float) }
+            attr_accessor :timestamp
+
+            sig { returns(T.nilable(Float)) }
+            attr_reader :end_time
+
+            sig { params(end_time: Float).void }
+            attr_writer :end_time
 
             sig do
               returns(
@@ -188,17 +199,32 @@ module Stagehand
             sig do
               params(
                 method_: String,
+                parameters: T::Hash[Symbol, T.anything],
+                result: T::Hash[Symbol, T.anything],
+                timestamp: Float,
+                end_time: Float,
                 token_usage:
                   Stagehand::Models::SessionReplayResponse::Data::Page::Action::TokenUsage::OrHash
               ).returns(T.attached_class)
             end
-            def self.new(method_: nil, token_usage: nil)
+            def self.new(
+              method_:,
+              parameters:,
+              result:,
+              timestamp:,
+              end_time: nil,
+              token_usage: nil
+            )
             end
 
             sig do
               override.returns(
                 {
                   method_: String,
+                  parameters: T::Hash[Symbol, T.anything],
+                  result: T::Hash[Symbol, T.anything],
+                  timestamp: Float,
+                  end_time: Float,
                   token_usage:
                     Stagehand::Models::SessionReplayResponse::Data::Page::Action::TokenUsage
                 }
@@ -217,10 +243,10 @@ module Stagehand
                 end
 
               sig { returns(T.nilable(Float)) }
-              attr_reader :cached_input_tokens
+              attr_reader :cost
 
-              sig { params(cached_input_tokens: Float).void }
-              attr_writer :cached_input_tokens
+              sig { params(cost: Float).void }
+              attr_writer :cost
 
               sig { returns(T.nilable(Float)) }
               attr_reader :input_tokens
@@ -235,12 +261,6 @@ module Stagehand
               attr_writer :output_tokens
 
               sig { returns(T.nilable(Float)) }
-              attr_reader :reasoning_tokens
-
-              sig { params(reasoning_tokens: Float).void }
-              attr_writer :reasoning_tokens
-
-              sig { returns(T.nilable(Float)) }
               attr_reader :time_ms
 
               sig { params(time_ms: Float).void }
@@ -248,18 +268,16 @@ module Stagehand
 
               sig do
                 params(
-                  cached_input_tokens: Float,
+                  cost: Float,
                   input_tokens: Float,
                   output_tokens: Float,
-                  reasoning_tokens: Float,
                   time_ms: Float
                 ).returns(T.attached_class)
               end
               def self.new(
-                cached_input_tokens: nil,
+                cost: nil,
                 input_tokens: nil,
                 output_tokens: nil,
-                reasoning_tokens: nil,
                 time_ms: nil
               )
               end
@@ -267,10 +285,9 @@ module Stagehand
               sig do
                 override.returns(
                   {
-                    cached_input_tokens: Float,
+                    cost: Float,
                     input_tokens: Float,
                     output_tokens: Float,
-                    reasoning_tokens: Float,
                     time_ms: Float
                   }
                 )

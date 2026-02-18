@@ -24,28 +24,72 @@ module Stagehand
       class Data < Stagehand::Internal::Type::BaseModel
         # @!attribute pages
         #
-        #   @return [Array<Stagehand::Models::SessionReplayResponse::Data::Page>, nil]
-        optional :pages,
+        #   @return [Array<Stagehand::Models::SessionReplayResponse::Data::Page>]
+        required :pages,
                  -> { Stagehand::Internal::Type::ArrayOf[Stagehand::Models::SessionReplayResponse::Data::Page] }
 
-        # @!method initialize(pages: nil)
+        # @!attribute client_language
+        #
+        #   @return [String, nil]
+        optional :client_language, String, api_name: :clientLanguage
+
+        # @!method initialize(pages:, client_language: nil)
         #   @param pages [Array<Stagehand::Models::SessionReplayResponse::Data::Page>]
+        #   @param client_language [String]
 
         class Page < Stagehand::Internal::Type::BaseModel
           # @!attribute actions
           #
-          #   @return [Array<Stagehand::Models::SessionReplayResponse::Data::Page::Action>, nil]
-          optional :actions,
+          #   @return [Array<Stagehand::Models::SessionReplayResponse::Data::Page::Action>]
+          required :actions,
                    -> { Stagehand::Internal::Type::ArrayOf[Stagehand::Models::SessionReplayResponse::Data::Page::Action] }
 
-          # @!method initialize(actions: nil)
+          # @!attribute duration
+          #
+          #   @return [Float]
+          required :duration, Float
+
+          # @!attribute timestamp
+          #
+          #   @return [Float]
+          required :timestamp, Float
+
+          # @!attribute url
+          #
+          #   @return [String]
+          required :url, String
+
+          # @!method initialize(actions:, duration:, timestamp:, url:)
           #   @param actions [Array<Stagehand::Models::SessionReplayResponse::Data::Page::Action>]
+          #   @param duration [Float]
+          #   @param timestamp [Float]
+          #   @param url [String]
 
           class Action < Stagehand::Internal::Type::BaseModel
             # @!attribute method_
             #
-            #   @return [String, nil]
-            optional :method_, String, api_name: :method
+            #   @return [String]
+            required :method_, String, api_name: :method
+
+            # @!attribute parameters
+            #
+            #   @return [Hash{Symbol=>Object}]
+            required :parameters, Stagehand::Internal::Type::HashOf[Stagehand::Internal::Type::Unknown]
+
+            # @!attribute result
+            #
+            #   @return [Hash{Symbol=>Object}]
+            required :result, Stagehand::Internal::Type::HashOf[Stagehand::Internal::Type::Unknown]
+
+            # @!attribute timestamp
+            #
+            #   @return [Float]
+            required :timestamp, Float
+
+            # @!attribute end_time
+            #
+            #   @return [Float, nil]
+            optional :end_time, Float, api_name: :endTime
 
             # @!attribute token_usage
             #
@@ -54,16 +98,20 @@ module Stagehand
                      -> { Stagehand::Models::SessionReplayResponse::Data::Page::Action::TokenUsage },
                      api_name: :tokenUsage
 
-            # @!method initialize(method_: nil, token_usage: nil)
+            # @!method initialize(method_:, parameters:, result:, timestamp:, end_time: nil, token_usage: nil)
             #   @param method_ [String]
+            #   @param parameters [Hash{Symbol=>Object}]
+            #   @param result [Hash{Symbol=>Object}]
+            #   @param timestamp [Float]
+            #   @param end_time [Float]
             #   @param token_usage [Stagehand::Models::SessionReplayResponse::Data::Page::Action::TokenUsage]
 
             # @see Stagehand::Models::SessionReplayResponse::Data::Page::Action#token_usage
             class TokenUsage < Stagehand::Internal::Type::BaseModel
-              # @!attribute cached_input_tokens
+              # @!attribute cost
               #
               #   @return [Float, nil]
-              optional :cached_input_tokens, Float, api_name: :cachedInputTokens
+              optional :cost, Float
 
               # @!attribute input_tokens
               #
@@ -75,21 +123,15 @@ module Stagehand
               #   @return [Float, nil]
               optional :output_tokens, Float, api_name: :outputTokens
 
-              # @!attribute reasoning_tokens
-              #
-              #   @return [Float, nil]
-              optional :reasoning_tokens, Float, api_name: :reasoningTokens
-
               # @!attribute time_ms
               #
               #   @return [Float, nil]
               optional :time_ms, Float, api_name: :timeMs
 
-              # @!method initialize(cached_input_tokens: nil, input_tokens: nil, output_tokens: nil, reasoning_tokens: nil, time_ms: nil)
-              #   @param cached_input_tokens [Float]
+              # @!method initialize(cost: nil, input_tokens: nil, output_tokens: nil, time_ms: nil)
+              #   @param cost [Float]
               #   @param input_tokens [Float]
               #   @param output_tokens [Float]
-              #   @param reasoning_tokens [Float]
               #   @param time_ms [Float]
             end
           end
