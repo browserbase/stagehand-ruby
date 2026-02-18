@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.6.0 (2026-02-18)
+
+Full Changelog: [v3.5.2...v3.6.0](https://github.com/browserbase/stagehand-ruby/compare/v3.5.2...v3.6.0)
+
+### Features
+
+* randomize region used for evals, split out pnpm and turbo cache, veri… ([a68a9d2](https://github.com/browserbase/stagehand-ruby/commit/a68a9d2705b2c3b3b35dcaab4b5693184194774b))
+
 ## 3.5.2 (2026-02-07)
 
 Full Changelog: [v3.5.1...v3.5.2](https://github.com/browserbase/stagehand-ruby/compare/v3.5.1...v3.5.2)
