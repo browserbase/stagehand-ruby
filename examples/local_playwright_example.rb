@@ -119,7 +119,7 @@ Playwright.create(playwright_cli_executable_path: "./node_modules/.bin/playwrigh
   session_id = nil
   begin
     start_response = client.sessions.start(
-      model_name: "openai/gpt-5-nano",
+      model_name: "anthropic/claude-sonnet-4-6",
       browser: {
         type: :local,
         launch_options: {
@@ -174,7 +174,7 @@ Playwright.create(playwright_cli_executable_path: "./node_modules/.bin/playwrigh
       },
       agent_config: {
         model: Stagehand::ModelConfig.new(
-          model_name: "openai/gpt-5-nano",
+          model_name: "anthropic/claude-opus-4-6",
           api_key: model_key
         ),
         cua: false

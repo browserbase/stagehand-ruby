@@ -74,7 +74,7 @@ begin
     cdp_url = browser_server.ws_endpoint
 
     start_response = client.sessions.start(
-      model_name: "openai/gpt-5-nano",
+      model_name: "anthropic/claude-sonnet-4-6",
       browser: {
         type: :local,
         launch_options: {
@@ -160,7 +160,7 @@ begin
         },
         agent_config: {
           model: {
-            model_name: "openai/gpt-5-nano",
+            model_name: "anthropic/claude-opus-4-6",
             api_key: model_key
           },
           cua: false
@@ -176,7 +176,7 @@ begin
           },
           agent_config: {
             model: {
-              model_name: "openai/gpt-5-nano",
+              model_name: "anthropic/claude-opus-4-6",
               api_key: model_key
             },
             cua: false
