@@ -4,7 +4,7 @@ require_relative "../test_helper"
 
 class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
   def test_act_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response =
       @stagehand.sessions.act("c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123", input: "Click the login button")
@@ -22,7 +22,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
   end
 
   def test_end_
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @stagehand.sessions.end_("c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123")
 
@@ -38,7 +38,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
   end
 
   def test_execute_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response =
       @stagehand.sessions.execute(
@@ -60,7 +60,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
   end
 
   def test_extract
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @stagehand.sessions.extract("c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123")
 
@@ -77,7 +77,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
   end
 
   def test_navigate_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response =
       @stagehand.sessions.navigate("c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123", url: "https://example.com")
@@ -95,7 +95,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
   end
 
   def test_observe
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @stagehand.sessions.observe("c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123")
 
@@ -112,7 +112,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
   end
 
   def test_replay
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @stagehand.sessions.replay("c4dbf3a9-9a58-4b22-8a1c-9f20f9f9e123")
 
@@ -129,7 +129,7 @@ class Stagehand::Test::Resources::SessionsTest < Stagehand::Test::ResourceTest
   end
 
   def test_start_required_params
-    skip("Prism tests are disabled")
+    skip("Mock server tests are disabled")
 
     response = @stagehand.sessions.start(model_name: "openai/gpt-4o")
 
