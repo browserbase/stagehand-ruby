@@ -80,6 +80,8 @@ module Stagehand
         GOOGLE = T.let(:google, Stagehand::ModelConfig::Provider::TaggedSymbol)
         MICROSOFT =
           T.let(:microsoft, Stagehand::ModelConfig::Provider::TaggedSymbol)
+        BEDROCK =
+          T.let(:bedrock, Stagehand::ModelConfig::Provider::TaggedSymbol)
 
         sig do
           override.returns(

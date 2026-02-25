@@ -137,7 +137,7 @@ module Stagehand
           def self?.variants: -> ::Array[Stagehand::Models::SessionExecuteParams::AgentConfig::model]
         end
 
-        type provider = :openai | :anthropic | :google | :microsoft
+        type provider = :openai | :anthropic | :google | :microsoft | :bedrock
 
         module Provider
           extend Stagehand::Internal::Type::Enum
@@ -146,6 +146,7 @@ module Stagehand
           ANTHROPIC: :anthropic
           GOOGLE: :google
           MICROSOFT: :microsoft
+          BEDROCK: :bedrock
 
           def self?.values: -> ::Array[Stagehand::Models::SessionExecuteParams::AgentConfig::provider]
         end
