@@ -46,6 +46,7 @@ module Stagehand
         ANTHROPIC = :anthropic
         GOOGLE = :google
         MICROSOFT = :microsoft
+        BEDROCK = :bedrock
 
         # @!method self.values
         #   @return [Array<Symbol>]
