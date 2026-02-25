@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.7.0 (2026-02-25)
+
+Full Changelog: [v3.6.1...v3.7.0](https://github.com/browserbase/stagehand-ruby/compare/v3.6.1...v3.7.0)
+
+### Features
+
+* Add bedrock to provider enum in Zod schemas and OpenAPI spec ([d48f5b4](https://github.com/browserbase/stagehand-ruby/commit/d48f5b49219186ee326adad925b4d1a67d4fd1c6))
+
 ## 3.6.1 (2026-02-25)
 
 Full Changelog: [v3.6.0...v3.6.1](https://github.com/browserbase/stagehand-ruby/compare/v3.6.0...v3.6.1)
