@@ -334,6 +334,11 @@ module Stagehand
               :microsoft,
               Stagehand::SessionExecuteParams::AgentConfig::Provider::TaggedSymbol
             )
+          BEDROCK =
+            T.let(
+              :bedrock,
+              Stagehand::SessionExecuteParams::AgentConfig::Provider::TaggedSymbol
+            )
 
           sig do
             override.returns(
