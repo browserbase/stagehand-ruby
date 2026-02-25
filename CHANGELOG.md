@@ -1,5 +1,14 @@
 # Changelog
 
+## 3.6.1 (2026-02-25)
+
+Full Changelog: [v3.6.0...v3.6.1](https://github.com/browserbase/stagehand-ruby/compare/v3.6.0...v3.6.1)
+
+### Chores
+
+* **internal:** remove mock server code ([621ce32](https://github.com/browserbase/stagehand-ruby/commit/621ce327c5c39cfebd023ca4a3b178f4eada2cdc))
+* update mock server docs ([29f592b](https://github.com/browserbase/stagehand-ruby/commit/29f592b49d6b99450bd695a0f18f5addefcdade0))
+
 ## 3.6.0 (2026-02-18)
 
 Full Changelog: [v3.5.2...v3.6.0](https://github.com/browserbase/stagehand-ruby/compare/v3.5.2...v3.6.0)
