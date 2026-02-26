@@ -183,6 +183,8 @@ Examples and dependencies:
 - `examples/local_playwright_example.rb`: `playwright-ruby-client` + Playwright browsers
 - `examples/local_watir_example.rb`: `watir`
 
+Multiregion support: see `examples/local_server_multiregion_browser_example.rb`.
+
 Install dependencies for the example you want to run, then execute it:
 
 ```bash
