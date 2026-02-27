@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.7.1 (2026-02-27)
+
+Full Changelog: [v3.7.0...v3.7.1](https://github.com/browserbase/stagehand-ruby/compare/v3.7.0...v3.7.1)
+
+### Bug Fixes
+
+* properly mock time in ruby ci tests ([ed2c2c2](https://github.com/browserbase/stagehand-ruby/commit/ed2c2c28400498332f0742b2616fd14a66646690))
+
 ## 3.7.0 (2026-02-25)
 
 Full Changelog: [v3.6.1...v3.7.0](https://github.com/browserbase/stagehand-ruby/compare/v3.6.1...v3.7.0)
