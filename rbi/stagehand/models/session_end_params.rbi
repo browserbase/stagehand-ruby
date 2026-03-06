@@ -11,6 +11,10 @@ module Stagehand
           T.any(Stagehand::SessionEndParams, Stagehand::Internal::AnyHash)
         end
 
+      # Unique session identifier
+      sig { returns(String) }
+      attr_accessor :id
+
       # Whether to stream the response via SSE
       sig do
         returns(
@@ -29,12 +33,15 @@ module Stagehand
 
       sig do
         params(
+          id: String,
           x_stream_response:
             Stagehand::SessionEndParams::XStreamResponse::OrSymbol,
           request_options: Stagehand::RequestOptions::OrHash
         ).returns(T.attached_class)
       end
       def self.new(
+        # Unique session identifier
+        id:,
         # Whether to stream the response via SSE
         x_stream_response: nil,
         request_options: {}
@@ -44,6 +51,7 @@ module Stagehand
       sig do
         override.returns(
           {
+            id: String,
             x_stream_response:
               Stagehand::SessionEndParams::XStreamResponse::OrSymbol,
             request_options: Stagehand::RequestOptions

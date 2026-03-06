@@ -11,6 +11,10 @@ module Stagehand
           T.any(Stagehand::SessionExecuteParams, Stagehand::Internal::AnyHash)
         end
 
+      # Unique session identifier
+      sig { returns(String) }
+      attr_accessor :id
+
       sig { returns(Stagehand::SessionExecuteParams::AgentConfig) }
       attr_reader :agent_config
 
@@ -61,6 +65,7 @@ module Stagehand
 
       sig do
         params(
+          id: String,
           agent_config: Stagehand::SessionExecuteParams::AgentConfig::OrHash,
           execute_options:
             Stagehand::SessionExecuteParams::ExecuteOptions::OrHash,
@@ -72,6 +77,8 @@ module Stagehand
         ).returns(T.attached_class)
       end
       def self.new(
+        # Unique session identifier
+        id:,
         agent_config:,
         execute_options:,
         # Target frame ID for the agent
@@ -87,6 +94,7 @@ module Stagehand
       sig do
         override.returns(
           {
+            id: String,
             agent_config: Stagehand::SessionExecuteParams::AgentConfig,
             execute_options: Stagehand::SessionExecuteParams::ExecuteOptions,
             frame_id: T.nilable(String),

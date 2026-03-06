@@ -11,6 +11,10 @@ module Stagehand
           T.any(Stagehand::SessionActParams, Stagehand::Internal::AnyHash)
         end
 
+      # Unique session identifier
+      sig { returns(String) }
+      attr_accessor :id
+
       # Natural language instruction or Action object
       sig { returns(T.any(String, Stagehand::Action)) }
       attr_accessor :input
@@ -43,6 +47,7 @@ module Stagehand
 
       sig do
         params(
+          id: String,
           input: T.any(String, Stagehand::Action::OrHash),
           frame_id: T.nilable(String),
           options: Stagehand::SessionActParams::Options::OrHash,
@@ -52,6 +57,8 @@ module Stagehand
         ).returns(T.attached_class)
       end
       def self.new(
+        # Unique session identifier
+        id:,
         # Natural language instruction or Action object
         input:,
         # Target frame ID for the action
@@ -66,6 +73,7 @@ module Stagehand
       sig do
         override.returns(
           {
+            id: String,
             input: T.any(String, Stagehand::Action),
             frame_id: T.nilable(String),
             options: Stagehand::SessionActParams::Options,

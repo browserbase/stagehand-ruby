@@ -11,6 +11,10 @@ module Stagehand
           T.any(Stagehand::SessionNavigateParams, Stagehand::Internal::AnyHash)
         end
 
+      # Unique session identifier
+      sig { returns(String) }
+      attr_accessor :id
+
       # URL to navigate to
       sig { returns(String) }
       attr_accessor :url
@@ -52,6 +56,7 @@ module Stagehand
 
       sig do
         params(
+          id: String,
           url: String,
           frame_id: T.nilable(String),
           options: Stagehand::SessionNavigateParams::Options::OrHash,
@@ -62,6 +67,8 @@ module Stagehand
         ).returns(T.attached_class)
       end
       def self.new(
+        # Unique session identifier
+        id:,
         # URL to navigate to
         url:,
         # Target frame ID for the navigation
@@ -78,6 +85,7 @@ module Stagehand
       sig do
         override.returns(
           {
+            id: String,
             url: String,
             frame_id: T.nilable(String),
             options: Stagehand::SessionNavigateParams::Options,

@@ -2,6 +2,7 @@ module Stagehand
   module Models
     type session_act_params =
       {
+        id: String,
         input: Stagehand::Models::SessionActParams::input,
         frame_id: String?,
         options: Stagehand::SessionActParams::Options,
@@ -12,6 +13,8 @@ module Stagehand
     class SessionActParams < Stagehand::Internal::Type::BaseModel
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters
+
+      attr_accessor id: String
 
       attr_accessor input: Stagehand::Models::SessionActParams::input
 
@@ -30,6 +33,7 @@ module Stagehand
       ) -> Stagehand::Models::SessionActParams::x_stream_response
 
       def initialize: (
+        id: String,
         input: Stagehand::Models::SessionActParams::input,
         ?frame_id: String?,
         ?options: Stagehand::SessionActParams::Options,
@@ -38,6 +42,7 @@ module Stagehand
       ) -> void
 
       def to_hash: -> {
+        id: String,
         input: Stagehand::Models::SessionActParams::input,
         frame_id: String?,
         options: Stagehand::SessionActParams::Options,

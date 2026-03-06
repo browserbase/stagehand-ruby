@@ -2,6 +2,7 @@ module Stagehand
   module Models
     type session_observe_params =
       {
+        id: String,
         frame_id: String?,
         instruction: String,
         options: Stagehand::SessionObserveParams::Options,
@@ -12,6 +13,8 @@ module Stagehand
     class SessionObserveParams < Stagehand::Internal::Type::BaseModel
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters
+
+      attr_accessor id: String
 
       attr_accessor frame_id: String?
 
@@ -32,6 +35,7 @@ module Stagehand
       ) -> Stagehand::Models::SessionObserveParams::x_stream_response
 
       def initialize: (
+        id: String,
         ?frame_id: String?,
         ?instruction: String,
         ?options: Stagehand::SessionObserveParams::Options,
@@ -40,6 +44,7 @@ module Stagehand
       ) -> void
 
       def to_hash: -> {
+        id: String,
         frame_id: String?,
         instruction: String,
         options: Stagehand::SessionObserveParams::Options,
