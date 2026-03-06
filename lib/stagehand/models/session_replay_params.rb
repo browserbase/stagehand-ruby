@@ -7,13 +7,21 @@ module Stagehand
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters
 
+      # @!attribute id
+      #   Unique session identifier
+      #
+      #   @return [String]
+      required :id, String
+
       # @!attribute x_stream_response
       #   Whether to stream the response via SSE
       #
       #   @return [Symbol, Stagehand::Models::SessionReplayParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { Stagehand::SessionReplayParams::XStreamResponse }
 
-      # @!method initialize(x_stream_response: nil, request_options: {})
+      # @!method initialize(id:, x_stream_response: nil, request_options: {})
+      #   @param id [String] Unique session identifier
+      #
       #   @param x_stream_response [Symbol, Stagehand::Models::SessionReplayParams::XStreamResponse] Whether to stream the response via SSE
       #
       #   @param request_options [Stagehand::RequestOptions, Hash{Symbol=>Object}]

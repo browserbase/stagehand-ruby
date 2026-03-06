@@ -2,6 +2,7 @@ module Stagehand
   module Models
     type session_replay_params =
       {
+        id: String,
         x_stream_response: Stagehand::Models::SessionReplayParams::x_stream_response
       }
       & Stagehand::Internal::Type::request_parameters
@@ -10,6 +11,8 @@ module Stagehand
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters
 
+      attr_accessor id: String
+
       attr_reader x_stream_response: Stagehand::Models::SessionReplayParams::x_stream_response?
 
       def x_stream_response=: (
@@ -17,11 +20,13 @@ module Stagehand
       ) -> Stagehand::Models::SessionReplayParams::x_stream_response
 
       def initialize: (
+        id: String,
         ?x_stream_response: Stagehand::Models::SessionReplayParams::x_stream_response,
         ?request_options: Stagehand::request_opts
       ) -> void
 
       def to_hash: -> {
+        id: String,
         x_stream_response: Stagehand::Models::SessionReplayParams::x_stream_response,
         request_options: Stagehand::RequestOptions
       }

@@ -11,6 +11,10 @@ module Stagehand
           T.any(Stagehand::SessionObserveParams, Stagehand::Internal::AnyHash)
         end
 
+      # Unique session identifier
+      sig { returns(String) }
+      attr_accessor :id
+
       # Target frame ID for the observation
       sig { returns(T.nilable(String)) }
       attr_accessor :frame_id
@@ -48,6 +52,7 @@ module Stagehand
 
       sig do
         params(
+          id: String,
           frame_id: T.nilable(String),
           instruction: String,
           options: Stagehand::SessionObserveParams::Options::OrHash,
@@ -57,6 +62,8 @@ module Stagehand
         ).returns(T.attached_class)
       end
       def self.new(
+        # Unique session identifier
+        id:,
         # Target frame ID for the observation
         frame_id: nil,
         # Natural language instruction for what actions to find
@@ -71,6 +78,7 @@ module Stagehand
       sig do
         override.returns(
           {
+            id: String,
             frame_id: T.nilable(String),
             instruction: String,
             options: Stagehand::SessionObserveParams::Options,
