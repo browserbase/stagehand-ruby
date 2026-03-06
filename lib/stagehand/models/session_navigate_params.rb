@@ -7,6 +7,12 @@ module Stagehand
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters
 
+      # @!attribute id
+      #   Unique session identifier
+      #
+      #   @return [String]
+      required :id, String
+
       # @!attribute url
       #   URL to navigate to
       #
@@ -36,7 +42,9 @@ module Stagehand
       #   @return [Symbol, Stagehand::Models::SessionNavigateParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { Stagehand::SessionNavigateParams::XStreamResponse }
 
-      # @!method initialize(url:, frame_id: nil, options: nil, stream_response: nil, x_stream_response: nil, request_options: {})
+      # @!method initialize(id:, url:, frame_id: nil, options: nil, stream_response: nil, x_stream_response: nil, request_options: {})
+      #   @param id [String] Unique session identifier
+      #
       #   @param url [String] URL to navigate to
       #
       #   @param frame_id [String, nil] Target frame ID for the navigation
