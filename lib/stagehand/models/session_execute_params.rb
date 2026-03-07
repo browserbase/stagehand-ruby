@@ -9,6 +9,12 @@ module Stagehand
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters
 
+      # @!attribute id
+      #   Unique session identifier
+      #
+      #   @return [String]
+      required :id, String
+
       # @!attribute agent_config
       #
       #   @return [Stagehand::Models::SessionExecuteParams::AgentConfig]
@@ -39,7 +45,9 @@ module Stagehand
       #   @return [Symbol, Stagehand::Models::SessionExecuteParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { Stagehand::SessionExecuteParams::XStreamResponse }
 
-      # @!method initialize(agent_config:, execute_options:, frame_id: nil, should_cache: nil, x_stream_response: nil, request_options: {})
+      # @!method initialize(id:, agent_config:, execute_options:, frame_id: nil, should_cache: nil, x_stream_response: nil, request_options: {})
+      #   @param id [String] Unique session identifier
+      #
       #   @param agent_config [Stagehand::Models::SessionExecuteParams::AgentConfig]
       #
       #   @param execute_options [Stagehand::Models::SessionExecuteParams::ExecuteOptions]

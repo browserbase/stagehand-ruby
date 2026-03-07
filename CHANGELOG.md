@@ -1,5 +1,16 @@
 # Changelog
 
+## 3.7.2 (2026-03-07)
+
+Full Changelog: [v3.7.1...v3.7.2](https://github.com/browserbase/stagehand-ruby/compare/v3.7.1...v3.7.2)
+
+### Chores
+
+* **ci:** add build step ([ed6573f](https://github.com/browserbase/stagehand-ruby/commit/ed6573f2ddab4f5f51d1262480cb663da5e003d0))
+* **ci:** skip uploading artifacts on stainless-internal branches ([3a7e90b](https://github.com/browserbase/stagehand-ruby/commit/3a7e90bc8dd9f983dbbc7be16f997dd2dc02c3c0))
+* **internal:** codegen related update ([f714af2](https://github.com/browserbase/stagehand-ruby/commit/f714af2d7d5b9b822362aa10f6f6facab3332eaf))
+* **internal:** codegen related update ([ed9fab1](https://github.com/browserbase/stagehand-ruby/commit/ed9fab1f726c05ef48d4a55507b09212d7ced713))
+
 ## 3.7.1 (2026-02-27)
 
 Full Changelog: [v3.7.0...v3.7.1](https://github.com/browserbase/stagehand-ruby/compare/v3.7.0...v3.7.1)
