@@ -144,6 +144,11 @@ module Stagehand
           #   @return [Array<String>, nil]
           optional :args, Stagehand::Internal::Type::ArrayOf[String]
 
+          # @!attribute cdp_headers
+          #
+          #   @return [Hash{Symbol=>String}, nil]
+          optional :cdp_headers, Stagehand::Internal::Type::HashOf[String], api_name: :cdpHeaders
+
           # @!attribute cdp_url
           #
           #   @return [String, nil]
@@ -231,9 +236,10 @@ module Stagehand
           #   @return [Stagehand::Models::SessionStartParams::Browser::LaunchOptions::Viewport, nil]
           optional :viewport, -> { Stagehand::SessionStartParams::Browser::LaunchOptions::Viewport }
 
-          # @!method initialize(accept_downloads: nil, args: nil, cdp_url: nil, chromium_sandbox: nil, connect_timeout_ms: nil, device_scale_factor: nil, devtools: nil, downloads_path: nil, executable_path: nil, has_touch: nil, headless: nil, ignore_default_args: nil, ignore_https_errors: nil, locale: nil, port: nil, preserve_user_data_dir: nil, proxy: nil, user_data_dir: nil, viewport: nil)
+          # @!method initialize(accept_downloads: nil, args: nil, cdp_headers: nil, cdp_url: nil, chromium_sandbox: nil, connect_timeout_ms: nil, device_scale_factor: nil, devtools: nil, downloads_path: nil, executable_path: nil, has_touch: nil, headless: nil, ignore_default_args: nil, ignore_https_errors: nil, locale: nil, port: nil, preserve_user_data_dir: nil, proxy: nil, user_data_dir: nil, viewport: nil)
           #   @param accept_downloads [Boolean]
           #   @param args [Array<String>]
+          #   @param cdp_headers [Hash{Symbol=>String}]
           #   @param cdp_url [String]
           #   @param chromium_sandbox [Boolean]
           #   @param connect_timeout_ms [Float]
