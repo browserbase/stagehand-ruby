@@ -281,6 +281,12 @@ module Stagehand
           sig { params(args: T::Array[String]).void }
           attr_writer :args
 
+          sig { returns(T.nilable(T::Hash[Symbol, String])) }
+          attr_reader :cdp_headers
+
+          sig { params(cdp_headers: T::Hash[Symbol, String]).void }
+          attr_writer :cdp_headers
+
           sig { returns(T.nilable(String)) }
           attr_reader :cdp_url
 
@@ -420,6 +426,7 @@ module Stagehand
             params(
               accept_downloads: T::Boolean,
               args: T::Array[String],
+              cdp_headers: T::Hash[Symbol, String],
               cdp_url: String,
               chromium_sandbox: T::Boolean,
               connect_timeout_ms: Float,
@@ -445,6 +452,7 @@ module Stagehand
           def self.new(
             accept_downloads: nil,
             args: nil,
+            cdp_headers: nil,
             cdp_url: nil,
             chromium_sandbox: nil,
             connect_timeout_ms: nil,
@@ -470,6 +478,7 @@ module Stagehand
               {
                 accept_downloads: T::Boolean,
                 args: T::Array[String],
+                cdp_headers: T::Hash[Symbol, String],
                 cdp_url: String,
                 chromium_sandbox: T::Boolean,
                 connect_timeout_ms: Float,
