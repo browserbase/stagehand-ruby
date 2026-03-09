@@ -147,6 +147,7 @@ module Stagehand
           {
             accept_downloads: bool,
             args: ::Array[String],
+            cdp_headers: ::Hash[Symbol, String],
             cdp_url: String,
             chromium_sandbox: bool,
             connect_timeout_ms: Float,
@@ -174,6 +175,10 @@ module Stagehand
           attr_reader args: ::Array[String]?
 
           def args=: (::Array[String]) -> ::Array[String]
+
+          attr_reader cdp_headers: ::Hash[Symbol, String]?
+
+          def cdp_headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
 
           attr_reader cdp_url: String?
 
@@ -252,6 +257,7 @@ module Stagehand
           def initialize: (
             ?accept_downloads: bool,
             ?args: ::Array[String],
+            ?cdp_headers: ::Hash[Symbol, String],
             ?cdp_url: String,
             ?chromium_sandbox: bool,
             ?connect_timeout_ms: Float,
@@ -274,6 +280,7 @@ module Stagehand
           def to_hash: -> {
             accept_downloads: bool,
             args: ::Array[String],
+            cdp_headers: ::Hash[Symbol, String],
             cdp_url: String,
             chromium_sandbox: bool,
             connect_timeout_ms: Float,
