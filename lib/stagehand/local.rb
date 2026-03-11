@@ -85,7 +85,7 @@ module Stagehand
 
       def binary_filename
         platform, arch = platform_tag
-        name = "stagehand-server-#{platform}-#{arch}"
+        name = "stagehand-server-v3-#{platform}-#{arch}"
         name += ".exe" if platform == "win32"
         name
       end
@@ -131,9 +131,9 @@ module Stagehand
 
       def resolve_version(version)
         return fetch_latest_tag if version.empty? || version == "latest"
-        return version if version.start_with?("stagehand-server/")
+        return version if version.start_with?("stagehand-server-v3/")
 
-        "stagehand-server/#{version}"
+        "stagehand-server-v3/#{version}"
       end
 
       def fetch_latest_tag
@@ -148,9 +148,9 @@ module Stagehand
         releases = JSON.parse(response.body.to_s)
         releases.each do |release|
           tag = release["tag_name"]
-          return tag if tag.is_a?(String) && tag.start_with?("stagehand-server/")
+          return tag if tag.is_a?(String) && tag.start_with?("stagehand-server-v3/")
         end
-        raise "Failed to find stagehand-server release tag"
+        raise "Failed to find stagehand-server-v3 release tag"
       end
 
       def download_binary(tag, dest_path)

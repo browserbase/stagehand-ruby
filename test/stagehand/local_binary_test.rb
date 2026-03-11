@@ -58,9 +58,9 @@ class Stagehand::LocalBinaryTest < Minitest::Test
     filename = Stagehand::Local::Binary.binary_filename
 
     stub_request(:get, "https://api.github.com/repos/browserbase/stagehand/releases?per_page=15")
-      .to_return(status: 200, body: [{tag_name: "stagehand-server/v9.9.9"}].to_json)
+      .to_return(status: 200, body: [{tag_name: "stagehand-server-v3/v9.9.9"}].to_json)
 
-    stub_request(:get, "https://github.com/browserbase/stagehand/releases/download/stagehand-server/v9.9.9/#{filename}")
+    stub_request(:get, "https://github.com/browserbase/stagehand/releases/download/stagehand-server-v3/v9.9.9/#{filename}")
       .to_return(status: 200, body: "binary")
 
     path = Stagehand::Local::Binary.resolve_binary_path
@@ -73,9 +73,9 @@ class Stagehand::LocalBinaryTest < Minitest::Test
     filename = Stagehand::Local::Binary.binary_filename
 
     stub_request(:get, "https://api.github.com/repos/browserbase/stagehand/releases?per_page=15")
-      .to_return(status: 200, body: [{tag_name: "stagehand-server/v1.2.3"}].to_json)
+      .to_return(status: 200, body: [{tag_name: "stagehand-server-v3/v1.2.3"}].to_json)
 
-    stub_request(:get, "https://github.com/browserbase/stagehand/releases/download/stagehand-server/v1.2.3/#{filename}")
+    stub_request(:get, "https://github.com/browserbase/stagehand/releases/download/stagehand-server-v3/v1.2.3/#{filename}")
       .to_return(status: 404, body: "not found")
 
     err = assert_raises(RuntimeError) { Stagehand::Local::Binary.resolve_binary_path }
