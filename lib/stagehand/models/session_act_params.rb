@@ -9,6 +9,12 @@ module Stagehand
       extend Stagehand::Internal::Type::RequestParameters::Converter
       include Stagehand::Internal::Type::RequestParameters
 
+      # @!attribute id
+      #   Unique session identifier
+      #
+      #   @return [String]
+      required :id, String
+
       # @!attribute input
       #   Natural language instruction or Action object
       #
@@ -32,7 +38,9 @@ module Stagehand
       #   @return [Symbol, Stagehand::Models::SessionActParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { Stagehand::SessionActParams::XStreamResponse }
 
-      # @!method initialize(input:, frame_id: nil, options: nil, x_stream_response: nil, request_options: {})
+      # @!method initialize(id:, input:, frame_id: nil, options: nil, x_stream_response: nil, request_options: {})
+      #   @param id [String] Unique session identifier
+      #
       #   @param input [String, Stagehand::Models::Action] Natural language instruction or Action object
       #
       #   @param frame_id [String, nil] Target frame ID for the action

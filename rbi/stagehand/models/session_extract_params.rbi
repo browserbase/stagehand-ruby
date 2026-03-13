@@ -11,6 +11,10 @@ module Stagehand
           T.any(Stagehand::SessionExtractParams, Stagehand::Internal::AnyHash)
         end
 
+      # Unique session identifier
+      sig { returns(String) }
+      attr_accessor :id
+
       # Target frame ID for the extraction
       sig { returns(T.nilable(String)) }
       attr_accessor :frame_id
@@ -55,6 +59,7 @@ module Stagehand
 
       sig do
         params(
+          id: String,
           frame_id: T.nilable(String),
           instruction: String,
           options: Stagehand::SessionExtractParams::Options::OrHash,
@@ -65,6 +70,8 @@ module Stagehand
         ).returns(T.attached_class)
       end
       def self.new(
+        # Unique session identifier
+        id:,
         # Target frame ID for the extraction
         frame_id: nil,
         # Natural language instruction for what to extract
@@ -81,6 +88,7 @@ module Stagehand
       sig do
         override.returns(
           {
+            id: String,
             frame_id: T.nilable(String),
             instruction: String,
             options: Stagehand::SessionExtractParams::Options,
