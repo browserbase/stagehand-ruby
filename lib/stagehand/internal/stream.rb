@@ -16,14 +16,16 @@ module Stagehand
       # @return [Enumerable<generic<Elem>>]
       private def iterator
         # rubocop:disable Metrics/BlockLength
-        # rubocop:disable Lint/DuplicateBranch
         @iterator ||= Stagehand::Internal::Util.chain_fused(@stream) do |y|
+          consume = false
+
           @stream.each do |msg|
+            next if consume
+
             case msg
             in {data: String => data} if data.start_with?("{\"data\":{\"status\":\"finished\"")
-              decoded = JSON.parse(data, symbolize_names: true)
-              unwrapped = Stagehand::Internal::Util.dig(decoded, @unwrap)
-              y << Stagehand::Internal::Type::Converter.coerce(@model, unwrapped)
+              consume = true
+              next
             in {data: String => data} if data.start_with?("error")
               decoded = Kernel.then do
                 JSON.parse(data, symbolize_names: true)
@@ -47,7 +49,6 @@ module Stagehand
             end
           end
         end
-        # rubocop:enable Lint/DuplicateBranch
         # rubocop:enable Metrics/BlockLength
       end
     end
