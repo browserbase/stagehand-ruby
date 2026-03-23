@@ -56,7 +56,8 @@ module Stagehand
         {
           model: Stagehand::Models::SessionObserveParams::Options::model,
           selector: String,
-          timeout: Float
+          timeout: Float,
+          variables: ::Hash[Symbol, Stagehand::Models::SessionObserveParams::Options::variable]
         }
 
       class Options < Stagehand::Internal::Type::BaseModel
@@ -74,16 +75,24 @@ module Stagehand
 
         def timeout=: (Float) -> Float
 
+        attr_reader variables: ::Hash[Symbol, Stagehand::Models::SessionObserveParams::Options::variable]?
+
+        def variables=: (
+          ::Hash[Symbol, Stagehand::Models::SessionObserveParams::Options::variable]
+        ) -> ::Hash[Symbol, Stagehand::Models::SessionObserveParams::Options::variable]
+
         def initialize: (
           ?model: Stagehand::Models::SessionObserveParams::Options::model,
           ?selector: String,
-          ?timeout: Float
+          ?timeout: Float,
+          ?variables: ::Hash[Symbol, Stagehand::Models::SessionObserveParams::Options::variable]
         ) -> void
 
         def to_hash: -> {
           model: Stagehand::Models::SessionObserveParams::Options::model,
           selector: String,
-          timeout: Float
+          timeout: Float,
+          variables: ::Hash[Symbol, Stagehand::Models::SessionObserveParams::Options::variable]
         }
 
         type model = Stagehand::ModelConfig | String
@@ -92,6 +101,50 @@ module Stagehand
           extend Stagehand::Internal::Type::Union
 
           def self?.variants: -> ::Array[Stagehand::Models::SessionObserveParams::Options::model]
+        end
+
+        type variable =
+          String
+          | Float
+          | bool
+          | Stagehand::SessionObserveParams::Options::Variable::UnionMember3
+
+        module Variable
+          extend Stagehand::Internal::Type::Union
+
+          type union_member3 =
+            {
+              value: Stagehand::Models::SessionObserveParams::Options::Variable::UnionMember3::value,
+              description: String
+            }
+
+          class UnionMember3 < Stagehand::Internal::Type::BaseModel
+            attr_accessor value: Stagehand::Models::SessionObserveParams::Options::Variable::UnionMember3::value
+
+            attr_reader description: String?
+
+            def description=: (String) -> String
+
+            def initialize: (
+              value: Stagehand::Models::SessionObserveParams::Options::Variable::UnionMember3::value,
+              ?description: String
+            ) -> void
+
+            def to_hash: -> {
+              value: Stagehand::Models::SessionObserveParams::Options::Variable::UnionMember3::value,
+              description: String
+            }
+
+            type value = String | Float | bool
+
+            module Value
+              extend Stagehand::Internal::Type::Union
+
+              def self?.variants: -> ::Array[Stagehand::Models::SessionObserveParams::Options::Variable::UnionMember3::value]
+            end
+          end
+
+          def self?.variants: -> ::Array[Stagehand::Models::SessionObserveParams::Options::variable]
         end
       end
 
