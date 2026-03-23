@@ -78,17 +78,22 @@ module Stagehand
         optional :timeout, Float
 
         # @!attribute variables
-        #   Variables to substitute in the action instruction
+        #   Variables to substitute in the action instruction. Accepts flat primitives or {
+        #   value, description? } objects.
         #
-        #   @return [Hash{Symbol=>String}, nil]
-        optional :variables, Stagehand::Internal::Type::HashOf[String]
+        #   @return [Hash{Symbol=>String, Float, Boolean, Stagehand::Models::SessionActParams::Options::Variable::UnionMember3}, nil]
+        optional :variables,
+                 -> { Stagehand::Internal::Type::HashOf[union: Stagehand::SessionActParams::Options::Variable] }
 
         # @!method initialize(model: nil, timeout: nil, variables: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {Stagehand::Models::SessionActParams::Options} for more details.
+        #
         #   @param model [Stagehand::Models::ModelConfig, String] Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #
         #   @param timeout [Float] Timeout in ms for the action
         #
-        #   @param variables [Hash{Symbol=>String}] Variables to substitute in the action instruction
+        #   @param variables [Hash{Symbol=>String, Float, Boolean, Stagehand::Models::SessionActParams::Options::Variable::UnionMember3}] Variables to substitute in the action instruction. Accepts flat primitives or {
 
         # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #
@@ -102,6 +107,51 @@ module Stagehand
 
           # @!method self.variants
           #   @return [Array(Stagehand::Models::ModelConfig, String)]
+        end
+
+        module Variable
+          extend Stagehand::Internal::Type::Union
+
+          variant String
+
+          variant Float
+
+          variant Stagehand::Internal::Type::Boolean
+
+          variant -> { Stagehand::SessionActParams::Options::Variable::UnionMember3 }
+
+          class UnionMember3 < Stagehand::Internal::Type::BaseModel
+            # @!attribute value
+            #
+            #   @return [String, Float, Boolean]
+            required :value, union: -> { Stagehand::SessionActParams::Options::Variable::UnionMember3::Value }
+
+            # @!attribute description
+            #
+            #   @return [String, nil]
+            optional :description, String
+
+            # @!method initialize(value:, description: nil)
+            #   @param value [String, Float, Boolean]
+            #   @param description [String]
+
+            # @see Stagehand::Models::SessionActParams::Options::Variable::UnionMember3#value
+            module Value
+              extend Stagehand::Internal::Type::Union
+
+              variant String
+
+              variant Float
+
+              variant Stagehand::Internal::Type::Boolean
+
+              # @!method self.variants
+              #   @return [Array(String, Float, Boolean)]
+            end
+          end
+
+          # @!method self.variants
+          #   @return [Array(String, Float, Boolean, Stagehand::Models::SessionActParams::Options::Variable::UnionMember3)]
         end
       end
 

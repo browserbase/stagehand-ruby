@@ -126,18 +126,55 @@ module Stagehand
         sig { params(timeout: Float).void }
         attr_writer :timeout
 
-        # Variables to substitute in the action instruction
-        sig { returns(T.nilable(T::Hash[Symbol, String])) }
+        # Variables to substitute in the action instruction. Accepts flat primitives or {
+        # value, description? } objects.
+        sig do
+          returns(
+            T.nilable(
+              T::Hash[
+                Symbol,
+                T.any(
+                  String,
+                  Float,
+                  T::Boolean,
+                  Stagehand::SessionActParams::Options::Variable::UnionMember3
+                )
+              ]
+            )
+          )
+        end
         attr_reader :variables
 
-        sig { params(variables: T::Hash[Symbol, String]).void }
+        sig do
+          params(
+            variables:
+              T::Hash[
+                Symbol,
+                T.any(
+                  String,
+                  Float,
+                  T::Boolean,
+                  Stagehand::SessionActParams::Options::Variable::UnionMember3::OrHash
+                )
+              ]
+          ).void
+        end
         attr_writer :variables
 
         sig do
           params(
             model: T.any(Stagehand::ModelConfig::OrHash, String),
             timeout: Float,
-            variables: T::Hash[Symbol, String]
+            variables:
+              T::Hash[
+                Symbol,
+                T.any(
+                  String,
+                  Float,
+                  T::Boolean,
+                  Stagehand::SessionActParams::Options::Variable::UnionMember3::OrHash
+                )
+              ]
           ).returns(T.attached_class)
         end
         def self.new(
@@ -145,7 +182,8 @@ module Stagehand
           model: nil,
           # Timeout in ms for the action
           timeout: nil,
-          # Variables to substitute in the action instruction
+          # Variables to substitute in the action instruction. Accepts flat primitives or {
+          # value, description? } objects.
           variables: nil
         )
         end
@@ -155,7 +193,16 @@ module Stagehand
             {
               model: T.any(Stagehand::ModelConfig, String),
               timeout: Float,
-              variables: T::Hash[Symbol, String]
+              variables:
+                T::Hash[
+                  Symbol,
+                  T.any(
+                    String,
+                    Float,
+                    T::Boolean,
+                    Stagehand::SessionActParams::Options::Variable::UnionMember3
+                  )
+                ]
             }
           )
         end
@@ -171,6 +218,89 @@ module Stagehand
           sig do
             override.returns(
               T::Array[Stagehand::SessionActParams::Options::Model::Variants]
+            )
+          end
+          def self.variants
+          end
+        end
+
+        module Variable
+          extend Stagehand::Internal::Type::Union
+
+          Variants =
+            T.type_alias do
+              T.any(
+                String,
+                Float,
+                T::Boolean,
+                Stagehand::SessionActParams::Options::Variable::UnionMember3
+              )
+            end
+
+          class UnionMember3 < Stagehand::Internal::Type::BaseModel
+            OrHash =
+              T.type_alias do
+                T.any(
+                  Stagehand::SessionActParams::Options::Variable::UnionMember3,
+                  Stagehand::Internal::AnyHash
+                )
+              end
+
+            sig do
+              returns(
+                Stagehand::SessionActParams::Options::Variable::UnionMember3::Value::Variants
+              )
+            end
+            attr_accessor :value
+
+            sig { returns(T.nilable(String)) }
+            attr_reader :description
+
+            sig { params(description: String).void }
+            attr_writer :description
+
+            sig do
+              params(
+                value:
+                  Stagehand::SessionActParams::Options::Variable::UnionMember3::Value::Variants,
+                description: String
+              ).returns(T.attached_class)
+            end
+            def self.new(value:, description: nil)
+            end
+
+            sig do
+              override.returns(
+                {
+                  value:
+                    Stagehand::SessionActParams::Options::Variable::UnionMember3::Value::Variants,
+                  description: String
+                }
+              )
+            end
+            def to_hash
+            end
+
+            module Value
+              extend Stagehand::Internal::Type::Union
+
+              Variants = T.type_alias { T.any(String, Float, T::Boolean) }
+
+              sig do
+                override.returns(
+                  T::Array[
+                    Stagehand::SessionActParams::Options::Variable::UnionMember3::Value::Variants
+                  ]
+                )
+              end
+              def self.variants
+              end
+            end
+          end
+
+          sig do
+            override.returns(
+              T::Array[Stagehand::SessionActParams::Options::Variable::Variants]
             )
           end
           def self.variants
