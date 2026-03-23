@@ -123,11 +123,57 @@ module Stagehand
         sig { params(timeout: Float).void }
         attr_writer :timeout
 
+        # Variables whose names are exposed to the model so observe() returns
+        # %variableName% placeholders in suggested action arguments instead of literal
+        # values. Accepts flat primitives or { value, description? } objects.
+        sig do
+          returns(
+            T.nilable(
+              T::Hash[
+                Symbol,
+                T.any(
+                  String,
+                  Float,
+                  T::Boolean,
+                  Stagehand::SessionObserveParams::Options::Variable::UnionMember3
+                )
+              ]
+            )
+          )
+        end
+        attr_reader :variables
+
+        sig do
+          params(
+            variables:
+              T::Hash[
+                Symbol,
+                T.any(
+                  String,
+                  Float,
+                  T::Boolean,
+                  Stagehand::SessionObserveParams::Options::Variable::UnionMember3::OrHash
+                )
+              ]
+          ).void
+        end
+        attr_writer :variables
+
         sig do
           params(
             model: T.any(Stagehand::ModelConfig::OrHash, String),
             selector: String,
-            timeout: Float
+            timeout: Float,
+            variables:
+              T::Hash[
+                Symbol,
+                T.any(
+                  String,
+                  Float,
+                  T::Boolean,
+                  Stagehand::SessionObserveParams::Options::Variable::UnionMember3::OrHash
+                )
+              ]
           ).returns(T.attached_class)
         end
         def self.new(
@@ -136,7 +182,11 @@ module Stagehand
           # CSS selector to scope observation to a specific element
           selector: nil,
           # Timeout in ms for the observation
-          timeout: nil
+          timeout: nil,
+          # Variables whose names are exposed to the model so observe() returns
+          # %variableName% placeholders in suggested action arguments instead of literal
+          # values. Accepts flat primitives or { value, description? } objects.
+          variables: nil
         )
         end
 
@@ -145,7 +195,17 @@ module Stagehand
             {
               model: T.any(Stagehand::ModelConfig, String),
               selector: String,
-              timeout: Float
+              timeout: Float,
+              variables:
+                T::Hash[
+                  Symbol,
+                  T.any(
+                    String,
+                    Float,
+                    T::Boolean,
+                    Stagehand::SessionObserveParams::Options::Variable::UnionMember3
+                  )
+                ]
             }
           )
         end
@@ -162,6 +222,91 @@ module Stagehand
             override.returns(
               T::Array[
                 Stagehand::SessionObserveParams::Options::Model::Variants
+              ]
+            )
+          end
+          def self.variants
+          end
+        end
+
+        module Variable
+          extend Stagehand::Internal::Type::Union
+
+          Variants =
+            T.type_alias do
+              T.any(
+                String,
+                Float,
+                T::Boolean,
+                Stagehand::SessionObserveParams::Options::Variable::UnionMember3
+              )
+            end
+
+          class UnionMember3 < Stagehand::Internal::Type::BaseModel
+            OrHash =
+              T.type_alias do
+                T.any(
+                  Stagehand::SessionObserveParams::Options::Variable::UnionMember3,
+                  Stagehand::Internal::AnyHash
+                )
+              end
+
+            sig do
+              returns(
+                Stagehand::SessionObserveParams::Options::Variable::UnionMember3::Value::Variants
+              )
+            end
+            attr_accessor :value
+
+            sig { returns(T.nilable(String)) }
+            attr_reader :description
+
+            sig { params(description: String).void }
+            attr_writer :description
+
+            sig do
+              params(
+                value:
+                  Stagehand::SessionObserveParams::Options::Variable::UnionMember3::Value::Variants,
+                description: String
+              ).returns(T.attached_class)
+            end
+            def self.new(value:, description: nil)
+            end
+
+            sig do
+              override.returns(
+                {
+                  value:
+                    Stagehand::SessionObserveParams::Options::Variable::UnionMember3::Value::Variants,
+                  description: String
+                }
+              )
+            end
+            def to_hash
+            end
+
+            module Value
+              extend Stagehand::Internal::Type::Union
+
+              Variants = T.type_alias { T.any(String, Float, T::Boolean) }
+
+              sig do
+                override.returns(
+                  T::Array[
+                    Stagehand::SessionObserveParams::Options::Variable::UnionMember3::Value::Variants
+                  ]
+                )
+              end
+              def self.variants
+              end
+            end
+          end
+
+          sig do
+            override.returns(
+              T::Array[
+                Stagehand::SessionObserveParams::Options::Variable::Variants
               ]
             )
           end
