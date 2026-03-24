@@ -21,18 +21,26 @@ module Stagehand
       #   @return [String, nil]
       optional :base_url, String, api_name: :baseURL
 
+      # @!attribute headers
+      #   Custom headers sent with every request to the model provider
+      #
+      #   @return [Hash{Symbol=>String}, nil]
+      optional :headers, Stagehand::Internal::Type::HashOf[String]
+
       # @!attribute provider
       #   AI provider for the model (or provide a baseURL endpoint instead)
       #
       #   @return [Symbol, Stagehand::Models::ModelConfig::Provider, nil]
       optional :provider, enum: -> { Stagehand::ModelConfig::Provider }
 
-      # @!method initialize(model_name:, api_key: nil, base_url: nil, provider: nil)
+      # @!method initialize(model_name:, api_key: nil, base_url: nil, headers: nil, provider: nil)
       #   @param model_name [String] Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
       #
       #   @param api_key [String] API key for the model provider
       #
       #   @param base_url [String] Base URL for the model provider
+      #
+      #   @param headers [Hash{Symbol=>String}] Custom headers sent with every request to the model provider
       #
       #   @param provider [Symbol, Stagehand::Models::ModelConfig::Provider] AI provider for the model (or provide a baseURL endpoint instead)
 
