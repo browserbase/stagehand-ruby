@@ -5,6 +5,7 @@ module Stagehand
         model_name: String,
         api_key: String,
         base_url: String,
+        headers: ::Hash[Symbol, String],
         provider: Stagehand::Models::ModelConfig::provider
       }
 
@@ -19,6 +20,10 @@ module Stagehand
 
       def base_url=: (String) -> String
 
+      attr_reader headers: ::Hash[Symbol, String]?
+
+      def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
       attr_reader provider: Stagehand::Models::ModelConfig::provider?
 
       def provider=: (
@@ -29,6 +34,7 @@ module Stagehand
         model_name: String,
         ?api_key: String,
         ?base_url: String,
+        ?headers: ::Hash[Symbol, String],
         ?provider: Stagehand::Models::ModelConfig::provider
       ) -> void
 
@@ -36,6 +42,7 @@ module Stagehand
         model_name: String,
         api_key: String,
         base_url: String,
+        headers: ::Hash[Symbol, String],
         provider: Stagehand::Models::ModelConfig::provider
       }
 

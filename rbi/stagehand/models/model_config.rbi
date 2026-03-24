@@ -26,6 +26,13 @@ module Stagehand
       sig { params(base_url: String).void }
       attr_writer :base_url
 
+      # Custom headers sent with every request to the model provider
+      sig { returns(T.nilable(T::Hash[Symbol, String])) }
+      attr_reader :headers
+
+      sig { params(headers: T::Hash[Symbol, String]).void }
+      attr_writer :headers
+
       # AI provider for the model (or provide a baseURL endpoint instead)
       sig { returns(T.nilable(Stagehand::ModelConfig::Provider::OrSymbol)) }
       attr_reader :provider
@@ -38,6 +45,7 @@ module Stagehand
           model_name: String,
           api_key: String,
           base_url: String,
+          headers: T::Hash[Symbol, String],
           provider: Stagehand::ModelConfig::Provider::OrSymbol
         ).returns(T.attached_class)
       end
@@ -48,6 +56,8 @@ module Stagehand
         api_key: nil,
         # Base URL for the model provider
         base_url: nil,
+        # Custom headers sent with every request to the model provider
+        headers: nil,
         # AI provider for the model (or provide a baseURL endpoint instead)
         provider: nil
       )
@@ -59,6 +69,7 @@ module Stagehand
             model_name: String,
             api_key: String,
             base_url: String,
+            headers: T::Hash[Symbol, String],
             provider: Stagehand::ModelConfig::Provider::OrSymbol
           }
         )
