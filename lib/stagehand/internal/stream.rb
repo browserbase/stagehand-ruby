@@ -15,18 +15,10 @@ module Stagehand
       #
       # @return [Enumerable<generic<Elem>>]
       private def iterator
-        # rubocop:disable Metrics/BlockLength
         @iterator ||= Stagehand::Internal::Util.chain_fused(@stream) do |y|
-          consume = false
-
           @stream.each do |msg|
-            next if consume
-
             case msg
-            in {data: String => data} if data.start_with?("{\"data\":{\"status\":\"finished\"")
-              consume = true
-              next
-            in {data: String => data} if data.start_with?("error")
+            in {event: "error", data: String => data}
               decoded = Kernel.then do
                 JSON.parse(data, symbolize_names: true)
               rescue JSON::ParserError
@@ -41,7 +33,7 @@ module Stagehand
                 response: @response
               )
               raise err
-            in {event: nil, data: String => data}
+            in {event: "starting" | "connected" | "running" | "finished", data: String => data}
               decoded = JSON.parse(data, symbolize_names: true)
               unwrapped = Stagehand::Internal::Util.dig(decoded, @unwrap)
               y << Stagehand::Internal::Type::Converter.coerce(@model, unwrapped)
@@ -49,7 +41,6 @@ module Stagehand
             end
           end
         end
-        # rubocop:enable Metrics/BlockLength
       end
     end
   end
