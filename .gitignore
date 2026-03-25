@@ -3,6 +3,7 @@
 .ignore
 .prism.log
 .env
+.stdy.log
 .ruby-lsp/
 .yardoc/
 bin/tapioca
