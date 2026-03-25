@@ -1,5 +1,30 @@
 # Changelog
 
+## 3.18.0 (2026-03-25)
+
+Full Changelog: [v3.7.1...v3.18.0](https://github.com/browserbase/stagehand-ruby/compare/v3.7.1...v3.18.0)
+
+### Features
+
+* [fix]: add `useSearch` & `toolTimeout` to stainless types ([e5bedb8](https://github.com/browserbase/stagehand-ruby/commit/e5bedb88ac67d34a6db440e470e3eb964205e558))
+* [STG-1607] Yield finished SSE event instead of silently dropping it ([d5ffd2d](https://github.com/browserbase/stagehand-ruby/commit/d5ffd2d0ed6495673ef80ba0e1649bd1c1afa815))
+* Add explicit SSE event names for local v3 streaming ([5be6d12](https://github.com/browserbase/stagehand-ruby/commit/5be6d1293763ecb7f0268884784475986de2915c))
+* Add missing cdpHeaders field to v3 server openapi spec ([de6457f](https://github.com/browserbase/stagehand-ruby/commit/de6457f121764ffbadac51ec2a6103c27dbde338))
+* Include LLM headers in ModelConfig ([23cb4ea](https://github.com/browserbase/stagehand-ruby/commit/23cb4ea1319287992f1174c2b8fa2eff5fdfc5c4))
+* Revert broken finished SSE yield config ([1de4c00](https://github.com/browserbase/stagehand-ruby/commit/1de4c00c0b72936813fcd3e0499b51b1f135f33d))
+* variables for observe ([a9d6970](https://github.com/browserbase/stagehand-ruby/commit/a9d6970e7f43f1d69eddb42a14f09fb7f9158b29))
+
+
+### Chores
+
+* **ci:** add build step ([ed6573f](https://github.com/browserbase/stagehand-ruby/commit/ed6573f2ddab4f5f51d1262480cb663da5e003d0))
+* **ci:** skip lint on metadata-only changes ([079a802](https://github.com/browserbase/stagehand-ruby/commit/079a8028edf4e9dd09517363b0c1a3b16ed86865))
+* **ci:** skip uploading artifacts on stainless-internal branches ([3a7e90b](https://github.com/browserbase/stagehand-ruby/commit/3a7e90bc8dd9f983dbbc7be16f997dd2dc02c3c0))
+* **internal:** codegen related update ([f714af2](https://github.com/browserbase/stagehand-ruby/commit/f714af2d7d5b9b822362aa10f6f6facab3332eaf))
+* **internal:** codegen related update ([ed9fab1](https://github.com/browserbase/stagehand-ruby/commit/ed9fab1f726c05ef48d4a55507b09212d7ced713))
+* **internal:** tweak CI branches ([85b5b46](https://github.com/browserbase/stagehand-ruby/commit/85b5b4656c921f0784d05b27a3c4773b05b51cc6))
+* **internal:** update gitignore ([b4bc8a8](https://github.com/browserbase/stagehand-ruby/commit/b4bc8a8ae60ff252080d4bfcd0fc6af26dc95e74))
+
 ## 3.7.1 (2026-02-27)
 
 Full Changelog: [v3.7.0...v3.7.1](https://github.com/browserbase/stagehand-ruby/compare/v3.7.0...v3.7.1)
