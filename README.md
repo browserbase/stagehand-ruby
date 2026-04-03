@@ -213,7 +213,7 @@ When the library is unable to connect to the API, or if the API returns a non-su
 
 ```ruby
 begin
-  session = stagehand.sessions.start(model_name: "anthropic/claude-sonnet-4-6")
+  session = stagehand.sessions.start(model_name: "openai/gpt-5.4-mini")
 rescue Stagehand::Errors::APIConnectionError => e
   puts("The server could not be reached")
   puts(e.cause)  # an underlying Exception, likely raised within `net/http`
@@ -256,7 +256,7 @@ stagehand = Stagehand::Client.new(
 )
 
 # Or, configure per-request:
-stagehand.sessions.start(model_name: "anthropic/claude-sonnet-4-6", request_options: {max_retries: 5})
+stagehand.sessions.start(model_name: "openai/gpt-5.4-mini", request_options: {max_retries: 5})
 ```
 
 ### Timeouts
@@ -270,7 +270,7 @@ stagehand = Stagehand::Client.new(
 )
 
 # Or, configure per-request:
-stagehand.sessions.start(model_name: "anthropic/claude-sonnet-4-6", request_options: {timeout: 5})
+stagehand.sessions.start(model_name: "openai/gpt-5.4-mini", request_options: {timeout: 5})
 ```
 
 On timeout, `Stagehand::Errors::APITimeoutError` is raised.
