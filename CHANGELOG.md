@@ -1,5 +1,25 @@
 # Changelog
 
+## 3.19.3 (2026-04-03)
+
+Full Changelog: [v3.18.0...v3.19.3](https://github.com/browserbase/stagehand-ruby/compare/v3.18.0...v3.19.3)
+
+### Features
+
+* Replace default model used in server-v3 api spec examples ([0460af2](https://github.com/browserbase/stagehand-ruby/commit/0460af273ab6ba521a01847fe943032b619f7922))
+
+
+### Bug Fixes
+
+* align path encoding with RFC 3986 section 3.3 ([4f07e2e](https://github.com/browserbase/stagehand-ruby/commit/4f07e2eb4439a53ed1d830f0471b563656f19832))
+* **internal:** correct multipart form field name encoding ([2478726](https://github.com/browserbase/stagehand-ruby/commit/247872691f0c955d19b06cdfac5a4feb13477c1f))
+* variable name typo ([41c9b71](https://github.com/browserbase/stagehand-ruby/commit/41c9b719de177dc28c3f5b167bb96a136336866d))
+
+
+### Chores
+
+* **ci:** support opting out of skipping builds on metadata-only commits ([cb20c91](https://github.com/browserbase/stagehand-ruby/commit/cb20c91371c9be0282616f9137e51a2414b8a969))
+
 ## 3.18.0 (2026-03-25)
 
 Full Changelog: [v3.7.1...v3.18.0](https://github.com/browserbase/stagehand-ruby/compare/v3.7.1...v3.18.0)
