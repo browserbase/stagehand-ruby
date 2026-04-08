@@ -48,6 +48,15 @@ module Stagehand
       #   @return [Boolean, nil]
       optional :experimental, Stagehand::Internal::Type::Boolean
 
+      # @!attribute model_client_options
+      #   Optional provider-specific configuration for the session model (for example
+      #   Bedrock region and credentials)
+      #
+      #   @return [Stagehand::Models::SessionStartParams::ModelClientOptions::BedrockAPIKeyModelClientOptions, Stagehand::Models::SessionStartParams::ModelClientOptions::BedrockAwsCredentialsModelClientOptions, Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions, nil]
+      optional :model_client_options,
+               union: -> { Stagehand::SessionStartParams::ModelClientOptions },
+               api_name: :modelClientOptions
+
       # @!attribute self_heal
       #   Enable self-healing for failed actions
       #
@@ -78,7 +87,10 @@ module Stagehand
       #   @return [Symbol, Stagehand::Models::SessionStartParams::XStreamResponse, nil]
       optional :x_stream_response, enum: -> { Stagehand::SessionStartParams::XStreamResponse }
 
-      # @!method initialize(model_name:, act_timeout_ms: nil, browser: nil, browserbase_session_create_params: nil, browserbase_session_id: nil, dom_settle_timeout_ms: nil, experimental: nil, self_heal: nil, system_prompt: nil, verbose: nil, wait_for_captcha_solves: nil, x_stream_response: nil, request_options: {})
+      # @!method initialize(model_name:, act_timeout_ms: nil, browser: nil, browserbase_session_create_params: nil, browserbase_session_id: nil, dom_settle_timeout_ms: nil, experimental: nil, model_client_options: nil, self_heal: nil, system_prompt: nil, verbose: nil, wait_for_captcha_solves: nil, x_stream_response: nil, request_options: {})
+      #   Some parameter documentations has been truncated, see
+      #   {Stagehand::Models::SessionStartParams} for more details.
+      #
       #   @param model_name [String] Model name to use for AI operations
       #
       #   @param act_timeout_ms [Float] Timeout in ms for act operations (deprecated, v2 only)
@@ -92,6 +104,8 @@ module Stagehand
       #   @param dom_settle_timeout_ms [Float] Timeout in ms to wait for DOM to settle
       #
       #   @param experimental [Boolean]
+      #
+      #   @param model_client_options [Stagehand::Models::SessionStartParams::ModelClientOptions::BedrockAPIKeyModelClientOptions, Stagehand::Models::SessionStartParams::ModelClientOptions::BedrockAwsCredentialsModelClientOptions, Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions] Optional provider-specific configuration for the session model (for example Bedr
       #
       #   @param self_heal [Boolean] Enable self-healing for failed actions
       #
@@ -739,6 +753,405 @@ module Stagehand
           # @!method self.values
           #   @return [Array<Symbol>]
         end
+      end
+
+      # Optional provider-specific configuration for the session model (for example
+      # Bedrock region and credentials)
+      module ModelClientOptions
+        extend Stagehand::Internal::Type::Union
+
+        variant -> { Stagehand::SessionStartParams::ModelClientOptions::BedrockAPIKeyModelClientOptions }
+
+        variant -> { Stagehand::SessionStartParams::ModelClientOptions::BedrockAwsCredentialsModelClientOptions }
+
+        variant -> { Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions }
+
+        class BedrockAPIKeyModelClientOptions < Stagehand::Internal::Type::BaseModel
+          # @!attribute api_key
+          #   Short-term Bedrock API key for bearer-token auth
+          #
+          #   @return [String]
+          required :api_key, String, api_name: :apiKey
+
+          # @!attribute provider_options
+          #
+          #   @return [Stagehand::Models::SessionStartParams::ModelClientOptions::BedrockAPIKeyModelClientOptions::ProviderOptions]
+          required :provider_options,
+                   -> {
+                     Stagehand::SessionStartParams::ModelClientOptions::BedrockAPIKeyModelClientOptions::ProviderOptions
+                   },
+                   api_name: :providerOptions
+
+          # @!attribute base_url
+          #   Base URL for the model provider
+          #
+          #   @return [String, nil]
+          optional :base_url, String, api_name: :baseURL
+
+          # @!attribute headers
+          #   Custom headers for the model provider
+          #
+          #   @return [Hash{Symbol=>String}, nil]
+          optional :headers, Stagehand::Internal::Type::HashOf[String]
+
+          # @!attribute skip_api_key_fallback
+          #   When true, hosted sessions will not copy x-model-api-key into model.apiKey. Use
+          #   this when auth is carried through providerOptions instead of an API key.
+          #
+          #   @return [Boolean, nil]
+          optional :skip_api_key_fallback, Stagehand::Internal::Type::Boolean, api_name: :skipApiKeyFallback
+
+          # @!method initialize(api_key:, provider_options:, base_url: nil, headers: nil, skip_api_key_fallback: nil)
+          #   Some parameter documentations has been truncated, see
+          #   {Stagehand::Models::SessionStartParams::ModelClientOptions::BedrockAPIKeyModelClientOptions}
+          #   for more details.
+          #
+          #   @param api_key [String] Short-term Bedrock API key for bearer-token auth
+          #
+          #   @param provider_options [Stagehand::Models::SessionStartParams::ModelClientOptions::BedrockAPIKeyModelClientOptions::ProviderOptions]
+          #
+          #   @param base_url [String] Base URL for the model provider
+          #
+          #   @param headers [Hash{Symbol=>String}] Custom headers for the model provider
+          #
+          #   @param skip_api_key_fallback [Boolean] When true, hosted sessions will not copy x-model-api-key into model.apiKey. Use
+
+          # @see Stagehand::Models::SessionStartParams::ModelClientOptions::BedrockAPIKeyModelClientOptions#provider_options
+          class ProviderOptions < Stagehand::Internal::Type::BaseModel
+            # @!attribute region
+            #   AWS region for Amazon Bedrock
+            #
+            #   @return [String]
+            required :region, String
+
+            # @!method initialize(region:)
+            #   @param region [String] AWS region for Amazon Bedrock
+          end
+        end
+
+        class BedrockAwsCredentialsModelClientOptions < Stagehand::Internal::Type::BaseModel
+          # @!attribute provider_options
+          #
+          #   @return [Stagehand::Models::SessionStartParams::ModelClientOptions::BedrockAwsCredentialsModelClientOptions::ProviderOptions]
+          required :provider_options,
+                   -> {
+                     Stagehand::SessionStartParams::ModelClientOptions::BedrockAwsCredentialsModelClientOptions::ProviderOptions
+                   },
+                   api_name: :providerOptions
+
+          # @!attribute base_url
+          #   Base URL for the model provider
+          #
+          #   @return [String, nil]
+          optional :base_url, String, api_name: :baseURL
+
+          # @!attribute headers
+          #   Custom headers for the model provider
+          #
+          #   @return [Hash{Symbol=>String}, nil]
+          optional :headers, Stagehand::Internal::Type::HashOf[String]
+
+          # @!attribute skip_api_key_fallback
+          #   When true, hosted sessions will not copy x-model-api-key into model.apiKey. Use
+          #   this when auth is carried through providerOptions instead of an API key.
+          #
+          #   @return [Boolean, nil]
+          optional :skip_api_key_fallback, Stagehand::Internal::Type::Boolean, api_name: :skipApiKeyFallback
+
+          # @!method initialize(provider_options:, base_url: nil, headers: nil, skip_api_key_fallback: nil)
+          #   Some parameter documentations has been truncated, see
+          #   {Stagehand::Models::SessionStartParams::ModelClientOptions::BedrockAwsCredentialsModelClientOptions}
+          #   for more details.
+          #
+          #   @param provider_options [Stagehand::Models::SessionStartParams::ModelClientOptions::BedrockAwsCredentialsModelClientOptions::ProviderOptions]
+          #
+          #   @param base_url [String] Base URL for the model provider
+          #
+          #   @param headers [Hash{Symbol=>String}] Custom headers for the model provider
+          #
+          #   @param skip_api_key_fallback [Boolean] When true, hosted sessions will not copy x-model-api-key into model.apiKey. Use
+
+          # @see Stagehand::Models::SessionStartParams::ModelClientOptions::BedrockAwsCredentialsModelClientOptions#provider_options
+          class ProviderOptions < Stagehand::Internal::Type::BaseModel
+            # @!attribute access_key_id
+            #   AWS access key ID for Bedrock
+            #
+            #   @return [String]
+            required :access_key_id, String, api_name: :accessKeyId
+
+            # @!attribute region
+            #   AWS region for Amazon Bedrock
+            #
+            #   @return [String]
+            required :region, String
+
+            # @!attribute secret_access_key
+            #   AWS secret access key for Bedrock
+            #
+            #   @return [String]
+            required :secret_access_key, String, api_name: :secretAccessKey
+
+            # @!attribute session_token
+            #   Optional AWS session token for temporary credentials
+            #
+            #   @return [String, nil]
+            optional :session_token, String, api_name: :sessionToken
+
+            # @!method initialize(access_key_id:, region:, secret_access_key:, session_token: nil)
+            #   @param access_key_id [String] AWS access key ID for Bedrock
+            #
+            #   @param region [String] AWS region for Amazon Bedrock
+            #
+            #   @param secret_access_key [String] AWS secret access key for Bedrock
+            #
+            #   @param session_token [String] Optional AWS session token for temporary credentials
+          end
+        end
+
+        class GenericModelClientOptions < Stagehand::Internal::Type::BaseModel
+          # @!attribute api_key
+          #   API key for the model provider
+          #
+          #   @return [String, nil]
+          optional :api_key, String, api_name: :apiKey
+
+          # @!attribute base_url
+          #   Base URL for the model provider
+          #
+          #   @return [String, nil]
+          optional :base_url, String, api_name: :baseURL
+
+          # @!attribute headers
+          #   Custom headers for the model provider
+          #
+          #   @return [Hash{Symbol=>String}, nil]
+          optional :headers, Stagehand::Internal::Type::HashOf[String]
+
+          # @!attribute provider_options
+          #   Provider-specific options passed through to the AI SDK provider constructor. For
+          #   Bedrock: { region, accessKeyId, secretAccessKey, sessionToken }. For Vertex: {
+          #   project, location, googleAuthOptions }.
+          #
+          #   @return [Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::BedrockAPIKeyProviderOptions, Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::BedrockAwsCredentialsProviderOptions, Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions, nil]
+          optional :provider_options,
+                   union: -> {
+                     Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions
+                   },
+                   api_name: :providerOptions
+
+          # @!attribute skip_api_key_fallback
+          #   When true, hosted sessions will not copy x-model-api-key into model.apiKey. Use
+          #   this when auth is carried through providerOptions instead of an API key.
+          #
+          #   @return [Boolean, nil]
+          optional :skip_api_key_fallback, Stagehand::Internal::Type::Boolean, api_name: :skipApiKeyFallback
+
+          # @!method initialize(api_key: nil, base_url: nil, headers: nil, provider_options: nil, skip_api_key_fallback: nil)
+          #   Some parameter documentations has been truncated, see
+          #   {Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions}
+          #   for more details.
+          #
+          #   @param api_key [String] API key for the model provider
+          #
+          #   @param base_url [String] Base URL for the model provider
+          #
+          #   @param headers [Hash{Symbol=>String}] Custom headers for the model provider
+          #
+          #   @param provider_options [Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::BedrockAPIKeyProviderOptions, Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::BedrockAwsCredentialsProviderOptions, Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions] Provider-specific options passed through to the AI SDK provider constructor. For
+          #
+          #   @param skip_api_key_fallback [Boolean] When true, hosted sessions will not copy x-model-api-key into model.apiKey. Use
+
+          # Provider-specific options passed through to the AI SDK provider constructor. For
+          # Bedrock: { region, accessKeyId, secretAccessKey, sessionToken }. For Vertex: {
+          # project, location, googleAuthOptions }.
+          #
+          # @see Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions#provider_options
+          module ProviderOptions
+            extend Stagehand::Internal::Type::Union
+
+            variant -> { Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::BedrockAPIKeyProviderOptions }
+
+            variant -> { Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::BedrockAwsCredentialsProviderOptions }
+
+            variant -> { Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions }
+
+            class BedrockAPIKeyProviderOptions < Stagehand::Internal::Type::BaseModel
+              # @!attribute region
+              #   AWS region for Amazon Bedrock
+              #
+              #   @return [String]
+              required :region, String
+
+              # @!method initialize(region:)
+              #   @param region [String] AWS region for Amazon Bedrock
+            end
+
+            class BedrockAwsCredentialsProviderOptions < Stagehand::Internal::Type::BaseModel
+              # @!attribute access_key_id
+              #   AWS access key ID for Bedrock
+              #
+              #   @return [String]
+              required :access_key_id, String, api_name: :accessKeyId
+
+              # @!attribute region
+              #   AWS region for Amazon Bedrock
+              #
+              #   @return [String]
+              required :region, String
+
+              # @!attribute secret_access_key
+              #   AWS secret access key for Bedrock
+              #
+              #   @return [String]
+              required :secret_access_key, String, api_name: :secretAccessKey
+
+              # @!attribute session_token
+              #   Optional AWS session token for temporary credentials
+              #
+              #   @return [String, nil]
+              optional :session_token, String, api_name: :sessionToken
+
+              # @!method initialize(access_key_id:, region:, secret_access_key:, session_token: nil)
+              #   @param access_key_id [String] AWS access key ID for Bedrock
+              #
+              #   @param region [String] AWS region for Amazon Bedrock
+              #
+              #   @param secret_access_key [String] AWS secret access key for Bedrock
+              #
+              #   @param session_token [String] Optional AWS session token for temporary credentials
+            end
+
+            class GoogleVertexProviderOptions < Stagehand::Internal::Type::BaseModel
+              # @!attribute google_auth_options
+              #   Optional Google auth options for Vertex AI
+              #
+              #   @return [Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions::GoogleAuthOptions, nil]
+              optional :google_auth_options,
+                       -> {
+                         Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions::GoogleAuthOptions
+                       },
+                       api_name: :googleAuthOptions
+
+              # @!attribute headers
+              #   Custom headers for Vertex AI requests
+              #
+              #   @return [Hash{Symbol=>String}, nil]
+              optional :headers, Stagehand::Internal::Type::HashOf[String]
+
+              # @!attribute location
+              #   Google Cloud location for Vertex AI
+              #
+              #   @return [String, nil]
+              optional :location, String
+
+              # @!attribute project
+              #   Google Cloud project ID for Vertex AI
+              #
+              #   @return [String, nil]
+              optional :project, String
+
+              # @!method initialize(google_auth_options: nil, headers: nil, location: nil, project: nil)
+              #   @param google_auth_options [Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions::GoogleAuthOptions] Optional Google auth options for Vertex AI
+              #
+              #   @param headers [Hash{Symbol=>String}] Custom headers for Vertex AI requests
+              #
+              #   @param location [String] Google Cloud location for Vertex AI
+              #
+              #   @param project [String] Google Cloud project ID for Vertex AI
+
+              # @see Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions#google_auth_options
+              class GoogleAuthOptions < Stagehand::Internal::Type::BaseModel
+                # @!attribute credentials
+                #
+                #   @return [Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions::GoogleAuthOptions::Credentials, nil]
+                optional :credentials,
+                         -> { Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions::GoogleAuthOptions::Credentials }
+
+                # @!method initialize(credentials: nil)
+                #   Optional Google auth options for Vertex AI
+                #
+                #   @param credentials [Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions::GoogleAuthOptions::Credentials]
+
+                # @see Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions::GoogleAuthOptions#credentials
+                class Credentials < Stagehand::Internal::Type::BaseModel
+                  # @!attribute auth_provider_x509_cert_url
+                  #
+                  #   @return [String, nil]
+                  optional :auth_provider_x509_cert_url, String
+
+                  # @!attribute auth_uri
+                  #
+                  #   @return [String, nil]
+                  optional :auth_uri, String
+
+                  # @!attribute client_email
+                  #
+                  #   @return [String, nil]
+                  optional :client_email, String
+
+                  # @!attribute client_id
+                  #
+                  #   @return [String, nil]
+                  optional :client_id, String
+
+                  # @!attribute client_x509_cert_url
+                  #
+                  #   @return [String, nil]
+                  optional :client_x509_cert_url, String
+
+                  # @!attribute private_key
+                  #
+                  #   @return [String, nil]
+                  optional :private_key, String
+
+                  # @!attribute private_key_id
+                  #
+                  #   @return [String, nil]
+                  optional :private_key_id, String
+
+                  # @!attribute project_id
+                  #
+                  #   @return [String, nil]
+                  optional :project_id, String
+
+                  # @!attribute token_uri
+                  #
+                  #   @return [String, nil]
+                  optional :token_uri, String
+
+                  # @!attribute type
+                  #
+                  #   @return [String, nil]
+                  optional :type, String
+
+                  # @!attribute universe_domain
+                  #
+                  #   @return [String, nil]
+                  optional :universe_domain, String
+
+                  # @!method initialize(auth_provider_x509_cert_url: nil, auth_uri: nil, client_email: nil, client_id: nil, client_x509_cert_url: nil, private_key: nil, private_key_id: nil, project_id: nil, token_uri: nil, type: nil, universe_domain: nil)
+                  #   @param auth_provider_x509_cert_url [String]
+                  #   @param auth_uri [String]
+                  #   @param client_email [String]
+                  #   @param client_id [String]
+                  #   @param client_x509_cert_url [String]
+                  #   @param private_key [String]
+                  #   @param private_key_id [String]
+                  #   @param project_id [String]
+                  #   @param token_uri [String]
+                  #   @param type [String]
+                  #   @param universe_domain [String]
+                end
+              end
+            end
+
+            # @!method self.variants
+            #   @return [Array(Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::BedrockAPIKeyProviderOptions, Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::BedrockAwsCredentialsProviderOptions, Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions)]
+          end
+        end
+
+        # @!method self.variants
+        #   @return [Array(Stagehand::Models::SessionStartParams::ModelClientOptions::BedrockAPIKeyModelClientOptions, Stagehand::Models::SessionStartParams::ModelClientOptions::BedrockAwsCredentialsModelClientOptions, Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions)]
       end
 
       # Logging verbosity level (0=quiet, 1=normal, 2=debug)
