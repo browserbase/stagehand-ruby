@@ -415,6 +415,16 @@ module Stagehand
           #   @return [Boolean, nil]
           optional :block_ads, Stagehand::Internal::Type::Boolean, api_name: :blockAds
 
+          # @!attribute captcha_image_selector
+          #
+          #   @return [String, nil]
+          optional :captcha_image_selector, String, api_name: :captchaImageSelector
+
+          # @!attribute captcha_input_selector
+          #
+          #   @return [String, nil]
+          optional :captcha_input_selector, String, api_name: :captchaInputSelector
+
           # @!attribute context
           #
           #   @return [Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Context, nil]
@@ -437,6 +447,12 @@ module Stagehand
           #   @return [Boolean, nil]
           optional :log_session, Stagehand::Internal::Type::Boolean, api_name: :logSession
 
+          # @!attribute os
+          #
+          #   @return [Symbol, Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Os, nil]
+          optional :os,
+                   enum: -> { Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Os }
+
           # @!attribute record_session
           #
           #   @return [Boolean, nil]
@@ -447,21 +463,30 @@ module Stagehand
           #   @return [Boolean, nil]
           optional :solve_captchas, Stagehand::Internal::Type::Boolean, api_name: :solveCaptchas
 
+          # @!attribute verified
+          #
+          #   @return [Boolean, nil]
+          optional :verified, Stagehand::Internal::Type::Boolean
+
           # @!attribute viewport
           #
           #   @return [Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Viewport, nil]
           optional :viewport,
                    -> { Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Viewport }
 
-          # @!method initialize(advanced_stealth: nil, block_ads: nil, context: nil, extension_id: nil, fingerprint: nil, log_session: nil, record_session: nil, solve_captchas: nil, viewport: nil)
+          # @!method initialize(advanced_stealth: nil, block_ads: nil, captcha_image_selector: nil, captcha_input_selector: nil, context: nil, extension_id: nil, fingerprint: nil, log_session: nil, os: nil, record_session: nil, solve_captchas: nil, verified: nil, viewport: nil)
           #   @param advanced_stealth [Boolean]
           #   @param block_ads [Boolean]
+          #   @param captcha_image_selector [String]
+          #   @param captcha_input_selector [String]
           #   @param context [Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Context]
           #   @param extension_id [String]
           #   @param fingerprint [Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint]
           #   @param log_session [Boolean]
+          #   @param os [Symbol, Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Os]
           #   @param record_session [Boolean]
           #   @param solve_captchas [Boolean]
+          #   @param verified [Boolean]
           #   @param viewport [Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Viewport]
 
           # @see Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings#context
@@ -608,6 +633,20 @@ module Stagehand
               #   @param min_height [Float]
               #   @param min_width [Float]
             end
+          end
+
+          # @see Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings#os
+          module Os
+            extend Stagehand::Internal::Type::Enum
+
+            WINDOWS = :windows
+            MAC = :mac
+            LINUX = :linux
+            MOBILE = :mobile
+            TABLET = :tablet
+
+            # @!method self.values
+            #   @return [Array<Symbol>]
           end
 
           # @see Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings#viewport
