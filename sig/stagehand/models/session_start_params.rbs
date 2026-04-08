@@ -459,12 +459,16 @@ module Stagehand
           {
             advanced_stealth: bool,
             block_ads: bool,
+            captcha_image_selector: String,
+            captcha_input_selector: String,
             context: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Context,
             extension_id: String,
             fingerprint: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint,
             log_session: bool,
+            os: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::os,
             record_session: bool,
             solve_captchas: bool,
+            verified: bool,
             viewport: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Viewport
           }
 
@@ -476,6 +480,14 @@ module Stagehand
           attr_reader block_ads: bool?
 
           def block_ads=: (bool) -> bool
+
+          attr_reader captcha_image_selector: String?
+
+          def captcha_image_selector=: (String) -> String
+
+          attr_reader captcha_input_selector: String?
+
+          def captcha_input_selector=: (String) -> String
 
           attr_reader context: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Context?
 
@@ -497,6 +509,12 @@ module Stagehand
 
           def log_session=: (bool) -> bool
 
+          attr_reader os: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::os?
+
+          def os=: (
+            Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::os
+          ) -> Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::os
+
           attr_reader record_session: bool?
 
           def record_session=: (bool) -> bool
@@ -504,6 +522,10 @@ module Stagehand
           attr_reader solve_captchas: bool?
 
           def solve_captchas=: (bool) -> bool
+
+          attr_reader verified: bool?
+
+          def verified=: (bool) -> bool
 
           attr_reader viewport: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Viewport?
 
@@ -514,24 +536,32 @@ module Stagehand
           def initialize: (
             ?advanced_stealth: bool,
             ?block_ads: bool,
+            ?captcha_image_selector: String,
+            ?captcha_input_selector: String,
             ?context: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Context,
             ?extension_id: String,
             ?fingerprint: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint,
             ?log_session: bool,
+            ?os: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::os,
             ?record_session: bool,
             ?solve_captchas: bool,
+            ?verified: bool,
             ?viewport: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Viewport
           ) -> void
 
           def to_hash: -> {
             advanced_stealth: bool,
             block_ads: bool,
+            captcha_image_selector: String,
+            captcha_input_selector: String,
             context: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Context,
             extension_id: String,
             fingerprint: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint,
             log_session: bool,
+            os: Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::os,
             record_session: bool,
             solve_captchas: bool,
+            verified: bool,
             viewport: Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Viewport
           }
 
@@ -700,6 +730,20 @@ module Stagehand
                 min_width: Float
               }
             end
+          end
+
+          type os = :windows | :mac | :linux | :mobile | :tablet
+
+          module Os
+            extend Stagehand::Internal::Type::Enum
+
+            WINDOWS: :windows
+            MAC: :mac
+            LINUX: :linux
+            MOBILE: :mobile
+            TABLET: :tablet
+
+            def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::os]
           end
 
           type viewport = { height: Float, width: Float }
