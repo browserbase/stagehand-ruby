@@ -430,10 +430,13 @@ module Stagehand
         )
       end
 
+      # Some parameter documentations has been truncated, see
+      # {Stagehand::Models::SessionStartParams} for more details.
+      #
       # Creates a new browser session with the specified configuration. Returns a
       # session ID used for all subsequent operations.
       #
-      # @overload start(model_name:, act_timeout_ms: nil, browser: nil, browserbase_session_create_params: nil, browserbase_session_id: nil, dom_settle_timeout_ms: nil, experimental: nil, self_heal: nil, system_prompt: nil, verbose: nil, wait_for_captcha_solves: nil, x_stream_response: nil, request_options: {})
+      # @overload start(model_name:, act_timeout_ms: nil, browser: nil, browserbase_session_create_params: nil, browserbase_session_id: nil, dom_settle_timeout_ms: nil, experimental: nil, model_client_options: nil, self_heal: nil, system_prompt: nil, verbose: nil, wait_for_captcha_solves: nil, x_stream_response: nil, request_options: {})
       #
       # @param model_name [String] Body param: Model name to use for AI operations
       #
@@ -448,6 +451,8 @@ module Stagehand
       # @param dom_settle_timeout_ms [Float] Body param: Timeout in ms to wait for DOM to settle
       #
       # @param experimental [Boolean] Body param
+      #
+      # @param model_client_options [Stagehand::Models::SessionStartParams::ModelClientOptions::BedrockAPIKeyModelClientOptions, Stagehand::Models::SessionStartParams::ModelClientOptions::BedrockAwsCredentialsModelClientOptions, Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions] Body param: Optional provider-specific configuration for the session model (for
       #
       # @param self_heal [Boolean] Body param: Enable self-healing for failed actions
       #

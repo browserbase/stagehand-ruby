@@ -198,28 +198,12 @@ module Stagehand
         #   @return [Float, nil]
         optional :max_steps, Float, api_name: :maxSteps
 
-        # @!attribute tool_timeout
-        #   Timeout in milliseconds for each agent tool call
-        #
-        #   @return [Float, nil]
-        optional :tool_timeout, Float, api_name: :toolTimeout
-
-        # @!attribute use_search
-        #   Whether to enable the web search tool powered by Browserbase Search API
-        #
-        #   @return [Boolean, nil]
-        optional :use_search, Stagehand::Internal::Type::Boolean, api_name: :useSearch
-
-        # @!method initialize(instruction:, highlight_cursor: nil, max_steps: nil, tool_timeout: nil, use_search: nil)
+        # @!method initialize(instruction:, highlight_cursor: nil, max_steps: nil)
         #   @param instruction [String] Natural language instruction for the agent
         #
         #   @param highlight_cursor [Boolean] Whether to visually highlight the cursor during execution
         #
         #   @param max_steps [Float] Maximum number of steps the agent can take
-        #
-        #   @param tool_timeout [Float] Timeout in milliseconds for each agent tool call
-        #
-        #   @param use_search [Boolean] Whether to enable the web search tool powered by Browserbase Search API
       end
 
       # Whether to stream the response via SSE

@@ -9,6 +9,7 @@ module Stagehand
         browserbase_session_id: String,
         dom_settle_timeout_ms: Float,
         experimental: bool,
+        model_client_options: Stagehand::Models::SessionStartParams::model_client_options,
         self_heal: bool,
         system_prompt: String,
         verbose: Stagehand::Models::SessionStartParams::verbose,
@@ -51,6 +52,12 @@ module Stagehand
 
       def experimental=: (bool) -> bool
 
+      attr_reader model_client_options: Stagehand::Models::SessionStartParams::model_client_options?
+
+      def model_client_options=: (
+        Stagehand::Models::SessionStartParams::model_client_options
+      ) -> Stagehand::Models::SessionStartParams::model_client_options
+
       attr_reader self_heal: bool?
 
       def self_heal=: (bool) -> bool
@@ -83,6 +90,7 @@ module Stagehand
         ?browserbase_session_id: String,
         ?dom_settle_timeout_ms: Float,
         ?experimental: bool,
+        ?model_client_options: Stagehand::Models::SessionStartParams::model_client_options,
         ?self_heal: bool,
         ?system_prompt: String,
         ?verbose: Stagehand::Models::SessionStartParams::verbose,
@@ -99,6 +107,7 @@ module Stagehand
         browserbase_session_id: String,
         dom_settle_timeout_ms: Float,
         experimental: bool,
+        model_client_options: Stagehand::Models::SessionStartParams::model_client_options,
         self_heal: bool,
         system_prompt: String,
         verbose: Stagehand::Models::SessionStartParams::verbose,
@@ -844,6 +853,398 @@ module Stagehand
 
           def self?.values: -> ::Array[Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::region]
         end
+      end
+
+      type model_client_options =
+        Stagehand::SessionStartParams::ModelClientOptions::BedrockAPIKeyModelClientOptions
+        | Stagehand::SessionStartParams::ModelClientOptions::BedrockAwsCredentialsModelClientOptions
+        | Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions
+
+      module ModelClientOptions
+        extend Stagehand::Internal::Type::Union
+
+        type bedrock_api_key_model_client_options =
+          {
+            api_key: String,
+            provider_options: Stagehand::SessionStartParams::ModelClientOptions::BedrockAPIKeyModelClientOptions::ProviderOptions,
+            base_url: String,
+            headers: ::Hash[Symbol, String],
+            skip_api_key_fallback: bool
+          }
+
+        class BedrockAPIKeyModelClientOptions < Stagehand::Internal::Type::BaseModel
+          attr_accessor api_key: String
+
+          attr_accessor provider_options: Stagehand::SessionStartParams::ModelClientOptions::BedrockAPIKeyModelClientOptions::ProviderOptions
+
+          attr_reader base_url: String?
+
+          def base_url=: (String) -> String
+
+          attr_reader headers: ::Hash[Symbol, String]?
+
+          def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+          attr_reader skip_api_key_fallback: bool?
+
+          def skip_api_key_fallback=: (bool) -> bool
+
+          def initialize: (
+            api_key: String,
+            provider_options: Stagehand::SessionStartParams::ModelClientOptions::BedrockAPIKeyModelClientOptions::ProviderOptions,
+            ?base_url: String,
+            ?headers: ::Hash[Symbol, String],
+            ?skip_api_key_fallback: bool
+          ) -> void
+
+          def to_hash: -> {
+            api_key: String,
+            provider_options: Stagehand::SessionStartParams::ModelClientOptions::BedrockAPIKeyModelClientOptions::ProviderOptions,
+            base_url: String,
+            headers: ::Hash[Symbol, String],
+            skip_api_key_fallback: bool
+          }
+
+          type provider_options = { region: String }
+
+          class ProviderOptions < Stagehand::Internal::Type::BaseModel
+            attr_accessor region: String
+
+            def initialize: (region: String) -> void
+
+            def to_hash: -> { region: String }
+          end
+        end
+
+        type bedrock_aws_credentials_model_client_options =
+          {
+            provider_options: Stagehand::SessionStartParams::ModelClientOptions::BedrockAwsCredentialsModelClientOptions::ProviderOptions,
+            base_url: String,
+            headers: ::Hash[Symbol, String],
+            skip_api_key_fallback: bool
+          }
+
+        class BedrockAwsCredentialsModelClientOptions < Stagehand::Internal::Type::BaseModel
+          attr_accessor provider_options: Stagehand::SessionStartParams::ModelClientOptions::BedrockAwsCredentialsModelClientOptions::ProviderOptions
+
+          attr_reader base_url: String?
+
+          def base_url=: (String) -> String
+
+          attr_reader headers: ::Hash[Symbol, String]?
+
+          def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+          attr_reader skip_api_key_fallback: bool?
+
+          def skip_api_key_fallback=: (bool) -> bool
+
+          def initialize: (
+            provider_options: Stagehand::SessionStartParams::ModelClientOptions::BedrockAwsCredentialsModelClientOptions::ProviderOptions,
+            ?base_url: String,
+            ?headers: ::Hash[Symbol, String],
+            ?skip_api_key_fallback: bool
+          ) -> void
+
+          def to_hash: -> {
+            provider_options: Stagehand::SessionStartParams::ModelClientOptions::BedrockAwsCredentialsModelClientOptions::ProviderOptions,
+            base_url: String,
+            headers: ::Hash[Symbol, String],
+            skip_api_key_fallback: bool
+          }
+
+          type provider_options =
+            {
+              access_key_id: String,
+              region: String,
+              secret_access_key: String,
+              session_token: String
+            }
+
+          class ProviderOptions < Stagehand::Internal::Type::BaseModel
+            attr_accessor access_key_id: String
+
+            attr_accessor region: String
+
+            attr_accessor secret_access_key: String
+
+            attr_reader session_token: String?
+
+            def session_token=: (String) -> String
+
+            def initialize: (
+              access_key_id: String,
+              region: String,
+              secret_access_key: String,
+              ?session_token: String
+            ) -> void
+
+            def to_hash: -> {
+              access_key_id: String,
+              region: String,
+              secret_access_key: String,
+              session_token: String
+            }
+          end
+        end
+
+        type generic_model_client_options =
+          {
+            api_key: String,
+            base_url: String,
+            headers: ::Hash[Symbol, String],
+            provider_options: Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::provider_options,
+            skip_api_key_fallback: bool
+          }
+
+        class GenericModelClientOptions < Stagehand::Internal::Type::BaseModel
+          attr_reader api_key: String?
+
+          def api_key=: (String) -> String
+
+          attr_reader base_url: String?
+
+          def base_url=: (String) -> String
+
+          attr_reader headers: ::Hash[Symbol, String]?
+
+          def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+          attr_reader provider_options: Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::provider_options?
+
+          def provider_options=: (
+            Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::provider_options
+          ) -> Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::provider_options
+
+          attr_reader skip_api_key_fallback: bool?
+
+          def skip_api_key_fallback=: (bool) -> bool
+
+          def initialize: (
+            ?api_key: String,
+            ?base_url: String,
+            ?headers: ::Hash[Symbol, String],
+            ?provider_options: Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::provider_options,
+            ?skip_api_key_fallback: bool
+          ) -> void
+
+          def to_hash: -> {
+            api_key: String,
+            base_url: String,
+            headers: ::Hash[Symbol, String],
+            provider_options: Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::provider_options,
+            skip_api_key_fallback: bool
+          }
+
+          type provider_options =
+            Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::BedrockAPIKeyProviderOptions
+            | Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::BedrockAwsCredentialsProviderOptions
+            | Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions
+
+          module ProviderOptions
+            extend Stagehand::Internal::Type::Union
+
+            type bedrock_api_key_provider_options = { region: String }
+
+            class BedrockAPIKeyProviderOptions < Stagehand::Internal::Type::BaseModel
+              attr_accessor region: String
+
+              def initialize: (region: String) -> void
+
+              def to_hash: -> { region: String }
+            end
+
+            type bedrock_aws_credentials_provider_options =
+              {
+                access_key_id: String,
+                region: String,
+                secret_access_key: String,
+                session_token: String
+              }
+
+            class BedrockAwsCredentialsProviderOptions < Stagehand::Internal::Type::BaseModel
+              attr_accessor access_key_id: String
+
+              attr_accessor region: String
+
+              attr_accessor secret_access_key: String
+
+              attr_reader session_token: String?
+
+              def session_token=: (String) -> String
+
+              def initialize: (
+                access_key_id: String,
+                region: String,
+                secret_access_key: String,
+                ?session_token: String
+              ) -> void
+
+              def to_hash: -> {
+                access_key_id: String,
+                region: String,
+                secret_access_key: String,
+                session_token: String
+              }
+            end
+
+            type google_vertex_provider_options =
+              {
+                google_auth_options: Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions::GoogleAuthOptions,
+                headers: ::Hash[Symbol, String],
+                location: String,
+                project: String
+              }
+
+            class GoogleVertexProviderOptions < Stagehand::Internal::Type::BaseModel
+              attr_reader google_auth_options: Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions::GoogleAuthOptions?
+
+              def google_auth_options=: (
+                Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions::GoogleAuthOptions
+              ) -> Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions::GoogleAuthOptions
+
+              attr_reader headers: ::Hash[Symbol, String]?
+
+              def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+              attr_reader location: String?
+
+              def location=: (String) -> String
+
+              attr_reader project: String?
+
+              def project=: (String) -> String
+
+              def initialize: (
+                ?google_auth_options: Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions::GoogleAuthOptions,
+                ?headers: ::Hash[Symbol, String],
+                ?location: String,
+                ?project: String
+              ) -> void
+
+              def to_hash: -> {
+                google_auth_options: Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions::GoogleAuthOptions,
+                headers: ::Hash[Symbol, String],
+                location: String,
+                project: String
+              }
+
+              type google_auth_options =
+                {
+                  credentials: Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions::GoogleAuthOptions::Credentials
+                }
+
+              class GoogleAuthOptions < Stagehand::Internal::Type::BaseModel
+                attr_reader credentials: Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions::GoogleAuthOptions::Credentials?
+
+                def credentials=: (
+                  Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions::GoogleAuthOptions::Credentials
+                ) -> Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions::GoogleAuthOptions::Credentials
+
+                def initialize: (
+                  ?credentials: Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions::GoogleAuthOptions::Credentials
+                ) -> void
+
+                def to_hash: -> {
+                  credentials: Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::ProviderOptions::GoogleVertexProviderOptions::GoogleAuthOptions::Credentials
+                }
+
+                type credentials =
+                  {
+                    :auth_provider_x509_cert_url => String,
+                    auth_uri: String,
+                    client_email: String,
+                    client_id: String,
+                    :client_x509_cert_url => String,
+                    private_key: String,
+                    private_key_id: String,
+                    project_id: String,
+                    token_uri: String,
+                    type: String,
+                    universe_domain: String
+                  }
+
+                class Credentials < Stagehand::Internal::Type::BaseModel
+                  attr_reader auth_provider_x509_cert_url: String?
+
+                  def auth_provider_x509_cert_url=: (String) -> String
+
+                  attr_reader auth_uri: String?
+
+                  def auth_uri=: (String) -> String
+
+                  attr_reader client_email: String?
+
+                  def client_email=: (String) -> String
+
+                  attr_reader client_id: String?
+
+                  def client_id=: (String) -> String
+
+                  attr_reader client_x509_cert_url: String?
+
+                  def client_x509_cert_url=: (String) -> String
+
+                  attr_reader private_key: String?
+
+                  def private_key=: (String) -> String
+
+                  attr_reader private_key_id: String?
+
+                  def private_key_id=: (String) -> String
+
+                  attr_reader project_id: String?
+
+                  def project_id=: (String) -> String
+
+                  attr_reader token_uri: String?
+
+                  def token_uri=: (String) -> String
+
+                  attr_reader type: String?
+
+                  def type=: (String) -> String
+
+                  attr_reader universe_domain: String?
+
+                  def universe_domain=: (String) -> String
+
+                  def initialize: (
+                    ?auth_provider_x509_cert_url: String,
+                    ?auth_uri: String,
+                    ?client_email: String,
+                    ?client_id: String,
+                    ?client_x509_cert_url: String,
+                    ?private_key: String,
+                    ?private_key_id: String,
+                    ?project_id: String,
+                    ?token_uri: String,
+                    ?type: String,
+                    ?universe_domain: String
+                  ) -> void
+
+                  def to_hash: -> {
+                    :auth_provider_x509_cert_url => String,
+                    auth_uri: String,
+                    client_email: String,
+                    client_id: String,
+                    :client_x509_cert_url => String,
+                    private_key: String,
+                    private_key_id: String,
+                    project_id: String,
+                    token_uri: String,
+                    type: String,
+                    universe_domain: String
+                  }
+                end
+              end
+            end
+
+            def self?.variants: -> ::Array[Stagehand::Models::SessionStartParams::ModelClientOptions::GenericModelClientOptions::provider_options]
+          end
+        end
+
+        def self?.variants: -> ::Array[Stagehand::Models::SessionStartParams::model_client_options]
       end
 
       type verbose = Float
