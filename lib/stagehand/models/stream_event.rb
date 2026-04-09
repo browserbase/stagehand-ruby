@@ -22,7 +22,8 @@ module Stagehand
 
       # @!method initialize(id:, data:, type:)
       #   Server-Sent Event emitted during streaming responses. Events are sent as
-      #   `data: <JSON>\n\n`. Key order: data (with status first), type, id.
+      #   `event: <status>\ndata: <JSON>\n\n`, where the JSON payload has the shape
+      #   `{ data, type, id }`.
       #
       #   @param id [String] Unique identifier for this event
       #
