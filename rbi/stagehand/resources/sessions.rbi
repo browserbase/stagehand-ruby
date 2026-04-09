@@ -374,12 +374,6 @@ module Stagehand
           browserbase_session_id: String,
           dom_settle_timeout_ms: Float,
           experimental: T::Boolean,
-          model_client_options:
-            T.any(
-              Stagehand::SessionStartParams::ModelClientOptions::BedrockAPIKeyModelClientOptions::OrHash,
-              Stagehand::SessionStartParams::ModelClientOptions::BedrockAwsCredentialsModelClientOptions::OrHash,
-              Stagehand::SessionStartParams::ModelClientOptions::GenericModelClientOptions::OrHash
-            ),
           self_heal: T::Boolean,
           system_prompt: String,
           verbose: Stagehand::SessionStartParams::Verbose::OrFloat,
@@ -404,9 +398,6 @@ module Stagehand
         dom_settle_timeout_ms: nil,
         # Body param
         experimental: nil,
-        # Body param: Optional provider-specific configuration for the session model (for
-        # example Bedrock region and credentials)
-        model_client_options: nil,
         # Body param: Enable self-healing for failed actions
         self_heal: nil,
         # Body param: Custom system prompt for AI operations

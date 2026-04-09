@@ -158,7 +158,13 @@ module Stagehand
       end
 
       type execute_options =
-        { instruction: String, highlight_cursor: bool, max_steps: Float }
+        {
+          instruction: String,
+          highlight_cursor: bool,
+          max_steps: Float,
+          tool_timeout: Float,
+          use_search: bool
+        }
 
       class ExecuteOptions < Stagehand::Internal::Type::BaseModel
         attr_accessor instruction: String
@@ -171,16 +177,28 @@ module Stagehand
 
         def max_steps=: (Float) -> Float
 
+        attr_reader tool_timeout: Float?
+
+        def tool_timeout=: (Float) -> Float
+
+        attr_reader use_search: bool?
+
+        def use_search=: (bool) -> bool
+
         def initialize: (
           instruction: String,
           ?highlight_cursor: bool,
-          ?max_steps: Float
+          ?max_steps: Float,
+          ?tool_timeout: Float,
+          ?use_search: bool
         ) -> void
 
         def to_hash: -> {
           instruction: String,
           highlight_cursor: bool,
-          max_steps: Float
+          max_steps: Float,
+          tool_timeout: Float,
+          use_search: bool
         }
       end
 
