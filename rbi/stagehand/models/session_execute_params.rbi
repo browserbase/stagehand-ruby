@@ -387,11 +387,27 @@ module Stagehand
         sig { params(max_steps: Float).void }
         attr_writer :max_steps
 
+        # Timeout in milliseconds for each agent tool call
+        sig { returns(T.nilable(Float)) }
+        attr_reader :tool_timeout
+
+        sig { params(tool_timeout: Float).void }
+        attr_writer :tool_timeout
+
+        # Whether to enable the web search tool powered by Browserbase Search API
+        sig { returns(T.nilable(T::Boolean)) }
+        attr_reader :use_search
+
+        sig { params(use_search: T::Boolean).void }
+        attr_writer :use_search
+
         sig do
           params(
             instruction: String,
             highlight_cursor: T::Boolean,
-            max_steps: Float
+            max_steps: Float,
+            tool_timeout: Float,
+            use_search: T::Boolean
           ).returns(T.attached_class)
         end
         def self.new(
@@ -400,7 +416,11 @@ module Stagehand
           # Whether to visually highlight the cursor during execution
           highlight_cursor: nil,
           # Maximum number of steps the agent can take
-          max_steps: nil
+          max_steps: nil,
+          # Timeout in milliseconds for each agent tool call
+          tool_timeout: nil,
+          # Whether to enable the web search tool powered by Browserbase Search API
+          use_search: nil
         )
         end
 
@@ -409,7 +429,9 @@ module Stagehand
             {
               instruction: String,
               highlight_cursor: T::Boolean,
-              max_steps: Float
+              max_steps: Float,
+              tool_timeout: Float,
+              use_search: T::Boolean
             }
           )
         end

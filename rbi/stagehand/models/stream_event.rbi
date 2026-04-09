@@ -20,7 +20,8 @@ module Stagehand
       attr_accessor :type
 
       # Server-Sent Event emitted during streaming responses. Events are sent as
-      # `data: <JSON>\n\n`. Key order: data (with status first), type, id.
+      # `event: <status>\ndata: <JSON>\n\n`, where the JSON payload has the shape
+      # `{ data, type, id }`.
       sig do
         params(
           id: String,
