@@ -108,6 +108,19 @@ module Stagehand
               "model_api_key is required, and can be set via environ: \"MODEL_API_KEY\""
       end
 
+      headers = {}
+      custom_headers_env = ENV["STAGEHAND_CUSTOM_HEADERS"]
+      unless custom_headers_env.nil?
+        parsed = {}
+        custom_headers_env.split("\n").each do |line|
+          colon = line.index(":")
+          unless colon.nil?
+            parsed[line[0...colon].strip] = line[(colon + 1)..].strip
+          end
+        end
+        headers = parsed.merge(headers)
+      end
+
       @browserbase_api_key = browserbase_api_key.to_s
       @browserbase_project_id = browserbase_project_id.to_s
       @model_api_key = model_api_key.to_s
@@ -117,7 +130,8 @@ module Stagehand
         timeout: timeout,
         max_retries: max_retries,
         initial_retry_delay: initial_retry_delay,
-        max_retry_delay: max_retry_delay
+        max_retry_delay: max_retry_delay,
+        headers: headers
       )
 
       @sessions = Stagehand::Resources::Sessions.new(client: self)
