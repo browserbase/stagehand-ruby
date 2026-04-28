@@ -1,5 +1,27 @@
 # Changelog
 
+## 3.20.0 (2026-04-28)
+
+Full Changelog: [v3.19.3...v3.20.0](https://github.com/browserbase/stagehand-ruby/compare/v3.19.3...v3.20.0)
+
+### Features
+
+* [STG-1798] feat: support Browserbase verified sessions ([9647eb3](https://github.com/browserbase/stagehand-ruby/commit/9647eb3a4df86cc9d7aedb2f0a9ddd0babd39565))
+* Bedrock auth passthrough ([5cb6ecb](https://github.com/browserbase/stagehand-ruby/commit/5cb6ecbe621e894dc6c5aec379fdca1183eec4fc))
+* Revert "[STG-1573] Add providerOptions for extensible model auth ([#1822](https://github.com/browserbase/stagehand-ruby/issues/1822))" ([0c83a09](https://github.com/browserbase/stagehand-ruby/commit/0c83a0978116f8fc11a4edf78586f3d61b8af5e8))
+* support setting headers via env ([5515959](https://github.com/browserbase/stagehand-ruby/commit/5515959505685e62f9324aebf470a295dd6d8292))
+
+
+### Bug Fixes
+
+* avoid gzip buffering during streaming ([23c3eef](https://github.com/browserbase/stagehand-ruby/commit/23c3eef17497edbf3ec03049d12c548607112c8d))
+* multipart encoding for file arrays ([149b303](https://github.com/browserbase/stagehand-ruby/commit/149b303eb54f4c9af037a5e073a2d6c92d959b44))
+
+
+### Chores
+
+* **internal:** more robust bootstrap script ([69c050a](https://github.com/browserbase/stagehand-ruby/commit/69c050a467b5fcab904331bd30bd18d46cee8cae))
+
 ## 3.19.3 (2026-04-03)
 
 Full Changelog: [v3.18.0...v3.19.3](https://github.com/browserbase/stagehand-ruby/compare/v3.18.0...v3.19.3)
