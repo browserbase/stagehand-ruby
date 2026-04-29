@@ -800,6 +800,18 @@ module Stagehand
           sig { params(block_ads: T::Boolean).void }
           attr_writer :block_ads
 
+          sig { returns(T.nilable(String)) }
+          attr_reader :captcha_image_selector
+
+          sig { params(captcha_image_selector: String).void }
+          attr_writer :captcha_image_selector
+
+          sig { returns(T.nilable(String)) }
+          attr_reader :captcha_input_selector
+
+          sig { params(captcha_input_selector: String).void }
+          attr_writer :captcha_input_selector
+
           sig do
             returns(
               T.nilable(
@@ -846,6 +858,23 @@ module Stagehand
           sig { params(log_session: T::Boolean).void }
           attr_writer :log_session
 
+          sig do
+            returns(
+              T.nilable(
+                Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Os::OrSymbol
+              )
+            )
+          end
+          attr_reader :os
+
+          sig do
+            params(
+              os:
+                Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Os::OrSymbol
+            ).void
+          end
+          attr_writer :os
+
           sig { returns(T.nilable(T::Boolean)) }
           attr_reader :record_session
 
@@ -857,6 +886,12 @@ module Stagehand
 
           sig { params(solve_captchas: T::Boolean).void }
           attr_writer :solve_captchas
+
+          sig { returns(T.nilable(T::Boolean)) }
+          attr_reader :verified
+
+          sig { params(verified: T::Boolean).void }
+          attr_writer :verified
 
           sig do
             returns(
@@ -879,14 +914,19 @@ module Stagehand
             params(
               advanced_stealth: T::Boolean,
               block_ads: T::Boolean,
+              captcha_image_selector: String,
+              captcha_input_selector: String,
               context:
                 Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Context::OrHash,
               extension_id: String,
               fingerprint:
                 Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint::OrHash,
               log_session: T::Boolean,
+              os:
+                Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Os::OrSymbol,
               record_session: T::Boolean,
               solve_captchas: T::Boolean,
+              verified: T::Boolean,
               viewport:
                 Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Viewport::OrHash
             ).returns(T.attached_class)
@@ -894,12 +934,16 @@ module Stagehand
           def self.new(
             advanced_stealth: nil,
             block_ads: nil,
+            captcha_image_selector: nil,
+            captcha_input_selector: nil,
             context: nil,
             extension_id: nil,
             fingerprint: nil,
             log_session: nil,
+            os: nil,
             record_session: nil,
             solve_captchas: nil,
+            verified: nil,
             viewport: nil
           )
           end
@@ -909,14 +953,19 @@ module Stagehand
               {
                 advanced_stealth: T::Boolean,
                 block_ads: T::Boolean,
+                captcha_image_selector: String,
+                captcha_input_selector: String,
                 context:
                   Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Context,
                 extension_id: String,
                 fingerprint:
                   Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Fingerprint,
                 log_session: T::Boolean,
+                os:
+                  Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Os::OrSymbol,
                 record_session: T::Boolean,
                 solve_captchas: T::Boolean,
+                verified: T::Boolean,
                 viewport:
                   Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Viewport
               }
@@ -1345,6 +1394,55 @@ module Stagehand
               end
               def to_hash
               end
+            end
+          end
+
+          module Os
+            extend Stagehand::Internal::Type::Enum
+
+            TaggedSymbol =
+              T.type_alias do
+                T.all(
+                  Symbol,
+                  Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Os
+                )
+              end
+            OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+            WINDOWS =
+              T.let(
+                :windows,
+                Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Os::TaggedSymbol
+              )
+            MAC =
+              T.let(
+                :mac,
+                Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Os::TaggedSymbol
+              )
+            LINUX =
+              T.let(
+                :linux,
+                Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Os::TaggedSymbol
+              )
+            MOBILE =
+              T.let(
+                :mobile,
+                Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Os::TaggedSymbol
+              )
+            TABLET =
+              T.let(
+                :tablet,
+                Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Os::TaggedSymbol
+              )
+
+            sig do
+              override.returns(
+                T::Array[
+                  Stagehand::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings::Os::TaggedSymbol
+                ]
+              )
+            end
+            def self.values
             end
           end
 
