@@ -34,6 +34,62 @@ class StagehandTest < Minitest::Test
     assert_match(/is required/, e.message)
   end
 
+  def test_client_base_url_from_stagehand_api_url
+    with_env("STAGEHAND_API_URL" => "http://localhost:5000/from/api/env", "STAGEHAND_BASE_URL" => nil) do
+      stagehand =
+        Stagehand::Client.new(
+          browserbase_api_key: "My Browserbase API Key",
+          browserbase_project_id: "My Browserbase Project ID",
+          model_api_key: "My Model API Key"
+        )
+
+      assert_equal("http://localhost:5000/from/api/env", stagehand.base_url.to_s)
+    end
+  end
+
+  def test_client_base_url_from_legacy_stagehand_base_url
+    with_env("STAGEHAND_API_URL" => nil, "STAGEHAND_BASE_URL" => "http://localhost:5000/from/base/env") do
+      stagehand =
+        Stagehand::Client.new(
+          browserbase_api_key: "My Browserbase API Key",
+          browserbase_project_id: "My Browserbase Project ID",
+          model_api_key: "My Model API Key"
+        )
+
+      assert_equal("http://localhost:5000/from/base/env", stagehand.base_url.to_s)
+    end
+  end
+
+  def test_client_base_url_prefers_stagehand_api_url
+    with_env(
+      "STAGEHAND_API_URL" => "http://localhost:5000/from/api/env",
+      "STAGEHAND_BASE_URL" => "http://localhost:5000/from/base/env"
+    ) do
+      stagehand =
+        Stagehand::Client.new(
+          browserbase_api_key: "My Browserbase API Key",
+          browserbase_project_id: "My Browserbase Project ID",
+          model_api_key: "My Model API Key"
+        )
+
+      assert_equal("http://localhost:5000/from/api/env", stagehand.base_url.to_s)
+    end
+  end
+
+  def with_env(vars)
+    old_values = vars.keys.to_h { |key| [key, ENV.fetch(key, nil)] }
+
+    vars.each do |key, value|
+      value.nil? ? ENV.delete(key) : ENV[key] = value
+    end
+
+    yield
+  ensure
+    old_values.each do |key, value|
+      value.nil? ? ENV.delete(key) : ENV[key] = value
+    end
+  end
+
   def test_client_default_request_default_retry_attempts
     stub_request(:post, "http://localhost/v1/sessions/start").to_return_json(status: 500, body: {})
 
