@@ -72,8 +72,8 @@ module Stagehand
       # Server mode to use ("remote" or "local"). Defaults to "remote"
       server: "remote",
       # Override the default base URL for the API, e.g.,
-      # `"https://api.example.com/v2/"`. Defaults to `ENV["STAGEHAND_BASE_URL"]`
-      base_url: ENV["STAGEHAND_BASE_URL"],
+      # `"https://api.example.com/v2/"`. Defaults to `ENV["STAGEHAND_API_URL"]`
+      base_url: ENV["STAGEHAND_API_URL"] || ENV["STAGEHAND_BASE_URL"],
       # Max number of retries to attempt after a failed retryable request.
       max_retries: Stagehand::Client::DEFAULT_MAX_RETRIES,
       timeout: Stagehand::Client::DEFAULT_TIMEOUT_IN_SECONDS,

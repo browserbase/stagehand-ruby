@@ -72,7 +72,7 @@ module Stagehand
     # @param server [String] Server mode to use ("remote" or "local"). Defaults to "remote"
     #
     # @param base_url [String, nil] Override the default base URL for the API, e.g.,
-    # `"https://api.example.com/v2/"`. Defaults to `ENV["STAGEHAND_BASE_URL"]`
+    # `"https://api.example.com/v2/"`. Defaults to `ENV["STAGEHAND_API_URL"]`
     #
     # @param max_retries [Integer] Max number of retries to attempt after a failed retryable request.
     #
@@ -86,7 +86,7 @@ module Stagehand
       browserbase_project_id: ENV["BROWSERBASE_PROJECT_ID"],
       model_api_key: ENV["MODEL_API_KEY"],
       server: "remote",
-      base_url: ENV["STAGEHAND_BASE_URL"],
+      base_url: ENV["STAGEHAND_API_URL"] || ENV["STAGEHAND_BASE_URL"],
       max_retries: self.class::DEFAULT_MAX_RETRIES,
       timeout: self.class::DEFAULT_TIMEOUT_IN_SECONDS,
       initial_retry_delay: self.class::DEFAULT_INITIAL_RETRY_DELAY,

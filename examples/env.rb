@@ -23,11 +23,9 @@ module ExampleEnv
     end
 
     missing = REQUIRED_KEYS.select { |key| ENV[key].to_s.empty? }
-    unless missing.empty?
-      raise "Missing required env vars: #{missing.join(', ')} (from examples/.env)"
-    end
+    return if missing.empty?
 
-    ENV["STAGEHAND_BASE_URL"] ||= ENV["STAGEHAND_API_URL"]
+    raise "Missing required env vars: #{missing.join(', ')} (from examples/.env)"
   end
 
   def self.find_env_path
