@@ -680,6 +680,8 @@ module Stagehand
         sig { params(keep_alive: T::Boolean).void }
         attr_writer :keep_alive
 
+        # Deprecated. Browserbase API keys are now project-scoped, so this field is no
+        # longer required.
         sig { returns(T.nilable(String)) }
         attr_reader :project_id
 
@@ -751,6 +753,8 @@ module Stagehand
           browser_settings: nil,
           extension_id: nil,
           keep_alive: nil,
+          # Deprecated. Browserbase API keys are now project-scoped, so this field is no
+          # longer required.
           project_id: nil,
           proxies: nil,
           region: nil,

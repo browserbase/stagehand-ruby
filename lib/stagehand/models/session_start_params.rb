@@ -353,6 +353,10 @@ module Stagehand
         optional :keep_alive, Stagehand::Internal::Type::Boolean, api_name: :keepAlive
 
         # @!attribute project_id
+        #   @deprecated
+        #
+        #   Deprecated. Browserbase API keys are now project-scoped, so this field is no
+        #   longer required.
         #
         #   @return [String, nil]
         optional :project_id, String, api_name: :projectId
@@ -380,13 +384,24 @@ module Stagehand
                  api_name: :userMetadata
 
         # @!method initialize(browser_settings: nil, extension_id: nil, keep_alive: nil, project_id: nil, proxies: nil, region: nil, timeout: nil, user_metadata: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams} for more
+        #   details.
+        #
         #   @param browser_settings [Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::BrowserSettings]
+        #
         #   @param extension_id [String]
+        #
         #   @param keep_alive [Boolean]
-        #   @param project_id [String]
+        #
+        #   @param project_id [String] Deprecated. Browserbase API keys are now project-scoped, so this field is no lon
+        #
         #   @param proxies [Boolean, Array<Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::Browserbase, Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Proxies::ProxyConfigList::External>]
+        #
         #   @param region [Symbol, Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams::Region]
+        #
         #   @param timeout [Float]
+        #
         #   @param user_metadata [Hash{Symbol=>Object}]
 
         # @see Stagehand::Models::SessionStartParams::BrowserbaseSessionCreateParams#browser_settings
