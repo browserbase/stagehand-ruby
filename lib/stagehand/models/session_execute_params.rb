@@ -210,7 +210,14 @@ module Stagehand
         #   @return [Boolean, nil]
         optional :use_search, Stagehand::Internal::Type::Boolean, api_name: :useSearch
 
-        # @!method initialize(instruction:, highlight_cursor: nil, max_steps: nil, tool_timeout: nil, use_search: nil)
+        # @!attribute variables
+        #   Variables available to the agent via %variableName% syntax in supported tools
+        #
+        #   @return [Hash{Symbol=>String, Float, Boolean, Stagehand::Models::SessionExecuteParams::ExecuteOptions::Variable::UnionMember3}, nil]
+        optional :variables,
+                 -> { Stagehand::Internal::Type::HashOf[union: Stagehand::SessionExecuteParams::ExecuteOptions::Variable] }
+
+        # @!method initialize(instruction:, highlight_cursor: nil, max_steps: nil, tool_timeout: nil, use_search: nil, variables: nil)
         #   @param instruction [String] Natural language instruction for the agent
         #
         #   @param highlight_cursor [Boolean] Whether to visually highlight the cursor during execution
@@ -220,6 +227,54 @@ module Stagehand
         #   @param tool_timeout [Float] Timeout in milliseconds for each agent tool call
         #
         #   @param use_search [Boolean] Whether to enable the web search tool powered by Browserbase Search API
+        #
+        #   @param variables [Hash{Symbol=>String, Float, Boolean, Stagehand::Models::SessionExecuteParams::ExecuteOptions::Variable::UnionMember3}] Variables available to the agent via %variableName% syntax in supported tools
+
+        module Variable
+          extend Stagehand::Internal::Type::Union
+
+          variant String
+
+          variant Float
+
+          variant Stagehand::Internal::Type::Boolean
+
+          variant -> { Stagehand::SessionExecuteParams::ExecuteOptions::Variable::UnionMember3 }
+
+          class UnionMember3 < Stagehand::Internal::Type::BaseModel
+            # @!attribute value
+            #
+            #   @return [String, Float, Boolean]
+            required :value,
+                     union: -> { Stagehand::SessionExecuteParams::ExecuteOptions::Variable::UnionMember3::Value }
+
+            # @!attribute description
+            #
+            #   @return [String, nil]
+            optional :description, String
+
+            # @!method initialize(value:, description: nil)
+            #   @param value [String, Float, Boolean]
+            #   @param description [String]
+
+            # @see Stagehand::Models::SessionExecuteParams::ExecuteOptions::Variable::UnionMember3#value
+            module Value
+              extend Stagehand::Internal::Type::Union
+
+              variant String
+
+              variant Float
+
+              variant Stagehand::Internal::Type::Boolean
+
+              # @!method self.variants
+              #   @return [Array(String, Float, Boolean)]
+            end
+          end
+
+          # @!method self.variants
+          #   @return [Array(String, Float, Boolean, Stagehand::Models::SessionExecuteParams::ExecuteOptions::Variable::UnionMember3)]
+        end
       end
 
       # Whether to stream the response via SSE

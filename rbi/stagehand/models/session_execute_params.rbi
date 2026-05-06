@@ -401,13 +401,57 @@ module Stagehand
         sig { params(use_search: T::Boolean).void }
         attr_writer :use_search
 
+        # Variables available to the agent via %variableName% syntax in supported tools
+        sig do
+          returns(
+            T.nilable(
+              T::Hash[
+                Symbol,
+                T.any(
+                  String,
+                  Float,
+                  T::Boolean,
+                  Stagehand::SessionExecuteParams::ExecuteOptions::Variable::UnionMember3
+                )
+              ]
+            )
+          )
+        end
+        attr_reader :variables
+
+        sig do
+          params(
+            variables:
+              T::Hash[
+                Symbol,
+                T.any(
+                  String,
+                  Float,
+                  T::Boolean,
+                  Stagehand::SessionExecuteParams::ExecuteOptions::Variable::UnionMember3::OrHash
+                )
+              ]
+          ).void
+        end
+        attr_writer :variables
+
         sig do
           params(
             instruction: String,
             highlight_cursor: T::Boolean,
             max_steps: Float,
             tool_timeout: Float,
-            use_search: T::Boolean
+            use_search: T::Boolean,
+            variables:
+              T::Hash[
+                Symbol,
+                T.any(
+                  String,
+                  Float,
+                  T::Boolean,
+                  Stagehand::SessionExecuteParams::ExecuteOptions::Variable::UnionMember3::OrHash
+                )
+              ]
           ).returns(T.attached_class)
         end
         def self.new(
@@ -420,7 +464,9 @@ module Stagehand
           # Timeout in milliseconds for each agent tool call
           tool_timeout: nil,
           # Whether to enable the web search tool powered by Browserbase Search API
-          use_search: nil
+          use_search: nil,
+          # Variables available to the agent via %variableName% syntax in supported tools
+          variables: nil
         )
         end
 
@@ -431,11 +477,106 @@ module Stagehand
               highlight_cursor: T::Boolean,
               max_steps: Float,
               tool_timeout: Float,
-              use_search: T::Boolean
+              use_search: T::Boolean,
+              variables:
+                T::Hash[
+                  Symbol,
+                  T.any(
+                    String,
+                    Float,
+                    T::Boolean,
+                    Stagehand::SessionExecuteParams::ExecuteOptions::Variable::UnionMember3
+                  )
+                ]
             }
           )
         end
         def to_hash
+        end
+
+        module Variable
+          extend Stagehand::Internal::Type::Union
+
+          Variants =
+            T.type_alias do
+              T.any(
+                String,
+                Float,
+                T::Boolean,
+                Stagehand::SessionExecuteParams::ExecuteOptions::Variable::UnionMember3
+              )
+            end
+
+          class UnionMember3 < Stagehand::Internal::Type::BaseModel
+            OrHash =
+              T.type_alias do
+                T.any(
+                  Stagehand::SessionExecuteParams::ExecuteOptions::Variable::UnionMember3,
+                  Stagehand::Internal::AnyHash
+                )
+              end
+
+            sig do
+              returns(
+                Stagehand::SessionExecuteParams::ExecuteOptions::Variable::UnionMember3::Value::Variants
+              )
+            end
+            attr_accessor :value
+
+            sig { returns(T.nilable(String)) }
+            attr_reader :description
+
+            sig { params(description: String).void }
+            attr_writer :description
+
+            sig do
+              params(
+                value:
+                  Stagehand::SessionExecuteParams::ExecuteOptions::Variable::UnionMember3::Value::Variants,
+                description: String
+              ).returns(T.attached_class)
+            end
+            def self.new(value:, description: nil)
+            end
+
+            sig do
+              override.returns(
+                {
+                  value:
+                    Stagehand::SessionExecuteParams::ExecuteOptions::Variable::UnionMember3::Value::Variants,
+                  description: String
+                }
+              )
+            end
+            def to_hash
+            end
+
+            module Value
+              extend Stagehand::Internal::Type::Union
+
+              Variants = T.type_alias { T.any(String, Float, T::Boolean) }
+
+              sig do
+                override.returns(
+                  T::Array[
+                    Stagehand::SessionExecuteParams::ExecuteOptions::Variable::UnionMember3::Value::Variants
+                  ]
+                )
+              end
+              def self.variants
+              end
+            end
+          end
+
+          sig do
+            override.returns(
+              T::Array[
+                Stagehand::SessionExecuteParams::ExecuteOptions::Variable::Variants
+              ]
+            )
+          end
+          def self.variants
+          end
         end
       end
 
