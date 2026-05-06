@@ -10,7 +10,7 @@ module Stagehand
 
     attr_reader browserbase_api_key: String
 
-    attr_reader browserbase_project_id: String
+    attr_reader browserbase_project_id: String?
 
     attr_reader model_api_key: String
 
@@ -26,8 +26,8 @@ module Stagehand
 
     def initialize: (
       ?browserbase_api_key: String?,
-      ?browserbase_project_id: String?,
       ?model_api_key: String?,
+      ?browserbase_project_id: String?,
       ?base_url: String?,
       ?max_retries: Integer,
       ?timeout: Float,

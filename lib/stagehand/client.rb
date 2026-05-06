@@ -19,8 +19,9 @@ module Stagehand
     # @return [String]
     attr_reader :browserbase_api_key
 
-    # Your [Browserbase Project ID](https://www.browserbase.com/settings)
-    # @return [String]
+    # Deprecated. Browserbase API keys are now project-scoped, so this value is no
+    # longer required.
+    # @return [String, nil]
     attr_reader :browserbase_project_id
 
     # Your LLM provider API key (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
@@ -63,11 +64,11 @@ module Stagehand
     # @param browserbase_api_key [String, nil] Your [Browserbase API Key](https://www.browserbase.com/settings) Defaults to
     # `ENV["BROWSERBASE_API_KEY"]`
     #
-    # @param browserbase_project_id [String, nil] Your [Browserbase Project ID](https://www.browserbase.com/settings) Defaults to
-    # `ENV["BROWSERBASE_PROJECT_ID"]`
-    #
     # @param model_api_key [String, nil] Your LLM provider API key (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
     # Defaults to `ENV["MODEL_API_KEY"]`
+    #
+    # @param browserbase_project_id [String, nil] Deprecated. Browserbase API keys are now project-scoped, so this value is no
+    # longer required. Defaults to `ENV["BROWSERBASE_PROJECT_ID"]`
     #
     # @param base_url [String, nil] Override the default base URL for the API, e.g.,
     # `"https://api.example.com/v2/"`. Defaults to `ENV["STAGEHAND_BASE_URL"]`
@@ -81,8 +82,8 @@ module Stagehand
     # @param max_retry_delay [Float]
     def initialize(
       browserbase_api_key: ENV["BROWSERBASE_API_KEY"],
-      browserbase_project_id: ENV["BROWSERBASE_PROJECT_ID"],
       model_api_key: ENV["MODEL_API_KEY"],
+      browserbase_project_id: ENV["BROWSERBASE_PROJECT_ID"],
       base_url: ENV["STAGEHAND_BASE_URL"],
       max_retries: self.class::DEFAULT_MAX_RETRIES,
       timeout: self.class::DEFAULT_TIMEOUT_IN_SECONDS,
@@ -93,9 +94,6 @@ module Stagehand
 
       if browserbase_api_key.nil?
         raise ArgumentError.new("browserbase_api_key is required, and can be set via environ: \"BROWSERBASE_API_KEY\"")
-      end
-      if browserbase_project_id.nil?
-        raise ArgumentError.new("browserbase_project_id is required, and can be set via environ: \"BROWSERBASE_PROJECT_ID\"")
       end
       if model_api_key.nil?
         raise ArgumentError.new("model_api_key is required, and can be set via environ: \"MODEL_API_KEY\"")
@@ -115,8 +113,8 @@ module Stagehand
       end
 
       @browserbase_api_key = browserbase_api_key.to_s
-      @browserbase_project_id = browserbase_project_id.to_s
       @model_api_key = model_api_key.to_s
+      @browserbase_project_id = browserbase_project_id&.to_s
 
       super(
         base_url: base_url,
