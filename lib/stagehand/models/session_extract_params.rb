@@ -60,6 +60,12 @@ module Stagehand
       #   @param request_options [Stagehand::RequestOptions, Hash{Symbol=>Object}]
 
       class Options < Stagehand::Internal::Type::BaseModel
+        # @!attribute ignore_selectors
+        #   Selectors for elements and subtrees that should be excluded from extraction
+        #
+        #   @return [Array<String>, nil]
+        optional :ignore_selectors, Stagehand::Internal::Type::ArrayOf[String], api_name: :ignoreSelectors
+
         # @!attribute model
         #   Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #
@@ -78,7 +84,9 @@ module Stagehand
         #   @return [Float, nil]
         optional :timeout, Float
 
-        # @!method initialize(model: nil, selector: nil, timeout: nil)
+        # @!method initialize(ignore_selectors: nil, model: nil, selector: nil, timeout: nil)
+        #   @param ignore_selectors [Array<String>] Selectors for elements and subtrees that should be excluded from extraction
+        #
         #   @param model [Stagehand::Models::ModelConfig, String] Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #
         #   @param selector [String] CSS selector to scope extraction to a specific element

@@ -61,12 +61,17 @@ module Stagehand
 
       type options =
         {
+          ignore_selectors: ::Array[String],
           model: Stagehand::Models::SessionExtractParams::Options::model,
           selector: String,
           timeout: Float
         }
 
       class Options < Stagehand::Internal::Type::BaseModel
+        attr_reader ignore_selectors: ::Array[String]?
+
+        def ignore_selectors=: (::Array[String]) -> ::Array[String]
+
         attr_reader model: Stagehand::Models::SessionExtractParams::Options::model?
 
         def model=: (
@@ -82,12 +87,14 @@ module Stagehand
         def timeout=: (Float) -> Float
 
         def initialize: (
+          ?ignore_selectors: ::Array[String],
           ?model: Stagehand::Models::SessionExtractParams::Options::model,
           ?selector: String,
           ?timeout: Float
         ) -> void
 
         def to_hash: -> {
+          ignore_selectors: ::Array[String],
           model: Stagehand::Models::SessionExtractParams::Options::model,
           selector: String,
           timeout: Float
