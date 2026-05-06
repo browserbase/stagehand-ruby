@@ -34,7 +34,7 @@ module Stagehand
     #
     # @return [Hash{String=>String}]
     private def auth_headers
-      {**bb_api_key_auth, **bb_project_id_auth, **llm_model_api_key_auth}
+      {**bb_api_key_auth, **llm_model_api_key_auth}
     end
 
     # @api private
@@ -48,7 +48,7 @@ module Stagehand
     #
     # @return [Hash{String=>String}]
     private def bb_project_id_auth
-      {"x-bb-project-id" => @browserbase_project_id}
+      {}
     end
 
     # @api private
@@ -63,8 +63,8 @@ module Stagehand
     # @param browserbase_api_key [String, nil] Your [Browserbase API Key](https://www.browserbase.com/settings) Defaults to
     # `ENV["BROWSERBASE_API_KEY"]`
     #
-    # @param browserbase_project_id [String, nil] Your [Browserbase Project ID](https://www.browserbase.com/settings) Defaults to
-    # `ENV["BROWSERBASE_PROJECT_ID"]`
+    # @param browserbase_project_id [String, nil] Deprecated. Browserbase API keys are now project-scoped, so
+    # this value is accepted for backwards compatibility and ignored.
     #
     # @param model_api_key [String, nil] Your LLM provider API key (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
     # Defaults to `ENV["MODEL_API_KEY"]`
@@ -72,7 +72,8 @@ module Stagehand
     # @param server [String] Server mode to use ("remote" or "local"). Defaults to "remote"
     #
     # @param base_url [String, nil] Override the default base URL for the API, e.g.,
-    # `"https://api.example.com/v2/"`. Defaults to `ENV["STAGEHAND_API_URL"]`
+    # `"https://api.example.com/v2/"`. Defaults to `ENV["STAGEHAND_API_URL"]`,
+    # then `ENV["STAGEHAND_BASE_URL"]`
     #
     # @param max_retries [Integer] Max number of retries to attempt after a failed retryable request.
     #
@@ -83,7 +84,7 @@ module Stagehand
     # @param max_retry_delay [Float]
     def initialize(
       browserbase_api_key: ENV["BROWSERBASE_API_KEY"],
-      browserbase_project_id: ENV["BROWSERBASE_PROJECT_ID"],
+      browserbase_project_id: nil,
       model_api_key: ENV["MODEL_API_KEY"],
       server: "remote",
       base_url: ENV["STAGEHAND_API_URL"] || ENV["STAGEHAND_BASE_URL"],
@@ -98,10 +99,6 @@ module Stagehand
       if browserbase_api_key.nil?
         raise ArgumentError,
               "browserbase_api_key is required, and can be set via environ: \"BROWSERBASE_API_KEY\""
-      end
-      if browserbase_project_id.nil?
-        raise ArgumentError,
-              "browserbase_project_id is required, and can be set via environ: \"BROWSERBASE_PROJECT_ID\""
       end
       if model_api_key.nil?
         raise ArgumentError,

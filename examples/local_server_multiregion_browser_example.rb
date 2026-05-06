@@ -7,12 +7,10 @@ require "stagehand"
 require_relative "env"
 ExampleEnv.load!
 browserbase_api_key = ENV["BROWSERBASE_API_KEY"].to_s
-browserbase_project_id = ENV["BROWSERBASE_PROJECT_ID"].to_s
 model_key = ENV["MODEL_API_KEY"].to_s
 
 missing = []
 missing << "BROWSERBASE_API_KEY" if browserbase_api_key.empty?
-missing << "BROWSERBASE_PROJECT_ID" if browserbase_project_id.empty?
 missing << "MODEL_API_KEY" if model_key.empty?
 
 unless missing.empty?
@@ -22,7 +20,6 @@ end
 
 client = Stagehand::Client.new(
   browserbase_api_key: browserbase_api_key,
-  browserbase_project_id: browserbase_project_id,
   model_api_key: model_key,
   server: "local"
 )

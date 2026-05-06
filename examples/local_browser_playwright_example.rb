@@ -16,12 +16,10 @@ end
 
 model_key = ENV["MODEL_API_KEY"]
 browserbase_api_key = ENV["BROWSERBASE_API_KEY"].to_s
-browserbase_project_id = ENV["BROWSERBASE_PROJECT_ID"].to_s
 
 missing = []
 missing << "MODEL_API_KEY" if model_key.to_s.empty?
 missing << "BROWSERBASE_API_KEY" if browserbase_api_key.empty?
-missing << "BROWSERBASE_PROJECT_ID" if browserbase_project_id.empty?
 
 unless missing.empty?
   warn("Set #{missing.join(', ')} to run the local Playwright example.")
@@ -60,7 +58,6 @@ end
 
 client = Stagehand::Client.new(
   browserbase_api_key: browserbase_api_key,
-  browserbase_project_id: browserbase_project_id,
   model_api_key: model_key,
   server: "local"
 )

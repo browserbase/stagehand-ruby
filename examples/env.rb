@@ -2,10 +2,8 @@
 
 module ExampleEnv
   REQUIRED_KEYS = %w[
-    STAGEHAND_API_URL
     MODEL_API_KEY
     BROWSERBASE_API_KEY
-    BROWSERBASE_PROJECT_ID
   ].freeze
 
   def self.load!

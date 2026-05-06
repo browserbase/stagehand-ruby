@@ -50,7 +50,6 @@ module Stagehand
 
       missing = []
       missing << "browserbase_api_key" if client.browserbase_api_key.to_s.empty?
-      missing << "browserbase_project_id" if client.browserbase_project_id.to_s.empty?
       return if missing.empty?
 
       message =
@@ -213,10 +212,9 @@ module Stagehand
     end
 
     class ServerManager
-      def initialize(model_api_key:, browserbase_api_key:, browserbase_project_id:)
+      def initialize(model_api_key:, browserbase_api_key:)
         @model_api_key = model_api_key
         @browserbase_api_key = browserbase_api_key
-        @browserbase_project_id = browserbase_project_id
         @host = DEFAULT_HOST
         @port = 0
         @mutex = Mutex.new
@@ -335,9 +333,6 @@ module Stagehand
         if @browserbase_api_key.to_s != ""
           env["BROWSERBASE_API_KEY"] = @browserbase_api_key
         end
-        if @browserbase_project_id.to_s != ""
-          env["BROWSERBASE_PROJECT_ID"] = @browserbase_project_id
-        end
         env
       end
 
@@ -376,8 +371,6 @@ module Stagehand
           kwargs[:base_url] = base_url.nil? ? "http://#{DEFAULT_HOST}" : base_url
           kwargs[:browserbase_api_key] =
             kwargs[:browserbase_api_key] || ENV["BROWSERBASE_API_KEY"] || ""
-          kwargs[:browserbase_project_id] =
-            kwargs[:browserbase_project_id] || ENV["BROWSERBASE_PROJECT_ID"] || ""
         end
 
         super(**kwargs)
@@ -386,8 +379,7 @@ module Stagehand
 
         @local_server_manager = Stagehand::Local::ServerManager.new(
           model_api_key: @model_api_key,
-          browserbase_api_key: @browserbase_api_key,
-          browserbase_project_id: @browserbase_project_id
+          browserbase_api_key: @browserbase_api_key
         )
       end
 
@@ -421,8 +413,7 @@ module Stagehand
       end
 
       def bb_project_id_auth
-        return {} if @browserbase_project_id.to_s.empty?
-        super
+        {}
       end
     end
 

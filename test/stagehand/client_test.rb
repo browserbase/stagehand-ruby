@@ -76,6 +76,29 @@ class StagehandTest < Minitest::Test
     end
   end
 
+  def test_client_omits_project_id_header
+    captured_headers = nil
+    stub_request(:post, "http://localhost/v1/sessions/start")
+      .with do |request|
+        captured_headers = request.headers
+        true
+      end
+      .to_return_json(status: 200, body: {})
+
+    stagehand =
+      Stagehand::Client.new(
+        base_url: "http://localhost",
+        browserbase_api_key: "My Browserbase API Key",
+        browserbase_project_id: "My Browserbase Project ID",
+        model_api_key: "My Model API Key"
+      )
+
+    stagehand.sessions.start(model_name: "openai/gpt-5.4-mini")
+
+    refute_nil(captured_headers)
+    refute_includes(captured_headers.keys.map(&:downcase), "x-bb-project-id")
+  end
+
   def with_env(vars)
     old_values = vars.keys.to_h { |key| [key, ENV.fetch(key, nil)] }
 

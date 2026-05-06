@@ -14,7 +14,7 @@ module Stagehand
     sig { returns(String) }
     attr_reader :browserbase_api_key
 
-    # Your [Browserbase Project ID](https://www.browserbase.com/settings)
+    # Deprecated. Browserbase API keys are now project-scoped, so this value is accepted for backwards compatibility and ignored.
     sig { returns(String) }
     attr_reader :browserbase_project_id
 
@@ -63,16 +63,16 @@ module Stagehand
       # Your [Browserbase API Key](https://www.browserbase.com/settings) Defaults to
       # `ENV["BROWSERBASE_API_KEY"]`
       browserbase_api_key: ENV["BROWSERBASE_API_KEY"],
-      # Your [Browserbase Project ID](https://www.browserbase.com/settings) Defaults to
-      # `ENV["BROWSERBASE_PROJECT_ID"]`
-      browserbase_project_id: ENV["BROWSERBASE_PROJECT_ID"],
+      # Deprecated. Browserbase API keys are now project-scoped, so this value is accepted for backwards compatibility and ignored.
+      browserbase_project_id: nil,
       # Your LLM provider API key (e.g. OPENAI_API_KEY, ANTHROPIC_API_KEY, etc.)
       # Defaults to `ENV["MODEL_API_KEY"]`
       model_api_key: ENV["MODEL_API_KEY"],
       # Server mode to use ("remote" or "local"). Defaults to "remote"
       server: "remote",
       # Override the default base URL for the API, e.g.,
-      # `"https://api.example.com/v2/"`. Defaults to `ENV["STAGEHAND_API_URL"]`
+      # `"https://api.example.com/v2/"`. Defaults to `ENV["STAGEHAND_API_URL"]`,
+      # then `ENV["STAGEHAND_BASE_URL"]`
       base_url: ENV["STAGEHAND_API_URL"] || ENV["STAGEHAND_BASE_URL"],
       # Max number of retries to attempt after a failed retryable request.
       max_retries: Stagehand::Client::DEFAULT_MAX_RETRIES,
