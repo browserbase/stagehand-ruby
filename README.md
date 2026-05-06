@@ -90,7 +90,6 @@ require "playwright"
 
 client = Stagehand::Client.new(
   browserbase_api_key: ENV["BROWSERBASE_API_KEY"],
-  browserbase_project_id: ENV["BROWSERBASE_PROJECT_ID"],
   model_api_key: ENV["MODEL_API_KEY"],
   server: "remote"
 )
@@ -162,10 +161,10 @@ client.sessions.end_(session_id)
 
 Set your environment variables (from `examples/.env.example`):
 
-- `STAGEHAND_API_URL`
 - `MODEL_API_KEY`
 - `BROWSERBASE_API_KEY`
-- `BROWSERBASE_PROJECT_ID`
+
+`STAGEHAND_API_URL` is optional and defaults to the hosted Stagehand API. `STAGEHAND_BASE_URL` remains supported as a deprecated fallback when `STAGEHAND_API_URL` is unset.
 
 ```bash
 cp examples/.env.example examples/.env
