@@ -19,7 +19,8 @@ module Stagehand
     # @return [String]
     attr_reader :browserbase_api_key
 
-    # Your [Browserbase Project ID](https://www.browserbase.com/settings)
+    # Deprecated. Browserbase API keys are now project-scoped, so this value is accepted for
+    # backwards compatibility and ignored.
     # @return [String]
     attr_reader :browserbase_project_id
 
