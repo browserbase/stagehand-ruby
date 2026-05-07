@@ -17,7 +17,7 @@ To use this gem, install via Bundler by adding the following to your application
 <!-- x-release-please-start-version -->
 
 ```ruby
-gem "stagehand", "~> 3.19.3"
+gem "stagehand", "~> 3.20.0"
 ```
 
 <!-- x-release-please-end -->
