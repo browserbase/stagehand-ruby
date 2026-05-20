@@ -127,6 +127,14 @@ module Stagehand
         end
         attr_writer :model
 
+        # When true, include a screenshot of the current viewport in the extraction LLM
+        # call. Defaults to false.
+        sig { returns(T.nilable(T::Boolean)) }
+        attr_reader :screenshot
+
+        sig { params(screenshot: T::Boolean).void }
+        attr_writer :screenshot
+
         # CSS selector to scope extraction to a specific element
         sig { returns(T.nilable(String)) }
         attr_reader :selector
@@ -145,6 +153,7 @@ module Stagehand
           params(
             ignore_selectors: T::Array[String],
             model: T.any(Stagehand::ModelConfig::OrHash, String),
+            screenshot: T::Boolean,
             selector: String,
             timeout: Float
           ).returns(T.attached_class)
@@ -154,6 +163,9 @@ module Stagehand
           ignore_selectors: nil,
           # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
           model: nil,
+          # When true, include a screenshot of the current viewport in the extraction LLM
+          # call. Defaults to false.
+          screenshot: nil,
           # CSS selector to scope extraction to a specific element
           selector: nil,
           # Timeout in ms for the extraction
@@ -166,6 +178,7 @@ module Stagehand
             {
               ignore_selectors: T::Array[String],
               model: T.any(Stagehand::ModelConfig, String),
+              screenshot: T::Boolean,
               selector: String,
               timeout: Float
             }
