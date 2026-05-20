@@ -72,6 +72,13 @@ module Stagehand
         #   @return [Stagehand::Models::ModelConfig, String, nil]
         optional :model, union: -> { Stagehand::SessionExtractParams::Options::Model }
 
+        # @!attribute screenshot
+        #   When true, include a screenshot of the current viewport in the extraction LLM
+        #   call. Defaults to false.
+        #
+        #   @return [Boolean, nil]
+        optional :screenshot, Stagehand::Internal::Type::Boolean
+
         # @!attribute selector
         #   CSS selector to scope extraction to a specific element
         #
@@ -84,10 +91,15 @@ module Stagehand
         #   @return [Float, nil]
         optional :timeout, Float
 
-        # @!method initialize(ignore_selectors: nil, model: nil, selector: nil, timeout: nil)
+        # @!method initialize(ignore_selectors: nil, model: nil, screenshot: nil, selector: nil, timeout: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {Stagehand::Models::SessionExtractParams::Options} for more details.
+        #
         #   @param ignore_selectors [Array<String>] Selectors for elements and subtrees that should be excluded from extraction
         #
         #   @param model [Stagehand::Models::ModelConfig, String] Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
+        #
+        #   @param screenshot [Boolean] When true, include a screenshot of the current viewport in the extraction LLM ca
         #
         #   @param selector [String] CSS selector to scope extraction to a specific element
         #

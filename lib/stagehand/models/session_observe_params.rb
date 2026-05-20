@@ -52,6 +52,12 @@ module Stagehand
       #   @param request_options [Stagehand::RequestOptions, Hash{Symbol=>Object}]
 
       class Options < Stagehand::Internal::Type::BaseModel
+        # @!attribute ignore_selectors
+        #   Selectors for elements and subtrees that should be excluded from observation
+        #
+        #   @return [Array<String>, nil]
+        optional :ignore_selectors, Stagehand::Internal::Type::ArrayOf[String], api_name: :ignoreSelectors
+
         # @!attribute model
         #   Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #
@@ -79,9 +85,11 @@ module Stagehand
         optional :variables,
                  -> { Stagehand::Internal::Type::HashOf[union: Stagehand::SessionObserveParams::Options::Variable] }
 
-        # @!method initialize(model: nil, selector: nil, timeout: nil, variables: nil)
+        # @!method initialize(ignore_selectors: nil, model: nil, selector: nil, timeout: nil, variables: nil)
         #   Some parameter documentations has been truncated, see
         #   {Stagehand::Models::SessionObserveParams::Options} for more details.
+        #
+        #   @param ignore_selectors [Array<String>] Selectors for elements and subtrees that should be excluded from observation
         #
         #   @param model [Stagehand::Models::ModelConfig, String] Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #

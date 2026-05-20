@@ -100,6 +100,13 @@ module Stagehand
             )
           end
 
+        # Selectors for elements and subtrees that should be excluded from observation
+        sig { returns(T.nilable(T::Array[String])) }
+        attr_reader :ignore_selectors
+
+        sig { params(ignore_selectors: T::Array[String]).void }
+        attr_writer :ignore_selectors
+
         # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         sig { returns(T.nilable(T.any(Stagehand::ModelConfig, String))) }
         attr_reader :model
@@ -161,6 +168,7 @@ module Stagehand
 
         sig do
           params(
+            ignore_selectors: T::Array[String],
             model: T.any(Stagehand::ModelConfig::OrHash, String),
             selector: String,
             timeout: Float,
@@ -177,6 +185,8 @@ module Stagehand
           ).returns(T.attached_class)
         end
         def self.new(
+          # Selectors for elements and subtrees that should be excluded from observation
+          ignore_selectors: nil,
           # Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
           model: nil,
           # CSS selector to scope observation to a specific element
@@ -193,6 +203,7 @@ module Stagehand
         sig do
           override.returns(
             {
+              ignore_selectors: T::Array[String],
               model: T.any(Stagehand::ModelConfig, String),
               selector: String,
               timeout: Float,

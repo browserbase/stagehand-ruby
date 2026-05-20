@@ -1,5 +1,20 @@
 # Changelog
 
+## 3.21.0 (2026-05-20)
+
+Full Changelog: [v3.20.0...v3.21.0](https://github.com/browserbase/stagehand-ruby/compare/v3.20.0...v3.21.0)
+
+### Features
+
+* [feat]: add `ignoreSelectors` to `observe()` ([0acc093](https://github.com/browserbase/stagehand-ruby/commit/0acc093944e72ee488393ec1fb73dc16450cc825))
+* Add `screenshot` option to Extract ([7b65ca7](https://github.com/browserbase/stagehand-ruby/commit/7b65ca776e1e13c489f13991b012fa24aecc60e6))
+* STG-1756 add Vertex auth params to Stagehand spec ([4b65f22](https://github.com/browserbase/stagehand-ruby/commit/4b65f221055c7d0d3d7426845fbd0e49ba13d2df))
+
+
+### Bug Fixes
+
+* **client:** elide content type header on requests without body ([6149c11](https://github.com/browserbase/stagehand-ruby/commit/6149c11d9ab60a0cac69f1e26e3a2f42425ad616))
+
 ## 3.20.0 (2026-05-06)
 
 Full Changelog: [v3.19.3...v3.20.0](https://github.com/browserbase/stagehand-ruby/compare/v3.19.3...v3.20.0)

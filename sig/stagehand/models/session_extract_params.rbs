@@ -63,6 +63,7 @@ module Stagehand
         {
           ignore_selectors: ::Array[String],
           model: Stagehand::Models::SessionExtractParams::Options::model,
+          screenshot: bool,
           selector: String,
           timeout: Float
         }
@@ -78,6 +79,10 @@ module Stagehand
           Stagehand::Models::SessionExtractParams::Options::model
         ) -> Stagehand::Models::SessionExtractParams::Options::model
 
+        attr_reader screenshot: bool?
+
+        def screenshot=: (bool) -> bool
+
         attr_reader selector: String?
 
         def selector=: (String) -> String
@@ -89,6 +94,7 @@ module Stagehand
         def initialize: (
           ?ignore_selectors: ::Array[String],
           ?model: Stagehand::Models::SessionExtractParams::Options::model,
+          ?screenshot: bool,
           ?selector: String,
           ?timeout: Float
         ) -> void
@@ -96,6 +102,7 @@ module Stagehand
         def to_hash: -> {
           ignore_selectors: ::Array[String],
           model: Stagehand::Models::SessionExtractParams::Options::model,
+          screenshot: bool,
           selector: String,
           timeout: Float
         }
