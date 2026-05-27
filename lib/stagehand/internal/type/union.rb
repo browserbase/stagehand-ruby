@@ -4,6 +4,17 @@ module Stagehand
   module Internal
     module Type
       # @api private
+      #
+      # @example
+      #   # `model_config` is a `Stagehand::ModelConfig`
+      #   case model_config
+      #   when Stagehand::ModelConfig::VertexModelConfigObject
+      #     puts(model_config.auth)
+      #   when Stagehand::ModelConfig::GenericModelConfigObject
+      #     puts(model_config.model_name)
+      #   else
+      #     puts(model_config)
+      #   end
       module Union
         include Stagehand::Internal::Type::Converter
         include Stagehand::Internal::Util::SorbetRuntimeSupport
