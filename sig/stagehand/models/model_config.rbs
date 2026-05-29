@@ -1,64 +1,332 @@
 module Stagehand
   module Models
     type model_config =
-      {
-        model_name: String,
-        api_key: String,
-        base_url: String,
-        headers: ::Hash[Symbol, String],
-        provider: Stagehand::Models::ModelConfig::provider
-      }
+      Stagehand::ModelConfig::VertexModelConfigObject
+      | Stagehand::ModelConfig::GenericModelConfigObject
 
-    class ModelConfig < Stagehand::Internal::Type::BaseModel
-      attr_accessor model_name: String
+    module ModelConfig
+      extend Stagehand::Internal::Type::Union
 
-      attr_reader api_key: String?
+      type vertex_model_config_object =
+        {
+          auth: Stagehand::ModelConfig::VertexModelConfigObject::Auth,
+          model_name: String,
+          provider: :vertex,
+          provider_options: Stagehand::ModelConfig::VertexModelConfigObject::ProviderOptions,
+          api_key: String,
+          base_url: String,
+          headers: ::Hash[Symbol, String]
+        }
 
-      def api_key=: (String) -> String
+      class VertexModelConfigObject < Stagehand::Internal::Type::BaseModel
+        attr_accessor auth: Stagehand::ModelConfig::VertexModelConfigObject::Auth
 
-      attr_reader base_url: String?
+        attr_accessor model_name: String
 
-      def base_url=: (String) -> String
+        attr_accessor provider: :vertex
 
-      attr_reader headers: ::Hash[Symbol, String]?
+        attr_accessor provider_options: Stagehand::ModelConfig::VertexModelConfigObject::ProviderOptions
 
-      def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+        attr_reader api_key: String?
 
-      attr_reader provider: Stagehand::Models::ModelConfig::provider?
+        def api_key=: (String) -> String
 
-      def provider=: (
-        Stagehand::Models::ModelConfig::provider
-      ) -> Stagehand::Models::ModelConfig::provider
+        attr_reader base_url: String?
 
-      def initialize: (
-        model_name: String,
-        ?api_key: String,
-        ?base_url: String,
-        ?headers: ::Hash[Symbol, String],
-        ?provider: Stagehand::Models::ModelConfig::provider
-      ) -> void
+        def base_url=: (String) -> String
 
-      def to_hash: -> {
-        model_name: String,
-        api_key: String,
-        base_url: String,
-        headers: ::Hash[Symbol, String],
-        provider: Stagehand::Models::ModelConfig::provider
-      }
+        attr_reader headers: ::Hash[Symbol, String]?
 
-      type provider = :openai | :anthropic | :google | :microsoft | :bedrock
+        def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
 
-      module Provider
-        extend Stagehand::Internal::Type::Enum
+        def initialize: (
+          auth: Stagehand::ModelConfig::VertexModelConfigObject::Auth,
+          model_name: String,
+          provider_options: Stagehand::ModelConfig::VertexModelConfigObject::ProviderOptions,
+          ?api_key: String,
+          ?base_url: String,
+          ?headers: ::Hash[Symbol, String],
+          ?provider: :vertex
+        ) -> void
 
-        OPENAI: :openai
-        ANTHROPIC: :anthropic
-        GOOGLE: :google
-        MICROSOFT: :microsoft
-        BEDROCK: :bedrock
+        def to_hash: -> {
+          auth: Stagehand::ModelConfig::VertexModelConfigObject::Auth,
+          model_name: String,
+          provider: :vertex,
+          provider_options: Stagehand::ModelConfig::VertexModelConfigObject::ProviderOptions,
+          api_key: String,
+          base_url: String,
+          headers: ::Hash[Symbol, String]
+        }
 
-        def self?.values: -> ::Array[Stagehand::Models::ModelConfig::provider]
+        type auth =
+          {
+            credentials: Stagehand::ModelConfig::VertexModelConfigObject::Auth::Credentials,
+            type: :googleServiceAccount,
+            project_id: String,
+            scopes: Stagehand::Models::ModelConfig::VertexModelConfigObject::Auth::scopes,
+            universe_domain: String
+          }
+
+        class Auth < Stagehand::Internal::Type::BaseModel
+          attr_accessor credentials: Stagehand::ModelConfig::VertexModelConfigObject::Auth::Credentials
+
+          attr_accessor type: :googleServiceAccount
+
+          attr_reader project_id: String?
+
+          def project_id=: (String) -> String
+
+          attr_reader scopes: Stagehand::Models::ModelConfig::VertexModelConfigObject::Auth::scopes?
+
+          def scopes=: (
+            Stagehand::Models::ModelConfig::VertexModelConfigObject::Auth::scopes
+          ) -> Stagehand::Models::ModelConfig::VertexModelConfigObject::Auth::scopes
+
+          attr_reader universe_domain: String?
+
+          def universe_domain=: (String) -> String
+
+          def initialize: (
+            credentials: Stagehand::ModelConfig::VertexModelConfigObject::Auth::Credentials,
+            ?project_id: String,
+            ?scopes: Stagehand::Models::ModelConfig::VertexModelConfigObject::Auth::scopes,
+            ?universe_domain: String,
+            ?type: :googleServiceAccount
+          ) -> void
+
+          def to_hash: -> {
+            credentials: Stagehand::ModelConfig::VertexModelConfigObject::Auth::Credentials,
+            type: :googleServiceAccount,
+            project_id: String,
+            scopes: Stagehand::Models::ModelConfig::VertexModelConfigObject::Auth::scopes,
+            universe_domain: String
+          }
+
+          type credentials =
+            {
+              client_email: String,
+              private_key: String,
+              :auth_provider_x509_cert_url => String,
+              auth_uri: String,
+              client_id: String,
+              :client_x509_cert_url => String,
+              private_key_id: String,
+              project_id: String,
+              token_uri: String,
+              type: Stagehand::Models::ModelConfig::VertexModelConfigObject::Auth::Credentials::type_,
+              universe_domain: String
+            }
+
+          class Credentials < Stagehand::Internal::Type::BaseModel
+            attr_accessor client_email: String
+
+            attr_accessor private_key: String
+
+            attr_reader auth_provider_x509_cert_url: String?
+
+            def auth_provider_x509_cert_url=: (String) -> String
+
+            attr_reader auth_uri: String?
+
+            def auth_uri=: (String) -> String
+
+            attr_reader client_id: String?
+
+            def client_id=: (String) -> String
+
+            attr_reader client_x509_cert_url: String?
+
+            def client_x509_cert_url=: (String) -> String
+
+            attr_reader private_key_id: String?
+
+            def private_key_id=: (String) -> String
+
+            attr_reader project_id: String?
+
+            def project_id=: (String) -> String
+
+            attr_reader token_uri: String?
+
+            def token_uri=: (String) -> String
+
+            attr_reader type: Stagehand::Models::ModelConfig::VertexModelConfigObject::Auth::Credentials::type_?
+
+            def type=: (
+              Stagehand::Models::ModelConfig::VertexModelConfigObject::Auth::Credentials::type_
+            ) -> Stagehand::Models::ModelConfig::VertexModelConfigObject::Auth::Credentials::type_
+
+            attr_reader universe_domain: String?
+
+            def universe_domain=: (String) -> String
+
+            def initialize: (
+              client_email: String,
+              private_key: String,
+              ?auth_provider_x509_cert_url: String,
+              ?auth_uri: String,
+              ?client_id: String,
+              ?client_x509_cert_url: String,
+              ?private_key_id: String,
+              ?project_id: String,
+              ?token_uri: String,
+              ?type: Stagehand::Models::ModelConfig::VertexModelConfigObject::Auth::Credentials::type_,
+              ?universe_domain: String
+            ) -> void
+
+            def to_hash: -> {
+              client_email: String,
+              private_key: String,
+              :auth_provider_x509_cert_url => String,
+              auth_uri: String,
+              client_id: String,
+              :client_x509_cert_url => String,
+              private_key_id: String,
+              project_id: String,
+              token_uri: String,
+              type: Stagehand::Models::ModelConfig::VertexModelConfigObject::Auth::Credentials::type_,
+              universe_domain: String
+            }
+
+            type type_ = :service_account
+
+            module Type
+              extend Stagehand::Internal::Type::Enum
+
+              SERVICE_ACCOUNT: :service_account
+
+              def self?.values: -> ::Array[Stagehand::Models::ModelConfig::VertexModelConfigObject::Auth::Credentials::type_]
+            end
+          end
+
+          type scopes = String | ::Array[String]
+
+          module Scopes
+            extend Stagehand::Internal::Type::Union
+
+            def self?.variants: -> ::Array[Stagehand::Models::ModelConfig::VertexModelConfigObject::Auth::scopes]
+
+            StringArray: Stagehand::Internal::Type::Converter
+          end
+        end
+
+        type provider_options =
+          {
+            vertex: Stagehand::ModelConfig::VertexModelConfigObject::ProviderOptions::Vertex
+          }
+
+        class ProviderOptions < Stagehand::Internal::Type::BaseModel
+          attr_accessor vertex: Stagehand::ModelConfig::VertexModelConfigObject::ProviderOptions::Vertex
+
+          def initialize: (
+            vertex: Stagehand::ModelConfig::VertexModelConfigObject::ProviderOptions::Vertex
+          ) -> void
+
+          def to_hash: -> {
+            vertex: Stagehand::ModelConfig::VertexModelConfigObject::ProviderOptions::Vertex
+          }
+
+          type vertex =
+            {
+              location: String,
+              project: String,
+              base_url: String,
+              headers: ::Hash[Symbol, String]
+            }
+
+          class Vertex < Stagehand::Internal::Type::BaseModel
+            attr_accessor location: String
+
+            attr_accessor project: String
+
+            attr_reader base_url: String?
+
+            def base_url=: (String) -> String
+
+            attr_reader headers: ::Hash[Symbol, String]?
+
+            def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+            def initialize: (
+              location: String,
+              project: String,
+              ?base_url: String,
+              ?headers: ::Hash[Symbol, String]
+            ) -> void
+
+            def to_hash: -> {
+              location: String,
+              project: String,
+              base_url: String,
+              headers: ::Hash[Symbol, String]
+            }
+          end
+        end
       end
+
+      type generic_model_config_object =
+        {
+          model_name: String,
+          api_key: String,
+          base_url: String,
+          headers: ::Hash[Symbol, String],
+          provider: Stagehand::Models::ModelConfig::GenericModelConfigObject::provider
+        }
+
+      class GenericModelConfigObject < Stagehand::Internal::Type::BaseModel
+        attr_accessor model_name: String
+
+        attr_reader api_key: String?
+
+        def api_key=: (String) -> String
+
+        attr_reader base_url: String?
+
+        def base_url=: (String) -> String
+
+        attr_reader headers: ::Hash[Symbol, String]?
+
+        def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+        attr_reader provider: Stagehand::Models::ModelConfig::GenericModelConfigObject::provider?
+
+        def provider=: (
+          Stagehand::Models::ModelConfig::GenericModelConfigObject::provider
+        ) -> Stagehand::Models::ModelConfig::GenericModelConfigObject::provider
+
+        def initialize: (
+          model_name: String,
+          ?api_key: String,
+          ?base_url: String,
+          ?headers: ::Hash[Symbol, String],
+          ?provider: Stagehand::Models::ModelConfig::GenericModelConfigObject::provider
+        ) -> void
+
+        def to_hash: -> {
+          model_name: String,
+          api_key: String,
+          base_url: String,
+          headers: ::Hash[Symbol, String],
+          provider: Stagehand::Models::ModelConfig::GenericModelConfigObject::provider
+        }
+
+        type provider = :openai | :anthropic | :google | :microsoft | :bedrock
+
+        module Provider
+          extend Stagehand::Internal::Type::Enum
+
+          OPENAI: :openai
+          ANTHROPIC: :anthropic
+          GOOGLE: :google
+          MICROSOFT: :microsoft
+          BEDROCK: :bedrock
+
+          def self?.values: -> ::Array[Stagehand::Models::ModelConfig::GenericModelConfigObject::provider]
+        end
+      end
+
+      def self?.variants: -> ::Array[Stagehand::Models::model_config]
     end
   end
 end

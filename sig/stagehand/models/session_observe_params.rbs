@@ -54,6 +54,7 @@ module Stagehand
 
       type options =
         {
+          ignore_selectors: ::Array[String],
           model: Stagehand::Models::SessionObserveParams::Options::model,
           selector: String,
           timeout: Float,
@@ -61,6 +62,10 @@ module Stagehand
         }
 
       class Options < Stagehand::Internal::Type::BaseModel
+        attr_reader ignore_selectors: ::Array[String]?
+
+        def ignore_selectors=: (::Array[String]) -> ::Array[String]
+
         attr_reader model: Stagehand::Models::SessionObserveParams::Options::model?
 
         def model=: (
@@ -82,6 +87,7 @@ module Stagehand
         ) -> ::Hash[Symbol, Stagehand::Models::SessionObserveParams::Options::variable]
 
         def initialize: (
+          ?ignore_selectors: ::Array[String],
           ?model: Stagehand::Models::SessionObserveParams::Options::model,
           ?selector: String,
           ?timeout: Float,
@@ -89,16 +95,340 @@ module Stagehand
         ) -> void
 
         def to_hash: -> {
+          ignore_selectors: ::Array[String],
           model: Stagehand::Models::SessionObserveParams::Options::model,
           selector: String,
           timeout: Float,
           variables: ::Hash[Symbol, Stagehand::Models::SessionObserveParams::Options::variable]
         }
 
-        type model = Stagehand::ModelConfig | String
+        type model =
+          Stagehand::SessionObserveParams::Options::Model::VertexModelConfigObject
+          | Stagehand::SessionObserveParams::Options::Model::GenericModelConfigObject
+          | String
 
         module Model
           extend Stagehand::Internal::Type::Union
+
+          type vertex_model_config_object =
+            {
+              auth: Stagehand::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth,
+              model_name: String,
+              provider: :vertex,
+              provider_options: Stagehand::SessionObserveParams::Options::Model::VertexModelConfigObject::ProviderOptions,
+              api_key: String,
+              base_url: String,
+              headers: ::Hash[Symbol, String]
+            }
+
+          class VertexModelConfigObject < Stagehand::Internal::Type::BaseModel
+            attr_accessor auth: Stagehand::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth
+
+            attr_accessor model_name: String
+
+            attr_accessor provider: :vertex
+
+            attr_accessor provider_options: Stagehand::SessionObserveParams::Options::Model::VertexModelConfigObject::ProviderOptions
+
+            attr_reader api_key: String?
+
+            def api_key=: (String) -> String
+
+            attr_reader base_url: String?
+
+            def base_url=: (String) -> String
+
+            attr_reader headers: ::Hash[Symbol, String]?
+
+            def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+            def initialize: (
+              auth: Stagehand::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth,
+              model_name: String,
+              provider_options: Stagehand::SessionObserveParams::Options::Model::VertexModelConfigObject::ProviderOptions,
+              ?api_key: String,
+              ?base_url: String,
+              ?headers: ::Hash[Symbol, String],
+              ?provider: :vertex
+            ) -> void
+
+            def to_hash: -> {
+              auth: Stagehand::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth,
+              model_name: String,
+              provider: :vertex,
+              provider_options: Stagehand::SessionObserveParams::Options::Model::VertexModelConfigObject::ProviderOptions,
+              api_key: String,
+              base_url: String,
+              headers: ::Hash[Symbol, String]
+            }
+
+            type auth =
+              {
+                credentials: Stagehand::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth::Credentials,
+                type: :googleServiceAccount,
+                project_id: String,
+                scopes: Stagehand::Models::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth::scopes,
+                universe_domain: String
+              }
+
+            class Auth < Stagehand::Internal::Type::BaseModel
+              attr_accessor credentials: Stagehand::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth::Credentials
+
+              attr_accessor type: :googleServiceAccount
+
+              attr_reader project_id: String?
+
+              def project_id=: (String) -> String
+
+              attr_reader scopes: Stagehand::Models::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth::scopes?
+
+              def scopes=: (
+                Stagehand::Models::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth::scopes
+              ) -> Stagehand::Models::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth::scopes
+
+              attr_reader universe_domain: String?
+
+              def universe_domain=: (String) -> String
+
+              def initialize: (
+                credentials: Stagehand::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth::Credentials,
+                ?project_id: String,
+                ?scopes: Stagehand::Models::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth::scopes,
+                ?universe_domain: String,
+                ?type: :googleServiceAccount
+              ) -> void
+
+              def to_hash: -> {
+                credentials: Stagehand::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth::Credentials,
+                type: :googleServiceAccount,
+                project_id: String,
+                scopes: Stagehand::Models::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth::scopes,
+                universe_domain: String
+              }
+
+              type credentials =
+                {
+                  client_email: String,
+                  private_key: String,
+                  :auth_provider_x509_cert_url => String,
+                  auth_uri: String,
+                  client_id: String,
+                  :client_x509_cert_url => String,
+                  private_key_id: String,
+                  project_id: String,
+                  token_uri: String,
+                  type: Stagehand::Models::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth::Credentials::type_,
+                  universe_domain: String
+                }
+
+              class Credentials < Stagehand::Internal::Type::BaseModel
+                attr_accessor client_email: String
+
+                attr_accessor private_key: String
+
+                attr_reader auth_provider_x509_cert_url: String?
+
+                def auth_provider_x509_cert_url=: (String) -> String
+
+                attr_reader auth_uri: String?
+
+                def auth_uri=: (String) -> String
+
+                attr_reader client_id: String?
+
+                def client_id=: (String) -> String
+
+                attr_reader client_x509_cert_url: String?
+
+                def client_x509_cert_url=: (String) -> String
+
+                attr_reader private_key_id: String?
+
+                def private_key_id=: (String) -> String
+
+                attr_reader project_id: String?
+
+                def project_id=: (String) -> String
+
+                attr_reader token_uri: String?
+
+                def token_uri=: (String) -> String
+
+                attr_reader type: Stagehand::Models::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth::Credentials::type_?
+
+                def type=: (
+                  Stagehand::Models::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth::Credentials::type_
+                ) -> Stagehand::Models::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth::Credentials::type_
+
+                attr_reader universe_domain: String?
+
+                def universe_domain=: (String) -> String
+
+                def initialize: (
+                  client_email: String,
+                  private_key: String,
+                  ?auth_provider_x509_cert_url: String,
+                  ?auth_uri: String,
+                  ?client_id: String,
+                  ?client_x509_cert_url: String,
+                  ?private_key_id: String,
+                  ?project_id: String,
+                  ?token_uri: String,
+                  ?type: Stagehand::Models::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth::Credentials::type_,
+                  ?universe_domain: String
+                ) -> void
+
+                def to_hash: -> {
+                  client_email: String,
+                  private_key: String,
+                  :auth_provider_x509_cert_url => String,
+                  auth_uri: String,
+                  client_id: String,
+                  :client_x509_cert_url => String,
+                  private_key_id: String,
+                  project_id: String,
+                  token_uri: String,
+                  type: Stagehand::Models::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth::Credentials::type_,
+                  universe_domain: String
+                }
+
+                type type_ = :service_account
+
+                module Type
+                  extend Stagehand::Internal::Type::Enum
+
+                  SERVICE_ACCOUNT: :service_account
+
+                  def self?.values: -> ::Array[Stagehand::Models::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth::Credentials::type_]
+                end
+              end
+
+              type scopes = String | ::Array[String]
+
+              module Scopes
+                extend Stagehand::Internal::Type::Union
+
+                def self?.variants: -> ::Array[Stagehand::Models::SessionObserveParams::Options::Model::VertexModelConfigObject::Auth::scopes]
+
+                StringArray: Stagehand::Internal::Type::Converter
+              end
+            end
+
+            type provider_options =
+              {
+                vertex: Stagehand::SessionObserveParams::Options::Model::VertexModelConfigObject::ProviderOptions::Vertex
+              }
+
+            class ProviderOptions < Stagehand::Internal::Type::BaseModel
+              attr_accessor vertex: Stagehand::SessionObserveParams::Options::Model::VertexModelConfigObject::ProviderOptions::Vertex
+
+              def initialize: (
+                vertex: Stagehand::SessionObserveParams::Options::Model::VertexModelConfigObject::ProviderOptions::Vertex
+              ) -> void
+
+              def to_hash: -> {
+                vertex: Stagehand::SessionObserveParams::Options::Model::VertexModelConfigObject::ProviderOptions::Vertex
+              }
+
+              type vertex =
+                {
+                  location: String,
+                  project: String,
+                  base_url: String,
+                  headers: ::Hash[Symbol, String]
+                }
+
+              class Vertex < Stagehand::Internal::Type::BaseModel
+                attr_accessor location: String
+
+                attr_accessor project: String
+
+                attr_reader base_url: String?
+
+                def base_url=: (String) -> String
+
+                attr_reader headers: ::Hash[Symbol, String]?
+
+                def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+                def initialize: (
+                  location: String,
+                  project: String,
+                  ?base_url: String,
+                  ?headers: ::Hash[Symbol, String]
+                ) -> void
+
+                def to_hash: -> {
+                  location: String,
+                  project: String,
+                  base_url: String,
+                  headers: ::Hash[Symbol, String]
+                }
+              end
+            end
+          end
+
+          type generic_model_config_object =
+            {
+              model_name: String,
+              api_key: String,
+              base_url: String,
+              headers: ::Hash[Symbol, String],
+              provider: Stagehand::Models::SessionObserveParams::Options::Model::GenericModelConfigObject::provider
+            }
+
+          class GenericModelConfigObject < Stagehand::Internal::Type::BaseModel
+            attr_accessor model_name: String
+
+            attr_reader api_key: String?
+
+            def api_key=: (String) -> String
+
+            attr_reader base_url: String?
+
+            def base_url=: (String) -> String
+
+            attr_reader headers: ::Hash[Symbol, String]?
+
+            def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+            attr_reader provider: Stagehand::Models::SessionObserveParams::Options::Model::GenericModelConfigObject::provider?
+
+            def provider=: (
+              Stagehand::Models::SessionObserveParams::Options::Model::GenericModelConfigObject::provider
+            ) -> Stagehand::Models::SessionObserveParams::Options::Model::GenericModelConfigObject::provider
+
+            def initialize: (
+              model_name: String,
+              ?api_key: String,
+              ?base_url: String,
+              ?headers: ::Hash[Symbol, String],
+              ?provider: Stagehand::Models::SessionObserveParams::Options::Model::GenericModelConfigObject::provider
+            ) -> void
+
+            def to_hash: -> {
+              model_name: String,
+              api_key: String,
+              base_url: String,
+              headers: ::Hash[Symbol, String],
+              provider: Stagehand::Models::SessionObserveParams::Options::Model::GenericModelConfigObject::provider
+            }
+
+            type provider =
+              :openai | :anthropic | :google | :microsoft | :bedrock
+
+            module Provider
+              extend Stagehand::Internal::Type::Enum
+
+              OPENAI: :openai
+              ANTHROPIC: :anthropic
+              GOOGLE: :google
+              MICROSOFT: :microsoft
+              BEDROCK: :bedrock
+
+              def self?.values: -> ::Array[Stagehand::Models::SessionObserveParams::Options::Model::GenericModelConfigObject::provider]
+            end
+          end
 
           def self?.variants: -> ::Array[Stagehand::Models::SessionObserveParams::Options::model]
         end

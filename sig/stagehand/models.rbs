@@ -1,7 +1,7 @@
 module Stagehand
   class Action = Stagehand::Models::Action
 
-  class ModelConfig = Stagehand::Models::ModelConfig
+  module ModelConfig = Stagehand::Models::ModelConfig
 
   class SessionActParams = Stagehand::Models::SessionActParams
 
