@@ -10,8 +10,10 @@ module Stagehand
       #   case model_config
       #   when Stagehand::ModelConfig::VertexModelConfigObject
       #     puts(model_config.auth)
-      #   when Stagehand::ModelConfig::GenericModelConfigObject
+      #   when Stagehand::ModelConfig::AzureEntraModelConfigObject
       #     puts(model_config.model_name)
+      #   when Stagehand::ModelConfig::AzureAPIKeyModelConfigObject
+      #     puts(model_config.provider)
       #   else
       #     puts(model_config)
       #   end

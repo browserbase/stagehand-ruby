@@ -69,7 +69,7 @@ module Stagehand
         # @!attribute model
         #   Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #
-        #   @return [Stagehand::Models::SessionExtractParams::Options::Model::VertexModelConfigObject, Stagehand::Models::SessionExtractParams::Options::Model::GenericModelConfigObject, String, nil]
+        #   @return [Stagehand::Models::SessionExtractParams::Options::Model::VertexModelConfigObject, Stagehand::Models::SessionExtractParams::Options::Model::AzureEntraModelConfigObject, Stagehand::Models::SessionExtractParams::Options::Model::AzureAPIKeyModelConfigObject, Stagehand::Models::SessionExtractParams::Options::Model::GenericModelConfigObject, String, nil]
         optional :model, union: -> { Stagehand::SessionExtractParams::Options::Model }
 
         # @!attribute screenshot
@@ -97,7 +97,7 @@ module Stagehand
         #
         #   @param ignore_selectors [Array<String>] Selectors for elements and subtrees that should be excluded from extraction
         #
-        #   @param model [Stagehand::Models::SessionExtractParams::Options::Model::VertexModelConfigObject, Stagehand::Models::SessionExtractParams::Options::Model::GenericModelConfigObject, String] Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
+        #   @param model [Stagehand::Models::SessionExtractParams::Options::Model::VertexModelConfigObject, Stagehand::Models::SessionExtractParams::Options::Model::AzureEntraModelConfigObject, Stagehand::Models::SessionExtractParams::Options::Model::AzureAPIKeyModelConfigObject, Stagehand::Models::SessionExtractParams::Options::Model::GenericModelConfigObject, String] Model configuration object or model name string (e.g., 'openai/gpt-5-nano')
         #
         #   @param screenshot [Boolean] When true, include a screenshot of the current viewport in the extraction LLM ca
         #
@@ -112,6 +112,10 @@ module Stagehand
           extend Stagehand::Internal::Type::Union
 
           variant -> { Stagehand::SessionExtractParams::Options::Model::VertexModelConfigObject }
+
+          variant -> { Stagehand::SessionExtractParams::Options::Model::AzureEntraModelConfigObject }
+
+          variant -> { Stagehand::SessionExtractParams::Options::Model::AzureAPIKeyModelConfigObject }
 
           variant -> { Stagehand::SessionExtractParams::Options::Model::GenericModelConfigObject }
 
@@ -382,6 +386,264 @@ module Stagehand
             end
           end
 
+          class AzureEntraModelConfigObject < Stagehand::Internal::Type::BaseModel
+            # @!attribute auth
+            #   Azure provider authentication configuration
+            #
+            #   @return [Stagehand::Models::SessionExtractParams::Options::Model::AzureEntraModelConfigObject::Auth]
+            required :auth, -> { Stagehand::SessionExtractParams::Options::Model::AzureEntraModelConfigObject::Auth }
+
+            # @!attribute model_name
+            #   Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+            #
+            #   @return [String]
+            required :model_name, String, api_name: :modelName
+
+            # @!attribute provider
+            #   Azure OpenAI model provider
+            #
+            #   @return [Symbol, :azure]
+            required :provider, const: :azure
+
+            # @!attribute provider_options
+            #   Azure provider-specific model configuration
+            #
+            #   @return [Stagehand::Models::SessionExtractParams::Options::Model::AzureEntraModelConfigObject::ProviderOptions]
+            required :provider_options,
+                     -> {
+                       Stagehand::SessionExtractParams::Options::Model::AzureEntraModelConfigObject::ProviderOptions
+                     },
+                     api_name: :providerOptions
+
+            # @!attribute base_url
+            #   Base URL for the model provider
+            #
+            #   @return [String, nil]
+            optional :base_url, String, api_name: :baseURL
+
+            # @!attribute headers
+            #   Custom headers sent with every request to the model provider
+            #
+            #   @return [Hash{Symbol=>String}, nil]
+            optional :headers, Stagehand::Internal::Type::HashOf[String]
+
+            # @!method initialize(auth:, model_name:, provider_options:, base_url: nil, headers: nil, provider: :azure)
+            #   @param auth [Stagehand::Models::SessionExtractParams::Options::Model::AzureEntraModelConfigObject::Auth] Azure provider authentication configuration
+            #
+            #   @param model_name [String] Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+            #
+            #   @param provider_options [Stagehand::Models::SessionExtractParams::Options::Model::AzureEntraModelConfigObject::ProviderOptions] Azure provider-specific model configuration
+            #
+            #   @param base_url [String] Base URL for the model provider
+            #
+            #   @param headers [Hash{Symbol=>String}] Custom headers sent with every request to the model provider
+            #
+            #   @param provider [Symbol, :azure] Azure OpenAI model provider
+
+            # @see Stagehand::Models::SessionExtractParams::Options::Model::AzureEntraModelConfigObject#auth
+            class Auth < Stagehand::Internal::Type::BaseModel
+              # @!attribute token
+              #   Microsoft Entra ID bearer token for Azure OpenAI
+              #
+              #   @return [String]
+              required :token, String
+
+              # @!attribute type
+              #   Use a Microsoft Entra ID bearer token for authentication
+              #
+              #   @return [Symbol, :azureEntraId]
+              required :type, const: :azureEntraId
+
+              # @!method initialize(token:, type: :azureEntraId)
+              #   Azure provider authentication configuration
+              #
+              #   @param token [String] Microsoft Entra ID bearer token for Azure OpenAI
+              #
+              #   @param type [Symbol, :azureEntraId] Use a Microsoft Entra ID bearer token for authentication
+            end
+
+            # @see Stagehand::Models::SessionExtractParams::Options::Model::AzureEntraModelConfigObject#provider_options
+            class ProviderOptions < Stagehand::Internal::Type::BaseModel
+              # @!attribute azure
+              #   Azure OpenAI provider-specific settings
+              #
+              #   @return [Stagehand::Models::SessionExtractParams::Options::Model::AzureEntraModelConfigObject::ProviderOptions::Azure]
+              required :azure,
+                       -> { Stagehand::SessionExtractParams::Options::Model::AzureEntraModelConfigObject::ProviderOptions::Azure }
+
+              # @!method initialize(azure:)
+              #   Azure provider-specific model configuration
+              #
+              #   @param azure [Stagehand::Models::SessionExtractParams::Options::Model::AzureEntraModelConfigObject::ProviderOptions::Azure] Azure OpenAI provider-specific settings
+
+              # @see Stagehand::Models::SessionExtractParams::Options::Model::AzureEntraModelConfigObject::ProviderOptions#azure
+              class Azure < Stagehand::Internal::Type::BaseModel
+                # @!attribute api_version
+                #   Azure OpenAI API version
+                #
+                #   @return [String, nil]
+                optional :api_version, String, api_name: :apiVersion
+
+                # @!attribute base_url
+                #   Base URL for the Azure OpenAI provider
+                #
+                #   @return [String, nil]
+                optional :base_url, String, api_name: :baseURL
+
+                # @!attribute headers
+                #   Custom headers sent with every request to the Azure OpenAI provider
+                #
+                #   @return [Hash{Symbol=>String}, nil]
+                optional :headers, Stagehand::Internal::Type::HashOf[String]
+
+                # @!attribute resource_name
+                #   Azure OpenAI resource name
+                #
+                #   @return [String, nil]
+                optional :resource_name, String, api_name: :resourceName
+
+                # @!attribute use_deployment_based_urls
+                #   Whether to use deployment-based Azure OpenAI URLs
+                #
+                #   @return [Boolean, nil]
+                optional :use_deployment_based_urls,
+                         Stagehand::Internal::Type::Boolean,
+                         api_name: :useDeploymentBasedUrls
+
+                # @!method initialize(api_version: nil, base_url: nil, headers: nil, resource_name: nil, use_deployment_based_urls: nil)
+                #   Azure OpenAI provider-specific settings
+                #
+                #   @param api_version [String] Azure OpenAI API version
+                #
+                #   @param base_url [String] Base URL for the Azure OpenAI provider
+                #
+                #   @param headers [Hash{Symbol=>String}] Custom headers sent with every request to the Azure OpenAI provider
+                #
+                #   @param resource_name [String] Azure OpenAI resource name
+                #
+                #   @param use_deployment_based_urls [Boolean] Whether to use deployment-based Azure OpenAI URLs
+              end
+            end
+          end
+
+          class AzureAPIKeyModelConfigObject < Stagehand::Internal::Type::BaseModel
+            # @!attribute model_name
+            #   Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+            #
+            #   @return [String]
+            required :model_name, String, api_name: :modelName
+
+            # @!attribute provider
+            #   Azure OpenAI model provider
+            #
+            #   @return [Symbol, :azure]
+            required :provider, const: :azure
+
+            # @!attribute provider_options
+            #   Azure provider-specific model configuration
+            #
+            #   @return [Stagehand::Models::SessionExtractParams::Options::Model::AzureAPIKeyModelConfigObject::ProviderOptions]
+            required :provider_options,
+                     -> {
+                       Stagehand::SessionExtractParams::Options::Model::AzureAPIKeyModelConfigObject::ProviderOptions
+                     },
+                     api_name: :providerOptions
+
+            # @!attribute api_key
+            #   API key for the model provider
+            #
+            #   @return [String, nil]
+            optional :api_key, String, api_name: :apiKey
+
+            # @!attribute base_url
+            #   Base URL for the model provider
+            #
+            #   @return [String, nil]
+            optional :base_url, String, api_name: :baseURL
+
+            # @!attribute headers
+            #   Custom headers sent with every request to the model provider
+            #
+            #   @return [Hash{Symbol=>String}, nil]
+            optional :headers, Stagehand::Internal::Type::HashOf[String]
+
+            # @!method initialize(model_name:, provider_options:, api_key: nil, base_url: nil, headers: nil, provider: :azure)
+            #   @param model_name [String] Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+            #
+            #   @param provider_options [Stagehand::Models::SessionExtractParams::Options::Model::AzureAPIKeyModelConfigObject::ProviderOptions] Azure provider-specific model configuration
+            #
+            #   @param api_key [String] API key for the model provider
+            #
+            #   @param base_url [String] Base URL for the model provider
+            #
+            #   @param headers [Hash{Symbol=>String}] Custom headers sent with every request to the model provider
+            #
+            #   @param provider [Symbol, :azure] Azure OpenAI model provider
+
+            # @see Stagehand::Models::SessionExtractParams::Options::Model::AzureAPIKeyModelConfigObject#provider_options
+            class ProviderOptions < Stagehand::Internal::Type::BaseModel
+              # @!attribute azure
+              #   Azure OpenAI provider-specific settings
+              #
+              #   @return [Stagehand::Models::SessionExtractParams::Options::Model::AzureAPIKeyModelConfigObject::ProviderOptions::Azure]
+              required :azure,
+                       -> { Stagehand::SessionExtractParams::Options::Model::AzureAPIKeyModelConfigObject::ProviderOptions::Azure }
+
+              # @!method initialize(azure:)
+              #   Azure provider-specific model configuration
+              #
+              #   @param azure [Stagehand::Models::SessionExtractParams::Options::Model::AzureAPIKeyModelConfigObject::ProviderOptions::Azure] Azure OpenAI provider-specific settings
+
+              # @see Stagehand::Models::SessionExtractParams::Options::Model::AzureAPIKeyModelConfigObject::ProviderOptions#azure
+              class Azure < Stagehand::Internal::Type::BaseModel
+                # @!attribute api_version
+                #   Azure OpenAI API version
+                #
+                #   @return [String, nil]
+                optional :api_version, String, api_name: :apiVersion
+
+                # @!attribute base_url
+                #   Base URL for the Azure OpenAI provider
+                #
+                #   @return [String, nil]
+                optional :base_url, String, api_name: :baseURL
+
+                # @!attribute headers
+                #   Custom headers sent with every request to the Azure OpenAI provider
+                #
+                #   @return [Hash{Symbol=>String}, nil]
+                optional :headers, Stagehand::Internal::Type::HashOf[String]
+
+                # @!attribute resource_name
+                #   Azure OpenAI resource name
+                #
+                #   @return [String, nil]
+                optional :resource_name, String, api_name: :resourceName
+
+                # @!attribute use_deployment_based_urls
+                #   Whether to use deployment-based Azure OpenAI URLs
+                #
+                #   @return [Boolean, nil]
+                optional :use_deployment_based_urls,
+                         Stagehand::Internal::Type::Boolean,
+                         api_name: :useDeploymentBasedUrls
+
+                # @!method initialize(api_version: nil, base_url: nil, headers: nil, resource_name: nil, use_deployment_based_urls: nil)
+                #   Azure OpenAI provider-specific settings
+                #
+                #   @param api_version [String] Azure OpenAI API version
+                #
+                #   @param base_url [String] Base URL for the Azure OpenAI provider
+                #
+                #   @param headers [Hash{Symbol=>String}] Custom headers sent with every request to the Azure OpenAI provider
+                #
+                #   @param resource_name [String] Azure OpenAI resource name
+                #
+                #   @param use_deployment_based_urls [Boolean] Whether to use deployment-based Azure OpenAI URLs
+              end
+            end
+          end
+
           class GenericModelConfigObject < Stagehand::Internal::Type::BaseModel
             # @!attribute model_name
             #   Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
@@ -443,7 +705,7 @@ module Stagehand
           end
 
           # @!method self.variants
-          #   @return [Array(Stagehand::Models::SessionExtractParams::Options::Model::VertexModelConfigObject, Stagehand::Models::SessionExtractParams::Options::Model::GenericModelConfigObject, String)]
+          #   @return [Array(Stagehand::Models::SessionExtractParams::Options::Model::VertexModelConfigObject, Stagehand::Models::SessionExtractParams::Options::Model::AzureEntraModelConfigObject, Stagehand::Models::SessionExtractParams::Options::Model::AzureAPIKeyModelConfigObject, Stagehand::Models::SessionExtractParams::Options::Model::GenericModelConfigObject, String)]
         end
       end
 
