@@ -549,13 +549,25 @@ module Stagehand
         #   @return [Hash{Symbol=>String}, nil]
         optional :headers, Stagehand::Internal::Type::HashOf[String]
 
+        # @!attribute openai_endpoint_format
+        #   Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses
+        #   API; use chat for Chat Completions-only endpoints.
+        #
+        #   @return [Symbol, Stagehand::Models::ModelConfig::GenericModelConfigObject::OpenAIEndpointFormat, nil]
+        optional :openai_endpoint_format,
+                 enum: -> { Stagehand::ModelConfig::GenericModelConfigObject::OpenAIEndpointFormat },
+                 api_name: :openaiEndpointFormat
+
         # @!attribute provider
         #   AI provider for the model (or provide a baseURL endpoint instead)
         #
         #   @return [Symbol, Stagehand::Models::ModelConfig::GenericModelConfigObject::Provider, nil]
         optional :provider, enum: -> { Stagehand::ModelConfig::GenericModelConfigObject::Provider }
 
-        # @!method initialize(model_name:, api_key: nil, base_url: nil, headers: nil, provider: nil)
+        # @!method initialize(model_name:, api_key: nil, base_url: nil, headers: nil, openai_endpoint_format: nil, provider: nil)
+        #   Some parameter documentations has been truncated, see
+        #   {Stagehand::Models::ModelConfig::GenericModelConfigObject} for more details.
+        #
         #   @param model_name [String] Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
         #
         #   @param api_key [String] API key for the model provider
@@ -564,7 +576,23 @@ module Stagehand
         #
         #   @param headers [Hash{Symbol=>String}] Custom headers sent with every request to the model provider
         #
+        #   @param openai_endpoint_format [Symbol, Stagehand::Models::ModelConfig::GenericModelConfigObject::OpenAIEndpointFormat] Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses API
+        #
         #   @param provider [Symbol, Stagehand::Models::ModelConfig::GenericModelConfigObject::Provider] AI provider for the model (or provide a baseURL endpoint instead)
+
+        # Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses
+        # API; use chat for Chat Completions-only endpoints.
+        #
+        # @see Stagehand::Models::ModelConfig::GenericModelConfigObject#openai_endpoint_format
+        module OpenAIEndpointFormat
+          extend Stagehand::Internal::Type::Enum
+
+          RESPONSES = :responses
+          CHAT = :chat
+
+          # @!method self.values
+          #   @return [Array<Symbol>]
+        end
 
         # AI provider for the model (or provide a baseURL endpoint instead)
         #

@@ -507,6 +507,7 @@ module Stagehand
           api_key: String,
           base_url: String,
           headers: ::Hash[Symbol, String],
+          openai_endpoint_format: Stagehand::Models::ModelConfig::GenericModelConfigObject::openai_endpoint_format,
           provider: Stagehand::Models::ModelConfig::GenericModelConfigObject::provider
         }
 
@@ -525,6 +526,12 @@ module Stagehand
 
         def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
 
+        attr_reader openai_endpoint_format: Stagehand::Models::ModelConfig::GenericModelConfigObject::openai_endpoint_format?
+
+        def openai_endpoint_format=: (
+          Stagehand::Models::ModelConfig::GenericModelConfigObject::openai_endpoint_format
+        ) -> Stagehand::Models::ModelConfig::GenericModelConfigObject::openai_endpoint_format
+
         attr_reader provider: Stagehand::Models::ModelConfig::GenericModelConfigObject::provider?
 
         def provider=: (
@@ -536,6 +543,7 @@ module Stagehand
           ?api_key: String,
           ?base_url: String,
           ?headers: ::Hash[Symbol, String],
+          ?openai_endpoint_format: Stagehand::Models::ModelConfig::GenericModelConfigObject::openai_endpoint_format,
           ?provider: Stagehand::Models::ModelConfig::GenericModelConfigObject::provider
         ) -> void
 
@@ -544,8 +552,20 @@ module Stagehand
           api_key: String,
           base_url: String,
           headers: ::Hash[Symbol, String],
+          openai_endpoint_format: Stagehand::Models::ModelConfig::GenericModelConfigObject::openai_endpoint_format,
           provider: Stagehand::Models::ModelConfig::GenericModelConfigObject::provider
         }
+
+        type openai_endpoint_format = :responses | :chat
+
+        module OpenAIEndpointFormat
+          extend Stagehand::Internal::Type::Enum
+
+          RESPONSES: :responses
+          CHAT: :chat
+
+          def self?.values: -> ::Array[Stagehand::Models::ModelConfig::GenericModelConfigObject::openai_endpoint_format]
+        end
 
         type provider = :openai | :anthropic | :google | :microsoft | :bedrock
 
