@@ -1326,6 +1326,25 @@ module Stagehand
             sig { params(headers: T::Hash[Symbol, String]).void }
             attr_writer :headers
 
+            # Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses
+            # API; use chat for Chat Completions-only endpoints.
+            sig do
+              returns(
+                T.nilable(
+                  Stagehand::SessionActParams::Options::Model::GenericModelConfigObject::OpenAIEndpointFormat::OrSymbol
+                )
+              )
+            end
+            attr_reader :openai_endpoint_format
+
+            sig do
+              params(
+                openai_endpoint_format:
+                  Stagehand::SessionActParams::Options::Model::GenericModelConfigObject::OpenAIEndpointFormat::OrSymbol
+              ).void
+            end
+            attr_writer :openai_endpoint_format
+
             # AI provider for the model (or provide a baseURL endpoint instead)
             sig do
               returns(
@@ -1350,6 +1369,8 @@ module Stagehand
                 api_key: String,
                 base_url: String,
                 headers: T::Hash[Symbol, String],
+                openai_endpoint_format:
+                  Stagehand::SessionActParams::Options::Model::GenericModelConfigObject::OpenAIEndpointFormat::OrSymbol,
                 provider:
                   Stagehand::SessionActParams::Options::Model::GenericModelConfigObject::Provider::OrSymbol
               ).returns(T.attached_class)
@@ -1363,6 +1384,9 @@ module Stagehand
               base_url: nil,
               # Custom headers sent with every request to the model provider
               headers: nil,
+              # Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses
+              # API; use chat for Chat Completions-only endpoints.
+              openai_endpoint_format: nil,
               # AI provider for the model (or provide a baseURL endpoint instead)
               provider: nil
             )
@@ -1375,12 +1399,50 @@ module Stagehand
                   api_key: String,
                   base_url: String,
                   headers: T::Hash[Symbol, String],
+                  openai_endpoint_format:
+                    Stagehand::SessionActParams::Options::Model::GenericModelConfigObject::OpenAIEndpointFormat::OrSymbol,
                   provider:
                     Stagehand::SessionActParams::Options::Model::GenericModelConfigObject::Provider::OrSymbol
                 }
               )
             end
             def to_hash
+            end
+
+            # Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses
+            # API; use chat for Chat Completions-only endpoints.
+            module OpenAIEndpointFormat
+              extend Stagehand::Internal::Type::Enum
+
+              TaggedSymbol =
+                T.type_alias do
+                  T.all(
+                    Symbol,
+                    Stagehand::SessionActParams::Options::Model::GenericModelConfigObject::OpenAIEndpointFormat
+                  )
+                end
+              OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+              RESPONSES =
+                T.let(
+                  :responses,
+                  Stagehand::SessionActParams::Options::Model::GenericModelConfigObject::OpenAIEndpointFormat::TaggedSymbol
+                )
+              CHAT =
+                T.let(
+                  :chat,
+                  Stagehand::SessionActParams::Options::Model::GenericModelConfigObject::OpenAIEndpointFormat::TaggedSymbol
+                )
+
+              sig do
+                override.returns(
+                  T::Array[
+                    Stagehand::SessionActParams::Options::Model::GenericModelConfigObject::OpenAIEndpointFormat::TaggedSymbol
+                  ]
+                )
+              end
+              def self.values
+              end
             end
 
             # AI provider for the model (or provide a baseURL endpoint instead)
