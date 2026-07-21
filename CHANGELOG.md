@@ -1,5 +1,25 @@
 # Changelog
 
+## 3.22.0 (2026-07-21)
+
+Full Changelog: [v3.21.0...v3.22.0](https://github.com/browserbase/stagehand-ruby/compare/v3.21.0...v3.22.0)
+
+### Features
+
+* [STG-2090] Add Azure Entra model auth support ([1f8bf4b](https://github.com/browserbase/stagehand-ruby/commit/1f8bf4b2421c4c85887535aff089a81392aef841))
+* **server-v3:** expose OpenAI endpoint format ([dadba88](https://github.com/browserbase/stagehand-ruby/commit/dadba88715cef9e9be8c9bc5f17ba518b7f7bee3))
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([ac0e4b5](https://github.com/browserbase/stagehand-ruby/commit/ac0e4b5002f37c47c2563f32639204af4eefbed6))
+
+
+### Bug Fixes
+
+* **client:** send content-type header for requests with an omitted optional body ([b6c6458](https://github.com/browserbase/stagehand-ruby/commit/b6c6458818c9e790e233aa601a99fe7ef5c0de42))
+
+
+### Chores
+
+* **internal:** bound formatter parallelism to CPU count ([4816aab](https://github.com/browserbase/stagehand-ruby/commit/4816aabe67fe83098eac022142e0f795a32ee204))
+
 ## 3.21.0 (2026-05-27)
 
 Full Changelog: [v3.20.0...v3.21.0](https://github.com/browserbase/stagehand-ruby/compare/v3.20.0...v3.21.0)
