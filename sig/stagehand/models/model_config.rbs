@@ -2,6 +2,8 @@ module Stagehand
   module Models
     type model_config =
       Stagehand::ModelConfig::VertexModelConfigObject
+      | Stagehand::ModelConfig::AzureEntraModelConfigObject
+      | Stagehand::ModelConfig::AzureAPIKeyModelConfigObject
       | Stagehand::ModelConfig::GenericModelConfigObject
 
     module ModelConfig
@@ -265,12 +267,247 @@ module Stagehand
         end
       end
 
+      type azure_entra_model_config_object =
+        {
+          auth: Stagehand::ModelConfig::AzureEntraModelConfigObject::Auth,
+          model_name: String,
+          provider: :azure,
+          provider_options: Stagehand::ModelConfig::AzureEntraModelConfigObject::ProviderOptions,
+          base_url: String,
+          headers: ::Hash[Symbol, String]
+        }
+
+      class AzureEntraModelConfigObject < Stagehand::Internal::Type::BaseModel
+        attr_accessor auth: Stagehand::ModelConfig::AzureEntraModelConfigObject::Auth
+
+        attr_accessor model_name: String
+
+        attr_accessor provider: :azure
+
+        attr_accessor provider_options: Stagehand::ModelConfig::AzureEntraModelConfigObject::ProviderOptions
+
+        attr_reader base_url: String?
+
+        def base_url=: (String) -> String
+
+        attr_reader headers: ::Hash[Symbol, String]?
+
+        def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+        def initialize: (
+          auth: Stagehand::ModelConfig::AzureEntraModelConfigObject::Auth,
+          model_name: String,
+          provider_options: Stagehand::ModelConfig::AzureEntraModelConfigObject::ProviderOptions,
+          ?base_url: String,
+          ?headers: ::Hash[Symbol, String],
+          ?provider: :azure
+        ) -> void
+
+        def to_hash: -> {
+          auth: Stagehand::ModelConfig::AzureEntraModelConfigObject::Auth,
+          model_name: String,
+          provider: :azure,
+          provider_options: Stagehand::ModelConfig::AzureEntraModelConfigObject::ProviderOptions,
+          base_url: String,
+          headers: ::Hash[Symbol, String]
+        }
+
+        type auth = { token: String, type: :azureEntraId }
+
+        class Auth < Stagehand::Internal::Type::BaseModel
+          attr_accessor token: String
+
+          attr_accessor type: :azureEntraId
+
+          def initialize: (token: String, ?type: :azureEntraId) -> void
+
+          def to_hash: -> { token: String, type: :azureEntraId }
+        end
+
+        type provider_options =
+          {
+            azure: Stagehand::ModelConfig::AzureEntraModelConfigObject::ProviderOptions::Azure
+          }
+
+        class ProviderOptions < Stagehand::Internal::Type::BaseModel
+          attr_accessor azure: Stagehand::ModelConfig::AzureEntraModelConfigObject::ProviderOptions::Azure
+
+          def initialize: (
+            azure: Stagehand::ModelConfig::AzureEntraModelConfigObject::ProviderOptions::Azure
+          ) -> void
+
+          def to_hash: -> {
+            azure: Stagehand::ModelConfig::AzureEntraModelConfigObject::ProviderOptions::Azure
+          }
+
+          type azure =
+            {
+              api_version: String,
+              base_url: String,
+              headers: ::Hash[Symbol, String],
+              resource_name: String,
+              use_deployment_based_urls: bool
+            }
+
+          class Azure < Stagehand::Internal::Type::BaseModel
+            attr_reader api_version: String?
+
+            def api_version=: (String) -> String
+
+            attr_reader base_url: String?
+
+            def base_url=: (String) -> String
+
+            attr_reader headers: ::Hash[Symbol, String]?
+
+            def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+            attr_reader resource_name: String?
+
+            def resource_name=: (String) -> String
+
+            attr_reader use_deployment_based_urls: bool?
+
+            def use_deployment_based_urls=: (bool) -> bool
+
+            def initialize: (
+              ?api_version: String,
+              ?base_url: String,
+              ?headers: ::Hash[Symbol, String],
+              ?resource_name: String,
+              ?use_deployment_based_urls: bool
+            ) -> void
+
+            def to_hash: -> {
+              api_version: String,
+              base_url: String,
+              headers: ::Hash[Symbol, String],
+              resource_name: String,
+              use_deployment_based_urls: bool
+            }
+          end
+        end
+      end
+
+      type azure_api_key_model_config_object =
+        {
+          model_name: String,
+          provider: :azure,
+          provider_options: Stagehand::ModelConfig::AzureAPIKeyModelConfigObject::ProviderOptions,
+          api_key: String,
+          base_url: String,
+          headers: ::Hash[Symbol, String]
+        }
+
+      class AzureAPIKeyModelConfigObject < Stagehand::Internal::Type::BaseModel
+        attr_accessor model_name: String
+
+        attr_accessor provider: :azure
+
+        attr_accessor provider_options: Stagehand::ModelConfig::AzureAPIKeyModelConfigObject::ProviderOptions
+
+        attr_reader api_key: String?
+
+        def api_key=: (String) -> String
+
+        attr_reader base_url: String?
+
+        def base_url=: (String) -> String
+
+        attr_reader headers: ::Hash[Symbol, String]?
+
+        def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+        def initialize: (
+          model_name: String,
+          provider_options: Stagehand::ModelConfig::AzureAPIKeyModelConfigObject::ProviderOptions,
+          ?api_key: String,
+          ?base_url: String,
+          ?headers: ::Hash[Symbol, String],
+          ?provider: :azure
+        ) -> void
+
+        def to_hash: -> {
+          model_name: String,
+          provider: :azure,
+          provider_options: Stagehand::ModelConfig::AzureAPIKeyModelConfigObject::ProviderOptions,
+          api_key: String,
+          base_url: String,
+          headers: ::Hash[Symbol, String]
+        }
+
+        type provider_options =
+          {
+            azure: Stagehand::ModelConfig::AzureAPIKeyModelConfigObject::ProviderOptions::Azure
+          }
+
+        class ProviderOptions < Stagehand::Internal::Type::BaseModel
+          attr_accessor azure: Stagehand::ModelConfig::AzureAPIKeyModelConfigObject::ProviderOptions::Azure
+
+          def initialize: (
+            azure: Stagehand::ModelConfig::AzureAPIKeyModelConfigObject::ProviderOptions::Azure
+          ) -> void
+
+          def to_hash: -> {
+            azure: Stagehand::ModelConfig::AzureAPIKeyModelConfigObject::ProviderOptions::Azure
+          }
+
+          type azure =
+            {
+              api_version: String,
+              base_url: String,
+              headers: ::Hash[Symbol, String],
+              resource_name: String,
+              use_deployment_based_urls: bool
+            }
+
+          class Azure < Stagehand::Internal::Type::BaseModel
+            attr_reader api_version: String?
+
+            def api_version=: (String) -> String
+
+            attr_reader base_url: String?
+
+            def base_url=: (String) -> String
+
+            attr_reader headers: ::Hash[Symbol, String]?
+
+            def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
+
+            attr_reader resource_name: String?
+
+            def resource_name=: (String) -> String
+
+            attr_reader use_deployment_based_urls: bool?
+
+            def use_deployment_based_urls=: (bool) -> bool
+
+            def initialize: (
+              ?api_version: String,
+              ?base_url: String,
+              ?headers: ::Hash[Symbol, String],
+              ?resource_name: String,
+              ?use_deployment_based_urls: bool
+            ) -> void
+
+            def to_hash: -> {
+              api_version: String,
+              base_url: String,
+              headers: ::Hash[Symbol, String],
+              resource_name: String,
+              use_deployment_based_urls: bool
+            }
+          end
+        end
+      end
+
       type generic_model_config_object =
         {
           model_name: String,
           api_key: String,
           base_url: String,
           headers: ::Hash[Symbol, String],
+          openai_endpoint_format: Stagehand::Models::ModelConfig::GenericModelConfigObject::openai_endpoint_format,
           provider: Stagehand::Models::ModelConfig::GenericModelConfigObject::provider
         }
 
@@ -289,6 +526,12 @@ module Stagehand
 
         def headers=: (::Hash[Symbol, String]) -> ::Hash[Symbol, String]
 
+        attr_reader openai_endpoint_format: Stagehand::Models::ModelConfig::GenericModelConfigObject::openai_endpoint_format?
+
+        def openai_endpoint_format=: (
+          Stagehand::Models::ModelConfig::GenericModelConfigObject::openai_endpoint_format
+        ) -> Stagehand::Models::ModelConfig::GenericModelConfigObject::openai_endpoint_format
+
         attr_reader provider: Stagehand::Models::ModelConfig::GenericModelConfigObject::provider?
 
         def provider=: (
@@ -300,6 +543,7 @@ module Stagehand
           ?api_key: String,
           ?base_url: String,
           ?headers: ::Hash[Symbol, String],
+          ?openai_endpoint_format: Stagehand::Models::ModelConfig::GenericModelConfigObject::openai_endpoint_format,
           ?provider: Stagehand::Models::ModelConfig::GenericModelConfigObject::provider
         ) -> void
 
@@ -308,8 +552,20 @@ module Stagehand
           api_key: String,
           base_url: String,
           headers: ::Hash[Symbol, String],
+          openai_endpoint_format: Stagehand::Models::ModelConfig::GenericModelConfigObject::openai_endpoint_format,
           provider: Stagehand::Models::ModelConfig::GenericModelConfigObject::provider
         }
+
+        type openai_endpoint_format = :responses | :chat
+
+        module OpenAIEndpointFormat
+          extend Stagehand::Internal::Type::Enum
+
+          RESPONSES: :responses
+          CHAT: :chat
+
+          def self?.values: -> ::Array[Stagehand::Models::ModelConfig::GenericModelConfigObject::openai_endpoint_format]
+        end
 
         type provider = :openai | :anthropic | :google | :microsoft | :bedrock
 

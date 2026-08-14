@@ -133,6 +133,8 @@ module Stagehand
             T.nilable(
               T.any(
                 Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::VertexModelConfigObject,
+                Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject,
+                Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureAPIKeyModelConfigObject,
                 Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::GenericModelConfigObject,
                 String
               )
@@ -146,6 +148,8 @@ module Stagehand
             execution_model:
               T.any(
                 Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::VertexModelConfigObject::OrHash,
+                Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject::OrHash,
+                Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureAPIKeyModelConfigObject::OrHash,
                 Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::GenericModelConfigObject::OrHash,
                 String
               )
@@ -176,6 +180,8 @@ module Stagehand
             T.nilable(
               T.any(
                 Stagehand::SessionExecuteParams::AgentConfig::Model::VertexModelConfigObject,
+                Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject,
+                Stagehand::SessionExecuteParams::AgentConfig::Model::AzureAPIKeyModelConfigObject,
                 Stagehand::SessionExecuteParams::AgentConfig::Model::GenericModelConfigObject,
                 String
               )
@@ -189,6 +195,8 @@ module Stagehand
             model:
               T.any(
                 Stagehand::SessionExecuteParams::AgentConfig::Model::VertexModelConfigObject::OrHash,
+                Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject::OrHash,
+                Stagehand::SessionExecuteParams::AgentConfig::Model::AzureAPIKeyModelConfigObject::OrHash,
                 Stagehand::SessionExecuteParams::AgentConfig::Model::GenericModelConfigObject::OrHash,
                 String
               )
@@ -227,6 +235,8 @@ module Stagehand
             execution_model:
               T.any(
                 Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::VertexModelConfigObject::OrHash,
+                Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject::OrHash,
+                Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureAPIKeyModelConfigObject::OrHash,
                 Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::GenericModelConfigObject::OrHash,
                 String
               ),
@@ -234,6 +244,8 @@ module Stagehand
             model:
               T.any(
                 Stagehand::SessionExecuteParams::AgentConfig::Model::VertexModelConfigObject::OrHash,
+                Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject::OrHash,
+                Stagehand::SessionExecuteParams::AgentConfig::Model::AzureAPIKeyModelConfigObject::OrHash,
                 Stagehand::SessionExecuteParams::AgentConfig::Model::GenericModelConfigObject::OrHash,
                 String
               ),
@@ -268,6 +280,8 @@ module Stagehand
               execution_model:
                 T.any(
                   Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::VertexModelConfigObject,
+                  Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject,
+                  Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureAPIKeyModelConfigObject,
                   Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::GenericModelConfigObject,
                   String
                 ),
@@ -276,6 +290,8 @@ module Stagehand
               model:
                 T.any(
                   Stagehand::SessionExecuteParams::AgentConfig::Model::VertexModelConfigObject,
+                  Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject,
+                  Stagehand::SessionExecuteParams::AgentConfig::Model::AzureAPIKeyModelConfigObject,
                   Stagehand::SessionExecuteParams::AgentConfig::Model::GenericModelConfigObject,
                   String
                 ),
@@ -298,6 +314,8 @@ module Stagehand
             T.type_alias do
               T.any(
                 Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::VertexModelConfigObject,
+                Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject,
+                Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureAPIKeyModelConfigObject,
                 Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::GenericModelConfigObject,
                 String
               )
@@ -829,6 +847,513 @@ module Stagehand
             end
           end
 
+          class AzureEntraModelConfigObject < Stagehand::Internal::Type::BaseModel
+            OrHash =
+              T.type_alias do
+                T.any(
+                  Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject,
+                  Stagehand::Internal::AnyHash
+                )
+              end
+
+            # Azure provider authentication configuration
+            sig do
+              returns(
+                Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject::Auth
+              )
+            end
+            attr_reader :auth
+
+            sig do
+              params(
+                auth:
+                  Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject::Auth::OrHash
+              ).void
+            end
+            attr_writer :auth
+
+            # Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+            sig { returns(String) }
+            attr_accessor :model_name
+
+            # Azure OpenAI model provider
+            sig { returns(Symbol) }
+            attr_accessor :provider
+
+            # Azure provider-specific model configuration
+            sig do
+              returns(
+                Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject::ProviderOptions
+              )
+            end
+            attr_reader :provider_options
+
+            sig do
+              params(
+                provider_options:
+                  Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject::ProviderOptions::OrHash
+              ).void
+            end
+            attr_writer :provider_options
+
+            # Base URL for the model provider
+            sig { returns(T.nilable(String)) }
+            attr_reader :base_url
+
+            sig { params(base_url: String).void }
+            attr_writer :base_url
+
+            # Custom headers sent with every request to the model provider
+            sig { returns(T.nilable(T::Hash[Symbol, String])) }
+            attr_reader :headers
+
+            sig { params(headers: T::Hash[Symbol, String]).void }
+            attr_writer :headers
+
+            sig do
+              params(
+                auth:
+                  Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject::Auth::OrHash,
+                model_name: String,
+                provider_options:
+                  Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject::ProviderOptions::OrHash,
+                base_url: String,
+                headers: T::Hash[Symbol, String],
+                provider: Symbol
+              ).returns(T.attached_class)
+            end
+            def self.new(
+              # Azure provider authentication configuration
+              auth:,
+              # Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+              model_name:,
+              # Azure provider-specific model configuration
+              provider_options:,
+              # Base URL for the model provider
+              base_url: nil,
+              # Custom headers sent with every request to the model provider
+              headers: nil,
+              # Azure OpenAI model provider
+              provider: :azure
+            )
+            end
+
+            sig do
+              override.returns(
+                {
+                  auth:
+                    Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject::Auth,
+                  model_name: String,
+                  provider: Symbol,
+                  provider_options:
+                    Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject::ProviderOptions,
+                  base_url: String,
+                  headers: T::Hash[Symbol, String]
+                }
+              )
+            end
+            def to_hash
+            end
+
+            class Auth < Stagehand::Internal::Type::BaseModel
+              OrHash =
+                T.type_alias do
+                  T.any(
+                    Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject::Auth,
+                    Stagehand::Internal::AnyHash
+                  )
+                end
+
+              # Microsoft Entra ID bearer token for Azure OpenAI
+              sig { returns(String) }
+              attr_accessor :token
+
+              # Use a Microsoft Entra ID bearer token for authentication
+              sig { returns(Symbol) }
+              attr_accessor :type
+
+              # Azure provider authentication configuration
+              sig do
+                params(token: String, type: Symbol).returns(T.attached_class)
+              end
+              def self.new(
+                # Microsoft Entra ID bearer token for Azure OpenAI
+                token:,
+                # Use a Microsoft Entra ID bearer token for authentication
+                type: :azureEntraId
+              )
+              end
+
+              sig { override.returns({ token: String, type: Symbol }) }
+              def to_hash
+              end
+            end
+
+            class ProviderOptions < Stagehand::Internal::Type::BaseModel
+              OrHash =
+                T.type_alias do
+                  T.any(
+                    Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject::ProviderOptions,
+                    Stagehand::Internal::AnyHash
+                  )
+                end
+
+              # Azure OpenAI provider-specific settings
+              sig do
+                returns(
+                  Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject::ProviderOptions::Azure
+                )
+              end
+              attr_reader :azure
+
+              sig do
+                params(
+                  azure:
+                    Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject::ProviderOptions::Azure::OrHash
+                ).void
+              end
+              attr_writer :azure
+
+              # Azure provider-specific model configuration
+              sig do
+                params(
+                  azure:
+                    Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject::ProviderOptions::Azure::OrHash
+                ).returns(T.attached_class)
+              end
+              def self.new(
+                # Azure OpenAI provider-specific settings
+                azure:
+              )
+              end
+
+              sig do
+                override.returns(
+                  {
+                    azure:
+                      Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject::ProviderOptions::Azure
+                  }
+                )
+              end
+              def to_hash
+              end
+
+              class Azure < Stagehand::Internal::Type::BaseModel
+                OrHash =
+                  T.type_alias do
+                    T.any(
+                      Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureEntraModelConfigObject::ProviderOptions::Azure,
+                      Stagehand::Internal::AnyHash
+                    )
+                  end
+
+                # Azure OpenAI API version
+                sig { returns(T.nilable(String)) }
+                attr_reader :api_version
+
+                sig { params(api_version: String).void }
+                attr_writer :api_version
+
+                # Base URL for the Azure OpenAI provider
+                sig { returns(T.nilable(String)) }
+                attr_reader :base_url
+
+                sig { params(base_url: String).void }
+                attr_writer :base_url
+
+                # Custom headers sent with every request to the Azure OpenAI provider
+                sig { returns(T.nilable(T::Hash[Symbol, String])) }
+                attr_reader :headers
+
+                sig { params(headers: T::Hash[Symbol, String]).void }
+                attr_writer :headers
+
+                # Azure OpenAI resource name
+                sig { returns(T.nilable(String)) }
+                attr_reader :resource_name
+
+                sig { params(resource_name: String).void }
+                attr_writer :resource_name
+
+                # Whether to use deployment-based Azure OpenAI URLs
+                sig { returns(T.nilable(T::Boolean)) }
+                attr_reader :use_deployment_based_urls
+
+                sig { params(use_deployment_based_urls: T::Boolean).void }
+                attr_writer :use_deployment_based_urls
+
+                # Azure OpenAI provider-specific settings
+                sig do
+                  params(
+                    api_version: String,
+                    base_url: String,
+                    headers: T::Hash[Symbol, String],
+                    resource_name: String,
+                    use_deployment_based_urls: T::Boolean
+                  ).returns(T.attached_class)
+                end
+                def self.new(
+                  # Azure OpenAI API version
+                  api_version: nil,
+                  # Base URL for the Azure OpenAI provider
+                  base_url: nil,
+                  # Custom headers sent with every request to the Azure OpenAI provider
+                  headers: nil,
+                  # Azure OpenAI resource name
+                  resource_name: nil,
+                  # Whether to use deployment-based Azure OpenAI URLs
+                  use_deployment_based_urls: nil
+                )
+                end
+
+                sig do
+                  override.returns(
+                    {
+                      api_version: String,
+                      base_url: String,
+                      headers: T::Hash[Symbol, String],
+                      resource_name: String,
+                      use_deployment_based_urls: T::Boolean
+                    }
+                  )
+                end
+                def to_hash
+                end
+              end
+            end
+          end
+
+          class AzureAPIKeyModelConfigObject < Stagehand::Internal::Type::BaseModel
+            OrHash =
+              T.type_alias do
+                T.any(
+                  Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureAPIKeyModelConfigObject,
+                  Stagehand::Internal::AnyHash
+                )
+              end
+
+            # Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+            sig { returns(String) }
+            attr_accessor :model_name
+
+            # Azure OpenAI model provider
+            sig { returns(Symbol) }
+            attr_accessor :provider
+
+            # Azure provider-specific model configuration
+            sig do
+              returns(
+                Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureAPIKeyModelConfigObject::ProviderOptions
+              )
+            end
+            attr_reader :provider_options
+
+            sig do
+              params(
+                provider_options:
+                  Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureAPIKeyModelConfigObject::ProviderOptions::OrHash
+              ).void
+            end
+            attr_writer :provider_options
+
+            # API key for the model provider
+            sig { returns(T.nilable(String)) }
+            attr_reader :api_key
+
+            sig { params(api_key: String).void }
+            attr_writer :api_key
+
+            # Base URL for the model provider
+            sig { returns(T.nilable(String)) }
+            attr_reader :base_url
+
+            sig { params(base_url: String).void }
+            attr_writer :base_url
+
+            # Custom headers sent with every request to the model provider
+            sig { returns(T.nilable(T::Hash[Symbol, String])) }
+            attr_reader :headers
+
+            sig { params(headers: T::Hash[Symbol, String]).void }
+            attr_writer :headers
+
+            sig do
+              params(
+                model_name: String,
+                provider_options:
+                  Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureAPIKeyModelConfigObject::ProviderOptions::OrHash,
+                api_key: String,
+                base_url: String,
+                headers: T::Hash[Symbol, String],
+                provider: Symbol
+              ).returns(T.attached_class)
+            end
+            def self.new(
+              # Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+              model_name:,
+              # Azure provider-specific model configuration
+              provider_options:,
+              # API key for the model provider
+              api_key: nil,
+              # Base URL for the model provider
+              base_url: nil,
+              # Custom headers sent with every request to the model provider
+              headers: nil,
+              # Azure OpenAI model provider
+              provider: :azure
+            )
+            end
+
+            sig do
+              override.returns(
+                {
+                  model_name: String,
+                  provider: Symbol,
+                  provider_options:
+                    Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureAPIKeyModelConfigObject::ProviderOptions,
+                  api_key: String,
+                  base_url: String,
+                  headers: T::Hash[Symbol, String]
+                }
+              )
+            end
+            def to_hash
+            end
+
+            class ProviderOptions < Stagehand::Internal::Type::BaseModel
+              OrHash =
+                T.type_alias do
+                  T.any(
+                    Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureAPIKeyModelConfigObject::ProviderOptions,
+                    Stagehand::Internal::AnyHash
+                  )
+                end
+
+              # Azure OpenAI provider-specific settings
+              sig do
+                returns(
+                  Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureAPIKeyModelConfigObject::ProviderOptions::Azure
+                )
+              end
+              attr_reader :azure
+
+              sig do
+                params(
+                  azure:
+                    Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureAPIKeyModelConfigObject::ProviderOptions::Azure::OrHash
+                ).void
+              end
+              attr_writer :azure
+
+              # Azure provider-specific model configuration
+              sig do
+                params(
+                  azure:
+                    Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureAPIKeyModelConfigObject::ProviderOptions::Azure::OrHash
+                ).returns(T.attached_class)
+              end
+              def self.new(
+                # Azure OpenAI provider-specific settings
+                azure:
+              )
+              end
+
+              sig do
+                override.returns(
+                  {
+                    azure:
+                      Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureAPIKeyModelConfigObject::ProviderOptions::Azure
+                  }
+                )
+              end
+              def to_hash
+              end
+
+              class Azure < Stagehand::Internal::Type::BaseModel
+                OrHash =
+                  T.type_alias do
+                    T.any(
+                      Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::AzureAPIKeyModelConfigObject::ProviderOptions::Azure,
+                      Stagehand::Internal::AnyHash
+                    )
+                  end
+
+                # Azure OpenAI API version
+                sig { returns(T.nilable(String)) }
+                attr_reader :api_version
+
+                sig { params(api_version: String).void }
+                attr_writer :api_version
+
+                # Base URL for the Azure OpenAI provider
+                sig { returns(T.nilable(String)) }
+                attr_reader :base_url
+
+                sig { params(base_url: String).void }
+                attr_writer :base_url
+
+                # Custom headers sent with every request to the Azure OpenAI provider
+                sig { returns(T.nilable(T::Hash[Symbol, String])) }
+                attr_reader :headers
+
+                sig { params(headers: T::Hash[Symbol, String]).void }
+                attr_writer :headers
+
+                # Azure OpenAI resource name
+                sig { returns(T.nilable(String)) }
+                attr_reader :resource_name
+
+                sig { params(resource_name: String).void }
+                attr_writer :resource_name
+
+                # Whether to use deployment-based Azure OpenAI URLs
+                sig { returns(T.nilable(T::Boolean)) }
+                attr_reader :use_deployment_based_urls
+
+                sig { params(use_deployment_based_urls: T::Boolean).void }
+                attr_writer :use_deployment_based_urls
+
+                # Azure OpenAI provider-specific settings
+                sig do
+                  params(
+                    api_version: String,
+                    base_url: String,
+                    headers: T::Hash[Symbol, String],
+                    resource_name: String,
+                    use_deployment_based_urls: T::Boolean
+                  ).returns(T.attached_class)
+                end
+                def self.new(
+                  # Azure OpenAI API version
+                  api_version: nil,
+                  # Base URL for the Azure OpenAI provider
+                  base_url: nil,
+                  # Custom headers sent with every request to the Azure OpenAI provider
+                  headers: nil,
+                  # Azure OpenAI resource name
+                  resource_name: nil,
+                  # Whether to use deployment-based Azure OpenAI URLs
+                  use_deployment_based_urls: nil
+                )
+                end
+
+                sig do
+                  override.returns(
+                    {
+                      api_version: String,
+                      base_url: String,
+                      headers: T::Hash[Symbol, String],
+                      resource_name: String,
+                      use_deployment_based_urls: T::Boolean
+                    }
+                  )
+                end
+                def to_hash
+                end
+              end
+            end
+          end
+
           class GenericModelConfigObject < Stagehand::Internal::Type::BaseModel
             OrHash =
               T.type_alias do
@@ -863,6 +1388,25 @@ module Stagehand
             sig { params(headers: T::Hash[Symbol, String]).void }
             attr_writer :headers
 
+            # Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses
+            # API; use chat for Chat Completions-only endpoints.
+            sig do
+              returns(
+                T.nilable(
+                  Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::GenericModelConfigObject::OpenAIEndpointFormat::OrSymbol
+                )
+              )
+            end
+            attr_reader :openai_endpoint_format
+
+            sig do
+              params(
+                openai_endpoint_format:
+                  Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::GenericModelConfigObject::OpenAIEndpointFormat::OrSymbol
+              ).void
+            end
+            attr_writer :openai_endpoint_format
+
             # AI provider for the model (or provide a baseURL endpoint instead)
             sig do
               returns(
@@ -887,6 +1431,8 @@ module Stagehand
                 api_key: String,
                 base_url: String,
                 headers: T::Hash[Symbol, String],
+                openai_endpoint_format:
+                  Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::GenericModelConfigObject::OpenAIEndpointFormat::OrSymbol,
                 provider:
                   Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::GenericModelConfigObject::Provider::OrSymbol
               ).returns(T.attached_class)
@@ -900,6 +1446,9 @@ module Stagehand
               base_url: nil,
               # Custom headers sent with every request to the model provider
               headers: nil,
+              # Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses
+              # API; use chat for Chat Completions-only endpoints.
+              openai_endpoint_format: nil,
               # AI provider for the model (or provide a baseURL endpoint instead)
               provider: nil
             )
@@ -912,12 +1461,50 @@ module Stagehand
                   api_key: String,
                   base_url: String,
                   headers: T::Hash[Symbol, String],
+                  openai_endpoint_format:
+                    Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::GenericModelConfigObject::OpenAIEndpointFormat::OrSymbol,
                   provider:
                     Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::GenericModelConfigObject::Provider::OrSymbol
                 }
               )
             end
             def to_hash
+            end
+
+            # Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses
+            # API; use chat for Chat Completions-only endpoints.
+            module OpenAIEndpointFormat
+              extend Stagehand::Internal::Type::Enum
+
+              TaggedSymbol =
+                T.type_alias do
+                  T.all(
+                    Symbol,
+                    Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::GenericModelConfigObject::OpenAIEndpointFormat
+                  )
+                end
+              OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+              RESPONSES =
+                T.let(
+                  :responses,
+                  Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::GenericModelConfigObject::OpenAIEndpointFormat::TaggedSymbol
+                )
+              CHAT =
+                T.let(
+                  :chat,
+                  Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::GenericModelConfigObject::OpenAIEndpointFormat::TaggedSymbol
+                )
+
+              sig do
+                override.returns(
+                  T::Array[
+                    Stagehand::SessionExecuteParams::AgentConfig::ExecutionModel::GenericModelConfigObject::OpenAIEndpointFormat::TaggedSymbol
+                  ]
+                )
+              end
+              def self.values
+              end
             end
 
             # AI provider for the model (or provide a baseURL endpoint instead)
@@ -1027,6 +1614,8 @@ module Stagehand
             T.type_alias do
               T.any(
                 Stagehand::SessionExecuteParams::AgentConfig::Model::VertexModelConfigObject,
+                Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject,
+                Stagehand::SessionExecuteParams::AgentConfig::Model::AzureAPIKeyModelConfigObject,
                 Stagehand::SessionExecuteParams::AgentConfig::Model::GenericModelConfigObject,
                 String
               )
@@ -1558,6 +2147,513 @@ module Stagehand
             end
           end
 
+          class AzureEntraModelConfigObject < Stagehand::Internal::Type::BaseModel
+            OrHash =
+              T.type_alias do
+                T.any(
+                  Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject,
+                  Stagehand::Internal::AnyHash
+                )
+              end
+
+            # Azure provider authentication configuration
+            sig do
+              returns(
+                Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject::Auth
+              )
+            end
+            attr_reader :auth
+
+            sig do
+              params(
+                auth:
+                  Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject::Auth::OrHash
+              ).void
+            end
+            attr_writer :auth
+
+            # Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+            sig { returns(String) }
+            attr_accessor :model_name
+
+            # Azure OpenAI model provider
+            sig { returns(Symbol) }
+            attr_accessor :provider
+
+            # Azure provider-specific model configuration
+            sig do
+              returns(
+                Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject::ProviderOptions
+              )
+            end
+            attr_reader :provider_options
+
+            sig do
+              params(
+                provider_options:
+                  Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject::ProviderOptions::OrHash
+              ).void
+            end
+            attr_writer :provider_options
+
+            # Base URL for the model provider
+            sig { returns(T.nilable(String)) }
+            attr_reader :base_url
+
+            sig { params(base_url: String).void }
+            attr_writer :base_url
+
+            # Custom headers sent with every request to the model provider
+            sig { returns(T.nilable(T::Hash[Symbol, String])) }
+            attr_reader :headers
+
+            sig { params(headers: T::Hash[Symbol, String]).void }
+            attr_writer :headers
+
+            sig do
+              params(
+                auth:
+                  Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject::Auth::OrHash,
+                model_name: String,
+                provider_options:
+                  Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject::ProviderOptions::OrHash,
+                base_url: String,
+                headers: T::Hash[Symbol, String],
+                provider: Symbol
+              ).returns(T.attached_class)
+            end
+            def self.new(
+              # Azure provider authentication configuration
+              auth:,
+              # Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+              model_name:,
+              # Azure provider-specific model configuration
+              provider_options:,
+              # Base URL for the model provider
+              base_url: nil,
+              # Custom headers sent with every request to the model provider
+              headers: nil,
+              # Azure OpenAI model provider
+              provider: :azure
+            )
+            end
+
+            sig do
+              override.returns(
+                {
+                  auth:
+                    Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject::Auth,
+                  model_name: String,
+                  provider: Symbol,
+                  provider_options:
+                    Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject::ProviderOptions,
+                  base_url: String,
+                  headers: T::Hash[Symbol, String]
+                }
+              )
+            end
+            def to_hash
+            end
+
+            class Auth < Stagehand::Internal::Type::BaseModel
+              OrHash =
+                T.type_alias do
+                  T.any(
+                    Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject::Auth,
+                    Stagehand::Internal::AnyHash
+                  )
+                end
+
+              # Microsoft Entra ID bearer token for Azure OpenAI
+              sig { returns(String) }
+              attr_accessor :token
+
+              # Use a Microsoft Entra ID bearer token for authentication
+              sig { returns(Symbol) }
+              attr_accessor :type
+
+              # Azure provider authentication configuration
+              sig do
+                params(token: String, type: Symbol).returns(T.attached_class)
+              end
+              def self.new(
+                # Microsoft Entra ID bearer token for Azure OpenAI
+                token:,
+                # Use a Microsoft Entra ID bearer token for authentication
+                type: :azureEntraId
+              )
+              end
+
+              sig { override.returns({ token: String, type: Symbol }) }
+              def to_hash
+              end
+            end
+
+            class ProviderOptions < Stagehand::Internal::Type::BaseModel
+              OrHash =
+                T.type_alias do
+                  T.any(
+                    Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject::ProviderOptions,
+                    Stagehand::Internal::AnyHash
+                  )
+                end
+
+              # Azure OpenAI provider-specific settings
+              sig do
+                returns(
+                  Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject::ProviderOptions::Azure
+                )
+              end
+              attr_reader :azure
+
+              sig do
+                params(
+                  azure:
+                    Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject::ProviderOptions::Azure::OrHash
+                ).void
+              end
+              attr_writer :azure
+
+              # Azure provider-specific model configuration
+              sig do
+                params(
+                  azure:
+                    Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject::ProviderOptions::Azure::OrHash
+                ).returns(T.attached_class)
+              end
+              def self.new(
+                # Azure OpenAI provider-specific settings
+                azure:
+              )
+              end
+
+              sig do
+                override.returns(
+                  {
+                    azure:
+                      Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject::ProviderOptions::Azure
+                  }
+                )
+              end
+              def to_hash
+              end
+
+              class Azure < Stagehand::Internal::Type::BaseModel
+                OrHash =
+                  T.type_alias do
+                    T.any(
+                      Stagehand::SessionExecuteParams::AgentConfig::Model::AzureEntraModelConfigObject::ProviderOptions::Azure,
+                      Stagehand::Internal::AnyHash
+                    )
+                  end
+
+                # Azure OpenAI API version
+                sig { returns(T.nilable(String)) }
+                attr_reader :api_version
+
+                sig { params(api_version: String).void }
+                attr_writer :api_version
+
+                # Base URL for the Azure OpenAI provider
+                sig { returns(T.nilable(String)) }
+                attr_reader :base_url
+
+                sig { params(base_url: String).void }
+                attr_writer :base_url
+
+                # Custom headers sent with every request to the Azure OpenAI provider
+                sig { returns(T.nilable(T::Hash[Symbol, String])) }
+                attr_reader :headers
+
+                sig { params(headers: T::Hash[Symbol, String]).void }
+                attr_writer :headers
+
+                # Azure OpenAI resource name
+                sig { returns(T.nilable(String)) }
+                attr_reader :resource_name
+
+                sig { params(resource_name: String).void }
+                attr_writer :resource_name
+
+                # Whether to use deployment-based Azure OpenAI URLs
+                sig { returns(T.nilable(T::Boolean)) }
+                attr_reader :use_deployment_based_urls
+
+                sig { params(use_deployment_based_urls: T::Boolean).void }
+                attr_writer :use_deployment_based_urls
+
+                # Azure OpenAI provider-specific settings
+                sig do
+                  params(
+                    api_version: String,
+                    base_url: String,
+                    headers: T::Hash[Symbol, String],
+                    resource_name: String,
+                    use_deployment_based_urls: T::Boolean
+                  ).returns(T.attached_class)
+                end
+                def self.new(
+                  # Azure OpenAI API version
+                  api_version: nil,
+                  # Base URL for the Azure OpenAI provider
+                  base_url: nil,
+                  # Custom headers sent with every request to the Azure OpenAI provider
+                  headers: nil,
+                  # Azure OpenAI resource name
+                  resource_name: nil,
+                  # Whether to use deployment-based Azure OpenAI URLs
+                  use_deployment_based_urls: nil
+                )
+                end
+
+                sig do
+                  override.returns(
+                    {
+                      api_version: String,
+                      base_url: String,
+                      headers: T::Hash[Symbol, String],
+                      resource_name: String,
+                      use_deployment_based_urls: T::Boolean
+                    }
+                  )
+                end
+                def to_hash
+                end
+              end
+            end
+          end
+
+          class AzureAPIKeyModelConfigObject < Stagehand::Internal::Type::BaseModel
+            OrHash =
+              T.type_alias do
+                T.any(
+                  Stagehand::SessionExecuteParams::AgentConfig::Model::AzureAPIKeyModelConfigObject,
+                  Stagehand::Internal::AnyHash
+                )
+              end
+
+            # Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+            sig { returns(String) }
+            attr_accessor :model_name
+
+            # Azure OpenAI model provider
+            sig { returns(Symbol) }
+            attr_accessor :provider
+
+            # Azure provider-specific model configuration
+            sig do
+              returns(
+                Stagehand::SessionExecuteParams::AgentConfig::Model::AzureAPIKeyModelConfigObject::ProviderOptions
+              )
+            end
+            attr_reader :provider_options
+
+            sig do
+              params(
+                provider_options:
+                  Stagehand::SessionExecuteParams::AgentConfig::Model::AzureAPIKeyModelConfigObject::ProviderOptions::OrHash
+              ).void
+            end
+            attr_writer :provider_options
+
+            # API key for the model provider
+            sig { returns(T.nilable(String)) }
+            attr_reader :api_key
+
+            sig { params(api_key: String).void }
+            attr_writer :api_key
+
+            # Base URL for the model provider
+            sig { returns(T.nilable(String)) }
+            attr_reader :base_url
+
+            sig { params(base_url: String).void }
+            attr_writer :base_url
+
+            # Custom headers sent with every request to the model provider
+            sig { returns(T.nilable(T::Hash[Symbol, String])) }
+            attr_reader :headers
+
+            sig { params(headers: T::Hash[Symbol, String]).void }
+            attr_writer :headers
+
+            sig do
+              params(
+                model_name: String,
+                provider_options:
+                  Stagehand::SessionExecuteParams::AgentConfig::Model::AzureAPIKeyModelConfigObject::ProviderOptions::OrHash,
+                api_key: String,
+                base_url: String,
+                headers: T::Hash[Symbol, String],
+                provider: Symbol
+              ).returns(T.attached_class)
+            end
+            def self.new(
+              # Model name string with provider prefix (e.g., 'openai/gpt-5-nano')
+              model_name:,
+              # Azure provider-specific model configuration
+              provider_options:,
+              # API key for the model provider
+              api_key: nil,
+              # Base URL for the model provider
+              base_url: nil,
+              # Custom headers sent with every request to the model provider
+              headers: nil,
+              # Azure OpenAI model provider
+              provider: :azure
+            )
+            end
+
+            sig do
+              override.returns(
+                {
+                  model_name: String,
+                  provider: Symbol,
+                  provider_options:
+                    Stagehand::SessionExecuteParams::AgentConfig::Model::AzureAPIKeyModelConfigObject::ProviderOptions,
+                  api_key: String,
+                  base_url: String,
+                  headers: T::Hash[Symbol, String]
+                }
+              )
+            end
+            def to_hash
+            end
+
+            class ProviderOptions < Stagehand::Internal::Type::BaseModel
+              OrHash =
+                T.type_alias do
+                  T.any(
+                    Stagehand::SessionExecuteParams::AgentConfig::Model::AzureAPIKeyModelConfigObject::ProviderOptions,
+                    Stagehand::Internal::AnyHash
+                  )
+                end
+
+              # Azure OpenAI provider-specific settings
+              sig do
+                returns(
+                  Stagehand::SessionExecuteParams::AgentConfig::Model::AzureAPIKeyModelConfigObject::ProviderOptions::Azure
+                )
+              end
+              attr_reader :azure
+
+              sig do
+                params(
+                  azure:
+                    Stagehand::SessionExecuteParams::AgentConfig::Model::AzureAPIKeyModelConfigObject::ProviderOptions::Azure::OrHash
+                ).void
+              end
+              attr_writer :azure
+
+              # Azure provider-specific model configuration
+              sig do
+                params(
+                  azure:
+                    Stagehand::SessionExecuteParams::AgentConfig::Model::AzureAPIKeyModelConfigObject::ProviderOptions::Azure::OrHash
+                ).returns(T.attached_class)
+              end
+              def self.new(
+                # Azure OpenAI provider-specific settings
+                azure:
+              )
+              end
+
+              sig do
+                override.returns(
+                  {
+                    azure:
+                      Stagehand::SessionExecuteParams::AgentConfig::Model::AzureAPIKeyModelConfigObject::ProviderOptions::Azure
+                  }
+                )
+              end
+              def to_hash
+              end
+
+              class Azure < Stagehand::Internal::Type::BaseModel
+                OrHash =
+                  T.type_alias do
+                    T.any(
+                      Stagehand::SessionExecuteParams::AgentConfig::Model::AzureAPIKeyModelConfigObject::ProviderOptions::Azure,
+                      Stagehand::Internal::AnyHash
+                    )
+                  end
+
+                # Azure OpenAI API version
+                sig { returns(T.nilable(String)) }
+                attr_reader :api_version
+
+                sig { params(api_version: String).void }
+                attr_writer :api_version
+
+                # Base URL for the Azure OpenAI provider
+                sig { returns(T.nilable(String)) }
+                attr_reader :base_url
+
+                sig { params(base_url: String).void }
+                attr_writer :base_url
+
+                # Custom headers sent with every request to the Azure OpenAI provider
+                sig { returns(T.nilable(T::Hash[Symbol, String])) }
+                attr_reader :headers
+
+                sig { params(headers: T::Hash[Symbol, String]).void }
+                attr_writer :headers
+
+                # Azure OpenAI resource name
+                sig { returns(T.nilable(String)) }
+                attr_reader :resource_name
+
+                sig { params(resource_name: String).void }
+                attr_writer :resource_name
+
+                # Whether to use deployment-based Azure OpenAI URLs
+                sig { returns(T.nilable(T::Boolean)) }
+                attr_reader :use_deployment_based_urls
+
+                sig { params(use_deployment_based_urls: T::Boolean).void }
+                attr_writer :use_deployment_based_urls
+
+                # Azure OpenAI provider-specific settings
+                sig do
+                  params(
+                    api_version: String,
+                    base_url: String,
+                    headers: T::Hash[Symbol, String],
+                    resource_name: String,
+                    use_deployment_based_urls: T::Boolean
+                  ).returns(T.attached_class)
+                end
+                def self.new(
+                  # Azure OpenAI API version
+                  api_version: nil,
+                  # Base URL for the Azure OpenAI provider
+                  base_url: nil,
+                  # Custom headers sent with every request to the Azure OpenAI provider
+                  headers: nil,
+                  # Azure OpenAI resource name
+                  resource_name: nil,
+                  # Whether to use deployment-based Azure OpenAI URLs
+                  use_deployment_based_urls: nil
+                )
+                end
+
+                sig do
+                  override.returns(
+                    {
+                      api_version: String,
+                      base_url: String,
+                      headers: T::Hash[Symbol, String],
+                      resource_name: String,
+                      use_deployment_based_urls: T::Boolean
+                    }
+                  )
+                end
+                def to_hash
+                end
+              end
+            end
+          end
+
           class GenericModelConfigObject < Stagehand::Internal::Type::BaseModel
             OrHash =
               T.type_alias do
@@ -1592,6 +2688,25 @@ module Stagehand
             sig { params(headers: T::Hash[Symbol, String]).void }
             attr_writer :headers
 
+            # Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses
+            # API; use chat for Chat Completions-only endpoints.
+            sig do
+              returns(
+                T.nilable(
+                  Stagehand::SessionExecuteParams::AgentConfig::Model::GenericModelConfigObject::OpenAIEndpointFormat::OrSymbol
+                )
+              )
+            end
+            attr_reader :openai_endpoint_format
+
+            sig do
+              params(
+                openai_endpoint_format:
+                  Stagehand::SessionExecuteParams::AgentConfig::Model::GenericModelConfigObject::OpenAIEndpointFormat::OrSymbol
+              ).void
+            end
+            attr_writer :openai_endpoint_format
+
             # AI provider for the model (or provide a baseURL endpoint instead)
             sig do
               returns(
@@ -1616,6 +2731,8 @@ module Stagehand
                 api_key: String,
                 base_url: String,
                 headers: T::Hash[Symbol, String],
+                openai_endpoint_format:
+                  Stagehand::SessionExecuteParams::AgentConfig::Model::GenericModelConfigObject::OpenAIEndpointFormat::OrSymbol,
                 provider:
                   Stagehand::SessionExecuteParams::AgentConfig::Model::GenericModelConfigObject::Provider::OrSymbol
               ).returns(T.attached_class)
@@ -1629,6 +2746,9 @@ module Stagehand
               base_url: nil,
               # Custom headers sent with every request to the model provider
               headers: nil,
+              # Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses
+              # API; use chat for Chat Completions-only endpoints.
+              openai_endpoint_format: nil,
               # AI provider for the model (or provide a baseURL endpoint instead)
               provider: nil
             )
@@ -1641,12 +2761,50 @@ module Stagehand
                   api_key: String,
                   base_url: String,
                   headers: T::Hash[Symbol, String],
+                  openai_endpoint_format:
+                    Stagehand::SessionExecuteParams::AgentConfig::Model::GenericModelConfigObject::OpenAIEndpointFormat::OrSymbol,
                   provider:
                     Stagehand::SessionExecuteParams::AgentConfig::Model::GenericModelConfigObject::Provider::OrSymbol
                 }
               )
             end
             def to_hash
+            end
+
+            # Wire format used by an OpenAI-compatible endpoint. Defaults to the Responses
+            # API; use chat for Chat Completions-only endpoints.
+            module OpenAIEndpointFormat
+              extend Stagehand::Internal::Type::Enum
+
+              TaggedSymbol =
+                T.type_alias do
+                  T.all(
+                    Symbol,
+                    Stagehand::SessionExecuteParams::AgentConfig::Model::GenericModelConfigObject::OpenAIEndpointFormat
+                  )
+                end
+              OrSymbol = T.type_alias { T.any(Symbol, String) }
+
+              RESPONSES =
+                T.let(
+                  :responses,
+                  Stagehand::SessionExecuteParams::AgentConfig::Model::GenericModelConfigObject::OpenAIEndpointFormat::TaggedSymbol
+                )
+              CHAT =
+                T.let(
+                  :chat,
+                  Stagehand::SessionExecuteParams::AgentConfig::Model::GenericModelConfigObject::OpenAIEndpointFormat::TaggedSymbol
+                )
+
+              sig do
+                override.returns(
+                  T::Array[
+                    Stagehand::SessionExecuteParams::AgentConfig::Model::GenericModelConfigObject::OpenAIEndpointFormat::TaggedSymbol
+                  ]
+                )
+              end
+              def self.values
+              end
             end
 
             # AI provider for the model (or provide a baseURL endpoint instead)
