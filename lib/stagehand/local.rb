@@ -11,6 +11,8 @@ module Stagehand
   module Local
     STAGEHAND_REPO = "browserbase/stagehand"
     DEFAULT_USER_AGENT = "stagehand-ruby/local"
+    # Includes the October 2026 Node.js and Undici security fixes.
+    DEFAULT_SERVER_VERSION = "stagehand-server-v3/v3.7.7"
     DEFAULT_HOST = "127.0.0.1"
     DEFAULT_READY_TIMEOUT_S = 30.0
     DOWNLOAD_TIMEOUT_S = 600
@@ -101,7 +103,7 @@ module Stagehand
           return ensure_executable(cache_path) if File.file?(cache_path)
 
           version = ENV["STAGEHAND_SERVER_VERSION"].to_s
-          version = "latest" if version.empty?
+          version = DEFAULT_SERVER_VERSION if version.empty?
           tag = resolve_version(version)
           download_binary(tag, cache_path)
         end
